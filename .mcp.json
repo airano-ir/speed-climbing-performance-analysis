@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "google-colab-mcp": {
+      "command": "python",
+      "args": [
+        "-m",
+        "mcp_colab_server.server"
+      ],
+      "alwaysAllow": [
+        "create_notebook",
+        "execute_code",
+        "list_notebooks",
+        "get_notebook_content",
+        "upload_file",
+        "download_file"
+      ]
+    },
+    "history-mcp": {
+      "command": "python",
+      "args": [
+        "-m",
+        "colab_mcp.main"
+      ]
+    }
+  }
+}
