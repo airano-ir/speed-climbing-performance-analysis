@@ -252,9 +252,9 @@ class TestIntegration:
 
 def test_create_test_frame_with_two_climbers():
     """
-    Helper to create a test frame with two simulated climbers.
+    Test creating a test frame with two simulated climbers.
 
-    This could be used for more advanced tests.
+    This verifies the helper function for creating synthetic test data.
     """
     frame = np.zeros((720, 1280, 3), dtype=np.uint8)
 
@@ -276,7 +276,9 @@ def test_create_test_frame_with_two_climbers():
     cv2.line(frame, (900, 400), (850, 550), (255, 255, 255), 5)  # Left leg
     cv2.line(frame, (900, 400), (950, 550), (255, 255, 255), 5)  # Right leg
 
-    return frame
+    # Verify frame was created properly
+    assert frame.shape == (720, 1280, 3)
+    assert frame.sum() > 0  # Not all black
 
 
 if __name__ == "__main__":

@@ -267,7 +267,7 @@ class DualLaneDetector:
             self.boundary_kf.update(np.array([[x_center]]))
 
             # Use filtered position
-            x_center = float(self.boundary_kf.x[0])
+            x_center = self.boundary_kf.x[0].item()
 
         return LaneBoundary(
             x_center=x_center,
@@ -411,11 +411,16 @@ class DualLaneDetector:
         Returns:
             pose_result if valid, None otherwise
         """
-        if pose_result is None or pose_result.com is None:
+        if pose_result is None or not pose_result.has_detection:
+            return None
+
+        # Get COM keypoint
+        com = pose_result.get_keypoint('COM')
+        if com is None:
             return None
 
         # Check if COM is in expected lane
-        com_x = pose_result.com.x
+        com_x = com.x
         is_left = boundary.is_left_lane(com_x, normalized=True)
 
         if expected_lane == "left" and is_left:
@@ -562,8 +567,9 @@ def _draw_skeleton(frame: np.ndarray, pose: PoseResult, color: Tuple[int, int, i
             cv2.circle(frame, pt, 4, color, -1)
 
     # Draw COM
-    if pose.com:
-        com_pt = (int(pose.com.x * w), int(pose.com.y * h))
+    com = pose.get_keypoint('COM')
+    if com:
+        com_pt = (int(com.x * w), int(com.y * h))
         cv2.circle(frame, com_pt, 8, (0, 255, 0), -1)
         cv2.circle(frame, com_pt, 10, color, 2)
 
