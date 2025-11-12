@@ -7,7 +7,8 @@
       "Bash(ffmpeg:*)",
       "Bash(timeout 30 python:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(timeout /t 10)"
     ]
   },
   "enableAllProjectMcpServers": true,
