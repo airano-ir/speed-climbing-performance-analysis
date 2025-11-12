@@ -1,0 +1,137 @@
+# IFSC Speed Climbing YouTube Video URLs
+# =====================================
+#
+# This file contains URLs for downloading test videos from YouTube.
+# Videos are selected to represent different scenarios for dual-climber analysis.
+#
+# Categories:
+# - World Cup Finals (dual-lane races)
+# - Olympic Games (highest quality footage)
+# - Semi-finals / Qualifications
+#
+# Last updated: 2025-11-12
+
+# ===========================================
+# PRIORITY VIDEOS (Download these first)
+# ===========================================
+#
+# IMPORTANT: Please update these URLs with real IFSC videos!
+#
+# To find videos:
+# 1. Go to: https://www.youtube.com/@sportclimbing (IFSC Official Channel)
+# 2. Search for: "speed climbing final" or "speed climbing world cup"
+# 3. Look for videos with dual-lane races (two climbers side by side)
+# 4. Copy the video URL and paste below
+#
+# Example search queries:
+# - "IFSC Speed Climbing World Cup 2024"
+# - "Speed Climbing Paris 2024 Olympics"
+# - "IFSC Speed Final 2023"
+# - "Speed Climbing World Championships"
+#
+# ===========================================
+
+priority:
+  # EXAMPLE 1: Replace with actual Paris 2024 Olympics video
+  - url: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID_HERE"
+    title: "Men's Speed Final - Paris 2024 Olympics"
+    description: "High quality dual-lane race, Olympic standard camera angles"
+    expected_duration: "~2-3 minutes"
+    dual_race: true
+    athletes: "World record attempts"
+    notes: "Best quality footage, IFSC standard wall, clear start beep"
+
+  # EXAMPLE 2: Replace with actual Paris 2024 Olympics video
+  - url: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID_HERE"
+    title: "Women's Speed Final - Paris 2024 Olympics"
+    description: "Ola Miroslaw and other top athletes"
+    expected_duration: "~2-3 minutes"
+    dual_race: true
+    athletes: "Top female climbers"
+    notes: "Clear wall markings, good for calibration testing"
+
+# ===========================================
+# WORLD CUP VIDEOS
+# ===========================================
+
+world_cup:
+  # 2024 World Cup Finals
+  - url: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID_1"
+    title: "IFSC World Cup Final 2024"
+    description: "Various dual-lane races"
+    dual_race: true
+    notes: "Check IFSC official channel for latest videos"
+
+  # 2023 World Championships
+  - url: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID_2"
+    title: "IFSC World Championships 2023 - Speed Final"
+    description: "Championship level competition"
+    dual_race: true
+    notes: "May have different camera angles"
+
+# ===========================================
+# TRAINING / TEST VIDEOS
+# ===========================================
+
+training:
+  # Single climber for initial testing
+  - url: "https://www.youtube.com/watch?v=YOUR_VIDEO_ID_3"
+    title: "Single climber training video"
+    description: "Use for single-lane validation"
+    dual_race: false
+    notes: "Good for testing pose estimation accuracy"
+
+# ===========================================
+# DOWNLOAD INSTRUCTIONS
+# ===========================================
+#
+# To download videos from this config:
+#
+# 1. Using Python:
+#    ```python
+#    from src.utils.youtube_downloader import IFSCVideoDownloader
+#    import yaml
+#
+#    with open('configs/youtube_urls.yaml') as f:
+#        config = yaml.safe_load(f)
+#
+#    downloader = IFSCVideoDownloader()
+#    for video in config['priority']:
+#        downloader.download(video['url'], filename=video['title'])
+#    ```
+#
+# 2. Using command line:
+#    ```bash
+#    python -m src.utils.youtube_downloader "URL" 720p "output_name"
+#    ```
+#
+# 3. Download all priority videos:
+#    ```bash
+#    python scripts/download_all_videos.py
+#    ```
+#
+# ===========================================
+# VIDEO QUALITY NOTES
+# ===========================================
+#
+# Recommended quality: 720p
+# - Good balance of file size and detail
+# - Sufficient for pose estimation
+# - 30 FPS minimum, 60 FPS preferred
+#
+# For research/publication: 1080p
+# - Better for manual annotation verification
+# - Clearer wall texture and hold identification
+#
+# ===========================================
+# COPYRIGHT NOTICE
+# ===========================================
+#
+# All videos are property of IFSC and respective content creators.
+# Downloaded videos should be used only for:
+# - Research purposes
+# - Educational analysis
+# - Non-commercial applications
+#
+# Do NOT redistribute downloaded videos.
+# Always credit the original source.
