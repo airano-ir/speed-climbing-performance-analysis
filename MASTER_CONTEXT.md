@@ -61,11 +61,12 @@
 
 - **نکته مهم**: کاربر باید URL واقعی ویدئوهای IFSC را در `configs/youtube_urls.yaml` قرار دهد
 
-#### 3. Dual-Lane Detection Module
+#### 3. Dual-Lane Detection Module ✅
 - **تاریخ**: 2025-11-12
+- **وضعیت**: COMPLETED & TESTED
 - **فایل‌های ایجاد شده**:
-  - `src/phase1_pose_estimation/dual_lane_detector.py` - ماژول اصلی
-  - `tests/test_dual_lane_detector.py` - Unit tests (16 test cases)
+  - `src/phase1_pose_estimation/dual_lane_detector.py` - ماژول اصلی (823 lines)
+  - `tests/test_dual_lane_detector.py` - Unit tests (17 test cases)
 
 - **کلاس‌های اصلی**:
   - `LaneBoundary`: مرز بین دو لاین
@@ -79,7 +80,7 @@
      - روش "motion": motion-based (future)
   2. Mask کردن هر لاین
   3. BlazePose extraction جداگانه برای هر لاین
-  4. Validation که هر pose در لاین صحیح است
+  4. Validation که هر pose در لاین صحیح است (با COM)
   5. Kalman smoothing برای boundary (اختیاری)
 
 - **قابلیت‌ها**:
@@ -88,32 +89,39 @@
   - Visualization با `visualize_dual_lane()`
   - CLI interface: `python dual_lane_detector.py video.mp4 output.mp4`
 
-- **تست‌ها**: 16 unit test (در انتظار نصب opencv برای اجرا)
+- **تست‌ها**: ✅ 17/17 unit tests PASSING (100%)
+  - LaneBoundary: 6 tests
+  - DualLaneDetector: 8 tests
+  - Visualization: 1 test
+  - Integration: 2 tests
 
 #### 4. Git Commits
-- **Commit 1** (dd66cc9):
+- **Commit 1** (dd66cc9): YouTube video downloader
   ```
   feat: add YouTube video downloader and configuration
-
-  - Created IFSCVideoDownloader class with yt-dlp integration
-  - Added youtube_urls.yaml configuration file
-  - Created download_priority_videos.py script
-  - Added HOW_TO_FIND_VIDEOS.md guide
-  - Fixed Windows console encoding issues
-
   Files: 9 changed, 933 insertions(+)
+  ```
+
+- **Commit 2** (d2e7942): Dual-lane detection system
+  ```
+  feat: add dual-lane detection system and master context
+  Files: 5 changed, 1367 insertions(+)
+  ```
+
+- **Commit 3** (c47021c): Bug fixes and test passing
+  ```
+  fix: resolve dual-lane detector test failures
+  - Fixed COM access (use get_keypoint() not .com attribute)
+  - Fixed numpy deprecation warnings
+  - All 17 tests passing
+  Files: 5 changed, 16 insertions(+), 8 deletions(-)
   ```
 
 ---
 
 ## 🔧 کارهای در حال انجام (In Progress)
 
-### پیاده‌سازی Dual-Lane Detection
-- ✅ کد اصلی نوشته شد
-- ✅ Unit tests نوشته شد
-- ⏳ نصب opencv و mediapipe (در حال انجام)
-- ⏳ اجرای تست‌ها و debug
-- ⏳ Commit نهایی
+**هیچ کار در حال انجام نیست** - آماده برای مرحله بعد!
 
 ---
 
@@ -358,10 +366,12 @@ tree -L 2 src/
 
 ## 🐛 مشکلات شناخته شده (Known Issues)
 
-1. **FFmpeg not installed**: audio analysis غیرفعال است
-2. **YouTube video URLs**: placeholders هستند، نیاز به URLهای واقعی
-3. **Windows encoding**: باید از ASCII استفاده کنیم نه Unicode emojis
-4. **opencv installation**: در حال نصب (ممکن است چند دقیقه طول بکشد)
+1. ~~**FFmpeg not installed**~~: ✅ نصب شده توسط کاربر
+2. **YouTube video URLs**: placeholders هستند، کاربر باید URLهای واقعی IFSC وارد کند
+3. ~~**Windows encoding**~~: ✅ حل شد - از ASCII استفاده می‌کنیم
+4. ~~**opencv installation**~~: ✅ نصب شد و تست شد
+5. ~~**mediapipe installation**~~: ✅ نصب شد و تست شد
+6. **MediaPipe cleanup warning**: warning جزئی در __del__ (غیرمهم)
 
 ---
 
@@ -387,12 +397,12 @@ tree -L 2 src/
 
 ```
 Phase 1: Core Infrastructure
-[████████░░░░░░░░░░░░] 40%
+[████████████░░░░░░░░] 60%
 
 ├─ Dependencies Setup         [████████████████████] 100% ✅
 ├─ Video Downloader          [████████████████████] 100% ✅
-├─ Dual-Lane Detection       [████████████████░░░░]  80% ⏳
-├─ Race Start Detection      [░░░░░░░░░░░░░░░░░░░░]   0% ⏸️
+├─ Dual-Lane Detection       [████████████████████] 100% ✅ (17/17 tests pass)
+├─ Race Start Detection      [░░░░░░░░░░░░░░░░░░░░]   0% ⏸️ NEXT
 ├─ Race Finish Detection     [░░░░░░░░░░░░░░░░░░░░]   0% ⏸️
 └─ Camera Calibration        [░░░░░░░░░░░░░░░░░░░░]   0% ⏸️
 
@@ -407,14 +417,15 @@ Phase 3: Integration & Testing
 
 ## 🔄 آخرین به‌روزرسانی (Last Update Log)
 
-**2025-11-12 09:00 UTC**
+**2025-11-12 09:30 UTC**
 - ✅ Created MASTER_CONTEXT.md
-- ✅ Committed YouTube downloader (commit dd66cc9)
-- ✅ Created dual_lane_detector.py
-- ✅ Created test_dual_lane_detector.py
-- ⏳ Installing opencv + mediapipe + pandas
-- ⏳ Waiting to run tests
-- ⏳ Next: Commit dual-lane detector
+- ✅ Committed YouTube downloader (dd66cc9)
+- ✅ Committed dual-lane detector (d2e7942)
+- ✅ User installed FFmpeg + MediaPipe
+- ✅ Fixed test failures (c47021c)
+- ✅ All 17 tests passing (100%)
+- ✅ Dual-Lane Detection module COMPLETE
+- 🎯 Next: Race Start Detection (Audio + Motion)
 
 ---
 
