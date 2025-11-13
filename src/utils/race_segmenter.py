@@ -100,26 +100,96 @@ class RaceSegmenter:
         self,
         video_path: Path,
         audio_path: Optional[Path] = None,
-        max_search_time: float = None
+        max_search_time: float = None,
+        max_starts: Optional[int] = None,
+        min_gap_between_races: float = 30.0
     ) -> List[RaceStartResult]:
         """
-        Detect all race starts in a video.
+        Detect all race starts in a video using sliding window approach.
 
         Args:
             video_path: Path to video file
             audio_path: Path to audio file
             max_search_time: Maximum time to search (None = entire video)
+            max_starts: Maximum number of starts to detect (None = all)
+            min_gap_between_races: Minimum gap between consecutive races (seconds)
 
         Returns:
             List of RaceStartResult
         """
-        # For now, detect single start
-        # TODO: Implement sliding window to detect multiple starts
-        result = self.start_detector.detect_from_video(video_path, audio_path)
+        # Get video duration
+        cap = cv2.VideoCapture(str(video_path))
+        fps = cap.get(cv2.CAP_PROP_FPS)
+        total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        duration = total_frames / fps
+        cap.release()
 
-        if result:
-            return [result]
-        return []
+        if max_search_time:
+            duration = min(duration, max_search_time)
+
+        starts = []
+        current_time = 0.0
+        search_window_size = 60.0  # Search 60 seconds at a time
+
+        print(f"Searching for race starts using sliding window approach...")
+        print(f"  Video duration: {duration:.1f}s")
+        print(f"  Min gap between races: {min_gap_between_races}s")
+
+        while current_time < duration:
+            if max_starts and len(starts) >= max_starts:
+                print(f"  Reached max starts limit ({max_starts})")
+                break
+
+            # Search in current window
+            window_end = min(current_time + search_window_size, duration)
+
+            print(f"  Searching window: {current_time:.1f}s - {window_end:.1f}s")
+
+            # Use motion detector for this window
+            result = self.start_detector.motion_detector.detect_start_from_video(
+                video_path,
+                max_search_frames=int(search_window_size * fps),
+                skip_frames=int(current_time * fps)
+            )
+
+            if result:
+                frame_id, timestamp, confidence = result
+
+                # Check if this is far enough from previous starts
+                is_new_race = True
+                for prev_start in starts:
+                    if abs(timestamp - prev_start.timestamp) < min_gap_between_races:
+                        is_new_race = False
+                        print(f"    Skipped: Too close to previous race (gap: {abs(timestamp - prev_start.timestamp):.1f}s)")
+                        break
+
+                if is_new_race:
+                    start_result = RaceStartResult(
+                        frame_id=frame_id,
+                        timestamp=timestamp,
+                        confidence=confidence,
+                        method='motion',
+                        motion_confidence=confidence
+                    )
+                    starts.append(start_result)
+                    print(f"    Found race start #{len(starts)} at {timestamp:.1f}s (confidence: {confidence:.2f})")
+
+                    # Jump past this race
+                    current_time = timestamp + min_gap_between_races
+                else:
+                    # Move forward a bit
+                    current_time += search_window_size / 2
+            else:
+                # No start found in this window, move to next
+                print(f"    No start found in this window")
+                current_time += search_window_size / 2
+
+            # Safety check: don't get stuck
+            if current_time >= duration - 5.0:  # Stop if less than 5s remaining
+                break
+
+        print(f"\nTotal race starts found: {len(starts)}")
+        return starts
 
     def extract_segment(
         self,
@@ -188,7 +258,8 @@ class RaceSegmenter:
         output_dir: Path,
         audio_path: Optional[Path] = None,
         max_races: Optional[int] = None,
-        save_video: bool = True
+        save_video: bool = True,
+        min_gap_between_races: float = 30.0
     ) -> List[RaceSegment]:
         """
         Segment video into individual race clips.
@@ -226,7 +297,12 @@ class RaceSegmenter:
 
         # Detect starts
         print("\nDetecting race starts...")
-        starts = self.detect_all_starts(video_path, audio_path)
+        starts = self.detect_all_starts(
+            video_path,
+            audio_path,
+            max_starts=max_races,
+            min_gap_between_races=min_gap_between_races
+        )
 
         print(f"Found {len(starts)} race start(s)")
 
@@ -386,6 +462,12 @@ if __name__ == '__main__':
                        help='Buffer before start (seconds)')
     parser.add_argument('--buffer-after', type=float, default=1.0,
                        help='Buffer after finish (seconds)')
+    parser.add_argument('--min-duration', type=float, default=3.0,
+                       help='Minimum race duration (seconds)')
+    parser.add_argument('--max-duration', type=float, default=15.0,
+                       help='Maximum race duration (seconds)')
+    parser.add_argument('--min-gap', type=float, default=30.0,
+                       help='Minimum gap between races (seconds)')
 
     args = parser.parse_args()
 
@@ -394,7 +476,9 @@ if __name__ == '__main__':
         start_detection_method=args.start_method,
         finish_detection_method=args.finish_method,
         buffer_before_sec=args.buffer_before,
-        buffer_after_sec=args.buffer_after
+        buffer_after_sec=args.buffer_after,
+        min_race_duration=args.min_duration,
+        max_race_duration=args.max_duration
     )
 
     # Segment video
@@ -403,7 +487,8 @@ if __name__ == '__main__':
         Path(args.output_dir),
         audio_path=Path(args.audio) if args.audio else None,
         max_races=args.max_races,
-        save_video=not args.metadata_only
+        save_video=not args.metadata_only,
+        min_gap_between_races=args.min_gap
     )
 
     print(f"\nSuccessfully extracted {len(segments)} race(s)")

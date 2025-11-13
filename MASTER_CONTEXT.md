@@ -139,11 +139,12 @@
 
 #### 6. Race Segmentation System ✅ (Priority 1)
 - **تاریخ**: 2025-11-13
-- **وضعیت**: COMPLETED
+- **وضعیت**: COMPLETED + IMPROVED (sliding window)
 - **فایل‌های ایجاد شده**:
   - `src/phase1_pose_estimation/race_start_detector.py` (490 lines)
   - `src/phase1_pose_estimation/race_finish_detector.py` (460 lines)
-  - `src/utils/race_segmenter.py` (380 lines)
+  - `src/utils/race_segmenter.py` (495 lines) - Updated with sliding window
+  - `docs/USER_TESTING_GUIDE.md` - راهنمای جامع تست برای کاربر (Farsi+English)
 
 **قابلیت‌های race_start_detector.py**:
 - `AudioBeepDetector`: تشخیص صدای بوق شروع (800-1200 Hz) با librosa + FFT
@@ -161,13 +162,21 @@
 
 **قابلیت‌های race_segmenter.py**:
 - Integration start + finish detectors
+- **Sliding window approach** برای تشخیص چند مسابقه (multi-race detection) ✅
 - استخراج race clips از ویدئوهای طولانی (1-3 ساعت)
 - تولید metadata JSON
-- Validation (min/max duration)
+- Validation (min/max duration) - قابل تنظیم
 - Buffer zones قابل تنظیم
-- CLI interface
+- min_gap_between_races برای جلوگیری از duplicates
+- CLI interface با پارامترهای کامل
 
 **خروجی**: از ویدئو 2 ساعته → 20-30 کلیپ مسابقه (هر کدام 5-15 ثانیه)
+
+**Improvements 2025-11-13**:
+- ✅ Sliding window (60s windows) برای multi-race detection
+- ✅ CLI args: --min-duration, --max-duration, --min-gap
+- ✅ False positive filtering با duration validation
+- ✅ Tested: Successfully extracts multiple races from compilation videos
 
 #### 7. Git Commits
 - **Commit 1** (dd66cc9): YouTube video downloader
@@ -233,23 +242,37 @@ python src/phase1_pose_estimation/race_start_detector.py video.mp4 --method fusi
 python src/phase1_pose_estimation/race_finish_detector.py video.mp4 --lane left
 ```
 
-#### Task 1.3: Race Segmenter ✅
-**فایل**: `src/utils/race_segmenter.py` (380 lines)
+#### Task 1.3: Race Segmenter ✅ + Sliding Window ✅
+**فایل**: `src/utils/race_segmenter.py` (495 lines) - Updated 2025-11-13
 **قابلیت‌ها**:
 - Integration کامل start + finish detectors
+- **Sliding window approach** (60s windows) برای multi-race detection ✅
 - اسکن و استخراج تمام مسابقات از ویدئو طولانی
 - ذخیره در `data/race_segments/`
 - تولید metadata JSON برای هر race
-- Validation: min/max duration (3-15 seconds configurable)
-- Buffer zones: قبل و بعد از race
+- Validation: min/max duration - **fully configurable via CLI** ✅
+- Buffer zones: قبل و بعد از race - configurable
+- min_gap_between_races: فاصله minimum بین مسابقات (جلوگیری از duplicates)
 
 **CLI Usage**:
 ```bash
+# Basic usage
 python src/utils/race_segmenter.py "data/raw_videos/video.mp4" \
   --output-dir "data/race_segments" \
   --max-races 5 \
   --buffer-before 1.0 \
   --buffer-after 1.0
+
+# Advanced: با تنظیم کامل thresholds (برای compilation videos)
+python src/utils/race_segmenter.py "data/raw_videos/video.mp4" \
+  --output-dir "data/race_segments" \
+  --max-races 10 \
+  --start-method motion \
+  --finish-method visual \
+  --min-duration 2.0 \
+  --max-duration 20.0 \
+  --min-gap 20.0 \
+  --metadata-only
 ```
 
 **خروجی**: از Seoul_2024 (2.1 ساعت) → 20-30 کلیپ مسابقه (5-15 ثانیه هر کدام)
