@@ -1,7 +1,7 @@
 # MASTER CONTEXT - Speed Climbing Performance Analysis
 # سند راهنمای کامل پروژه تحلیل سنگنوردی سرعتی
 
-**Last Updated**: 2025-11-12
+**Last Updated**: 2025-11-13
 **Purpose**: این سند برای ادامه کار در صورت قطع شدن session یا شروع مجدد در conversation جدید
 **Language**: Persian (Farsi) + English
 
@@ -95,7 +95,49 @@
   - Visualization: 1 test
   - Integration: 2 tests
 
-#### 4. Git Commits
+#### 4. Video Dataset Downloaded ✅
+- **تاریخ**: 2025-11-13
+- **مکان**: `data/raw_videos/`
+- **تعداد**: 11 ویدئو، حجم کل: ~4.3 GB
+
+**ویدئوهای اصلی (Competition Finals - Dual-lane)**:
+1. `Speed_finals_Zilina_2025.mp4` - 3 ساعت (1280x720@30fps)
+2. `Speed_finals_Seoul_2024.mp4` - 2.1 ساعت (1280x720@30fps)
+3. `Speed_finals_Villars_2024.mp4` - 2.1 ساعت (1280x720@30fps)
+4. `Speed_finals_Innsbruck_2024.mp4` - 1.6 ساعت (1280x720@30fps)
+5. `Speed_finals_Chamonix_2024.mp4` - 1.6 ساعت (1280x720@30fps)
+
+**ویدئوهای کمکی**:
+- 1 ویدئوی compilation (10 fastest times)
+- 5 کلیپ کوتاه social media (12-24 ثانیه)
+
+**فایل‌های همراه**:
+- WAV audio files (برای race start detection)
+- JSON metadata files
+- YouTube info files
+
+**چالش‌ها شناسایی شده**:
+- ✅ ویدئوها بسیار طولانی (1.6-3 ساعت) - نیاز به race segmentation
+- ✅ دوربین حرکت می‌کند (camera motion) - نیاز به adaptive calibration
+- ✅ فرمت‌های مختلف (dual/single climber) - نیاز به auto-detection
+
+#### 5. IFSC Standards Documentation ✅
+- **تاریخ**: 2025-11-13
+- **فایل**: `docs/IFSC_Speed_Licence_Rules.pdf`
+- **محتوا**:
+  - 20 گیره استاندارد با موقعیت‌های دقیق (grid coordinates)
+  - ابعاد دیوار: 15m ارتفاع × 3m عرض × 5° overhang
+  - فاصله گیره‌ها: 125mm (perfect برای calibration!)
+  - نقشه کامل panel grid system
+
+**استفاده استراتژیک**:
+- کالیبراسیون خودکار با hold spacing
+- Validation pose estimation با موقعیت‌های شناخته‌شده
+- Hold-by-hold performance metrics
+- Path optimization analysis
+- حل مشکل camera motion با re-calibration
+
+#### 6. Git Commits
 - **Commit 1** (dd66cc9): YouTube video downloader
   ```
   feat: add YouTube video downloader and configuration
@@ -117,6 +159,18 @@
   Files: 5 changed, 16 insertions(+), 8 deletions(-)
   ```
 
+- **Commit 4** (5019acc): Enhanced YouTube downloader
+  ```
+  feat: enhance YouTube downloader to keep video files after audio extraction
+  Files: Updated youtube_downloader.py
+  ```
+
+- **Commit 5** (dd3370d): Documentation update
+  ```
+  docs: update MASTER_CONTEXT with completed dual-lane detector
+  Files: MASTER_CONTEXT.md updated
+  ```
+
 ---
 
 ## 🔧 کارهای در حال انجام (In Progress)
@@ -125,87 +179,167 @@
 
 ---
 
-## 📝 کارهای آینده (Pending Tasks)
+## 📝 برنامه پیشنهادی پیاده‌سازی (Implementation Roadmap)
 
-### 1. Race Start Detection (Audio + Motion)
-**Priority**: High
-**Dependencies**: FFmpeg (optional), librosa
+### Priority 1: Race Segmentation System 🎯 CURRENT
+**هدف**: استخراج مسابقات 5-10 ثانیه‌ای از ویدئوهای 2-3 ساعته
 
-**خروجی مورد انتظار**:
-- فایل: `src/phase1_pose_estimation/race_start_detector.py`
-- قابلیت تشخیص:
-  - Audio: تشخیص صدای بوق شروع با librosa
-  - Motion: تشخیص حرکت ناگهانی climbers
-  - Fusion: ترکیب دو روش برای دقت بالاتر
-- خروجی: frame_id و timestamp دقیق شروع مسابقه
+#### Task 1.1: Race Start Detection
+**فایل**: `src/phase1_pose_estimation/race_start_detector.py`
+**قابلیت‌ها**:
+- Audio-based: تشخیص صدای بوق شروع با librosa + FFT analysis
+- Motion-based: تشخیص حرکت ناگهانی climbers با optical flow
+- Fusion: ترکیب هر دو روش برای دقت بالا
+- خروجی: frame_id و timestamp دقیق شروع
 
-### 2. Race Finish Detection (Top Touch)
-**Priority**: High
+**Dependencies**: librosa, soundfile, opencv (optical flow)
 
-**خروجی مورد انتظار**:
-- فایل: `src/phase1_pose_estimation/race_finish_detector.py`
-- قابلیت تشخیص:
-  - تشخیص دست climber رسیدن به دکمه بالایی (hold 20)
-  - محاسبه timestamp دقیق finish
-  - تشخیص winner (کدام climber زودتر finish کرد)
+#### Task 1.2: Race Finish Detection
+**فایل**: `src/phase1_pose_estimation/race_finish_detector.py`
+**قابلیت‌ها**:
+- تشخیص دست رسیدن به دکمه بالایی (hold 20)
+- محاسبه timestamp دقیق finish
+- تشخیص winner (کدام climber اول finish کرد)
+- Validation با top boundary detection
 
-### 3. Time-Series Plots
-**Priority**: Medium
-**Dependencies**: matplotlib, seaborn
+#### Task 1.3: Race Segmenter
+**فایل**: `src/utils/race_segmenter.py`
+**قابلیت‌ها**:
+- اسکن کل ویدئو و پیدا کردن تمام مسابقات
+- استخراج segment های start→finish
+- ذخیره در `data/race_segments/`
+- تولید metadata برای هر race
+- CLI: `python race_segmenter.py video.mp4 --output-dir data/race_segments/`
 
-**خروجی مورد انتظار**:
-- فایل: `src/visualization/time_series_plots.py`
-- نمودارها:
-  - Vertical position vs Time
-  - Horizontal position vs Time
-  - Velocity vs Time
-  - مقایسه همزمان دو climber (dual plot)
+**خروجی**: از Seoul_2024 (2.1 ساعت) → 20-30 کلیپ مسابقه
 
-### 4. CSV Export (Race Period Only)
-**Priority**: Medium
+---
 
-**خروجی مورد انتظار**:
-- فایل: `src/utils/csv_exporter.py`
-- فیلتر کردن فقط دوره مسابقه (از start تا finish)
-- Export جداگانه برای هر climber
-- فیلدها: frame_id, timestamp, COM_x, COM_y, velocity, acceleration
+### Priority 2: IFSC Standards Integration 🔧
+**هدف**: استفاده از گیره‌های استاندارد برای calibration و validation
 
-### 5. Comparative Report
-**Priority**: Medium
+#### Task 2.1: IFSC Route Map Parser
+**فایل**: `src/calibration/ifsc_route_map.py`
+**قابلیت‌ها**:
+- پارس PDF و استخراج موقعیت 20 گیره
+- تولید dictionary: `{hold_num: (panel, grid_x, grid_y, meter_x, meter_y)}`
+- ذخیره در `configs/ifsc_route_coordinates.json`
+- محاسبه pixel coordinates از meter coordinates
 
-**خروجی مورد انتظار**:
-- فایل: `src/analysis/comparative_report.py`
-- گزارش شامل:
-  - Winner determination
-  - Time comparison
-  - Path efficiency comparison
-  - Movement pattern analysis
-- خروجی: PDF یا HTML
+#### Task 2.2: Hold Detector
+**فایل**: `src/phase1_pose_estimation/hold_detector.py`
+**قابلیت‌ها**:
+- Template matching برای گیره‌های قرمز IFSC
+- Color-based detection (HSV thresholding)
+- تطبیق با نقشه استاندارد (match detected → expected)
+- خروجی: لیست detected holds در هر frame با confidence
 
-### 6. Camera Calibration (IFSC Standard)
-**Priority**: High
+#### Task 2.3: Camera Motion Detector
+**فایل**: `src/utils/camera_motion_detector.py`
+**قابلیت‌ها**:
+- تشخیص خودکار: STATIC یا MOVING camera
+- Optical flow analysis روی background
+- Feature tracking stability metric
+- اضافه flag به metadata: `"camera_type": "static"|"moving"`
 
-**خروجی مورد انتظار**:
-- فایل: `src/calibration/ifsc_calibration.py`
-- مبدل pixel → meter بر اساس:
-  - ارتفاع دیوار: 15m
-  - عرض هر لاین: 3m
-  - 20 hold استاندارد IFSC
-- Homography matrix برای perspective correction
+---
 
-### 7. Integration Testing
-**Priority**: High
+### Priority 3: Smart Calibration System 📐
+**هدف**: کالیبراسیون هوشمند برای هر دو نوع دوربین
 
-**خروجی مورد انتظار**:
-- فایل: `tests/test_integration.py`
-- تست end-to-end pipeline
-- تست با ویدئوهای واقعی IFSC
+#### Task 3.1: Static Camera Calibration
+**فایل**: `src/calibration/static_camera_calibration.py`
+**قابلیت‌ها**:
+- Homography matrix از detected holds
+- One-time calibration (first frame)
+- Pixel → meter converter با دقت بالا
+- Perspective correction
 
-### 8. Notebook جدید
-**خروجی مورد انتظار**:
-- فایل: `notebooks/02_dual_climber_race_analysis.ipynb`
+#### Task 3.2: Moving Camera Calibration
+**فایل**: `src/calibration/moving_camera_calibration.py`
+**قابلیت‌ها**:
+- Adaptive per-frame calibration
+- استفاده از visible holds برای re-calibration
+- Normalized coordinates (0-1) fallback
+- Tracking scale changes
+
+#### Task 3.3: Unified Calibration Interface
+**فایل**: `src/calibration/ifsc_calibration.py`
+**قابلیت‌ها**:
+- Auto-detect camera type و انتخاب strategy
+- Factory pattern: `create_calibrator(camera_type)`
+- Integration با hold detector
+- خروجی: `CalibrationResult` با pixel↔meter converters
+
+---
+
+### Priority 4: Analysis & Reporting 📊
+**هدف**: تحلیل performance و تولید گزارش‌های مقایسه‌ای
+
+#### Task 4.1: Performance Metrics
+**فایل**: `src/analysis/performance_metrics.py`
+**متریک‌ها**:
+- Hold-by-hold timing (زمان رسیدن به هر گیره 1-20)
+- Velocity profile (speed vs time/height)
+- Acceleration peaks
+- Path efficiency (deviation از خط مستقیم)
+- Movement smoothness (jerk analysis)
+
+#### Task 4.2: Time-Series Visualization
+**فایل**: `src/visualization/time_series_plots.py`
+**نمودارها**:
+- Vertical position vs Time
+- Horizontal position vs Time
+- Velocity vs Time
+- Side-by-side dual climber comparison
+- Animated trajectory plot
+
+#### Task 4.3: CSV Exporter
+**فایل**: `src/utils/csv_exporter.py`
+**قابلیت‌ها**:
+- فیلتر race period only (start→finish)
+- Export per-climber
+- فیلدها: frame_id, timestamp, COM_x, COM_y, velocity, acceleration, current_hold
+- Support برای metric vs pixel coordinates
+
+#### Task 4.4: Comparative Report Generator
+**فایل**: `src/analysis/comparative_report.py`
+**گزارش شامل**:
+- Winner determination
+- Time comparison (overall + per-section)
+- Path efficiency comparison
+- Hold-by-hold comparison
+- Statistical summary
+- خروجی: HTML report با charts
+
+---
+
+### Priority 5: Integration & Testing 🧪
+**هدف**: pipeline کامل end-to-end
+
+#### Task 5.1: Integration Pipeline
+**فایل**: `src/phase1_pose_estimation/pipeline.py`
+**قابلیت‌ها**:
+- یکپارچه‌سازی تمام components
+- Auto-workflow: video → races → poses → calibration → metrics → report
+- Progress tracking
+- Error handling و recovery
+- CLI interface
+
+#### Task 5.2: End-to-End Tests
+**فایل**: `tests/test_integration.py`
+**تست‌ها**:
+- Full pipeline با sample video
+- Validation با ground truth times
+- Performance benchmarks
+
+#### Task 5.3: Demo Notebook
+**فایل**: `notebooks/02_dual_climber_race_analysis.ipynb`
+**محتوا**:
+- مثال کامل از دانلود تا گزارش
 - Google Colab compatible
-- مثال کامل از دانلود تا گزارش نهایی
+- Interactive visualizations
+- مقایسه 2 climber واقعی
 
 ---
 
@@ -214,17 +348,26 @@
 ```
 speed_climbing_analysis/
 ├── data/
-│   ├── raw_videos/           # محل ذخیره ویدئوهای دانلود شده
-│   ├── processed/            # خروجی‌های پردازش
-│   └── annotations/          # برچسب‌های دستی (اگر باشد)
+│   ├── raw_videos/                      # ✅ ویدئوهای دانلود شده (11 videos, 4.3GB)
+│   │   ├── *.mp4                        # (gitignored - too large)
+│   │   ├── *.wav                        # Audio files (gitignored)
+│   │   ├── *_metadata.json              # (tracked - small)
+│   │   └── *.info.json                  # YouTube metadata (tracked)
+│   │
+│   ├── race_segments/                   # ⏳ کلیپ‌های استخراج شده (5-10 sec each)
+│   ├── processed/                       # خروجی‌های پردازش (gitignored)
+│   ├── calibration/                     # داده‌های calibration (gitignored)
+│   └── annotations/                     # برچسب‌های دستی (اگر باشد)
 │
 ├── src/
 │   ├── phase1_pose_estimation/
 │   │   ├── video_processor.py
 │   │   ├── blazepose_extractor.py
-│   │   ├── dual_lane_detector.py        # ✅ NEW
-│   │   ├── race_start_detector.py       # ⏳ TODO
-│   │   └── race_finish_detector.py      # ⏳ TODO
+│   │   ├── dual_lane_detector.py        # ✅ COMPLETE (823 lines, 17 tests)
+│   │   ├── race_start_detector.py       # 🎯 PRIORITY 1 (in progress)
+│   │   ├── race_finish_detector.py      # 🎯 PRIORITY 1
+│   │   ├── hold_detector.py             # ⏳ PRIORITY 2
+│   │   └── pipeline.py                  # ⏳ PRIORITY 5
 │   │
 │   ├── phase2_features/
 │   │   ├── path_entropy.py
@@ -232,70 +375,92 @@ speed_climbing_analysis/
 │   │   └── com_tracker.py
 │   │
 │   ├── calibration/
-│   │   └── ifsc_calibration.py          # ⏳ TODO
+│   │   ├── ifsc_route_map.py            # ⏳ PRIORITY 2
+│   │   ├── static_camera_calibration.py # ⏳ PRIORITY 3
+│   │   ├── moving_camera_calibration.py # ⏳ PRIORITY 3
+│   │   └── ifsc_calibration.py          # ⏳ PRIORITY 3 (unified)
 │   │
 │   ├── utils/
-│   │   ├── youtube_downloader.py        # ✅ NEW
-│   │   └── csv_exporter.py              # ⏳ TODO
+│   │   ├── youtube_downloader.py        # ✅ COMPLETE
+│   │   ├── race_segmenter.py            # 🎯 PRIORITY 1
+│   │   ├── camera_motion_detector.py    # ⏳ PRIORITY 2
+│   │   └── csv_exporter.py              # ⏳ PRIORITY 4
 │   │
 │   ├── visualization/
 │   │   ├── overlay.py
-│   │   ├── time_series_plots.py         # ⏳ TODO
+│   │   ├── time_series_plots.py         # ⏳ PRIORITY 4
 │   │   └── dashboard.py
 │   │
 │   └── analysis/
-│       └── comparative_report.py        # ⏳ TODO
+│       ├── performance_metrics.py       # ⏳ PRIORITY 4
+│       └── comparative_report.py        # ⏳ PRIORITY 4
 │
 ├── configs/
 │   ├── keypoints.json
 │   ├── camera_calibration.json
-│   └── youtube_urls.yaml                # ✅ NEW (needs user URLs)
+│   ├── youtube_urls.yaml                # ✅ (user filled)
+│   └── ifsc_route_coordinates.json      # ⏳ PRIORITY 2 (from PDF)
 │
 ├── scripts/
-│   └── download_priority_videos.py      # ✅ NEW
+│   └── download_priority_videos.py      # ✅ COMPLETE
 │
 ├── tests/
-│   ├── test_dual_lane_detector.py       # ✅ NEW (16 tests)
-│   └── test_integration.py              # ⏳ TODO
+│   ├── test_dual_lane_detector.py       # ✅ COMPLETE (17 tests passing)
+│   ├── test_race_detector.py            # ⏳ PRIORITY 1
+│   ├── test_calibration.py              # ⏳ PRIORITY 3
+│   └── test_integration.py              # ⏳ PRIORITY 5
 │
 ├── notebooks/
 │   ├── 01_phase1_pose_estimation.ipynb
-│   └── 02_dual_climber_race_analysis.ipynb  # ⏳ TODO
+│   └── 02_dual_climber_race_analysis.ipynb  # ⏳ PRIORITY 5
+│
+├── docs/                                # ✅ NEW
+│   ├── IFSC_Speed_Licence_Rules.pdf     # ✅ (moved from Desktop)
+│   └── implementation_notes.md          # Technical decisions
 │
 ├── requirements.txt                     # Original
-├── requirements_phase1_extended.txt     # ✅ NEW
-├── SETUP_FFMPEG.md                      # ✅ NEW
-├── HOW_TO_FIND_VIDEOS.md               # ✅ NEW
+├── requirements_phase1_extended.txt     # ✅ Extended deps
+├── SETUP_FFMPEG.md                      # ✅ FFmpeg guide
+├── HOW_TO_FIND_VIDEOS.md               # ✅ Video search guide
 ├── MASTER_CONTEXT.md                    # ✅ THIS FILE
+├── .gitignore                           # ✅ Updated for large files
 ├── README.md
-└── prompt.md                            # System architecture
+└── prompt.md                            # System architecture (1032 lines)
 ```
 
 ---
 
 ## 🎯 استراتژی توسعه (Development Strategy)
 
-### Phase 1: Core Infrastructure (Current - ~50% Complete)
-1. ✅ Dependencies setup
-2. ✅ Video downloader
-3. ✅ Dual-lane detection
-4. ⏳ Race start/finish detection
-5. ⏳ Camera calibration
+### Phase 1: Core Infrastructure (~65% Complete)
+1. ✅ Dependencies setup (100%)
+2. ✅ Video downloader (100%)
+3. ✅ Video dataset collected (11 videos)
+4. ✅ IFSC standards documented (PDF)
+5. ✅ Dual-lane detection (100% - 17/17 tests)
+6. 🎯 Race start/finish detection (0% - CURRENT)
+7. ⏳ IFSC route map parser (0%)
+8. ⏳ Hold detector (0%)
+9. ⏳ Camera motion detector (0%)
+10. ⏳ Calibration system (0%)
 
 ### Phase 2: Analysis & Export (~0% Complete)
-1. ⏳ Time-series visualization
-2. ⏳ CSV export (race period only)
-3. ⏳ Comparative reports
+1. ⏳ Performance metrics calculator
+2. ⏳ Time-series visualization
+3. ⏳ CSV export (race period only)
+4. ⏳ Comparative reports
 
 ### Phase 3: Integration & Testing (~0% Complete)
-1. ⏳ Integration tests
-2. ⏳ End-to-end pipeline
-3. ⏳ Documentation
+1. ⏳ Integration pipeline
+2. ⏳ Integration tests
+3. ⏳ End-to-end testing
+4. ⏳ Demo notebook
 
 ### Phase 4: Advanced Features (Future)
 1. NARX neural networks
 2. Fuzzy logic system
-3. Dashboard
+3. Interactive dashboard
+4. Real-time processing
 
 ---
 
@@ -397,25 +562,51 @@ tree -L 2 src/
 
 ```
 Phase 1: Core Infrastructure
-[████████████░░░░░░░░] 60%
+[█████████████░░░░░░░] 65%
 
-├─ Dependencies Setup         [████████████████████] 100% ✅
-├─ Video Downloader          [████████████████████] 100% ✅
-├─ Dual-Lane Detection       [████████████████████] 100% ✅ (17/17 tests pass)
-├─ Race Start Detection      [░░░░░░░░░░░░░░░░░░░░]   0% ⏸️ NEXT
-├─ Race Finish Detection     [░░░░░░░░░░░░░░░░░░░░]   0% ⏸️
-└─ Camera Calibration        [░░░░░░░░░░░░░░░░░░░░]   0% ⏸️
+├─ Dependencies Setup            [████████████████████] 100% ✅
+├─ Video Downloader             [████████████████████] 100% ✅
+├─ Video Dataset                [████████████████████] 100% ✅ (11 videos, 4.3GB)
+├─ IFSC Standards Doc           [████████████████████] 100% ✅ (PDF parsed)
+├─ Dual-Lane Detection          [████████████████████] 100% ✅ (17/17 tests)
+├─ Race Start Detection         [░░░░░░░░░░░░░░░░░░░░]   0% 🎯 IN PROGRESS
+├─ Race Finish Detection        [░░░░░░░░░░░░░░░░░░░░]   0% 🎯 NEXT
+├─ Race Segmenter               [░░░░░░░░░░░░░░░░░░░░]   0% 🎯 NEXT
+├─ IFSC Route Map Parser        [░░░░░░░░░░░░░░░░░░░░]   0% ⏳
+├─ Hold Detector                [░░░░░░░░░░░░░░░░░░░░]   0% ⏳
+├─ Camera Motion Detector       [░░░░░░░░░░░░░░░░░░░░]   0% ⏳
+└─ Calibration System           [░░░░░░░░░░░░░░░░░░░░]   0% ⏳
 
 Phase 2: Analysis & Export
 [░░░░░░░░░░░░░░░░░░░░] 0%
 
+├─ Performance Metrics          [░░░░░░░░░░░░░░░░░░░░]   0% ⏳
+├─ Time-Series Plots            [░░░░░░░░░░░░░░░░░░░░]   0% ⏳
+├─ CSV Exporter                 [░░░░░░░░░░░░░░░░░░░░]   0% ⏳
+└─ Comparative Report           [░░░░░░░░░░░░░░░░░░░░]   0% ⏳
+
 Phase 3: Integration & Testing
 [░░░░░░░░░░░░░░░░░░░░] 0%
+
+├─ Integration Pipeline         [░░░░░░░░░░░░░░░░░░░░]   0% ⏳
+├─ Integration Tests            [░░░░░░░░░░░░░░░░░░░░]   0% ⏳
+└─ Demo Notebook                [░░░░░░░░░░░░░░░░░░░░]   0% ⏳
 ```
 
 ---
 
 ## 🔄 آخرین به‌روزرسانی (Last Update Log)
+
+**2025-11-13 - Major Documentation Update**
+- ✅ Downloaded 11 competition videos (4.3 GB total)
+- ✅ Collected IFSC Speed Licence Rules PDF
+- ✅ Analyzed video challenges (long videos, camera motion, formats)
+- ✅ Analyzed IFSC standards (20 holds, 125mm spacing, grid system)
+- ✅ Updated MASTER_CONTEXT with comprehensive implementation roadmap
+- ✅ Documented all 5 priorities (no time estimates)
+- ✅ Updated project structure (added docs/, data/race_segments/, etc.)
+- ✅ Updated progress tracker (Phase 1: 65%)
+- 🎯 Starting Priority 1: Race Start/Finish Detection
 
 **2025-11-12 09:30 UTC**
 - ✅ Created MASTER_CONTEXT.md
@@ -425,7 +616,6 @@ Phase 3: Integration & Testing
 - ✅ Fixed test failures (c47021c)
 - ✅ All 17 tests passing (100%)
 - ✅ Dual-Lane Detection module COMPLETE
-- 🎯 Next: Race Start Detection (Audio + Motion)
 
 ---
 

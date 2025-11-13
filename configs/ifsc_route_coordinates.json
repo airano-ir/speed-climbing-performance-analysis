@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "source": "IFSC Speed Licence Rules (01/02/2022)",
+    "wall_height_m": 15.0,
+    "wall_width_per_lane_m": 3.0,
+    "wall_inclination_deg": 5.0,
+    "hold_spacing_mm": 125,
+    "panel_size_mm": [1500, 1500],
+    "grid_columns": ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"],
+    "grid_rows": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    "note": "This file will be populated by parsing the IFSC PDF (docs/IFSC_Speed_Licence_Rules.pdf)"
+  },
+  "holds": {
+    "comment": "20 standardized holds per lane, numbered 1-20 from bottom to top",
+    "example_format": {
+      "hold_number": 1,
+      "type": "foot_hold",
+      "panel": "DX1",
+      "grid_position": ["F4", "G4"],
+      "meter_coordinates": {
+        "x": 0.0,
+        "y": 0.0,
+        "note": "To be calculated from grid positions"
+      }
+    },
+    "left_lane": [],
+    "right_lane": []
+  },
+  "status": "PLACEHOLDER",
+  "todo": [
+    "Parse IFSC PDF to extract hold positions from panel tables",
+    "Convert grid positions (e.g., 'F4') to meter coordinates",
+    "Populate left_lane and right_lane arrays with all 20 holds",
+    "Add hold types (BIG_HOLD, FOOT_HOLD, STOP_DEVICE)",
+    "Validate coordinates against wall dimensions"
+  ]
+}
