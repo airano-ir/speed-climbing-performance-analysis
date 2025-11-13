@@ -103,6 +103,8 @@ class IFSCVideoDownloader:
                 'preferredcodec': 'wav',
                 'preferredquality': '192',
             }]
+            # Keep the video file after extracting audio
+            ydl_opts['keepvideo'] = True
 
         print(f"[*] Downloading from: {url}")
         print(f"[*] Output directory: {self.output_dir}")
