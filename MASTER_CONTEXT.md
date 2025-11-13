@@ -137,38 +137,60 @@
 - Path optimization analysis
 - حل مشکل camera motion با re-calibration
 
-#### 6. Git Commits
+#### 6. Race Segmentation System ✅ (Priority 1)
+- **تاریخ**: 2025-11-13
+- **وضعیت**: COMPLETED
+- **فایل‌های ایجاد شده**:
+  - `src/phase1_pose_estimation/race_start_detector.py` (490 lines)
+  - `src/phase1_pose_estimation/race_finish_detector.py` (460 lines)
+  - `src/utils/race_segmenter.py` (380 lines)
+
+**قابلیت‌های race_start_detector.py**:
+- `AudioBeepDetector`: تشخیص صدای بوق شروع (800-1200 Hz) با librosa + FFT
+- `MotionStartDetector`: تشخیص حرکت ناگهانی با Optical Flow
+- `RaceStartDetector`: Fusion method (audio + motion)
+- 3 روش: audio, motion, fusion
+- CLI interface
+
+**قابلیت‌های race_finish_detector.py**:
+- `TopButtonDetector`: تشخیص تغییر رنگ دکمه بالایی
+- `PoseBasedFinishDetector`: تشخیص دست رسیدن به top
+- `RaceFinishDetector`: Combined detection
+- `detect_winner()`: تعیین برنده
+- CLI interface
+
+**قابلیت‌های race_segmenter.py**:
+- Integration start + finish detectors
+- استخراج race clips از ویدئوهای طولانی (1-3 ساعت)
+- تولید metadata JSON
+- Validation (min/max duration)
+- Buffer zones قابل تنظیم
+- CLI interface
+
+**خروجی**: از ویدئو 2 ساعته → 20-30 کلیپ مسابقه (هر کدام 5-15 ثانیه)
+
+#### 7. Git Commits
 - **Commit 1** (dd66cc9): YouTube video downloader
-  ```
-  feat: add YouTube video downloader and configuration
-  Files: 9 changed, 933 insertions(+)
-  ```
-
 - **Commit 2** (d2e7942): Dual-lane detection system
-  ```
-  feat: add dual-lane detection system and master context
-  Files: 5 changed, 1367 insertions(+)
-  ```
-
 - **Commit 3** (c47021c): Bug fixes and test passing
-  ```
-  fix: resolve dual-lane detector test failures
-  - Fixed COM access (use get_keypoint() not .com attribute)
-  - Fixed numpy deprecation warnings
-  - All 17 tests passing
-  Files: 5 changed, 16 insertions(+), 8 deletions(-)
-  ```
-
 - **Commit 4** (5019acc): Enhanced YouTube downloader
-  ```
-  feat: enhance YouTube downloader to keep video files after audio extraction
-  Files: Updated youtube_downloader.py
-  ```
-
 - **Commit 5** (dd3370d): Documentation update
+- **Commit 6** (aafa060): Documentation with video inventory (2025-11-13)
   ```
-  docs: update MASTER_CONTEXT with completed dual-lane detector
-  Files: MASTER_CONTEXT.md updated
+  docs: update MASTER_CONTEXT with video inventory and implementation plan
+  - Add comprehensive video inventory (11 videos, 4.3 GB)
+  - Document IFSC standards integration strategy
+  - Add 5-priority implementation roadmap
+  - Update project structure
+  Files: 4 changed, 449 insertions(+), 124 deletions(-)
+  ```
+- **Commit 7** (238c08b): Priority 1 - Race Segmentation System (2025-11-13)
+  ```
+  feat: implement Priority 1 - Race Segmentation System
+  - race_start_detector.py (490 lines)
+  - race_finish_detector.py (460 lines)
+  - race_segmenter.py (380 lines)
+  Files: 3 changed, 1461 insertions(+)
   ```
 
 ---
@@ -181,37 +203,58 @@
 
 ## 📝 برنامه پیشنهادی پیاده‌سازی (Implementation Roadmap)
 
-### Priority 1: Race Segmentation System 🎯 CURRENT
-**هدف**: استخراج مسابقات 5-10 ثانیه‌ای از ویدئوهای 2-3 ساعته
+### Priority 1: Race Segmentation System ✅ COMPLETED
+**هدف**: استخراج مسابقات 5-15 ثانیه‌ای از ویدئوهای 2-3 ساعته
+**وضعیت**: 100% - Ready for testing
 
-#### Task 1.1: Race Start Detection
-**فایل**: `src/phase1_pose_estimation/race_start_detector.py`
+#### Task 1.1: Race Start Detection ✅
+**فایل**: `src/phase1_pose_estimation/race_start_detector.py` (490 lines)
 **قابلیت‌ها**:
 - Audio-based: تشخیص صدای بوق شروع با librosa + FFT analysis
 - Motion-based: تشخیص حرکت ناگهانی climbers با optical flow
 - Fusion: ترکیب هر دو روش برای دقت بالا
-- خروجی: frame_id و timestamp دقیق شروع
+- خروجی: RaceStartResult با frame_id و timestamp دقیق
 
-**Dependencies**: librosa, soundfile, opencv (optical flow)
+**CLI Usage**:
+```bash
+python src/phase1_pose_estimation/race_start_detector.py video.mp4 --method fusion
+```
 
-#### Task 1.2: Race Finish Detection
-**فایل**: `src/phase1_pose_estimation/race_finish_detector.py`
+#### Task 1.2: Race Finish Detection ✅
+**فایل**: `src/phase1_pose_estimation/race_finish_detector.py` (460 lines)
 **قابلیت‌ها**:
-- تشخیص دست رسیدن به دکمه بالایی (hold 20)
-- محاسبه timestamp دقیق finish
+- TopButtonDetector: تشخیص تغییر رنگ دکمه بالایی (visual)
+- PoseBasedFinishDetector: تشخیص دست رسیدن به top (pose-based)
 - تشخیص winner (کدام climber اول finish کرد)
-- Validation با top boundary detection
+- Combined detection برای دقت بالا
 
-#### Task 1.3: Race Segmenter
-**فایل**: `src/utils/race_segmenter.py`
+**CLI Usage**:
+```bash
+python src/phase1_pose_estimation/race_finish_detector.py video.mp4 --lane left
+```
+
+#### Task 1.3: Race Segmenter ✅
+**فایل**: `src/utils/race_segmenter.py` (380 lines)
 **قابلیت‌ها**:
-- اسکن کل ویدئو و پیدا کردن تمام مسابقات
-- استخراج segment های start→finish
+- Integration کامل start + finish detectors
+- اسکن و استخراج تمام مسابقات از ویدئو طولانی
 - ذخیره در `data/race_segments/`
-- تولید metadata برای هر race
-- CLI: `python race_segmenter.py video.mp4 --output-dir data/race_segments/`
+- تولید metadata JSON برای هر race
+- Validation: min/max duration (3-15 seconds configurable)
+- Buffer zones: قبل و بعد از race
 
-**خروجی**: از Seoul_2024 (2.1 ساعت) → 20-30 کلیپ مسابقه
+**CLI Usage**:
+```bash
+python src/utils/race_segmenter.py "data/raw_videos/video.mp4" \
+  --output-dir "data/race_segments" \
+  --max-races 5 \
+  --buffer-before 1.0 \
+  --buffer-after 1.0
+```
+
+**خروجی**: از Seoul_2024 (2.1 ساعت) → 20-30 کلیپ مسابقه (5-15 ثانیه هر کدام)
+
+**نکته مهم**: حداکثر مدت مسابقه (max_race_duration) روی 15 ثانیه تنظیم شده تا مسابقات طولانی‌تر را هم پوشش دهد.
 
 ---
 
@@ -562,17 +605,17 @@ tree -L 2 src/
 
 ```
 Phase 1: Core Infrastructure
-[█████████████░░░░░░░] 65%
+[██████████████░░░░░░] 70%
 
 ├─ Dependencies Setup            [████████████████████] 100% ✅
 ├─ Video Downloader             [████████████████████] 100% ✅
 ├─ Video Dataset                [████████████████████] 100% ✅ (11 videos, 4.3GB)
-├─ IFSC Standards Doc           [████████████████████] 100% ✅ (PDF parsed)
+├─ IFSC Standards Doc           [████████████████████] 100% ✅ (PDF)
 ├─ Dual-Lane Detection          [████████████████████] 100% ✅ (17/17 tests)
-├─ Race Start Detection         [░░░░░░░░░░░░░░░░░░░░]   0% 🎯 IN PROGRESS
-├─ Race Finish Detection        [░░░░░░░░░░░░░░░░░░░░]   0% 🎯 NEXT
-├─ Race Segmenter               [░░░░░░░░░░░░░░░░░░░░]   0% 🎯 NEXT
-├─ IFSC Route Map Parser        [░░░░░░░░░░░░░░░░░░░░]   0% ⏳
+├─ Race Start Detection         [████████████████████] 100% ✅ (490 lines)
+├─ Race Finish Detection        [████████████████████] 100% ✅ (460 lines)
+├─ Race Segmenter               [████████████████████] 100% ✅ (380 lines)
+├─ IFSC Route Map Parser        [░░░░░░░░░░░░░░░░░░░░]   0% 🎯 NEXT
 ├─ Hold Detector                [░░░░░░░░░░░░░░░░░░░░]   0% ⏳
 ├─ Camera Motion Detector       [░░░░░░░░░░░░░░░░░░░░]   0% ⏳
 └─ Calibration System           [░░░░░░░░░░░░░░░░░░░░]   0% ⏳
@@ -597,18 +640,29 @@ Phase 3: Integration & Testing
 
 ## 🔄 آخرین به‌روزرسانی (Last Update Log)
 
-**2025-11-13 - Major Documentation Update**
+**2025-11-13 Late Update - Priority 1 COMPLETED**
+- ✅ Implemented complete Race Segmentation System (1330+ lines)
+- ✅ race_start_detector.py: Audio + Motion + Fusion detection
+- ✅ race_finish_detector.py: Visual + Pose-based detection + Winner determination
+- ✅ race_segmenter.py: Full integration with CLI interface
+- ✅ Committed Priority 1 (238c08b)
+- ✅ Updated MASTER_CONTEXT with Priority 1 completion
+- ✅ Updated progress tracker (Phase 1: 70%)
+- ✅ Configured max_race_duration=15s for longer races
+- 🎯 Ready for testing with real videos
+- 🎯 Next: Test and validate, then Priority 2
+
+**2025-11-13 Early Update - Documentation & Planning**
 - ✅ Downloaded 11 competition videos (4.3 GB total)
 - ✅ Collected IFSC Speed Licence Rules PDF
 - ✅ Analyzed video challenges (long videos, camera motion, formats)
 - ✅ Analyzed IFSC standards (20 holds, 125mm spacing, grid system)
 - ✅ Updated MASTER_CONTEXT with comprehensive implementation roadmap
-- ✅ Documented all 5 priorities (no time estimates)
+- ✅ Documented all 5 priorities
 - ✅ Updated project structure (added docs/, data/race_segments/, etc.)
-- ✅ Updated progress tracker (Phase 1: 65%)
-- 🎯 Starting Priority 1: Race Start/Finish Detection
+- ✅ Committed documentation updates (aafa060)
 
-**2025-11-12 09:30 UTC**
+**2025-11-12 Initial Development**
 - ✅ Created MASTER_CONTEXT.md
 - ✅ Committed YouTube downloader (dd66cc9)
 - ✅ Committed dual-lane detector (d2e7942)
