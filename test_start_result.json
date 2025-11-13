@@ -1,0 +1,9 @@
+{
+  "frame_id": 16,
+  "timestamp": 0.5333333333333333,
+  "confidence": 1.0,
+  "method": "motion",
+  "audio_confidence": null,
+  "motion_confidence": 1.0,
+  "metadata": null
+}
