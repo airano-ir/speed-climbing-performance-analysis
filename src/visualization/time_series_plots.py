@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Time Series Visualization
 =========================
@@ -15,12 +16,19 @@ Date: 2025-11-14
 """
 
 from pathlib import Path
+import sys
+import io
 import json
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec
 from typing import Optional, List, Tuple
-import sys
+
+# Fix Windows console encoding for emoji/unicode support
+# NOTE: Disabled for matplotlib compatibility - use chcp 65001 in console instead
+# if sys.platform == 'win32':
+#     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+#     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
 # Add analysis module to path
 sys.path.insert(0, str(Path(__file__).parent.parent / 'analysis'))

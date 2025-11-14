@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Performance Metrics Calculator
 ==============================
@@ -16,11 +17,18 @@ Date: 2025-11-14
 """
 
 from pathlib import Path
+import sys
+import io
 import json
 import numpy as np
 import pandas as pd
 from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass
+
+# Fix Windows console encoding for emoji/unicode support
+if sys.platform == 'win32':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
 
 @dataclass
