@@ -178,7 +178,42 @@
 - ✅ False positive filtering با duration validation
 - ✅ Tested: Successfully extracts multiple races from compilation videos
 
-#### 7. Git Commits
+#### 7. Manual Race Segmentation System ✅ (2025-11-14)
+- **وضعیت**: COMPLETED - استفاده از timestamps دستی برای دقت بالا
+- **فایل‌های ایجاد شده**:
+  - `scripts/parse_timestamps_to_yaml.py` (~900 lines) - تبدیل timestamps به YAML
+  - `src/utils/manual_race_segmenter.py` (~550 lines) - استخراج با timestamps دستی
+  - `scripts/batch_segment_competitions.py` (~120 lines) - پردازش batch
+  - `docs/MANUAL_SEGMENTATION_GUIDE.md` - راهنمای جامع کاربر
+  - `configs/race_timestamps/*.yaml` - 3 فایل config (Seoul, Villars, Chamonix)
+
+**قابلیت‌های parse_timestamps_to_yaml.py**:
+- پارس timestamps از متن فارسی
+- تولید YAML config با اطلاعات کامل ورزشکاران
+- اصلاح خودکار end_time برای مسابقات زودتر تمام شده (+5s)
+- حذف مسابقات invalid (مثل false starts)
+- خروجی: 87 مسابقه برای 3 فاینال (Seoul: 31, Villars: 24, Chamonix: 32)
+
+**قابلیت‌های manual_race_segmenter.py**:
+- برش frame-accurate با ffmpeg
+- Buffer قابل تنظیم (قبل و بعد)
+- Optional detection refinement (فعلاً disabled برای سرعت)
+- تولید metadata کامل با اطلاعات ورزشکاران
+- Winner detection (TODO)
+- Progress tracking
+
+**مزایا**:
+- ⚡ سریع: ~30 ثانیه per race (با --no-refine)
+- ✅ دقیق: timestamps manual = دقت 100%
+- 📊 Metadata غنی: athlete info, country, round, bib colors
+- 🎯 No false positives
+
+**نکات مهم**:
+- قبل از شروع مسابقه 3 بوق می‌زند (بوق سوم = شروع)
+- برخی مسابقات زودتر تمام می‌شوند (parser خودکار +5s اضافه می‌کند)
+- Race 15 Seoul حذف شد (false start - خیلی کوتاه)
+
+#### 8. Git Commits
 - **Commit 1** (dd66cc9): YouTube video downloader
 - **Commit 2** (d2e7942): Dual-lane detection system
 - **Commit 3** (c47021c): Bug fixes and test passing
@@ -206,7 +241,14 @@
 
 ## 🔧 کارهای در حال انجام (In Progress)
 
-**هیچ کار در حال انجام نیست** - آماده برای مرحله بعد!
+### Manual Race Segmentation (2025-11-14)
+- ✅ Parser و YAML configs ساخته شد
+- 🔄 Seoul 2024: در حال پردازش مجدد (31 مسابقه) - 16/31 تا الان
+- ⏳ Villars 2024: آماده برای پردازش (24 مسابقه) - راهنما آماده
+- ⏳ Chamonix 2024: آماده برای پردازش (32 مسابقه) - راهنما آماده
+- 📖 راهنمای کامل کاربر: `docs/MANUAL_SEGMENTATION_GUIDE.md`
+
+**Next**: بعد از اتمام Seoul، کاربر Villars و Chamonix را process می‌کند
 
 ---
 

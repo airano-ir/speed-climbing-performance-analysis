@@ -1,0 +1,424 @@
+video:
+  name: Speed_finals_Chamonix_2024
+  path: data/raw_videos/Speed_finals_Chamonix_2024.mp4
+  location: Chamonix, France
+  event_type: IFSC World Cup
+  fps: 30.0
+races:
+- race_id: 1
+  round: 1/8 final - Women
+  start_time: 06:31
+  end_time: 06:37
+  athletes:
+    left:
+      name: Natalia Kalucka
+      country: Poland
+      bib_color: red/white
+    right:
+      name: Isis Rothfork
+      country: USA
+      bib_color: blue/white
+- race_id: 2
+  round: 1/8 final - Women
+  start_time: 08:02
+  end_time: 08:09
+  athletes:
+    left:
+      name: Giulia Randi
+      country: Italy
+      bib_color: blue
+    right:
+      name: Franziska Ritter
+      country: Germany
+      bib_color: black/red/yellow
+- race_id: 3
+  round: 1/8 final - Women
+  start_time: 09:39
+  end_time: 09:48
+  athletes:
+    left:
+      name: Jimin Jeong
+      country: South Korea
+      bib_color: black/blue
+    right:
+      name: Karin Hayashi
+      country: Japan
+      bib_color: red/white
+- race_id: 4
+  round: 1/8 final - Women
+  start_time: '11:21'
+  end_time: '11:26'
+  athletes:
+    left:
+      name: Patrycja Chudziak
+      country: Poland
+      bib_color: red/white
+    right:
+      name: Sophia Kirov
+      country: USA
+      bib_color: blue/white
+- race_id: 5
+  round: 1/8 final - Women
+  start_time: '12:52'
+  end_time: '12:58'
+  athletes:
+    left:
+      name: Shengyan Wang
+      country: China
+      bib_color: red
+    right:
+      name: Agnese Rittosa
+      country: Italy
+      bib_color: blue
+- race_id: 6
+  round: 1/8 final - Women
+  start_time: '14:17'
+  end_time: '14:25'
+  athletes:
+    left:
+      name: Manon Lebon
+      country: France
+      bib_color: blue/white
+    right:
+      name: Capucine Viglione
+      country: France
+      bib_color: blue/white
+- race_id: 7
+  round: 1/8 final - Women
+  start_time: '16:00'
+  end_time: '16:08'
+  athletes:
+    left:
+      name: Shaoqin Zhang
+      country: China
+      bib_color: red
+    right:
+      name: Ren Kayo Matsu
+      country: Japan
+      bib_color: red/white
+- race_id: 8
+  round: 1/8 final - Women
+  start_time: '17:33'
+  end_time: '17:38'
+  athletes:
+    left:
+      name: Leslie Romero
+      country: Spain
+      bib_color: red/yellow
+    right:
+      name: Ya-Fei Niu
+      country: China
+      bib_color: red
+- race_id: 9
+  round: 1/8 final - Men
+  start_time: '20:23'
+  end_time: '20:36'
+  athletes:
+    left:
+      name: Matteo Zurloni
+      country: Italy
+      bib_color: blue
+    right:
+      name: Damir Tursunov
+      country: Kazakhstan
+      bib_color: blue/yellow
+- race_id: 10
+  round: 1/8 final - Men
+  start_time: '22:02'
+  end_time: '22:07'
+  athletes:
+    left:
+      name: Liang Zhang
+      country: China
+      bib_color: red
+    right:
+      name: Ryo Omasa
+      country: Japan
+      bib_color: red/white
+- race_id: 11
+  round: 1/8 final - Men
+  start_time: '23:38'
+  end_time: '23:46'
+  athletes:
+    left:
+      name: Xinchang Wang
+      country: China
+      bib_color: red
+    right:
+      name: Yong-Jun Jung
+      country: South Korea
+      bib_color: black/blue
+- race_id: 12
+  round: 1/8 final - Men
+  start_time: '25:20'
+  end_time: '25:26'
+  athletes:
+    left:
+      name: Amir Maimuratov
+      country: Kazakhstan
+      bib_color: blue/yellow
+    right:
+      name: Hryhorii Ilchyshyn
+      country: Ukraine
+      bib_color: blue/yellow
+- race_id: 13
+  round: 1/8 final - Men
+  start_time: '27:07'
+  end_time: '27:11'
+  athletes:
+    left:
+      name: Jianguo Long
+      country: China
+      bib_color: red
+    right:
+      name: Gian Luca Zodda
+      country: Italy
+      bib_color: blue
+- race_id: 14
+  round: 1/8 final - Men
+  start_time: '28:44'
+  end_time: '28:51'
+  athletes:
+    left:
+      name: Yaroslav Tkach
+      country: Ukraine
+      bib_color: blue/yellow
+    right:
+      name: Erik Noya
+      country: Spain
+      bib_color: red/yellow
+- race_id: 15
+  round: 1/8 final - Men
+  start_time: '30:19'
+  end_time: '30:25'
+  athletes:
+    left:
+      name: Samuel Watson
+      country: USA
+      bib_color: blue/white
+    right:
+      name: Shuto Hzz
+      country: Japan
+      bib_color: red/white
+- race_id: 16
+  round: 1/8 final - Men
+  start_time: '32:07'
+  end_time: '32:11'
+  athletes:
+    left:
+      name: Ludovico Fossali
+      country: Italy
+      bib_color: blue
+    right:
+      name: Pierre Rebreyend
+      country: France
+      bib_color: blue/white
+- race_id: 17
+  round: Quarter final - Women
+  start_time: '35:05'
+  end_time: '35:10'
+  athletes:
+    left:
+      name: Natalia Kalucka
+      country: Poland
+      bib_color: red/white
+    right:
+      name: Giulia Randi
+      country: Italy
+      bib_color: blue
+- race_id: 18
+  round: Quarter final - Women
+  start_time: '36:34'
+  end_time: '36:41'
+  athletes:
+    left:
+      name: Jimin Jeong
+      country: South Korea
+      bib_color: black/blue
+    right:
+      name: Patrycja Chudziak
+      country: Poland
+      bib_color: red/white
+- race_id: 19
+  round: Quarter final - Women
+  start_time: '38:05'
+  end_time: '38:11'
+  athletes:
+    left:
+      name: Shengyan Wang
+      country: China
+      bib_color: red
+    right:
+      name: Capucine Viglione
+      country: France
+      bib_color: blue/white
+- race_id: 20
+  round: Quarter final - Women
+  start_time: '39:43'
+  end_time: '39:47'
+  athletes:
+    left:
+      name: Shaoqin Zhang
+      country: China
+      bib_color: red
+    right:
+      name: Leslie Romero
+      country: Spain
+      bib_color: red/yellow
+- race_id: 21
+  round: Quarter final - Men
+  start_time: '42:30'
+  end_time: '42:37'
+  athletes:
+    left:
+      name: Matteo Zurloni
+      country: Italy
+      bib_color: blue
+    right:
+      name: Ryo Omasa
+      country: Japan
+      bib_color: red/white
+- race_id: 22
+  round: Quarter final - Men
+  start_time: '44:15'
+  end_time: '44:19'
+  athletes:
+    left:
+      name: Xinchang Wang
+      country: China
+      bib_color: red
+    right:
+      name: Amir Maimuratov
+      country: Kazakhstan
+      bib_color: blue/yellow
+- race_id: 23
+  round: Quarter final - Men
+  start_time: '45:59'
+  end_time: '46:05'
+  athletes:
+    left:
+      name: Gian Luca Zodda
+      country: Italy
+      bib_color: blue
+    right:
+      name: Erik Noya
+      country: Spain
+      bib_color: red/yellow
+- race_id: 24
+  round: Quarter final - Men
+  start_time: '47:42'
+  end_time: '47:47'
+  athletes:
+    left:
+      name: Samuel Watson
+      country: USA
+      bib_color: blue/white
+    right:
+      name: Pierre Rebreyend
+      country: France
+      bib_color: blue/white
+- race_id: 25
+  round: Semi final - Women
+  start_time: '54:15'
+  end_time: '54:25'
+  athletes:
+    left:
+      name: Natalia Kalucka
+      country: Poland
+      bib_color: red/white
+    right:
+      name: Jimin Jeong
+      country: South Korea
+      bib_color: black/blue
+  notes: Slip and recovery
+- race_id: 26
+  round: Semi final - Women
+  start_time: '56:02'
+  end_time: '56:06'
+  athletes:
+    left:
+      name: Shengyan Wang
+      country: China
+      bib_color: red
+    right:
+      name: Shaoqin Zhang
+      country: China
+      bib_color: red
+- race_id: 27
+  round: Semi final - Men
+  start_time: '59:09'
+  end_time: '59:15'
+  athletes:
+    left:
+      name: Ryo Omasa
+      country: Japan
+      bib_color: red/white
+    right:
+      name: Xinchang Wang
+      country: China
+      bib_color: red
+- race_id: 28
+  round: Semi final - Men
+  start_time: 01:00:58
+  end_time: 01:01:03
+  athletes:
+    left:
+      name: Erik Noya
+      country: Spain
+      bib_color: red/yellow
+    right:
+      name: Samuel Watson
+      country: USA
+      bib_color: blue/white
+- race_id: 29
+  round: Small final - Women (Bronze)
+  start_time: 01:06:04
+  end_time: 01:06:12
+  athletes:
+    left:
+      name: Jimin Jeong
+      country: South Korea
+      bib_color: black/blue
+    right:
+      name: Shengyan Wang
+      country: China
+      bib_color: red
+- race_id: 30
+  round: Small final - Men (Bronze)
+  start_time: 01:07:44
+  end_time: 01:07:51
+  athletes:
+    left:
+      name: Ryo Omasa
+      country: Japan
+      bib_color: red/white
+    right:
+      name: Erik Noya
+      country: Spain
+      bib_color: red/yellow
+- race_id: 31
+  round: Final - Women (Gold)
+  start_time: 01:09:41
+  end_time: 01:09:48
+  athletes:
+    left:
+      name: Natalia Kalucka
+      country: Poland
+      bib_color: red/white
+    right:
+      name: Shaoqin Zhang
+      country: China
+      bib_color: red
+- race_id: 32
+  round: Final - Men (Gold)
+  start_time: 01:11:59
+  end_time: 01:12:04
+  athletes:
+    left:
+      name: Xinchang Wang
+      country: China
+      bib_color: red
+    right:
+      name: Samuel Watson
+      country: USA
+      bib_color: blue/white
