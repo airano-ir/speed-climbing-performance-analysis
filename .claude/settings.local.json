@@ -21,7 +21,12 @@
       "Bash(NUL)",
       "Bash(nul)",
       "Bash(powershell -Command:*)",
-      "Bash(powershell -ExecutionPolicy Bypass -File check_progress.ps1)"
+      "Bash(powershell -ExecutionPolicy Bypass -File check_progress.ps1)",
+      "Bash(git remote add:*)",
+      "Bash(git fetch:*)",
+      "Bash(SETUP_WEB_ENVIRONMENT.md)",
+      "Bash(requirements_core.txt)",
+      "Bash(test_pose_extraction.py)"
     ]
   },
   "enableAllProjectMcpServers": true,
