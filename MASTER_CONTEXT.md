@@ -1,7 +1,7 @@
 # MASTER CONTEXT - Speed Climbing Performance Analysis
 # سند راهنمای کامل پروژه تحلیل سنگنوردی سرعتی
 
-**Last Updated**: 2025-11-14
+**Last Updated**: 2025-11-14 (Phase 2 Complete)
 **Purpose**: این سند برای ادامه کار در صورت قطع شدن session یا شروع مجدد در conversation جدید
 **Language**: Persian (Farsi) + English
 
@@ -12,13 +12,19 @@
 > **برای شروع کار در https://claude.ai/code جدید، این بخش را اول بخوانید!**
 
 ### آخرین وضعیت (2025-11-14):
-✅ **Manual Race Segmentation: 100% COMPLETE**
+✅ **Phase 1: Manual Race Segmentation - 100% COMPLETE**
 - 188 مسابقه از 5 فاینال استخراج شد
 - همه فایل‌های ویدئو در `data/race_segments/` موجود است
 - همه YAML configs آماده در `configs/race_timestamps/`
 
-### مرحله فعلی: Phase 2 - Pose Estimation & Analysis
-**آماده برای شروع!** همه race clips موجود است.
+✅ **Phase 2: Pose Estimation & Analysis - 100% COMPLETE**
+- Batch pose extraction پیاده‌سازی شد
+- Performance metrics calculator آماده
+- Time-series visualization آماده
+- تست شده با 2 race clip (detection rate: 96-99%)
+
+### مرحله فعلی: Phase 2 - Ready for Full Dataset Processing
+**آماده برای پردازش 188 race!**
 
 ### فایل‌های کلیدی برای ادامه:
 1. **این فایل**: [MASTER_CONTEXT.md](MASTER_CONTEXT.md) - سند کامل پروژه
@@ -468,6 +474,15 @@ github: https://github.com/languageofearthcom-oss/Speed-Climbing-Performance-Ana
   - 3 YAML configs generated (Seoul: 31, Villars: 24, Chamonix: 32)
   Files: 7 changed, ~2000 insertions
   ```
+- **Commit 12** (abf50c0): feat(phase2): implement pose extraction, metrics, and visualization (2025-11-14)
+  ```
+  feat(phase2): implement pose extraction, metrics, and visualization
+  - batch_pose_extraction.py: Updated for race_segments with CLI args
+  - performance_metrics.py: COM, velocity, acceleration, jerk, path efficiency
+  - time_series_plots.py: Single & dual climber visualizations
+  - Tested with 2 races (96-99% detection rate)
+  Files: 5 changed, 882 insertions(+), 13 deletions(-)
+  ```
 
 ---
 
@@ -490,6 +505,69 @@ github: https://github.com/languageofearthcom-oss/Speed-Climbing-Performance-Ana
 - 📖 راهنمای کامل کاربر: [docs/MANUAL_SEGMENTATION_GUIDE.md](docs/MANUAL_SEGMENTATION_GUIDE.md) (Version 4.0)
 
 **Output Location**: `data/race_segments/` (188 MP4 clips + 188 metadata JSONs + 5 summary JSONs)
+
+### ✅ Phase 2: Pose Estimation & Performance Analysis - COMPLETED (2025-11-14)
+
+**وضعیت**: 100% - Core components implemented and tested
+
+#### 1. Batch Pose Extraction ✅
+**فایل**: `scripts/batch_pose_extraction.py` (updated)
+**قابلیت‌ها**:
+- پردازش race segments از `data/race_segments/`
+- CLI arguments: `--max-races N`, `--competition NAME`
+- Resume capability (skip processed files)
+- Detection rates: 96-99% (tested با 2 races)
+- خروجی: JSON files با pose keypoints
+
+**Usage**:
+```bash
+# تست با 3 race
+python scripts/batch_pose_extraction.py --max-races 3
+
+# پردازش یک competition
+python scripts/batch_pose_extraction.py --competition seoul_2024
+
+# پردازش همه 188 races
+python scripts/batch_pose_extraction.py
+```
+
+#### 2. Performance Metrics Calculator ✅
+**فایل**: `src/analysis/performance_metrics.py` (400+ lines)
+**متریک‌ها**:
+- **Center of Mass (COM)**: محاسبه با weighted keypoints
+- **Velocity**: vertical & horizontal (pixels/second)
+- **Acceleration**: magnitude calculation
+- **Jerk**: smoothness metric (pixels/second³)
+- **Path efficiency**: straight_distance / total_path_length
+
+**خروجی**: CSV + JSON
+
+**Usage**:
+```bash
+python src/analysis/performance_metrics.py race001_poses.json --lane left
+```
+
+#### 3. Time-Series Visualization ✅
+**فایل**: `src/visualization/time_series_plots.py` (450+ lines)
+**نمودارها**:
+- Single climber: 4-plot dashboard (trajectory, velocity, acceleration, horizontal deviation)
+- Dual comparison: side-by-side trajectory + velocity + summary bars
+- PNG export
+
+**Usage**:
+```bash
+# Single climber
+python src/visualization/time_series_plots.py race001_poses.json --mode single --lane left
+
+# Dual comparison
+python src/visualization/time_series_plots.py race001_poses.json --mode dual
+```
+
+**Test Results**:
+- ✅ 2 races processed successfully (Chamonix race001, race002)
+- ✅ Detection rate: Left=99.3%, Right=96.9%, Both=96.5%
+- ✅ Metrics calculated and exported
+- ✅ Visualizations generated
 
 ---
 
