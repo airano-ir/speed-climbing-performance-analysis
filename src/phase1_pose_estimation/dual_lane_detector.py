@@ -28,7 +28,15 @@ from pathlib import Path
 import json
 
 from blazepose_extractor import BlazePoseExtractor, PoseResult
-from filterpy.kalman import KalmanFilter
+
+# Optional: Kalman filter for boundary smoothing
+try:
+    from filterpy.kalman import KalmanFilter
+    FILTERPY_AVAILABLE = True
+except ImportError:
+    FILTERPY_AVAILABLE = False
+    KalmanFilter = None  # type: ignore
+    print("Warning: filterpy not available. Kalman smoothing disabled.")
 
 
 @dataclass
@@ -201,6 +209,12 @@ class DualLaneDetector:
 
     def _initialize_kalman_filter(self):
         """Initialize Kalman filter for boundary position tracking."""
+        if not FILTERPY_AVAILABLE:
+            # Kalman filter not available, use simple smoothing instead
+            self.boundary_kf = None
+            self.boundary_initialized = False
+            return
+
         # State: [x_position, x_velocity]
         self.boundary_kf = KalmanFilter(dim_x=2, dim_z=1)
 
@@ -254,20 +268,22 @@ class DualLaneDetector:
         else:
             raise ValueError(f"Unknown boundary detection method: {self.boundary_detection_method}")
 
-        # Apply Kalman smoothing if enabled
-        if self.enable_lane_smoothing:
+        # Apply Kalman smoothing if enabled (and available)
+        if self.enable_lane_smoothing and FILTERPY_AVAILABLE:
             if not self.boundary_initialized:
                 self._initialize_kalman_filter()
-                self.boundary_kf.x[0] = x_center
+                if self.boundary_kf is not None:
+                    self.boundary_kf.x[0] = x_center
 
             # Predict
-            self.boundary_kf.predict()
+            if self.boundary_kf is not None:
+                self.boundary_kf.predict()
 
-            # Update with measurement
-            self.boundary_kf.update(np.array([[x_center]]))
+                # Update with measurement
+                self.boundary_kf.update(np.array([[x_center]]))
 
-            # Use filtered position
-            x_center = self.boundary_kf.x[0].item()
+                # Use filtered position
+                x_center = self.boundary_kf.x[0].item()
 
         return LaneBoundary(
             x_center=x_center,
