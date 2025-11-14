@@ -5,6 +5,16 @@ Batch Pose Extraction Script
 استخراج BlazePose keypoints از race segments
 
 Usage:
+    python scripts/batch_pose_extraction.py [--max-races N] [--competition NAME]
+
+Examples:
+    # Process first 3 races from all competitions
+    python scripts/batch_pose_extraction.py --max-races 3
+
+    # Process all Seoul 2024 races
+    python scripts/batch_pose_extraction.py --competition seoul_2024
+
+    # Process all 188 races
     python scripts/batch_pose_extraction.py
 
 Output:
@@ -18,6 +28,7 @@ from pathlib import Path
 import sys
 import json
 import cv2
+import argparse
 from tqdm import tqdm
 
 # Add src to path
@@ -115,28 +126,56 @@ def extract_poses_from_clip(video_path: Path, output_json: Path) -> dict:
 
 
 def main():
-    """پردازش تمام race clips موجود."""
+    """پردازش race clips از race_segments."""
+    # Parse arguments
+    parser = argparse.ArgumentParser(description='Extract pose data from race segments')
+    parser.add_argument('--max-races', type=int, default=None,
+                       help='Maximum number of races to process (default: all)')
+    parser.add_argument('--competition', type=str, default=None,
+                       help='Process only specific competition (e.g., seoul_2024)')
+    args = parser.parse_args()
+
     # مسیرها
-    raw_videos = Path('data/raw_videos')
+    race_segments = Path('data/race_segments')
     output_dir = Path('data/processed/poses')
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    # پیدا کردن ویدیوها
-    video_extensions = ['*.mp4', '*.avi', '*.mov', '*.MP4', '*.AVI', '*.MOV']
+    # پیدا کردن ویدیوها از همه competitions یا یک competition خاص
     clips = []
-    for ext in video_extensions:
-        clips.extend(raw_videos.glob(ext))
-
-    clips = sorted(clips)
+    if args.competition:
+        competition_dir = race_segments / args.competition
+        if not competition_dir.exists():
+            print(f"❌ Competition directory not found: {competition_dir}")
+            print(f"\nAvailable competitions:")
+            for comp_dir in sorted(race_segments.iterdir()):
+                if comp_dir.is_dir():
+                    print(f"  - {comp_dir.name}")
+            return
+        clips.extend(sorted(competition_dir.glob('*.mp4')))
+        print(f"Processing competition: {args.competition}")
+    else:
+        # همه competitions
+        for comp_dir in sorted(race_segments.iterdir()):
+            if comp_dir.is_dir():
+                clips.extend(sorted(comp_dir.glob('*.mp4')))
+        print(f"Processing all competitions")
 
     if not clips:
-        print(f"⚠️  No video files found in {raw_videos}")
-        print(f"\nPlease add video files to: {raw_videos.absolute()}")
-        print(f"Supported formats: MP4, AVI, MOV")
-        print(f"\nFor help finding videos, see: HOW_TO_FIND_VIDEOS.md")
+        print(f"⚠️  No race segment MP4 files found in {race_segments}")
+        print(f"\nExpected structure:")
+        print(f"  data/race_segments/")
+        print(f"    seoul_2024/")
+        print(f"      Speed_finals_Seoul_2024_race001.mp4")
+        print(f"      Speed_finals_Seoul_2024_race002.mp4")
+        print(f"      ...")
         return
 
-    print(f"Found {len(clips)} video clip(s) to process\n")
+    # محدود کردن تعداد races
+    if args.max_races and args.max_races > 0:
+        clips = clips[:args.max_races]
+        print(f"Limited to first {args.max_races} races")
+
+    print(f"Found {len(clips)} race clip(s) to process\n")
 
     # پردازش
     stats_summary = []
