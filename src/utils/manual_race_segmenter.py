@@ -117,7 +117,9 @@ class ManualRaceSegmenter:
         video_path: Path,
         start_time: float,
         end_time: float,
-        output_path: Path
+        output_path: Path,
+        buffer_before: Optional[float] = None,
+        buffer_after: Optional[float] = None
     ) -> bool:
         """
         Extract rough clip using ffmpeg (frame-accurate).
@@ -127,16 +129,24 @@ class ManualRaceSegmenter:
             start_time: Start time in seconds
             end_time: End time in seconds
             output_path: Output file path
+            buffer_before: Buffer before start (uses default if None)
+            buffer_after: Buffer after end (uses default if None)
 
         Returns:
             True if successful
         """
+        # Use provided buffers or defaults
+        if buffer_before is None:
+            buffer_before = self.buffer_before
+        if buffer_after is None:
+            buffer_after = self.buffer_after
+
         # Calculate duration
         duration = end_time - start_time
 
         # Add buffers
-        actual_start = max(0, start_time - self.buffer_before)
-        actual_duration = duration + self.buffer_before + self.buffer_after
+        actual_start = max(0, start_time - buffer_before)
+        actual_duration = duration + buffer_before + buffer_after
 
         # Build ffmpeg command (frame-accurate with re-encoding)
         cmd = [
@@ -297,6 +307,14 @@ class ManualRaceSegmenter:
         start_time = self.parse_timestamp_to_seconds(race_config['start_time'])
         end_time = self.parse_timestamp_to_seconds(race_config['end_time'])
 
+        # Check for late start flag (need more buffer before)
+        buffer_before = self.buffer_before
+        if race_config.get('late_start', False):
+            buffer_before = 3.0  # Use 3s for late starts instead of default 1.5s
+            late_start_note = " (LATE START - using 3s buffer)"
+        else:
+            late_start_note = ""
+
         # Generate output filename
         race_filename = f"{video_name}_race{race_id:03d}.mp4"
         race_output_path = output_dir / race_filename if save_video else None
@@ -304,7 +322,7 @@ class ManualRaceSegmenter:
         # Extract rough clip to temporary location for detection
         temp_clip_path = output_dir / f"temp_{race_filename}"
 
-        print(f"\n  Race {race_id}: {race_config['round']}")
+        print(f"\n  Race {race_id}: {race_config['round']}{late_start_note}")
         print(f"    Manual times: {race_config['start_time']} - {race_config['end_time']}")
 
         # Extract rough clip
@@ -312,7 +330,8 @@ class ManualRaceSegmenter:
             video_path,
             start_time,
             end_time,
-            temp_clip_path if self.refine_detection else race_output_path
+            temp_clip_path if self.refine_detection else race_output_path,
+            buffer_before=buffer_before
         )
 
         if not success:
@@ -347,14 +366,14 @@ class ManualRaceSegmenter:
                 print(f"      Start detection failed, using manual time")
 
             # Refine finish (relative to detected start in the clip)
-            clip_start_frame = int((start_time - self.buffer_before) * fps)
-            relative_start_frame = int((detected_start_time - (start_time - self.buffer_before)) * fps)
+            clip_start_frame = int((start_time - buffer_before) * fps)
+            relative_start_frame = int((detected_start_time - (start_time - buffer_before)) * fps)
 
             finish_result = self.refine_finish_time(temp_clip_path, relative_start_frame, fps)
             if finish_result:
                 rel_frame, rel_time, conf, win = finish_result
                 # Convert relative to absolute
-                detected_finish_time = (start_time - self.buffer_before) + rel_time
+                detected_finish_time = (start_time - buffer_before) + rel_time
                 detected_finish_frame = int(detected_finish_time * fps)
                 finish_confidence = conf
                 winner = win
@@ -369,7 +388,8 @@ class ManualRaceSegmenter:
                     video_path,
                     detected_start_time,
                     detected_finish_time,
-                    race_output_path
+                    race_output_path,
+                    buffer_before=buffer_before
                 )
 
             # Remove temp clip
@@ -399,7 +419,7 @@ class ManualRaceSegmenter:
             start_confidence=start_confidence,
             finish_confidence=finish_confidence,
             output_path=str(race_output_path) if race_output_path else None,
-            buffer_before=self.buffer_before,
+            buffer_before=buffer_before,
             buffer_after=self.buffer_after,
             extraction_date=datetime.now().isoformat(),
             notes=race_config.get('notes')

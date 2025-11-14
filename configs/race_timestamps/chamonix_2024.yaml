@@ -8,7 +8,7 @@ races:
 - race_id: 1
   round: 1/8 final - Women
   start_time: 06:31
-  end_time: 06:37
+  end_time: 06:42
   athletes:
     left:
       name: Natalia Kalucka
@@ -18,10 +18,11 @@ races:
       name: Isis Rothfork
       country: USA
       bib_color: blue/white
+  notes: End time extended +5s (early finish)
 - race_id: 2
   round: 1/8 final - Women
   start_time: 08:02
-  end_time: 08:09
+  end_time: 08:14
   athletes:
     left:
       name: Giulia Randi
@@ -31,6 +32,7 @@ races:
       name: Franziska Ritter
       country: Germany
       bib_color: black/red/yellow
+  notes: End time extended +5s (early finish)
 - race_id: 3
   round: 1/8 final - Women
   start_time: 09:39
@@ -47,7 +49,7 @@ races:
 - race_id: 4
   round: 1/8 final - Women
   start_time: '11:21'
-  end_time: '11:26'
+  end_time: '11:31'
   athletes:
     left:
       name: Patrycja Chudziak
@@ -57,10 +59,11 @@ races:
       name: Sophia Kirov
       country: USA
       bib_color: blue/white
+  notes: End time extended +5s (early finish)
 - race_id: 5
   round: 1/8 final - Women
   start_time: '12:52'
-  end_time: '12:58'
+  end_time: '13:03'
   athletes:
     left:
       name: Shengyan Wang
@@ -70,10 +73,11 @@ races:
       name: Agnese Rittosa
       country: Italy
       bib_color: blue
+  notes: End time extended +5s (early finish)
 - race_id: 6
   round: 1/8 final - Women
   start_time: '14:17'
-  end_time: '14:25'
+  end_time: '14:30'
   athletes:
     left:
       name: Manon Lebon
@@ -83,10 +87,11 @@ races:
       name: Capucine Viglione
       country: France
       bib_color: blue/white
+  notes: End time extended +5s (early finish)
 - race_id: 7
   round: 1/8 final - Women
   start_time: '16:00'
-  end_time: '16:08'
+  end_time: '16:13'
   athletes:
     left:
       name: Shaoqin Zhang
@@ -96,6 +101,7 @@ races:
       name: Ren Kayo Matsu
       country: Japan
       bib_color: red/white
+  notes: End time extended +5s (early finish)
 - race_id: 8
   round: 1/8 final - Women
   start_time: '17:33'
@@ -138,7 +144,7 @@ races:
 - race_id: 11
   round: 1/8 final - Men
   start_time: '23:38'
-  end_time: '23:46'
+  end_time: '23:51'
   athletes:
     left:
       name: Xinchang Wang
@@ -148,6 +154,7 @@ races:
       name: Yong-Jun Jung
       country: South Korea
       bib_color: black/blue
+  notes: End time extended +5s (early finish)
 - race_id: 12
   round: 1/8 final - Men
   start_time: '25:20'
@@ -177,7 +184,7 @@ races:
 - race_id: 14
   round: 1/8 final - Men
   start_time: '28:44'
-  end_time: '28:51'
+  end_time: '28:56'
   athletes:
     left:
       name: Yaroslav Tkach
@@ -187,10 +194,11 @@ races:
       name: Erik Noya
       country: Spain
       bib_color: red/yellow
+  notes: End time extended +5s (early finish)
 - race_id: 15
   round: 1/8 final - Men
   start_time: '30:19'
-  end_time: '30:25'
+  end_time: '30:30'
   athletes:
     left:
       name: Samuel Watson
@@ -200,6 +208,7 @@ races:
       name: Shuto Hzz
       country: Japan
       bib_color: red/white
+  notes: End time extended +5s (early finish)
 - race_id: 16
   round: 1/8 final - Men
   start_time: '32:07'
@@ -229,7 +238,7 @@ races:
 - race_id: 18
   round: Quarter final - Women
   start_time: '36:34'
-  end_time: '36:41'
+  end_time: '36:46'
   athletes:
     left:
       name: Jimin Jeong
@@ -239,10 +248,11 @@ races:
       name: Patrycja Chudziak
       country: Poland
       bib_color: red/white
+  notes: End time extended +5s (early finish)
 - race_id: 19
   round: Quarter final - Women
   start_time: '38:05'
-  end_time: '38:11'
+  end_time: '38:16'
   athletes:
     left:
       name: Shengyan Wang
@@ -252,10 +262,11 @@ races:
       name: Capucine Viglione
       country: France
       bib_color: blue/white
+  notes: End time extended +5s (early finish)
 - race_id: 20
   round: Quarter final - Women
   start_time: '39:43'
-  end_time: '39:47'
+  end_time: '39:52'
   athletes:
     left:
       name: Shaoqin Zhang
@@ -265,10 +276,12 @@ races:
       name: Leslie Romero
       country: Spain
       bib_color: red/yellow
+  notes: End time extended +5s (early finish) | Late start (needs more buffer)
+  late_start: true
 - race_id: 21
   round: Quarter final - Men
   start_time: '42:30'
-  end_time: '42:37'
+  end_time: '42:42'
   athletes:
     left:
       name: Matteo Zurloni
@@ -278,6 +291,7 @@ races:
       name: Ryo Omasa
       country: Japan
       bib_color: red/white
+  notes: End time extended +5s (early finish)
 - race_id: 22
   round: Quarter final - Men
   start_time: '44:15'
@@ -334,7 +348,7 @@ races:
 - race_id: 26
   round: Semi final - Women
   start_time: '56:02'
-  end_time: '56:06'
+  end_time: '56:11'
   athletes:
     left:
       name: Shengyan Wang
@@ -344,6 +358,8 @@ races:
       name: Shaoqin Zhang
       country: China
       bib_color: red
+  notes: End time extended +5s (early finish) | Late start (needs more buffer)
+  late_start: true
 - race_id: 27
   round: Semi final - Men
   start_time: '59:09'
@@ -373,7 +389,7 @@ races:
 - race_id: 29
   round: Small final - Women (Bronze)
   start_time: 01:06:04
-  end_time: 01:06:12
+  end_time: 01:06:17
   athletes:
     left:
       name: Jimin Jeong
@@ -383,10 +399,11 @@ races:
       name: Shengyan Wang
       country: China
       bib_color: red
+  notes: End time extended +5s (early finish)
 - race_id: 30
   round: Small final - Men (Bronze)
   start_time: 01:07:44
-  end_time: 01:07:51
+  end_time: 01:07:59
   athletes:
     left:
       name: Ryo Omasa
@@ -396,6 +413,7 @@ races:
       name: Erik Noya
       country: Spain
       bib_color: red/yellow
+  notes: End time extended +8s (early finish)
 - race_id: 31
   round: Final - Women (Gold)
   start_time: 01:09:41
@@ -412,7 +430,7 @@ races:
 - race_id: 32
   round: Final - Men (Gold)
   start_time: 01:11:59
-  end_time: 01:12:04
+  end_time: 01:12:09
   athletes:
     left:
       name: Xinchang Wang
@@ -422,3 +440,5 @@ races:
       name: Samuel Watson
       country: USA
       bib_color: blue/white
+  notes: End time extended +5s (early finish)
+notes: Some races have late starts or early finishes. Adjusted accordingly.

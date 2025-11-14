@@ -2,7 +2,7 @@
 """
 Batch segment multiple competitions using manual timestamps.
 
-This script processes Seoul, Villars, and Chamonix 2024 competitions
+This script processes Seoul, Villars, Chamonix, Innsbruck 2024 and Zilina 2025 competitions
 using the ManualRaceSegmenter with YAML config files.
 """
 
@@ -17,7 +17,7 @@ from utils.manual_race_segmenter import ManualRaceSegmenter
 
 
 def main():
-    """Process all three competitions."""
+    """Process all five competitions."""
 
     # Configuration
     competitions = [
@@ -25,7 +25,7 @@ def main():
             'name': 'Seoul 2024',
             'config': 'configs/race_timestamps/seoul_2024.yaml',
             'output_dir': 'data/race_segments/seoul_2024',
-            'total_races': 32
+            'total_races': 31
         },
         {
             'name': 'Villars 2024',
@@ -38,6 +38,18 @@ def main():
             'config': 'configs/race_timestamps/chamonix_2024.yaml',
             'output_dir': 'data/race_segments/chamonix_2024',
             'total_races': 32
+        },
+        {
+            'name': 'Innsbruck 2024',
+            'config': 'configs/race_timestamps/innsbruck_2024.yaml',
+            'output_dir': 'data/race_segments/innsbruck_2024',
+            'total_races': 32
+        },
+        {
+            'name': 'Zilina 2025',
+            'config': 'configs/race_timestamps/zilina_2025.yaml',
+            'output_dir': 'data/race_segments/zilina_2025',
+            'total_races': 72
         }
     ]
 

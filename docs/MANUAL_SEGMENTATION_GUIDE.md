@@ -1,7 +1,7 @@
 # راهنمای استخراج دستی مسابقات - Manual Race Segmentation Guide
 
 **تاریخ**: 2025-11-14
-**نسخه**: 2.0 (اصلاح شده)
+**نسخه**: 3.0 (Final - با اصلاحات و Innsbruck)
 **زبان**: فارسی + English
 
 ---
@@ -9,14 +9,17 @@
 ## 📊 وضعیت فعلی (Current Status)
 
 ### ✅ کامل شده:
-- **Parser Script**: اصلاح timestamps و حذف race 15
-- **YAML Configs**: تولید شده برای 3 مسابقه
-- **Seoul 2024**: در حال پردازش مجدد با timestamps اصلاح شده (31 مسابقه)
+- **Parser Script**: اصلاح همه timestamps (Seoul, Villars, Chamonix) + افزودن Innsbruck
+- **YAML Configs**: تولید شده برای 4 مسابقه
+- **Seoul 2024**: ✅ اتمام (31 مسابقه)
+- **Late Start Handling**: پشتیبانی از مسابقات با شروع دیرهنگام (3s buffer)
+- **Manual Race Segmenter**: اصلاح شده برای late_start flag
 
-### ⏳ باقی‌مانده برای شما:
+### ⏳ باقی‌مانده برای پردازش:
 - **Villars 2024**: 24 مسابقه (~15 دقیقه)
 - **Chamonix 2024**: 32 مسابقه (~20 دقیقه)
-- **Total**: 56 مسابقه + بررسی Seoul (31 مسابقه)
+- **Innsbruck 2024**: 32 مسابقه (~20 دقیقه)
+- **Total**: 88 مسابقه (~55 دقیقه)
 
 ---
 
@@ -33,8 +36,40 @@
 
 3. **Total**: 31 مسابقه (قبلاً 32 بود)
 
+### Villars 2024:
+1. **مسابقات زودتر تمام شده**:
+   - Races 1, 7, 8, 12 → +5s به end_time
+   - Race 2 → +4s به end_time (خاص)
+
+2. **شروع دیرهنگام** (3s buffer):
+   - Races 2, 13, 15, 23 → `late_start: true`
+
+3. **Total**: 24 مسابقه (1/8 final Men rerun به دلیل مشکل auto belay)
+
+### Chamonix 2024:
+1. **مسابقات زودتر تمام شده**:
+   - Races 1, 2, 4, 5, 6, 7, 11, 14, 15, 18, 19, 20, 21, 26, 29, 32 → +5s
+   - Race 30 → +8s (خاص)
+
+2. **شروع دیرهنگام** (3s buffer):
+   - Races 20, 26 → `late_start: true`
+
+3. **Total**: 32 مسابقه
+
+### Innsbruck 2024 (جدید!):
+1. **شروع دیرهنگام** (3s buffer) - خیلی زیاد:
+   - Races 2, 4, 6, 8, 9, 10, 12, 14, 15, 16, 17, 20, 21, 23, 24, 25, 27, 32
+   - Total: 18 از 32 مسابقه دارای late_start
+
+2. **نکات**:
+   - نام‌های ناقص ورزشکاران (فقط نام یا نام خانوادگی)
+   - مکان: Innsbruck, Austria (European Cup)
+   - گزارشگر: Matthew Fall (عضو تیم سرعت بریتانیا)
+
+3. **Total**: 32 مسابقه
+
 ### نکته مهم:
-**در همه ویدئوها قبل از شروع 3 بوق می‌زند و مسابقه از بوق سوم شروع می‌شود.**
+**در همه ویدئوها معمولاً قبل از شروع 3 بوق می‌زند و مسابقه از بوق سوم شروع می‌شود، اما گاهی 1، 2 یا هیچ بوقی نیست و بلافاصله شروع می‌شود.**
 
 ---
 
@@ -106,6 +141,32 @@ python src/utils/manual_race_segmenter.py ^
 **زمان تخمینی**: 18-20 دقیقه
 **خروجی انتظاری**: 32 کلیپ MP4 + 32 metadata JSON + 1 summary JSON
 
+**نکته Chamonix**:
+- Races 20 & 26 دارای late_start هستند (سیستم خودکار 3s buffer می‌دهد)
+
+---
+
+### گام 4: استخراج Innsbruck 2024 (32 مسابقه - جدید!)
+
+```bash
+cd "g:\My Drive\Projects\Speed Climbing Performance Analysis"
+
+python src/utils/manual_race_segmenter.py ^
+  "configs/race_timestamps/innsbruck_2024.yaml" ^
+  --output-dir "data/race_segments/innsbruck_2024" ^
+  --buffer-before 1.5 ^
+  --buffer-after 1.5 ^
+  --no-refine
+```
+
+**زمان تخمینی**: 18-20 دقیقه
+**خروجی انتظاری**: 32 کلیپ MP4 + 32 metadata JSON + 1 summary JSON
+
+**نکته Innsbruck**:
+- 18 از 32 مسابقه دارای late_start هستند (سیستم خودکار 3s buffer می‌دهد)
+- نام‌های ورزشکاران ناقص است (فقط نام یا نام خانوادگی)
+- European Cup - Innsbruck, Austria
+
 ---
 
 ## 📁 ساختار نهایی
@@ -127,13 +188,18 @@ data/race_segments/
 │   ├── ...
 │   └── Speed_finals_Villars_2024_summary.json
 │
-└── chamonix_2024/                  ⏳ (32 مسابقه)
-    ├── Speed_finals_Chamonix_2024_race001.mp4
+├── chamonix_2024/                  ⏳ (32 مسابقه)
+│   ├── Speed_finals_Chamonix_2024_race001.mp4
+│   ├── ...
+│   └── Speed_finals_Chamonix_2024_summary.json
+│
+└── innsbruck_2024/                 ⏳ (32 مسابقه - جدید!)
+    ├── Speed_finals_Innsbruck_2024_race001.mp4
     ├── ...
-    └── Speed_finals_Chamonix_2024_summary.json
+    └── Speed_finals_Innsbruck_2024_summary.json
 ```
 
-**Total**: 87 مسابقه (31 + 24 + 32)
+**Total**: 119 مسابقه (31 + 24 + 32 + 32)
 
 ---
 
@@ -160,6 +226,12 @@ data/race_segments/
 - [ ] فایل summary وجود دارد
 - [ ] یک نمونه ویدئو را باز کنید
 
+**Innsbruck:**
+- [ ] تعداد فایل‌های MP4: 32
+- [ ] تعداد metadata files: 32
+- [ ] فایل summary وجود دارد
+- [ ] یک نمونه ویدئو را باز کنید
+
 ---
 
 ## 📊 دستورات بررسی سریع
@@ -171,7 +243,8 @@ data/race_segments/
 echo "Seoul: $(ls data/race_segments/seoul_2024/*.mp4 2>/dev/null | wc -l) / 31"
 echo "Villars: $(ls data/race_segments/villars_2024/*.mp4 2>/dev/null | wc -l) / 24"
 echo "Chamonix: $(ls data/race_segments/chamonix_2024/*.mp4 2>/dev/null | wc -l) / 32"
-echo "Total: $(find data/race_segments -name '*.mp4' 2>/dev/null | wc -l) / 87"
+echo "Innsbruck: $(ls data/race_segments/innsbruck_2024/*.mp4 2>/dev/null | wc -l) / 32"
+echo "Total: $(find data/race_segments -name '*.mp4' 2>/dev/null | wc -l) / 119"
 ```
 
 **PowerShell:**
@@ -179,8 +252,9 @@ echo "Total: $(find data/race_segments -name '*.mp4' 2>/dev/null | wc -l) / 87"
 Write-Host "Seoul:" (Get-ChildItem "data\race_segments\seoul_2024\*.mp4" -ErrorAction SilentlyContinue).Count "/ 31"
 Write-Host "Villars:" (Get-ChildItem "data\race_segments\villars_2024\*.mp4" -ErrorAction SilentlyContinue).Count "/ 24"
 Write-Host "Chamonix:" (Get-ChildItem "data\race_segments\chamonix_2024\*.mp4" -ErrorAction SilentlyContinue).Count "/ 32"
+Write-Host "Innsbruck:" (Get-ChildItem "data\race_segments\innsbruck_2024\*.mp4" -ErrorAction SilentlyContinue).Count "/ 32"
 $total = (Get-ChildItem -Recurse "data\race_segments\*.mp4" -ErrorAction SilentlyContinue).Count
-Write-Host "Total:" $total "/ 87"
+Write-Host "Total:" $total "/ 119"
 ```
 
 ### حجم کل:
@@ -196,7 +270,7 @@ $size = (Get-ChildItem -Recurse data\race_segments | Measure-Object -Property Le
 Write-Host "Total size:" ([math]::Round($size/1GB, 2)) "GB"
 ```
 
-**انتظار**: حدود 2-3 GB
+**انتظار**: حدود 3-4 GB (119 مسابقه)
 
 ---
 
@@ -274,13 +348,14 @@ echo "=== FINAL REPORT ==="
 echo "Seoul: $(ls data/race_segments/seoul_2024/*.mp4 | wc -l) / 31"
 echo "Villars: $(ls data/race_segments/villars_2024/*.mp4 | wc -l) / 24"
 echo "Chamonix: $(ls data/race_segments/chamonix_2024/*.mp4 | wc -l) / 32"
-echo "Total: $(find data/race_segments -name '*.mp4' | wc -l) / 87"
+echo "Innsbruck: $(ls data/race_segments/innsbruck_2024/*.mp4 | wc -l) / 32"
+echo "Total: $(find data/race_segments -name '*.mp4' | wc -l) / 119"
 echo ""
 echo "=== Sample Metadata (Seoul Race 1) ==="
 cat "data/race_segments/seoul_2024/Speed_finals_Seoul_2024_race001_metadata.json"
 ```
 
-یا ساده‌تر: فقط بگویید "همه تمام شد - 87 مسابقه آماده!"
+یا ساده‌تر: فقط بگویید "همه تمام شد - 119 مسابقه آماده!"
 
 ---
 
@@ -296,10 +371,13 @@ cat "data/race_segments/seoul_2024/Speed_finals_Seoul_2024_race001_metadata.json
 ## 💡 نکات مهم
 
 1. **سرعت**: با `--no-refine` هر مسابقه ~30 ثانیه طول می‌کشد
-2. **دقت**: timestamps شما دقیق است، نیازی به detection نیست
+2. **دقت**: timestamps دقیق است، نیازی به detection نیست
 3. **Buffer**: 1.5s قبل و بعد کافی است (3 بوق + واکنش)
-4. **Race 15**: حذف شده است (false start)
-5. **Total**: 87 مسابقه (نه 88)
+4. **Late Start**: سیستم خودکار 3s buffer برای مسابقات با `late_start: true` می‌دهد
+5. **Seoul Race 15**: حذف شده است (false start)
+6. **Total**: 119 مسابقه (31 + 24 + 32 + 32)
+7. **اصلاحات**: همه timestamps اصلاح شده‌اند (Seoul, Villars, Chamonix)
+8. **Innsbruck**: نام‌های ورزشکاران ناقص + 18 مسابقه late_start
 
 ---
 

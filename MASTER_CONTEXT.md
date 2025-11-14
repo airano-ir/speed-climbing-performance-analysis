@@ -1,7 +1,7 @@
 # MASTER CONTEXT - Speed Climbing Performance Analysis
 # سند راهنمای کامل پروژه تحلیل سنگنوردی سرعتی
 
-**Last Updated**: 2025-11-13
+**Last Updated**: 2025-11-14
 **Purpose**: این سند برای ادامه کار در صورت قطع شدن session یا شروع مجدد در conversation جدید
 **Language**: Persian (Farsi) + English
 
@@ -181,22 +181,30 @@
 #### 7. Manual Race Segmentation System ✅ (2025-11-14)
 - **وضعیت**: COMPLETED - استفاده از timestamps دستی برای دقت بالا
 - **فایل‌های ایجاد شده**:
-  - `scripts/parse_timestamps_to_yaml.py` (~900 lines) - تبدیل timestamps به YAML
-  - `src/utils/manual_race_segmenter.py` (~550 lines) - استخراج با timestamps دستی
-  - `scripts/batch_segment_competitions.py` (~120 lines) - پردازش batch
-  - `docs/MANUAL_SEGMENTATION_GUIDE.md` - راهنمای جامع کاربر
-  - `configs/race_timestamps/*.yaml` - 3 فایل config (Seoul, Villars, Chamonix)
+  - `scripts/parse_timestamps_to_yaml.py` (~1450 lines) - تبدیل timestamps به YAML برای 5 مسابقه
+  - `src/utils/manual_race_segmenter.py` (~550 lines) - استخراج با timestamps دستی + late_start handling
+  - `scripts/batch_segment_competitions.py` (~130 lines) - پردازش batch
+  - `docs/MANUAL_SEGMENTATION_GUIDE.md` - راهنمای جامع کاربر (Version 3.0)
+  - `configs/race_timestamps/*.yaml` - 5 فایل config (Seoul, Villars, Chamonix, Innsbruck, Zilina)
 
 **قابلیت‌های parse_timestamps_to_yaml.py**:
 - پارس timestamps از متن فارسی
 - تولید YAML config با اطلاعات کامل ورزشکاران
-- اصلاح خودکار end_time برای مسابقات زودتر تمام شده (+5s)
+- اصلاح خودکار end_time برای مسابقات زودتر تمام شده (+4s/+5s/+8s)
+- اضافه کردن start_time برای مسابقات با شروع دیرهنگام (+20s)
+- علامت‌گذاری `late_start` flag برای مسابقات با شروع تأخیری
 - حذف مسابقات invalid (مثل false starts)
-- خروجی: 87 مسابقه برای 3 فاینال (Seoul: 31, Villars: 24, Chamonix: 32)
+- خروجی: **191 مسابقه** برای 5 فاینال:
+  - Seoul 2024: 31 مسابقه (race 15 حذف شد)
+  - Villars 2024: 24 مسابقه (rerun 1/8 final men)
+  - Chamonix 2024: 32 مسابقه (IFSC World Cup)
+  - Innsbruck 2024: 32 مسابقه (European Cup)
+  - Zilina 2025: 72 مسابقه (European Youth Championships - U17/U19/U21)
 
 **قابلیت‌های manual_race_segmenter.py**:
 - برش frame-accurate با ffmpeg
-- Buffer قابل تنظیم (قبل و بعد)
+- Buffer قابل تنظیم (default: 1.5s قبل و بعد)
+- **Late start handling**: خودکار 3s buffer برای مسابقات با `late_start: true`
 - Optional detection refinement (فعلاً disabled برای سرعت)
 - تولید metadata کامل با اطلاعات ورزشکاران
 - Winner detection (TODO)
@@ -207,11 +215,14 @@
 - ✅ دقیق: timestamps manual = دقت 100%
 - 📊 Metadata غنی: athlete info, country, round, bib colors
 - 🎯 No false positives
+- 🔄 Smart buffer adjustment: 3s برای late starts
 
 **نکات مهم**:
-- قبل از شروع مسابقه 3 بوق می‌زند (بوق سوم = شروع)
-- برخی مسابقات زودتر تمام می‌شوند (parser خودکار +5s اضافه می‌کند)
-- Race 15 Seoul حذف شد (false start - خیلی کوتاه)
+- معمولاً قبل از شروع 3 بوق می‌زند (بوق سوم = شروع)، اما گاهی 1، 2 یا هیچ بوقی نیست
+- برخی مسابقات زودتر تمام می‌شوند (parser خودکار +4-8s اضافه می‌کند)
+- برخی مسابقات با تأخیر شروع می‌شوند (parser خودکار 3s buffer می‌دهد)
+- Seoul Race 15 حذف شد (false start - خیلی کوتاه)
+- Zilina: دیواره لغزنده، بسیاری از ورزشکاران افتادند
 
 #### 8. Git Commits
 - **Commit 1** (dd66cc9): YouTube video downloader
@@ -236,19 +247,35 @@
   - race_segmenter.py (380 lines)
   Files: 3 changed, 1461 insertions(+)
   ```
+- **Commit 8** (57d164f): docs: update MASTER_CONTEXT with Priority 1 completion and cleanup (2025-11-13)
+- **Commit 9** (4b169da): test: add Priority 1 test results and validation (2025-11-13)
+- **Commit 10** (d27fbbd): feat: add sliding window multi-race detection to race segmenter (2025-11-13)
+- **Commit 11** (3efc78b): feat: implement manual race segmentation system (2025-11-14)
+  ```
+  feat: implement manual race segmentation system
+  - parse_timestamps_to_yaml.py: Parse manual timestamps to YAML (Seoul fixed)
+  - manual_race_segmenter.py: Frame-accurate extraction with ffmpeg
+  - batch_segment_competitions.py: Batch processing script
+  - MANUAL_SEGMENTATION_GUIDE.md: Comprehensive user guide (Farsi+English)
+  - 3 YAML configs generated (Seoul: 31, Villars: 24, Chamonix: 32)
+  Files: 7 changed, ~2000 insertions
+  ```
 
 ---
 
 ## 🔧 کارهای در حال انجام (In Progress)
 
-### Manual Race Segmentation (2025-11-14)
-- ✅ Parser و YAML configs ساخته شد
-- 🔄 Seoul 2024: در حال پردازش مجدد (31 مسابقه) - 16/31 تا الان
-- ⏳ Villars 2024: آماده برای پردازش (24 مسابقه) - راهنما آماده
-- ⏳ Chamonix 2024: آماده برای پردازش (32 مسابقه) - راهنما آماده
-- 📖 راهنمای کامل کاربر: `docs/MANUAL_SEGMENTATION_GUIDE.md`
-
-**Next**: بعد از اتمام Seoul، کاربر Villars و Chamonix را process می‌کند
+### Manual Race Segmentation - Final Processing (2025-11-14)
+- ✅ Parser و YAML configs ساخته شد (5 مسابقه، 191 race)
+- ✅ Seoul 2024: COMPLETED (31 مسابقه با اصلاحات)
+- ✅ Timestamps corrections applied:
+  - Seoul: +5s corrections, race 15 removed
+  - Villars: +4s/+5s corrections, late_start flags
+  - Chamonix: +5s/+8s corrections, late_start flags
+  - Innsbruck: +5s/+8s corrections, +20s start for race 2, late_start flags
+  - Zilina: 72 races (European Youth Championships)
+- 🔄 در حال پردازش: Villars, Chamonix, Innsbruck, Zilina (~1.5 hours)
+- 📖 راهنمای کامل کاربر: `docs/MANUAL_SEGMENTATION_GUIDE.md` (Version 3.0)
 
 ---
 
@@ -735,6 +762,117 @@ Phase 3: Integration & Testing
 - ✅ Fixed test failures (c47021c)
 - ✅ All 17 tests passing (100%)
 - ✅ Dual-Lane Detection module COMPLETE
+
+---
+
+## 🎯 مراحل بعدی (Next Steps)
+
+### گام فوری: اتمام پردازش مسابقات (2025-11-14)
+1. ✅ Seoul 2024: COMPLETED (31 مسابقه)
+2. 🔄 **در حال اجرا**: Villars, Chamonix, Innsbruck, Zilina (~1.5 hours)
+   - `python scripts/batch_segment_competitions.py` در حال اجرا
+   - کل 160 مسابقه باقیمانده (24 + 32 + 32 + 72)
+3. ✅ Verify extracted segments:
+   ```bash
+   ls -l data/race_segments/*/
+   # Expected: 191 .mp4 files + 191 metadata JSONs + 5 summary JSONs
+   ```
+
+### Phase 2: Pose Estimation & Analysis (بعد از اتمام segmentation)
+
+#### گام 1: Pose Estimation روی Race Segments (اولویت بالا)
+**هدف**: استخراج BlazePose keypoints از 191 کلیپ مسابقه
+
+**تسک‌ها**:
+1. **Pipeline ساده برای batch processing**:
+   - ورودی: directory از race clips (191 فایل .mp4)
+   - خروجی: JSON/NPZ files با pose keypoints
+   - قابلیت resumable (skip already processed)
+
+2. **استفاده از کد موجود**:
+   - `dual_lane_detector.py` آماده است و تست شده
+   - نیاز به script ساده برای batch processing:
+     ```python
+     # scripts/batch_pose_extraction.py
+     for clip in race_segments:
+         detector = DualLaneDetector(method='fixed')
+         result = detector.process_frame(frame)
+         save_keypoints(result, output_path)
+     ```
+
+3. **خروجی موردنیاز**:
+   - Format: JSON یا NPZ (numpy compressed)
+   - محتوا: frame_id, left_keypoints, right_keypoints, confidence
+   - ذخیره در: `data/processed/poses/`
+
+#### گام 2: IFSC Calibration Integration (اولویت متوسط)
+**هدف**: استفاده از 20 گیره استاندارد برای calibration
+
+**تسک‌ها**:
+1. **Parse IFSC PDF** → grid coordinates
+2. **Hold Detection** با color/template matching
+3. **Pixel-to-Meter Conversion** با homography
+4. **مزیت**: حل مشکل camera motion با re-calibration per frame
+
+#### گام 3: Performance Metrics (اولویت بالا)
+**هدف**: محاسبه متریک‌های performance از pose data
+
+**متریک‌های کلیدی**:
+- **Vertical velocity**: سرعت صعود (m/s)
+- **Hold-by-hold timing**: زمان رسیدن به هر گیره (اگر calibration باشد)
+- **Movement smoothness**: jerk analysis
+- **Path efficiency**: انحراف از خط مستقیم
+
+**تسک‌ها**:
+1. Load pose keypoints
+2. Calculate metrics frame-by-frame
+3. Export to CSV for each race
+4. Aggregate statistics (mean, std, percentiles)
+
+#### گام 4: Visualization & Comparison (اولویت بالا)
+**هدف**: مقایسه بصری دو climber
+
+**نمودارها**:
+- Time-series plots (height vs time)
+- Velocity profiles
+- Side-by-side video + overlay
+- Comparative dashboard
+
+### Priority Roadmap بعد از Phase 2:
+
+1. **Short-term** (1-2 weeks):
+   - ✅ Race segmentation (DONE - 191 races)
+   - 🔄 Pose extraction (batch processing)
+   - 📊 Basic metrics (velocity, timing)
+   - 📈 Simple visualizations
+
+2. **Medium-term** (1 month):
+   - 📐 IFSC calibration (20 holds)
+   - 🎯 Hold-by-hold analysis
+   - 📊 Advanced metrics (jerk, path efficiency)
+   - 📈 Interactive dashboard
+
+3. **Long-term** (2-3 months):
+   - 🧠 NARX neural networks (performance prediction)
+   - 🤖 Fuzzy logic systems (technique evaluation)
+   - 🌐 Real-time processing
+   - 📱 Mobile/web deployment
+
+### فایل‌های کلیدی برای Phase 2:
+```
+scripts/
+  batch_pose_extraction.py        # NEW - batch processing for 191 clips
+
+src/analysis/
+  performance_metrics.py           # NEW - calculate metrics from poses
+
+src/visualization/
+  time_series_plots.py             # NEW - velocity, height plots
+  comparative_overlay.py           # NEW - side-by-side comparison
+
+notebooks/
+  02_pose_analysis.ipynb           # NEW - exploratory analysis
+```
 
 ---
 

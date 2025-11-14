@@ -8,7 +8,7 @@ races:
 - race_id: 1
   round: 1/8 final - Men (Rerun)
   start_time: '51:10'
-  end_time: '51:14'
+  end_time: '51:19'
   athletes:
     left:
       name: Matteo Zurloni
@@ -18,10 +18,11 @@ races:
       name: Masio Ganier
       country: France
       bib_color: blue/white/red
+  notes: End time extended +5s (early finish)
 - race_id: 2
   round: 1/8 final - Men (Rerun)
   start_time: '52:55'
-  end_time: '53:00'
+  end_time: '53:04'
   athletes:
     left:
       name: Kostiantyn Pavlenko
@@ -31,6 +32,8 @@ races:
       name: Kevin Ammon
       country: France
       bib_color: blue/white/red
+  notes: End time extended +4s (early finish) | Late start (needs more buffer)
+  late_start: true
 - race_id: 3
   round: 1/8 final - Men (Rerun)
   start_time: '54:52'
@@ -87,7 +90,7 @@ races:
 - race_id: 7
   round: 1/8 final - Men (Rerun)
   start_time: 01:01:28
-  end_time: 01:01:32
+  end_time: 01:01:37
   athletes:
     left:
       name: Leander Carmans
@@ -97,11 +100,11 @@ races:
       name: Hii Otisian
       country: Ukraine
       bib_color: black/blue/yellow
-  notes: Fall occurred
+  notes: Fall occurred | End time extended +5s (early finish)
 - race_id: 8
   round: 1/8 final - Men (Rerun)
   start_time: 01:03:17
-  end_time: 01:03:23
+  end_time: 01:03:28
   athletes:
     left:
       name: Sebastian Lucke
@@ -111,6 +114,7 @@ races:
       name: Lucas Knap
       country: Germany
       bib_color: black/red/yellow
+  notes: End time extended +5s (early finish)
 - race_id: 9
   round: Quarter final - Women
   start_time: 01:05:56
@@ -153,7 +157,7 @@ races:
 - race_id: 12
   round: Quarter final - Women
   start_time: 01:10:38
-  end_time: 01:10:42
+  end_time: 01:10:47
   athletes:
     left:
       name: Beatrice Colli
@@ -163,6 +167,7 @@ races:
       name: Julia Cotch
       country: Poland
       bib_color: red/white
+  notes: End time extended +5s (early finish)
 - race_id: 13
   round: Quarter final - Men
   start_time: 01:12:29
@@ -176,6 +181,8 @@ races:
       name: Kostiantyn Pavlenko
       country: Ukraine
       bib_color: black/blue/yellow
+  late_start: true
+  notes: Late start (needs more buffer)
 - race_id: 14
   round: Quarter final - Men
   start_time: 01:14:16
@@ -203,7 +210,8 @@ races:
       name: Marcin Dzienski
       country: Poland
       bib_color: red/white
-  notes: Slip occurred
+  notes: Slip occurred | Late start (needs more buffer)
+  late_start: true
 - race_id: 16
   round: Quarter final - Men
   start_time: 01:17:35
@@ -315,7 +323,8 @@ races:
       name: Patricia Hujak
       country: Poland
       bib_color: red/white
-  notes: Slip occurred
+  notes: Slip occurred | Late start (needs more buffer)
+  late_start: true
 - race_id: 24
   round: Final - Men (Gold)
   start_time: 01:42:10
@@ -330,4 +339,5 @@ races:
       country: Italy
       bib_color: blue
   notes: Slip occurred
-notes: Auto belay malfunction in left lane caused rerun of all 1/8 final men races
+notes: Auto belay malfunction in left lane caused rerun of all 1/8 final men races.
+  Some races have late starts or early finishes.
