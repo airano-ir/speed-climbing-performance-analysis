@@ -62,14 +62,30 @@ powershell -ExecutionPolicy Bypass -File check_progress.ps1
 
 **راهنمای دقیق**: بخش "🎯 مراحل بعدی (Next Steps)" را در پایین این سند ببینید.
 
-### 📦 مدیریت فایل‌های ویدئو (Video Files Management)
+### 📦 مدیریت فایل‌های ویدئو (Video Files Management) - Updated 2025-11-14
 
-**مهم**: فایل‌های ویدئو در git نیستند (در `.gitignore`)
+**استراتژی Multi-Environment**: پروژه در سه محیط مختلف sync می‌شود
 
-**موقعیت فعلی**:
-- همه فایل‌ها در Google Drive: `G:\My Drive\Projects\Speed Climbing Performance Analysis\data\`
-- 5 raw videos: `data/raw_videos/*.mp4` (~10-15 GB)
-- 188 race segments: `data/race_segments/*/*.mp4` (~5-6 GB)
+**محیط‌های موجود**:
+1. **Gitea (Primary - Private)**: https://gitea.airano.ir/dev/Speed-Climbing-Performance-Analysis
+2. **GitHub (Public - Lightweight)**: https://github.com/languageofearthcom-oss/Speed-Climbing-Performance-Analysis
+3. **UI claude.ai/code**: Clone از GitHub
+
+**وضعیت فایل‌های ویدئو**:
+- **Local (Google Drive)**: همه فایل‌ها (~711 MB)
+  - ❌ 5 raw finals videos حذف شدند (قابل دانلود مجدد از YouTube)
+  - ✅ 188 race segments (705 MB) - آماده برای commit
+  - ✅ 5 sample clips (6 MB)
+  - ✅ همه metadata files
+
+- **Gitea**:
+  - ✅ Committed (commit 4110df5) - 706MB data
+  - ⚠️ Push pending (timeout - نیاز به manual push یا chunked push)
+
+- **GitHub**:
+  - ✅ همه کد و configs synced
+  - ❌ Race segments MP4 ignored (gitignore)
+  - ✅ همه metadata tracked
 
 **برای استفاده در پروژه جدید**:
 1. **گزینه 1 - کپی از Google Drive**:
@@ -105,6 +121,71 @@ git add .gitattributes
 ```
 
 **توصیه**: فایل‌های ویدئو را در Google Drive نگه دارید و فقط کد + configs را در git قرار دهید.
+
+---
+
+## 🔄 Multi-Environment Sync Workflow (راهنمای همگام‌سازی) - New 2025-11-14
+
+### نمای کلی:
+```
+┌─────────────┐         ┌─────────────┐         ┌─────────────┐
+│   Gitea     │◄───────►│  Local PC   │◄───────►│  GitHub     │
+│  (Primary)  │         │  (You)      │         │  (Public)   │
+│  Full Data  │         │             │         │ Lightweight │
+└─────────────┘         └─────────────┘         └─────────────┘
+                              ▲
+                              │
+                              ▼
+                        ┌─────────────┐
+                        │ claude.ai/  │
+                        │    code     │
+                        └─────────────┘
+```
+
+### فایل‌های راهنما:
+- **[SYNC_WORKFLOW.md](SYNC_WORKFLOW.md)**: راهنمای جامع sync (30+ صفحه)
+- **sync.bat** / **sync.sh**: اسکریپت‌های automation
+
+### دستورات سریع:
+
+**Windows**:
+```bash
+sync.bat          # Full sync (pull + push + verify)
+sync.bat pull     # Pull only
+sync.bat push     # Push only
+```
+
+**Linux/Mac**:
+```bash
+chmod +x sync.sh
+./sync.sh         # Full sync
+```
+
+### Workflow روزانه:
+
+**صبح** (شروع کار):
+```bash
+git pull origin main      # از Gitea
+git push github main      # به GitHub
+```
+
+**عصر** (پایان کار):
+```bash
+git add -A
+git commit -m "توضیحات"
+git push origin main      # به Gitea
+git push github main      # به GitHub
+```
+
+### Remotes فعلی:
+```
+origin: https://gitea.airano.ir/dev/Speed-Climbing-Performance-Analysis.git
+github: https://github.com/languageofearthcom-oss/Speed-Climbing-Performance-Analysis.git
+```
+
+برای جزئیات بیشتر، [SYNC_WORKFLOW.md](SYNC_WORKFLOW.md) را ببینید.
+
+---
 
 ### 💡 بهبودها و نکات مهم (Improvements & Key Notes)
 
@@ -864,6 +945,29 @@ Phase 3: Integration & Testing
 ---
 
 ## 🔄 آخرین به‌روزرسانی (Last Update Log)
+
+**2025-11-14 Multi-Environment Setup + Data Cleanup**
+- ✅ Merged UI improvements از claude.ai/code:
+  - filterpy اختیاری شد (backward compatible)
+  - SETUP_WEB_ENVIRONMENT.md ایجاد شد
+  - requirements_core.txt برای محیط وب
+  - test_pose_extraction.py
+- ✅ پاکسازی کامل (16GB → 711MB):
+  - حذف 5 ویدئوی فاینال بزرگ (قابل دانلود مجدد)
+  - حذف فایل‌های موقت YouTube و WAV
+  - نگه‌داری 188 race segments + metadata
+- ✅ Multi-Environment Sync Setup:
+  - SYNC_WORKFLOW.md (راهنمای جامع 30+ صفحه)
+  - sync.bat / sync.sh (automation scripts)
+  - Gitea ↔ GitHub ↔ UI workflow
+- ✅ Data committed locally (commit 4110df5 - 706MB):
+  - 188 race segment MP4s
+  - 188 metadata JSONs
+  - 21 raw video metadata
+- ⚠️ Push to Gitea pending (timeout - نیاز به manual)
+- ✅ GitHub synced (code + docs + scripts)
+- 🎯 Ready for UI claude.ai/code to continue Phase 2
+- 📝 START_UI_DEVELOPMENT.md ایجاد شد
 
 **2025-11-13 Late Update - Priority 1 COMPLETED**
 - ✅ Implemented complete Race Segmentation System (1330+ lines)
