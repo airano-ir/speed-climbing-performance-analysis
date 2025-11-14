@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Villars_2024_race013",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+  "round": "Quarter final - Men",
+  "manual_start_time": "01:12:29",
+  "manual_end_time": "01:12:33",
+  "detected_start_frame": 130470,
+  "detected_finish_frame": 130546,
+  "detected_start_time": 4349,
+  "detected_finish_time": 4351.533333333334,
+  "race_duration": 2.5333333333337578,
+  "left_athlete": {
+    "name": "Matteo Zurloni",
+    "country": "Italy",
+    "bib_color": "blue"
+  },
+  "right_athlete": {
+    "name": "Kostiantyn Pavlenko",
+    "country": "Ukraine",
+    "bib_color": "black/blue/yellow"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.4388020833333333,
+  "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race013.mp4",
+  "buffer_before": 3.0,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T12:04:03.918458",
+  "notes": "Late start (needs more buffer)"
+}

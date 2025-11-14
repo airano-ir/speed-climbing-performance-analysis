@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Chamonix_2024_race021",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Chamonix_2024.mp4",
+  "round": "Quarter final - Men",
+  "manual_start_time": "42:30",
+  "manual_end_time": "42:42",
+  "detected_start_frame": 76658,
+  "detected_finish_frame": 76828,
+  "detected_start_time": 2555.266666666667,
+  "detected_finish_time": 2560.9333333333334,
+  "race_duration": 5.666666666666515,
+  "left_athlete": {
+    "name": "Matteo Zurloni",
+    "country": "Italy",
+    "bib_color": "blue"
+  },
+  "right_athlete": {
+    "name": "Ryo Omasa",
+    "country": "Japan",
+    "bib_color": "red/white"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.4217664930555556,
+  "output_path": "data\\race_segments\\chamonix_2024\\Speed_finals_Chamonix_2024_race021.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T13:09:34.631439",
+  "notes": "End time extended +5s (early finish)"
+}

@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Chamonix_2024_race009",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Chamonix_2024.mp4",
+  "round": "1/8 final - Men",
+  "manual_start_time": "20:23",
+  "manual_end_time": "20:36",
+  "detected_start_frame": 36860,
+  "detected_finish_frame": 37044,
+  "detected_start_time": 1228.6666666666667,
+  "detected_finish_time": 1234.8,
+  "race_duration": 6.133333333333212,
+  "left_athlete": {
+    "name": "Matteo Zurloni",
+    "country": "Italy",
+    "bib_color": "blue"
+  },
+  "right_athlete": {
+    "name": "Damir Tursunov",
+    "country": "Kazakhstan",
+    "bib_color": "blue/yellow"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.4695095486111111,
+  "output_path": "data\\race_segments\\chamonix_2024\\Speed_finals_Chamonix_2024_race009.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T12:57:37.175565",
+  "notes": null
+}

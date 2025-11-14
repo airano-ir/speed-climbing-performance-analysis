@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Zilina_2025_race038",
+  "source_video": "G:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Zilina_2025.mp4",
+  "round": "Quarter final - Women U19",
+  "manual_start_time": "01:05:05",
+  "manual_end_time": "01:05:28",
+  "detected_start_frame": 117150,
+  "detected_finish_frame": 117840,
+  "detected_start_time": 3905,
+  "detected_finish_time": 3928,
+  "race_duration": 23,
+  "left_athlete": {
+    "name": "Polina",
+    "country": "Ukraine",
+    "bib_color": "unknown"
+  },
+  "right_athlete": {
+    "name": "Martina",
+    "country": "Poland",
+    "bib_color": "unknown"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 1.0,
+  "output_path": "data\\race_segments\\zilina_2025\\Speed_finals_Zilina_2025_race038.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T16:45:02.199620",
+  "notes": "Start time -4s (video cut adjustment)"
+}

@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Zilina_2025_race019",
+  "source_video": "G:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Zilina_2025.mp4",
+  "round": "1/8 final - Women U19",
+  "manual_start_time": "42:36",
+  "manual_end_time": "43:17",
+  "detected_start_frame": 76680,
+  "detected_finish_frame": 77910,
+  "detected_start_time": 2556,
+  "detected_finish_time": 2597,
+  "race_duration": 41,
+  "left_athlete": {
+    "name": "Sara",
+    "country": "Italy",
+    "bib_color": "unknown"
+  },
+  "right_athlete": {
+    "name": "Carolina",
+    "country": "Poland",
+    "bib_color": "unknown"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 1.0,
+  "output_path": "data\\race_segments\\zilina_2025\\Speed_finals_Zilina_2025_race019.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T16:41:40.101668",
+  "notes": "End time +10s (extended replay)"
+}

@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Seoul_2024_race016",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Seoul_2024.mp4",
+  "round": "Quarter final - Women",
+  "manual_start_time": "34:22",
+  "manual_end_time": "34:32",
+  "detected_start_frame": 61860,
+  "detected_finish_frame": 62059,
+  "detected_start_time": 2062,
+  "detected_finish_time": 2068.6666666666665,
+  "race_duration": 6.666666666666515,
+  "left_athlete": {
+    "name": "Raja Salilia",
+    "country": "Indonesia",
+    "bib_color": "red/white"
+  },
+  "right_athlete": {
+    "name": "Susan Nuri Adadya",
+    "country": "Indonesia",
+    "bib_color": "red/white"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.5088975694444444,
+  "output_path": "data\\race_segments\\seoul_2024\\Speed_finals_Seoul_2024_race016.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T11:25:13.736926",
+  "notes": "End time extended +5s (race finished early)"
+}

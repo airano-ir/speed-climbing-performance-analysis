@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Innsbruck_2024_race009",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Innsbruck_2024.mp4",
+  "round": "1/8 final - Women",
+  "manual_start_time": "26:36",
+  "manual_end_time": "26:42",
+  "detected_start_frame": 47880,
+  "detected_finish_frame": 48060,
+  "detected_start_time": 1596,
+  "detected_finish_time": 1602,
+  "race_duration": 6,
+  "left_athlete": {
+    "name": "Daria Tkacheva",
+    "country": "Ukraine",
+    "bib_color": "blue/yellow"
+  },
+  "right_athlete": {
+    "name": "Emma Glode",
+    "country": "Germany",
+    "bib_color": "black/red/yellow"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 1.0,
+  "output_path": "data\\race_segments\\innsbruck_2024\\Speed_finals_Innsbruck_2024_race009.mp4",
+  "buffer_before": 3.0,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T13:36:22.726732",
+  "notes": "Late start (needs more buffer)"
+}

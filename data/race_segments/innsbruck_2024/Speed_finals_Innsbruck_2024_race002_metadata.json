@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Innsbruck_2024_race002",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Innsbruck_2024.mp4",
+  "round": "1/8 final - Men",
+  "manual_start_time": "16:18",
+  "manual_end_time": "16:27",
+  "detected_start_frame": 29340,
+  "detected_finish_frame": 29610,
+  "detected_start_time": 978,
+  "detected_finish_time": 987,
+  "race_duration": 9,
+  "left_athlete": {
+    "name": "Kostiantyn Pavlenko",
+    "country": "Ukraine",
+    "bib_color": "blue/yellow"
+  },
+  "right_athlete": {
+    "name": "Joshua Bruyns",
+    "country": "Germany",
+    "bib_color": "black/red/yellow"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 1.0,
+  "output_path": "data\\race_segments\\innsbruck_2024\\Speed_finals_Innsbruck_2024_race002.mp4",
+  "buffer_before": 3.0,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T13:25:38.280695",
+  "notes": "Start time +20s, End time +8s (timing adjustments) | Late start (needs more buffer)"
+}

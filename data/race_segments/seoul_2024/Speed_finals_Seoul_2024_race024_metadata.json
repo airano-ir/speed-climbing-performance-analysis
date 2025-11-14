@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Seoul_2024_race024",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Seoul_2024.mp4",
+  "round": "Semi final - Women",
+  "manual_start_time": "01:07:08",
+  "manual_end_time": "01:07:19",
+  "detected_start_frame": 120840,
+  "detected_finish_frame": 121153,
+  "detected_start_time": 4028,
+  "detected_finish_time": 4038.4333333333334,
+  "race_duration": 10.433333333333394,
+  "left_athlete": {
+    "name": "Raja Salilia",
+    "country": "Indonesia",
+    "bib_color": "red/white"
+  },
+  "right_athlete": {
+    "name": "Lijuan Deng",
+    "country": "China",
+    "bib_color": "red/yellow"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.4597439236111111,
+  "output_path": "data\\race_segments\\seoul_2024\\Speed_finals_Seoul_2024_race024.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T11:36:07.039584",
+  "notes": "End time extended +5s (race finished early)"
+}

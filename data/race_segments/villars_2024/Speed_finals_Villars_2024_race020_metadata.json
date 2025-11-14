@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Villars_2024_race020",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+  "round": "Semi final - Men",
+  "manual_start_time": "01:31:15",
+  "manual_end_time": "01:31:25",
+  "detected_start_frame": 164250,
+  "detected_finish_frame": 164556,
+  "detected_start_time": 5475,
+  "detected_finish_time": 5485.2,
+  "race_duration": 10.199999999999818,
+  "left_athlete": {
+    "name": "Ludovico Fossali",
+    "country": "Italy",
+    "bib_color": "blue"
+  },
+  "right_athlete": {
+    "name": "Sebastian Lucke",
+    "country": "Germany",
+    "bib_color": "black/red/yellow"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.40690104166666663,
+  "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race020.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T12:14:44.917269",
+  "notes": "Fall and slip occurred"
+}

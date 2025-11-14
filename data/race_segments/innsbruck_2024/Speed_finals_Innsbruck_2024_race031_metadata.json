@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Innsbruck_2024_race031",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Innsbruck_2024.mp4",
+  "round": "Final - Men (Gold)",
+  "manual_start_time": "01:21:55",
+  "manual_end_time": "01:22:01",
+  "detected_start_frame": 147450,
+  "detected_finish_frame": 147630,
+  "detected_start_time": 4915,
+  "detected_finish_time": 4921,
+  "race_duration": 6,
+  "left_athlete": {
+    "name": "Kostiantyn Pavlenko",
+    "country": "Ukraine",
+    "bib_color": "blue/yellow"
+  },
+  "right_athlete": {
+    "name": "Lucas Knapp",
+    "country": "Austria",
+    "bib_color": "red/white"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 1.0,
+  "output_path": "data\\race_segments\\innsbruck_2024\\Speed_finals_Innsbruck_2024_race031.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T14:16:01.640784",
+  "notes": null
+}

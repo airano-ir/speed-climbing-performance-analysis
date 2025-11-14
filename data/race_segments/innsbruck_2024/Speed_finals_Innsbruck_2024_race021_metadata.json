@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Innsbruck_2024_race021",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Innsbruck_2024.mp4",
+  "round": "Quarter final - Women",
+  "manual_start_time": "53:28",
+  "manual_end_time": "53:35",
+  "detected_start_frame": 96240,
+  "detected_finish_frame": 96450,
+  "detected_start_time": 3208,
+  "detected_finish_time": 3215,
+  "race_duration": 7,
+  "left_athlete": {
+    "name": "Daria",
+    "country": "Ukraine",
+    "bib_color": "blue/yellow"
+  },
+  "right_athlete": {
+    "name": "Erica",
+    "country": "Italy",
+    "bib_color": "blue/white/red"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 1.0,
+  "output_path": "data\\race_segments\\innsbruck_2024\\Speed_finals_Innsbruck_2024_race021.mp4",
+  "buffer_before": 3.0,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T13:57:16.615607",
+  "notes": "After long technical break | Late start (needs more buffer)"
+}

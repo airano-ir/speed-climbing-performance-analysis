@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Innsbruck_2024_race022",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Innsbruck_2024.mp4",
+  "round": "Quarter final - Women",
+  "manual_start_time": "54:48",
+  "manual_end_time": "55:01",
+  "detected_start_frame": 98640,
+  "detected_finish_frame": 99030,
+  "detected_start_time": 3288,
+  "detected_finish_time": 3301,
+  "race_duration": 13,
+  "left_athlete": {
+    "name": "Maria",
+    "country": "Poland",
+    "bib_color": "red/white"
+  },
+  "right_athlete": {
+    "name": "Yulia",
+    "country": "Germany",
+    "bib_color": "black/red/yellow"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 1.0,
+  "output_path": "data\\race_segments\\innsbruck_2024\\Speed_finals_Innsbruck_2024_race022.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T13:58:48.162662",
+  "notes": null
+}

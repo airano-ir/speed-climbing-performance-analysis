@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Zilina_2025_race029",
+  "source_video": "G:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Zilina_2025.mp4",
+  "round": "1/8 final - Men U19",
+  "manual_start_time": "54:39",
+  "manual_end_time": "55:00",
+  "detected_start_frame": 98370,
+  "detected_finish_frame": 99000,
+  "detected_start_time": 3279,
+  "detected_finish_time": 3300,
+  "race_duration": 21,
+  "left_athlete": {
+    "name": "Unknown",
+    "country": "Germany",
+    "bib_color": "unknown"
+  },
+  "right_athlete": {
+    "name": "Samuel",
+    "country": "Italy",
+    "bib_color": "unknown"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 1.0,
+  "output_path": "data\\race_segments\\zilina_2025\\Speed_finals_Zilina_2025_race029.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T16:43:27.624236",
+  "notes": null
+}

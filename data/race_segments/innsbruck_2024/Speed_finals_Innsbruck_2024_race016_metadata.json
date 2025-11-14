@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Innsbruck_2024_race016",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Innsbruck_2024.mp4",
+  "round": "1/8 final - Women",
+  "manual_start_time": "35:37",
+  "manual_end_time": "35:50",
+  "detected_start_frame": 64110,
+  "detected_finish_frame": 64500,
+  "detected_start_time": 2137,
+  "detected_finish_time": 2150,
+  "race_duration": 13,
+  "left_athlete": {
+    "name": "Tetiana",
+    "country": "Austria",
+    "bib_color": "red/white"
+  },
+  "right_athlete": {
+    "name": "Agnes",
+    "country": "Italy",
+    "bib_color": "blue/white/red"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 1.0,
+  "output_path": "data\\race_segments\\innsbruck_2024\\Speed_finals_Innsbruck_2024_race016.mp4",
+  "buffer_before": 3.0,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T13:49:36.480141",
+  "notes": "Late start (needs more buffer)"
+}

@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Chamonix_2024_race006",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Chamonix_2024.mp4",
+  "round": "1/8 final - Women",
+  "manual_start_time": "14:17",
+  "manual_end_time": "14:30",
+  "detected_start_frame": 25825,
+  "detected_finish_frame": 26047,
+  "detected_start_time": 860.8333333333334,
+  "detected_finish_time": 868.2333333333333,
+  "race_duration": 7.399999999999977,
+  "left_athlete": {
+    "name": "Manon Lebon",
+    "country": "France",
+    "bib_color": "blue/white"
+  },
+  "right_athlete": {
+    "name": "Capucine Viglione",
+    "country": "France",
+    "bib_color": "blue/white"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.47526041666666663,
+  "output_path": "data\\race_segments\\chamonix_2024\\Speed_finals_Chamonix_2024_race006.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T12:54:36.954864",
+  "notes": "End time extended +5s (early finish)"
+}

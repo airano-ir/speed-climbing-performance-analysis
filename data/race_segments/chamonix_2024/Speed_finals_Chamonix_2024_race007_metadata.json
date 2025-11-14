@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Chamonix_2024_race007",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Chamonix_2024.mp4",
+  "round": "1/8 final - Women",
+  "manual_start_time": "16:00",
+  "manual_end_time": "16:13",
+  "detected_start_frame": 28956,
+  "detected_finish_frame": 29140,
+  "detected_start_time": 965.2,
+  "detected_finish_time": 971.3333333333334,
+  "race_duration": 6.133333333333326,
+  "left_athlete": {
+    "name": "Shaoqin Zhang",
+    "country": "China",
+    "bib_color": "red"
+  },
+  "right_athlete": {
+    "name": "Ren Kayo Matsu",
+    "country": "Japan",
+    "bib_color": "red/white"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.4764539930555556,
+  "output_path": "data\\race_segments\\chamonix_2024\\Speed_finals_Chamonix_2024_race007.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T12:55:50.235002",
+  "notes": "End time extended +5s (early finish)"
+}

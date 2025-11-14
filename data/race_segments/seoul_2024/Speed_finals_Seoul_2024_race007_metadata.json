@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Seoul_2024_race007",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Seoul_2024.mp4",
+  "round": "1/8 final - Women",
+  "manual_start_time": "16:04",
+  "manual_end_time": "16:17",
+  "detected_start_frame": 28920,
+  "detected_finish_frame": 29220,
+  "detected_start_time": 964,
+  "detected_finish_time": 974.0,
+  "race_duration": 10.0,
+  "left_athlete": {
+    "name": "Hanareum Song",
+    "country": "South Korea",
+    "bib_color": "black/blue"
+  },
+  "right_athlete": {
+    "name": "Jimin Jong",
+    "country": "South Korea",
+    "bib_color": "black/blue"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.5231119791666667,
+  "output_path": "data\\race_segments\\seoul_2024\\Speed_finals_Seoul_2024_race007.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T11:12:13.633855",
+  "notes": "End time extended +5s (race finished early)"
+}

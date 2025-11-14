@@ -1,0 +1,753 @@
+{
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+  "location": "Villars, Switzerland",
+  "event_type": "European Championship",
+  "total_races": 24,
+  "races": [
+    {
+      "race_id": "Speed_finals_Villars_2024_race001",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "1/8 final - Men (Rerun)",
+      "manual_start_time": "51:10",
+      "manual_end_time": "51:19",
+      "detected_start_frame": 92100,
+      "detected_finish_frame": 92274,
+      "detected_start_time": 3070,
+      "detected_finish_time": 3075.8,
+      "race_duration": 5.800000000000182,
+      "left_athlete": {
+        "name": "Matteo Zurloni",
+        "country": "Italy",
+        "bib_color": "blue"
+      },
+      "right_athlete": {
+        "name": "Masio Ganier",
+        "country": "France",
+        "bib_color": "blue/white/red"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.4755859375,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race001.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T11:48:22.440370",
+      "notes": "End time extended +5s (early finish)"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race002",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "1/8 final - Men (Rerun)",
+      "manual_start_time": "52:55",
+      "manual_end_time": "53:04",
+      "detected_start_frame": 95482,
+      "detected_finish_frame": 95520,
+      "detected_start_time": 3182.733333333333,
+      "detected_finish_time": 3184,
+      "race_duration": 1.2666666666668789,
+      "left_athlete": {
+        "name": "Kostiantyn Pavlenko",
+        "country": "Ukraine",
+        "bib_color": "black/blue/yellow"
+      },
+      "right_athlete": {
+        "name": "Kevin Ammon",
+        "country": "France",
+        "bib_color": "blue/white/red"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 1.0,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race002.mp4",
+      "buffer_before": 3.0,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T11:49:47.055243",
+      "notes": "End time extended +4s (early finish) | Late start (needs more buffer)"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race003",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "1/8 final - Men (Rerun)",
+      "manual_start_time": "54:52",
+      "manual_end_time": "54:58",
+      "detected_start_frame": 98760,
+      "detected_finish_frame": 98915,
+      "detected_start_time": 3292,
+      "detected_finish_time": 3297.1666666666665,
+      "race_duration": 5.166666666666515,
+      "left_athlete": {
+        "name": "Yaroslav Tkach",
+        "country": "Ukraine",
+        "bib_color": "black/blue/yellow"
+      },
+      "right_athlete": {
+        "name": "Miguel Gomez Barios",
+        "country": "Spain",
+        "bib_color": "red/yellow"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.4340277777777778,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race003.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T11:51:12.541507",
+      "notes": null
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race004",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "1/8 final - Men (Rerun)",
+      "manual_start_time": "56:30",
+      "manual_end_time": "56:35",
+      "detected_start_frame": 101700,
+      "detected_finish_frame": 101864,
+      "detected_start_time": 3390,
+      "detected_finish_time": 3395.4666666666667,
+      "race_duration": 5.466666666666697,
+      "left_athlete": {
+        "name": "Erik Noya",
+        "country": "Spain",
+        "bib_color": "red/yellow"
+      },
+      "right_athlete": {
+        "name": "Gomo",
+        "country": "Spain",
+        "bib_color": "red/yellow"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.4143880208333333,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race004.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T11:52:27.694343",
+      "notes": null
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race005",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "1/8 final - Men (Rerun)",
+      "manual_start_time": "58:16",
+      "manual_end_time": "58:20",
+      "detected_start_frame": 104880,
+      "detected_finish_frame": 105024,
+      "detected_start_time": 3496,
+      "detected_finish_time": 3500.8,
+      "race_duration": 4.800000000000182,
+      "left_athlete": {
+        "name": "Ludovico Fossali",
+        "country": "Italy",
+        "bib_color": "blue"
+      },
+      "right_athlete": {
+        "name": "Alessandro Bulos",
+        "country": "Italy",
+        "bib_color": "blue"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.4262152777777778,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race005.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T11:53:28.771844",
+      "notes": null
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race006",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "1/8 final - Men (Rerun)",
+      "manual_start_time": "59:47",
+      "manual_end_time": "59:56",
+      "detected_start_frame": 107610,
+      "detected_finish_frame": 107760,
+      "detected_start_time": 3587,
+      "detected_finish_time": 3592.0,
+      "race_duration": 5.0,
+      "left_athlete": {
+        "name": "Marcin Dzienski",
+        "country": "Poland",
+        "bib_color": "red/white"
+      },
+      "right_athlete": {
+        "name": "Jan Luca Zoda",
+        "country": "Italy",
+        "bib_color": "blue"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.45562065972222227,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race006.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T11:54:46.943331",
+      "notes": "Fall occurred"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race007",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "1/8 final - Men (Rerun)",
+      "manual_start_time": "01:01:28",
+      "manual_end_time": "01:01:37",
+      "detected_start_frame": 110640,
+      "detected_finish_frame": 110832,
+      "detected_start_time": 3688,
+      "detected_finish_time": 3694.4,
+      "race_duration": 6.400000000000091,
+      "left_athlete": {
+        "name": "Leander Carmans",
+        "country": "Belgium",
+        "bib_color": "black/red"
+      },
+      "right_athlete": {
+        "name": "Hii Otisian",
+        "country": "Ukraine",
+        "bib_color": "black/blue/yellow"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.41731770833333337,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race007.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T11:56:02.771118",
+      "notes": "Fall occurred | End time extended +5s (early finish)"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race008",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "1/8 final - Men (Rerun)",
+      "manual_start_time": "01:03:17",
+      "manual_end_time": "01:03:28",
+      "detected_start_frame": 113899,
+      "detected_finish_frame": 114160,
+      "detected_start_time": 3796.633333333333,
+      "detected_finish_time": 3805.3333333333335,
+      "race_duration": 8.700000000000273,
+      "left_athlete": {
+        "name": "Sebastian Lucke",
+        "country": "Germany",
+        "bib_color": "black/red/yellow"
+      },
+      "right_athlete": {
+        "name": "Lucas Knap",
+        "country": "Germany",
+        "bib_color": "black/red/yellow"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.4136284722222222,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race008.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T11:56:41.548299",
+      "notes": "End time extended +5s (early finish)"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race009",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Quarter final - Women",
+      "manual_start_time": "01:05:56",
+      "manual_end_time": "01:06:05",
+      "detected_start_frame": 118680,
+      "detected_finish_frame": 118927,
+      "detected_start_time": 3956,
+      "detected_finish_time": 3964.233333333333,
+      "race_duration": 8.233333333333121,
+      "left_athlete": {
+        "name": "Natalia Kalucka",
+        "country": "Poland",
+        "bib_color": "red/white"
+      },
+      "right_athlete": {
+        "name": "Liry",
+        "country": "Spain",
+        "bib_color": "red/yellow"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.4150390625,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race009.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T11:57:59.351675",
+      "notes": null
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race010",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Quarter final - Women",
+      "manual_start_time": "01:07:24",
+      "manual_end_time": "01:07:34",
+      "detected_start_frame": 121320,
+      "detected_finish_frame": 121528,
+      "detected_start_time": 4044,
+      "detected_finish_time": 4050.9333333333334,
+      "race_duration": 6.933333333333394,
+      "left_athlete": {
+        "name": "Julia Randy",
+        "country": "Poland",
+        "bib_color": "red/white"
+      },
+      "right_athlete": {
+        "name": "Ka Videl Martinez",
+        "country": "Spain",
+        "bib_color": "red/yellow"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.40364583333333337,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race010.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T11:59:21.085740",
+      "notes": null
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race011",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Quarter final - Women",
+      "manual_start_time": "01:08:51",
+      "manual_end_time": "01:09:01",
+      "detected_start_frame": 123930,
+      "detected_finish_frame": 124188,
+      "detected_start_time": 4131,
+      "detected_finish_time": 4139.6,
+      "race_duration": 8.600000000000364,
+      "left_athlete": {
+        "name": "Patricia Hujak",
+        "country": "Poland",
+        "bib_color": "red/white"
+      },
+      "right_athlete": {
+        "name": "Anna Brok",
+        "country": "Poland",
+        "bib_color": "red/white"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.4065755208333333,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race011.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T12:00:57.511002",
+      "notes": null
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race012",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Quarter final - Women",
+      "manual_start_time": "01:10:38",
+      "manual_end_time": "01:10:47",
+      "detected_start_frame": 127140,
+      "detected_finish_frame": 127344,
+      "detected_start_time": 4238,
+      "detected_finish_time": 4244.833333333333,
+      "race_duration": 6.83333333333303,
+      "left_athlete": {
+        "name": "Beatrice Colli",
+        "country": "Italy",
+        "bib_color": "blue"
+      },
+      "right_athlete": {
+        "name": "Julia Cotch",
+        "country": "Poland",
+        "bib_color": "red/white"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.41167534722222227,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race012.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T12:02:49.619214",
+      "notes": "End time extended +5s (early finish)"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race013",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Quarter final - Men",
+      "manual_start_time": "01:12:29",
+      "manual_end_time": "01:12:33",
+      "detected_start_frame": 130470,
+      "detected_finish_frame": 130546,
+      "detected_start_time": 4349,
+      "detected_finish_time": 4351.533333333334,
+      "race_duration": 2.5333333333337578,
+      "left_athlete": {
+        "name": "Matteo Zurloni",
+        "country": "Italy",
+        "bib_color": "blue"
+      },
+      "right_athlete": {
+        "name": "Kostiantyn Pavlenko",
+        "country": "Ukraine",
+        "bib_color": "black/blue/yellow"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.4388020833333333,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race013.mp4",
+      "buffer_before": 3.0,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T12:04:03.918458",
+      "notes": "Late start (needs more buffer)"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race014",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Quarter final - Men",
+      "manual_start_time": "01:14:16",
+      "manual_end_time": "01:14:21",
+      "detected_start_frame": 133680,
+      "detected_finish_frame": 133841,
+      "detected_start_time": 4456,
+      "detected_finish_time": 4461.366666666667,
+      "race_duration": 5.366666666666788,
+      "left_athlete": {
+        "name": "Erik Noya",
+        "country": "Spain",
+        "bib_color": "red/yellow"
+      },
+      "right_athlete": {
+        "name": "Yaroslav Tkach",
+        "country": "Ukraine",
+        "bib_color": "black/blue/yellow"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.45562065972222227,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race014.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T12:05:24.081240",
+      "notes": "Slip occurred"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race015",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Quarter final - Men",
+      "manual_start_time": "01:16:05",
+      "manual_end_time": "01:16:10",
+      "detected_start_frame": 137177,
+      "detected_finish_frame": 137100,
+      "detected_start_time": 4572.566666666667,
+      "detected_finish_time": 4570,
+      "race_duration": -2.566666666666606,
+      "left_athlete": {
+        "name": "Ludovico Fossali",
+        "country": "Italy",
+        "bib_color": "blue"
+      },
+      "right_athlete": {
+        "name": "Marcin Dzienski",
+        "country": "Poland",
+        "bib_color": "red/white"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 1.0,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race015.mp4",
+      "buffer_before": 3.0,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T12:06:45.792221",
+      "notes": "Slip occurred | Late start (needs more buffer)"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race016",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Quarter final - Men",
+      "manual_start_time": "01:17:35",
+      "manual_end_time": "01:17:42",
+      "detected_start_frame": 139650,
+      "detected_finish_frame": 139816,
+      "detected_start_time": 4655,
+      "detected_finish_time": 4660.533333333334,
+      "race_duration": 5.533333333333758,
+      "left_athlete": {
+        "name": "Leander Carmans",
+        "country": "Belgium",
+        "bib_color": "black/red"
+      },
+      "right_athlete": {
+        "name": "Sebastian Lucke",
+        "country": "Germany",
+        "bib_color": "black/red/yellow"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.43576388888888884,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race016.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T12:08:16.916500",
+      "notes": "Fall occurred"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race017",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Semi final - Women",
+      "manual_start_time": "01:24:54",
+      "manual_end_time": "01:25:03",
+      "detected_start_frame": 152820,
+      "detected_finish_frame": 153023,
+      "detected_start_time": 5094,
+      "detected_finish_time": 5100.766666666666,
+      "race_duration": 6.766666666666424,
+      "left_athlete": {
+        "name": "Natalia Kalucka",
+        "country": "Poland",
+        "bib_color": "red/white"
+      },
+      "right_athlete": {
+        "name": "Julia Randy",
+        "country": "Poland",
+        "bib_color": "red/white"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.4140625,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race017.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T12:09:41.832406",
+      "notes": "Slip occurred"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race018",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Semi final - Women",
+      "manual_start_time": "01:26:30",
+      "manual_end_time": "01:26:43",
+      "detected_start_frame": 155700,
+      "detected_finish_frame": 155910,
+      "detected_start_time": 5190,
+      "detected_finish_time": 5197.0,
+      "race_duration": 7.0,
+      "left_athlete": {
+        "name": "Patricia Hujak",
+        "country": "Poland",
+        "bib_color": "red/white"
+      },
+      "right_athlete": {
+        "name": "Beatrice Colli",
+        "country": "Italy",
+        "bib_color": "blue"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.4055989583333333,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race018.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T12:11:19.364771",
+      "notes": "Fall and slip occurred"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race019",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Semi final - Men",
+      "manual_start_time": "01:29:23",
+      "manual_end_time": "01:29:35",
+      "detected_start_frame": 161137,
+      "detected_finish_frame": 161250,
+      "detected_start_time": 5371.233333333334,
+      "detected_finish_time": 5375,
+      "race_duration": 3.766666666666424,
+      "left_athlete": {
+        "name": "Matteo Zurloni",
+        "country": "Italy",
+        "bib_color": "blue"
+      },
+      "right_athlete": {
+        "name": "Erik Noya",
+        "country": "Spain",
+        "bib_color": "red/yellow"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 1.0,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race019.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T12:13:16.709416",
+      "notes": "First sub-5 second time of competition"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race020",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Semi final - Men",
+      "manual_start_time": "01:31:15",
+      "manual_end_time": "01:31:25",
+      "detected_start_frame": 164250,
+      "detected_finish_frame": 164556,
+      "detected_start_time": 5475,
+      "detected_finish_time": 5485.2,
+      "race_duration": 10.199999999999818,
+      "left_athlete": {
+        "name": "Ludovico Fossali",
+        "country": "Italy",
+        "bib_color": "blue"
+      },
+      "right_athlete": {
+        "name": "Sebastian Lucke",
+        "country": "Germany",
+        "bib_color": "black/red/yellow"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.40690104166666663,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race020.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T12:14:44.917269",
+      "notes": "Fall and slip occurred"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race021",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Small final - Women (Bronze)",
+      "manual_start_time": "01:35:51",
+      "manual_end_time": "01:36:03",
+      "detected_start_frame": 172530,
+      "detected_finish_frame": 172783,
+      "detected_start_time": 5751,
+      "detected_finish_time": 5759.433333333333,
+      "race_duration": 8.433333333333394,
+      "left_athlete": {
+        "name": "Julia Randy",
+        "country": "Poland",
+        "bib_color": "red/white"
+      },
+      "right_athlete": {
+        "name": "Beatrice Colli",
+        "country": "Italy",
+        "bib_color": "blue"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.4422743055555556,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race021.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T12:16:34.964457",
+      "notes": "Fall and slip occurred"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race022",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Small final - Men (Bronze)",
+      "manual_start_time": "01:38:01",
+      "manual_end_time": "01:38:07",
+      "detected_start_frame": 176394,
+      "detected_finish_frame": 176610,
+      "detected_start_time": 5879.8,
+      "detected_finish_time": 5887,
+      "race_duration": 7.199999999999818,
+      "left_athlete": {
+        "name": "Erik Noya",
+        "country": "Spain",
+        "bib_color": "red/yellow"
+      },
+      "right_athlete": {
+        "name": "Sebastian Lucke",
+        "country": "Germany",
+        "bib_color": "black/red/yellow"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 1.0,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race022.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T12:16:49.347244",
+      "notes": "False start"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race023",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Final - Women (Gold)",
+      "manual_start_time": "01:40:04",
+      "manual_end_time": "01:40:12",
+      "detected_start_frame": 180357,
+      "detected_finish_frame": 180360,
+      "detected_start_time": 6011.9,
+      "detected_finish_time": 6012,
+      "race_duration": 0.1000000000003638,
+      "left_athlete": {
+        "name": "Natalia Kalucka",
+        "country": "Poland",
+        "bib_color": "red/white"
+      },
+      "right_athlete": {
+        "name": "Patricia Hujak",
+        "country": "Poland",
+        "bib_color": "red/white"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 1.0,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race023.mp4",
+      "buffer_before": 3.0,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T12:18:11.830454",
+      "notes": "Slip occurred | Late start (needs more buffer)"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race024",
+      "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+      "round": "Final - Men (Gold)",
+      "manual_start_time": "01:42:10",
+      "manual_end_time": "01:42:15",
+      "detected_start_frame": 183900,
+      "detected_finish_frame": 184055,
+      "detected_start_time": 6130,
+      "detected_finish_time": 6135.166666666667,
+      "race_duration": 5.16666666666697,
+      "left_athlete": {
+        "name": "Matteo Zurloni",
+        "country": "Italy",
+        "bib_color": "blue"
+      },
+      "right_athlete": {
+        "name": "Ludovico Fossali",
+        "country": "Italy",
+        "bib_color": "blue"
+      },
+      "winner": null,
+      "time_difference": null,
+      "start_confidence": 1.0,
+      "finish_confidence": 0.4373914930555556,
+      "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race024.mp4",
+      "buffer_before": 1.5,
+      "buffer_after": 1.5,
+      "extraction_date": "2025-11-14T12:19:24.250936",
+      "notes": "Slip occurred"
+    }
+  ],
+  "processing_date": "2025-11-14T12:19:24.288450"
+}

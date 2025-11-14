@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Seoul_2024_race008",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Seoul_2024.mp4",
+  "round": "1/8 final - Women",
+  "manual_start_time": "17:33",
+  "manual_end_time": "17:44",
+  "detected_start_frame": 31590,
+  "detected_finish_frame": 31920,
+  "detected_start_time": 1053,
+  "detected_finish_time": 1064,
+  "race_duration": 11,
+  "left_athlete": {
+    "name": "Shenen Wang",
+    "country": "China",
+    "bib_color": "red/yellow"
+  },
+  "right_athlete": {
+    "name": "Sophia",
+    "country": "USA",
+    "bib_color": "blue/red/white"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 1.0,
+  "output_path": "data\\race_segments\\seoul_2024\\Speed_finals_Seoul_2024_race008.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T11:14:03.528351",
+  "notes": null
+}

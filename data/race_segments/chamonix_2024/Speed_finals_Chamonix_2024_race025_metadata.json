@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Chamonix_2024_race025",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Chamonix_2024.mp4",
+  "round": "Semi final - Women",
+  "manual_start_time": "54:15",
+  "manual_end_time": "54:25",
+  "detected_start_frame": 97704,
+  "detected_finish_frame": 97930,
+  "detected_start_time": 3256.8,
+  "detected_finish_time": 3264.3333333333335,
+  "race_duration": 7.533333333333303,
+  "left_athlete": {
+    "name": "Natalia Kalucka",
+    "country": "Poland",
+    "bib_color": "red/white"
+  },
+  "right_athlete": {
+    "name": "Jimin Jeong",
+    "country": "South Korea",
+    "bib_color": "black/blue"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.5435112847222222,
+  "output_path": "data\\race_segments\\chamonix_2024\\Speed_finals_Chamonix_2024_race025.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T13:12:28.295843",
+  "notes": "Slip and recovery"
+}

@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Villars_2024_race023",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+  "round": "Final - Women (Gold)",
+  "manual_start_time": "01:40:04",
+  "manual_end_time": "01:40:12",
+  "detected_start_frame": 180357,
+  "detected_finish_frame": 180360,
+  "detected_start_time": 6011.9,
+  "detected_finish_time": 6012,
+  "race_duration": 0.1000000000003638,
+  "left_athlete": {
+    "name": "Natalia Kalucka",
+    "country": "Poland",
+    "bib_color": "red/white"
+  },
+  "right_athlete": {
+    "name": "Patricia Hujak",
+    "country": "Poland",
+    "bib_color": "red/white"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 1.0,
+  "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race023.mp4",
+  "buffer_before": 3.0,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T12:18:11.830454",
+  "notes": "Slip occurred | Late start (needs more buffer)"
+}

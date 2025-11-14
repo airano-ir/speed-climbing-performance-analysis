@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Seoul_2024_race013",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Seoul_2024.mp4",
+  "round": "1/8 final - Men",
+  "manual_start_time": "26:12",
+  "manual_end_time": "26:24",
+  "detected_start_frame": 47160,
+  "detected_finish_frame": 47473,
+  "detected_start_time": 1572,
+  "detected_finish_time": 1582.4333333333334,
+  "race_duration": 10.433333333333394,
+  "left_athlete": {
+    "name": "Kostiantyn Pavlenko",
+    "country": "Ukraine",
+    "bib_color": "blue/yellow"
+  },
+  "right_athlete": {
+    "name": "Veddriq Leonardo",
+    "country": "Indonesia",
+    "bib_color": "red/white"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.4002821180555555,
+  "output_path": "data\\race_segments\\seoul_2024\\Speed_finals_Seoul_2024_race013.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T11:21:21.366091",
+  "notes": "End time extended +5s (race finished early)"
+}

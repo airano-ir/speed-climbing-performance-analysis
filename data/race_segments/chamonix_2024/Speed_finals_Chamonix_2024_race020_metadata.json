@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Chamonix_2024_race020",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Chamonix_2024.mp4",
+  "round": "Quarter final - Women",
+  "manual_start_time": "39:43",
+  "manual_end_time": "39:52",
+  "detected_start_frame": 71451,
+  "detected_finish_frame": 71606,
+  "detected_start_time": 2381.7,
+  "detected_finish_time": 2386.866666666667,
+  "race_duration": 5.16666666666697,
+  "left_athlete": {
+    "name": "Shaoqin Zhang",
+    "country": "China",
+    "bib_color": "red"
+  },
+  "right_athlete": {
+    "name": "Leslie Romero",
+    "country": "Spain",
+    "bib_color": "red/yellow"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.4091796875,
+  "output_path": "data\\race_segments\\chamonix_2024\\Speed_finals_Chamonix_2024_race020.mp4",
+  "buffer_before": 3.0,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T13:08:12.344158",
+  "notes": "End time extended +5s (early finish) | Late start (needs more buffer)"
+}

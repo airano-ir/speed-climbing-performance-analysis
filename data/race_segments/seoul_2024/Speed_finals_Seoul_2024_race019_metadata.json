@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Seoul_2024_race019",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Seoul_2024.mp4",
+  "round": "Quarter final - Women",
+  "manual_start_time": "39:08",
+  "manual_end_time": "39:18",
+  "detected_start_frame": 70440,
+  "detected_finish_frame": 70734,
+  "detected_start_time": 2348,
+  "detected_finish_time": 2357.8,
+  "race_duration": 9.800000000000182,
+  "left_athlete": {
+    "name": "Jimin Jong",
+    "country": "South Korea",
+    "bib_color": "black/blue"
+  },
+  "right_athlete": {
+    "name": "Shenen Wang",
+    "country": "China",
+    "bib_color": "red/yellow"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.4292534722222222,
+  "output_path": "data\\race_segments\\seoul_2024\\Speed_finals_Seoul_2024_race019.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T11:29:24.032313",
+  "notes": "End time extended +5s (race finished early)"
+}

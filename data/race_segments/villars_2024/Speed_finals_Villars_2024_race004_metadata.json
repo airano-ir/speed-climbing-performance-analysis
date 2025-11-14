@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Villars_2024_race004",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+  "round": "1/8 final - Men (Rerun)",
+  "manual_start_time": "56:30",
+  "manual_end_time": "56:35",
+  "detected_start_frame": 101700,
+  "detected_finish_frame": 101864,
+  "detected_start_time": 3390,
+  "detected_finish_time": 3395.4666666666667,
+  "race_duration": 5.466666666666697,
+  "left_athlete": {
+    "name": "Erik Noya",
+    "country": "Spain",
+    "bib_color": "red/yellow"
+  },
+  "right_athlete": {
+    "name": "Gomo",
+    "country": "Spain",
+    "bib_color": "red/yellow"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.4143880208333333,
+  "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race004.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T11:52:27.694343",
+  "notes": null
+}

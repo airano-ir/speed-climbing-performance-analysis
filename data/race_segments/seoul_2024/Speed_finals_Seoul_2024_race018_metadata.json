@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Seoul_2024_race018",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Seoul_2024.mp4",
+  "round": "Quarter final - Women",
+  "manual_start_time": "37:40",
+  "manual_end_time": "37:46",
+  "detected_start_frame": 67800,
+  "detected_finish_frame": 67998,
+  "detected_start_time": 2260,
+  "detected_finish_time": 2266.6,
+  "race_duration": 6.599999999999909,
+  "left_athlete": {
+    "name": "Tamara",
+    "country": "Kazakhstan",
+    "bib_color": "blue/yellow"
+  },
+  "right_athlete": {
+    "name": "Zho Yayo",
+    "country": "China",
+    "bib_color": "red/yellow"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.5100911458333334,
+  "output_path": "data\\race_segments\\seoul_2024\\Speed_finals_Seoul_2024_race018.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T11:27:50.337507",
+  "notes": null
+}

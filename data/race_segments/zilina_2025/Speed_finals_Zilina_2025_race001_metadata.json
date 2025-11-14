@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Zilina_2025_race001",
+  "source_video": "G:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Zilina_2025.mp4",
+  "round": "1/8 final - Women U17",
+  "manual_start_time": "14:58",
+  "manual_end_time": "15:17",
+  "detected_start_frame": 26940,
+  "detected_finish_frame": 27510,
+  "detected_start_time": 898,
+  "detected_finish_time": 917,
+  "race_duration": 19,
+  "left_athlete": {
+    "name": "Nina",
+    "country": "Ukraine",
+    "bib_color": "unknown"
+  },
+  "right_athlete": {
+    "name": "Yevheniya",
+    "country": "Ukraine",
+    "bib_color": "unknown"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 1.0,
+  "output_path": "data\\race_segments\\zilina_2025\\Speed_finals_Zilina_2025_race001.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T16:37:08.700703",
+  "notes": null
+}

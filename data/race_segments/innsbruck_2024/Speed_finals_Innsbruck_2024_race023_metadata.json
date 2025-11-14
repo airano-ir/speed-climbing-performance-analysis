@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Innsbruck_2024_race023",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Innsbruck_2024.mp4",
+  "round": "Quarter final - Women",
+  "manual_start_time": "56:24",
+  "manual_end_time": "56:35",
+  "detected_start_frame": 101520,
+  "detected_finish_frame": 101778,
+  "detected_start_time": 3384,
+  "detected_finish_time": 3392.6,
+  "race_duration": 8.599999999999909,
+  "left_athlete": {
+    "name": "Carla",
+    "country": "Spain",
+    "bib_color": "red/yellow"
+  },
+  "right_athlete": {
+    "name": "Sarah",
+    "country": "Italy",
+    "bib_color": "blue/white/red"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.42740885416666663,
+  "output_path": "data\\race_segments\\innsbruck_2024\\Speed_finals_Innsbruck_2024_race023.mp4",
+  "buffer_before": 3.0,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T14:00:16.764341",
+  "notes": "End time extended +5s (early finish) | Late start (needs more buffer)"
+}

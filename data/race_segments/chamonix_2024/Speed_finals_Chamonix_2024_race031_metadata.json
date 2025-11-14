@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Chamonix_2024_race031",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Chamonix_2024.mp4",
+  "round": "Final - Women (Gold)",
+  "manual_start_time": "01:09:41",
+  "manual_end_time": "01:09:48",
+  "detected_start_frame": 125466,
+  "detected_finish_frame": 125651,
+  "detected_start_time": 4182.2,
+  "detected_finish_time": 4188.366666666667,
+  "race_duration": 6.16666666666697,
+  "left_athlete": {
+    "name": "Natalia Kalucka",
+    "country": "Poland",
+    "bib_color": "red/white"
+  },
+  "right_athlete": {
+    "name": "Shaoqin Zhang",
+    "country": "China",
+    "bib_color": "red"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.5008680555555556,
+  "output_path": "data\\race_segments\\chamonix_2024\\Speed_finals_Chamonix_2024_race031.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T13:19:25.437857",
+  "notes": null
+}

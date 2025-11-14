@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Zilina_2025_race010",
+  "source_video": "G:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Zilina_2025.mp4",
+  "round": "1/8 final - Men U17",
+  "manual_start_time": "30:09",
+  "manual_end_time": "30:31",
+  "detected_start_frame": 54270,
+  "detected_finish_frame": 54930,
+  "detected_start_time": 1809,
+  "detected_finish_time": 1831,
+  "race_duration": 22,
+  "left_athlete": {
+    "name": "Giorgio",
+    "country": "Italy",
+    "bib_color": "unknown"
+  },
+  "right_athlete": {
+    "name": "Davide",
+    "country": "Italy",
+    "bib_color": "unknown"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 1.0,
+  "output_path": "data\\race_segments\\zilina_2025\\Speed_finals_Zilina_2025_race010.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T16:39:24.179162",
+  "notes": "Start time -4s (video cut adjustment)"
+}

@@ -112,3 +112,6 @@ docs/.doctrees/
 # OS files
 Thumbs.db
 .DS_Store
+
+# Claude local settings (user-specific)
+.claude/settings.local.json

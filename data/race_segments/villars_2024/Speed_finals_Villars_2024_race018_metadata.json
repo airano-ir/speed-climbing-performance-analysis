@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Villars_2024_race018",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+  "round": "Semi final - Women",
+  "manual_start_time": "01:26:30",
+  "manual_end_time": "01:26:43",
+  "detected_start_frame": 155700,
+  "detected_finish_frame": 155910,
+  "detected_start_time": 5190,
+  "detected_finish_time": 5197.0,
+  "race_duration": 7.0,
+  "left_athlete": {
+    "name": "Patricia Hujak",
+    "country": "Poland",
+    "bib_color": "red/white"
+  },
+  "right_athlete": {
+    "name": "Beatrice Colli",
+    "country": "Italy",
+    "bib_color": "blue"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.4055989583333333,
+  "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race018.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T12:11:19.364771",
+  "notes": "Fall and slip occurred"
+}

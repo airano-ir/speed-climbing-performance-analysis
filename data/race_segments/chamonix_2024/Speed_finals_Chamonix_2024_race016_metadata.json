@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Chamonix_2024_race016",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Chamonix_2024.mp4",
+  "round": "1/8 final - Men",
+  "manual_start_time": "32:07",
+  "manual_end_time": "32:11",
+  "detected_start_frame": 57792,
+  "detected_finish_frame": 57968,
+  "detected_start_time": 1926.4,
+  "detected_finish_time": 1932.2666666666667,
+  "race_duration": 5.866666666666561,
+  "left_athlete": {
+    "name": "Ludovico Fossali",
+    "country": "Italy",
+    "bib_color": "blue"
+  },
+  "right_athlete": {
+    "name": "Pierre Rebreyend",
+    "country": "France",
+    "bib_color": "blue/white"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.4657118055555556,
+  "output_path": "data\\race_segments\\chamonix_2024\\Speed_finals_Chamonix_2024_race016.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T13:04:57.211816",
+  "notes": null
+}

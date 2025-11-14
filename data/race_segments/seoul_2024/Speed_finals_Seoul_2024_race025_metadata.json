@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Seoul_2024_race025",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Seoul_2024.mp4",
+  "round": "Semi final - Women",
+  "manual_start_time": "01:09:01",
+  "manual_end_time": "01:09:14",
+  "detected_start_frame": 124230,
+  "detected_finish_frame": 124603,
+  "detected_start_time": 4141,
+  "detected_finish_time": 4153.466666666666,
+  "race_duration": 12.466666666666242,
+  "left_athlete": {
+    "name": "Zho Yayo",
+    "country": "China",
+    "bib_color": "red/yellow"
+  },
+  "right_athlete": {
+    "name": "Shenen Wang",
+    "country": "China",
+    "bib_color": "red/yellow"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.42990451388888895,
+  "output_path": "data\\race_segments\\seoul_2024\\Speed_finals_Seoul_2024_race025.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T11:38:00.420896",
+  "notes": "End time extended +5s (race finished early)"
+}

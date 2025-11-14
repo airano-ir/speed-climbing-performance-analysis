@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Villars_2024_race017",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+  "round": "Semi final - Women",
+  "manual_start_time": "01:24:54",
+  "manual_end_time": "01:25:03",
+  "detected_start_frame": 152820,
+  "detected_finish_frame": 153023,
+  "detected_start_time": 5094,
+  "detected_finish_time": 5100.766666666666,
+  "race_duration": 6.766666666666424,
+  "left_athlete": {
+    "name": "Natalia Kalucka",
+    "country": "Poland",
+    "bib_color": "red/white"
+  },
+  "right_athlete": {
+    "name": "Julia Randy",
+    "country": "Poland",
+    "bib_color": "red/white"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.4140625,
+  "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race017.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T12:09:41.832406",
+  "notes": "Slip occurred"
+}

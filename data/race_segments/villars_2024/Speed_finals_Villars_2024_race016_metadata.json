@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Villars_2024_race016",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+  "round": "Quarter final - Men",
+  "manual_start_time": "01:17:35",
+  "manual_end_time": "01:17:42",
+  "detected_start_frame": 139650,
+  "detected_finish_frame": 139816,
+  "detected_start_time": 4655,
+  "detected_finish_time": 4660.533333333334,
+  "race_duration": 5.533333333333758,
+  "left_athlete": {
+    "name": "Leander Carmans",
+    "country": "Belgium",
+    "bib_color": "black/red"
+  },
+  "right_athlete": {
+    "name": "Sebastian Lucke",
+    "country": "Germany",
+    "bib_color": "black/red/yellow"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.43576388888888884,
+  "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race016.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T12:08:16.916500",
+  "notes": "Fall occurred"
+}

@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Villars_2024_race022",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+  "round": "Small final - Men (Bronze)",
+  "manual_start_time": "01:38:01",
+  "manual_end_time": "01:38:07",
+  "detected_start_frame": 176394,
+  "detected_finish_frame": 176610,
+  "detected_start_time": 5879.8,
+  "detected_finish_time": 5887,
+  "race_duration": 7.199999999999818,
+  "left_athlete": {
+    "name": "Erik Noya",
+    "country": "Spain",
+    "bib_color": "red/yellow"
+  },
+  "right_athlete": {
+    "name": "Sebastian Lucke",
+    "country": "Germany",
+    "bib_color": "black/red/yellow"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 1.0,
+  "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race022.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T12:16:49.347244",
+  "notes": "False start"
+}

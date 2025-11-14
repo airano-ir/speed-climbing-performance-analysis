@@ -1,0 +1,31 @@
+{
+  "race_id": "Speed_finals_Villars_2024_race007",
+  "source_video": "g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\data\\raw_videos\\Speed_finals_Villars_2024.mp4",
+  "round": "1/8 final - Men (Rerun)",
+  "manual_start_time": "01:01:28",
+  "manual_end_time": "01:01:37",
+  "detected_start_frame": 110640,
+  "detected_finish_frame": 110832,
+  "detected_start_time": 3688,
+  "detected_finish_time": 3694.4,
+  "race_duration": 6.400000000000091,
+  "left_athlete": {
+    "name": "Leander Carmans",
+    "country": "Belgium",
+    "bib_color": "black/red"
+  },
+  "right_athlete": {
+    "name": "Hii Otisian",
+    "country": "Ukraine",
+    "bib_color": "black/blue/yellow"
+  },
+  "winner": null,
+  "time_difference": null,
+  "start_confidence": 1.0,
+  "finish_confidence": 0.41731770833333337,
+  "output_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race007.mp4",
+  "buffer_before": 1.5,
+  "buffer_after": 1.5,
+  "extraction_date": "2025-11-14T11:56:02.771118",
+  "notes": "Fall occurred | End time extended +5s (early finish)"
+}
