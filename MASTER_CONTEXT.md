@@ -62,6 +62,76 @@ powershell -ExecutionPolicy Bypass -File check_progress.ps1
 
 **راهنمای دقیق**: بخش "🎯 مراحل بعدی (Next Steps)" را در پایین این سند ببینید.
 
+### 📦 مدیریت فایل‌های ویدئو (Video Files Management)
+
+**مهم**: فایل‌های ویدئو در git نیستند (در `.gitignore`)
+
+**موقعیت فعلی**:
+- همه فایل‌ها در Google Drive: `G:\My Drive\Projects\Speed Climbing Performance Analysis\data\`
+- 5 raw videos: `data/raw_videos/*.mp4` (~10-15 GB)
+- 188 race segments: `data/race_segments/*/*.mp4` (~5-6 GB)
+
+**برای استفاده در پروژه جدید**:
+1. **گزینه 1 - کپی از Google Drive**:
+   ```bash
+   # همه فایل‌ها قبلاً در G:\My Drive موجود است
+   # فقط path را در کد اصلاح کنید
+   ```
+
+2. **گزینه 2 - استفاده از metadata**:
+   ```bash
+   # اگر فقط به metadata نیاز دارید:
+   # - configs/race_timestamps/*.yaml (در git)
+   # - data/race_segments/*/summary.json (کوچک - می‌توان commit کرد)
+   ```
+
+3. **گزینه 3 - بازسازی از YAML**:
+   ```bash
+   # اگر فایل‌ها گم شدند، می‌توانید دوباره بسازید:
+   python scripts/batch_segment_competitions.py
+   # زمان: ~2-3 ساعت برای همه
+   ```
+
+**نکته مهم برای Git LFS** (اگر می‌خواهید ویدئوها را version control کنید):
+```bash
+# نصب Git LFS
+git lfs install
+
+# Track video files
+git lfs track "*.mp4"
+git add .gitattributes
+
+# سپس می‌توانید commit کنید (اما توصیه نمی‌شود - حجم زیاد)
+```
+
+**توصیه**: فایل‌های ویدئو را در Google Drive نگه دارید و فقط کد + configs را در git قرار دهید.
+
+### 💡 بهبودها و نکات مهم (Improvements & Key Notes)
+
+**✅ موارد انجام شده**:
+1. **Automated Progress Monitoring**: اسکریپت `check_progress.ps1` برای tracking real-time
+2. **Late Start Handling**: buffer اتوماتیک 3s برای مسابقات با شروع دیرهنگام
+3. **Timestamp Corrections**: 188 مسابقه با اصلاحات دقیق timing
+4. **Race Deletion**: حذف خودکار races ناقص (Seoul race 15, Zilina races 13/51/55)
+5. **Auto Renumbering**: renumber کردن اتوماتیک بعد از حذف races
+6. **Comprehensive Metadata**: JSON metadata برای هر race با athlete info
+7. **Session Continuity**: Quick Start section برای شروع در session جدید
+
+**🔧 بهبودهای احتمالی آینده**:
+1. **Batch Pose Extraction**: پردازش موازی 188 race با multiprocessing
+2. **Resume Capability**: skip کردن فایل‌های پردازش شده (idempotent)
+3. **Quality Validation**: بررسی اتوماتیک کیفیت clips (duration, resolution)
+4. **Auto Timestamp Detection**: یادگیری timestamps از patterns (ML-based)
+5. **Cloud Storage Integration**: sync اتوماتیک با Google Drive API
+6. **Video Compression**: کاهش حجم با H.265/HEVC encoding
+
+**⚠️ نکات مهم**:
+- همیشه قبل از regenerate کردن، backup بگیرید
+- check_progress.ps1 را برای مانیتورینگ استفاده کنید
+- فایل‌های temp_*.mp4 را بعد از هر competition پاک کنید
+- YAML configs را version control کنید (کوچک و مهم)
+- ویدئوها را در Google Drive نگه دارید (نه در git)
+
 ---
 
 ## 📋 وضعیت کنونی پروژه (Current Project Status)
