@@ -7,6 +7,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 *.so
+
+# Explicitly ignore pycache in all subdirectories
+src/**/__pycache__/
+src/**/*.pyc
 .Python
 build/
 develop-eggs/
@@ -48,6 +52,10 @@ data/raw_videos/*.avi
 data/raw_videos/*.mov
 data/raw_videos/*.mkv
 
+# Specifically ignore large finals videos (can be re-downloaded from YouTube)
+data/raw_videos/Speed_finals_*.mp4
+data/raw_videos/Speed_finals_*.avi
+
 # Audio files (gitignored - large files)
 data/raw_videos/*.wav
 data/raw_videos/*.mp3
@@ -63,13 +71,16 @@ data/raw_videos/*.part
 !data/raw_videos/*.info.json
 
 # Processed data (gitignored - generated files)
-data/race_segments/*.mp4
-data/race_segments/*.avi
+# NOTE: Race segments are tracked in Gitea (primary repo)
+#       but ignored in GitHub (too large - 705MB)
+# data/race_segments/*.mp4    # Commented out for Gitea
+# data/race_segments/*.avi    # Commented out for Gitea
 data/processed/
 data/calibration/
 
-# Keep race segment metadata
+# Keep race segment metadata (always tracked)
 !data/race_segments/*_metadata.json
+!data/race_segments/*/summary.json
 
 # Model files (if any)
 *.pth
@@ -86,6 +97,10 @@ logs/
 *.tmp
 *.temp
 .cache/
+
+# Temporary AI files
+data/**/For AI*.txt
+data/**/*AI*.txt
 
 # Jupyter Notebook checkpoints
 .ipynb_checkpoints/
