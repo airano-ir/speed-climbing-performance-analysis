@@ -1022,7 +1022,272 @@ Phase 3: Integration & Testing
 
 ---
 
+## 📍 وضعیت فعلی و مراحل بعدی (Current Status & Next Steps)
+
+**تاریخ**: 2025-11-15
+**آخرین commit**: f6e8509
+
+### وضعیت فعلی ✅
+
+**Phase 1: COMPLETE - 100%**
+- 188 race segments extracted
+- BlazePose dual-lane detection working
+
+**Phase 2: COMPLETE - 100%**
+- Core implementation done (metrics + visualization)
+- Windows encoding fixed
+- Tested successfully with sample races
+
+**Batch Processing**: 🔄 در حال اجرا
+```bash
+# این دستور در حال اجرا است (~3 ساعت):
+python scripts/batch_pose_extraction.py
+
+# Output: data/processed/poses/ (188 JSON files, ~940 MB)
+```
+
+### مراحل برای شما (Windows - محیط اصلی)
+
+#### مرحله 1: صبر برای اتمام Batch Processing ⏳
+```bash
+# بررسی پیشرفت:
+ls -lh data/processed/poses/*.json | wc -l
+# باید به 188 برسد
+
+# بررسی خلاصه:
+cat data/processed/poses/_processing_summary.json
+```
+
+**زمان تخمینی**: 2-3 ساعت (بستگی به سیستم)
+
+---
+
+#### مرحله 2: Commit کردن Pose JSONs (بعد از اتمام)
+
+**گزینه A - فقط samples برای GitHub** (توصیه می‌شود):
+```bash
+# انتخاب خودکار top 10 samples
+python scripts/select_sample_poses.py \
+  --input data/processed/poses \
+  --output data/processed/poses/samples \
+  --count 10
+
+# Commit samples
+git add data/processed/poses/samples/*.json
+git add data/processed/poses/_processing_summary.json
+git commit -m "data: add sample pose files for GitHub
+
+- Top 10 fastest races selected
+- Total size: ~50 MB (suitable for GitHub)
+- Full dataset in Google Drive
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+```
+
+**گزینه B - همه JSONs برای Gitea** (فقط اگر Gitea داری):
+```bash
+# Commit all to Gitea
+git add data/processed/poses/*.json
+git commit -m "data: add all 188 pose extraction results (~940 MB)"
+git push origin main  # فقط Gitea
+```
+
+---
+
+#### مرحله 3: Push به GitHub
+```bash
+# Push code + docs + samples
+git push github main
+
+# توصیه: بررسی حجم قبل از push
+git count-objects -vH
+# اگر > 100 MB، فقط samples را commit کنید
+```
+
+---
+
+#### مرحله 4: ارسال Prompt به UI claude.ai/code
+
+**کپی کنید و در UI بفرستید**:
+```markdown
+Please read and execute the tasks in PROMPT_FOR_UI_CLAUDE.md
+
+This is a comprehensive implementation plan for Phase 2-5 of the Speed Climbing Performance Analysis project.
+
+Important notes:
+1. Work task by task (don't skip)
+2. Test after each task
+3. Commit after each task
+4. Update MASTER_CONTEXT.md as you progress
+5. If blocked on a task, document it and move to next
+
+Start with Task 1 (fix destructor error) and work through the priority list.
+
+Good luck!
+```
+
+**UI خواهد کرد**:
+1. رفع destructor error
+2. IFSC Calibration (pixel → meter)
+3. Video annotation pipeline
+4. Metrics aggregation
+5. Comparative visualizations
+6. Update notebooks
+7. Phase 3-5 (اگر وقت کرد)
+
+**زمان تخمینی UI**: 6-10 ساعت
+
+---
+
+#### مرحله 5: Pull و Test کردن کارهای UI
+
+```bash
+# Pull changes from GitHub
+git pull github main
+
+# Merge به main
+git merge github/main --no-edit
+
+# Test کدهای جدید
+pytest tests/ -v
+
+# تست IFSC Calibration
+python src/calibration/ifsc_route_map.py \
+  --pdf docs/IFSC_Speed_Licence_Rules.pdf \
+  --output configs/ifsc_route_coordinates.json
+
+# تست Video Annotation
+python src/visualization/video_annotator.py \
+  data/race_segments/chamonix_2024/race001.mp4 \
+  data/processed/poses/chamonix_2024/race001_poses.json \
+  data/processed/videos/race001_annotated.mp4
+```
+
+---
+
+#### مرحله 6: رفع Bug ها و بهبود (اگر نیاز بود)
+
+اگر UI با مشکلی روبرو شد و block شد:
+1. Error را بررسی کنید
+2. در Windows تست کنید
+3. Fix کنید
+4. Commit و push کنید
+5. به UI اطلاع دهید
+
+---
+
+#### مرحله 7: اجرای Full Pipeline
+
+```bash
+# 1. Batch metrics (روی همه 188 races)
+python scripts/batch_metrics_calculation.py \
+  --input data/processed/poses \
+  --output data/processed/metrics \
+  --calibration data/processed/calibration
+
+# 2. Generate comparison plots
+python scripts/generate_comparison_plots.py \
+  --input data/processed/metrics/aggregate_metrics.csv \
+  --output data/processed/plots/comparisons
+
+# 3. Batch video annotation (optional - زمان‌بر)
+python scripts/batch_annotate_videos.py \
+  --max-videos 10  # فقط top 10
+
+# 4. Select samples for GitHub
+python scripts/select_sample_poses.py --count 10
+python scripts/select_sample_videos.py --count 5
+```
+
+---
+
+#### مرحله 8: Final Commit و Documentation
+
+```bash
+# Commit همه خروجی‌ها
+git add data/processed/metrics/aggregate_metrics.csv
+git add data/processed/plots/comparisons/*.png
+git add data/processed/calibration/*.json
+git add data/processed/videos/samples/*.mp4
+git add docs/
+
+git commit -m "data: add Phase 2-5 results and documentation
+
+- Aggregate metrics for 188 races
+- Comparative analysis plots
+- IFSC calibration data
+- Sample annotated videos
+- Updated documentation
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>"
+
+# Push
+git push origin main   # Gitea
+git push github main   # GitHub
+```
+
+---
+
+### چک‌لیست نهایی ✅
+
+**قبل از شروع UI**:
+- [ ] batch_pose_extraction.py تمام شد
+- [ ] 188 JSON files در data/processed/poses/ هستند
+- [ ] Samples انتخاب و commit شدند
+- [ ] Changes به GitHub push شدند
+
+**بعد از کار UI**:
+- [ ] همه tasks در PROMPT_FOR_UI_CLAUDE.md انجام شدند
+- [ ] همه tests می‌گذرند
+- [ ] MASTER_CONTEXT.md به‌روز شد
+- [ ] Changes از GitHub pull شدند
+
+**برای Production**:
+- [ ] Full pipeline روی 188 races اجرا شد
+- [ ] همه metrics و plots تولید شدند
+- [ ] Calibration برای همه races انجام شد
+- [ ] Documentation کامل است
+- [ ] همه چیز commit و push شد
+
+---
+
+### منابع برای ادامه کار
+
+**مستندات**:
+- [PROMPT_FOR_UI_CLAUDE.md](PROMPT_FOR_UI_CLAUDE.md) - برنامه جامع برای UI
+- [OUTPUT_STRUCTURE_GUIDE.md](docs/OUTPUT_STRUCTURE_GUIDE.md) - راهنمای خروجی‌ها
+- [SYNC_WORKFLOW.md](SYNC_WORKFLOW.md) - راهنمای sync
+- [MANUAL_SEGMENTATION_GUIDE.md](docs/MANUAL_SEGMENTATION_GUIDE.md) - راهنمای segmentation
+
+**Scripts کاربردی**:
+- `scripts/batch_pose_extraction.py` - استخراج poses
+- `scripts/batch_metrics_calculation.py` - محاسبه metrics
+- `scripts/generate_comparison_plots.py` - نمودارهای مقایسه
+- `scripts/select_sample_poses.py` - انتخاب samples
+
+---
+
 ## 🔄 آخرین به‌روزرسانی (Last Update Log)
+
+**2025-11-15 Comprehensive Planning + Documentation**
+- ✅ رفع Windows console encoding در Phase 2 scripts
+- ✅ تست کامل Phase 2 (pose extraction, metrics, visualization)
+- ✅ Commits synced به Gitea و GitHub (f6e8509)
+- ✅ ساختار خروجی data/processed/ ایجاد شد
+- ✅ مستندات جامع ایجاد شد:
+  - **OUTPUT_STRUCTURE_GUIDE.md**: راهنمای کامل خروجی‌ها و مسیرها (45+ صفحه)
+  - **PROMPT_FOR_UI_CLAUDE.md**: برنامه جامع برای UI claude.ai/code
+  - data/processed/poses/samples/README.md: راهنمای انتخاب samples
+- ✅ به‌روزرسانی .gitignore برای GitHub:
+  - Ignore همه processed data
+  - Keep: aggregate metrics, comparison plots, calibration, samples
+  - حجم GitHub: ~117 MB (مناسب برای UI)
+- 🔄 **در حال اجرا**: batch_pose_extraction.py (~3 ساعت برای 188 races)
+- 🎯 **آماده**: ارسال prompt به UI claude.ai/code برای Phase 2-5
 
 **2025-11-14 Multi-Environment Setup + Data Cleanup**
 - ✅ Merged UI improvements از claude.ai/code:

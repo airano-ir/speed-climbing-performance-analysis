@@ -75,7 +75,26 @@ data/raw_videos/*.part
 #       but ignored in GitHub (too large - 705MB)
 # data/race_segments/*.mp4    # Commented out for Gitea
 # data/race_segments/*.avi    # Commented out for Gitea
+
+# Ignore all processed data by default
 data/processed/
+
+# EXCEPTIONS: Keep small/important files for GitHub
+!data/processed/metrics/aggregate_metrics.csv
+!data/processed/metrics/README.md
+!data/processed/plots/comparisons/
+!data/processed/plots/comparisons/*.png
+!data/processed/calibration/
+!data/processed/calibration/**/*.json
+
+# Keep sample pose files for demos (manually selected)
+!data/processed/poses/samples/
+!data/processed/poses/samples/*.json
+
+# Keep sample annotated videos (manually selected)
+!data/processed/videos/samples/
+!data/processed/videos/samples/*.mp4
+
 data/calibration/
 
 # Keep race segment metadata (always tracked)
