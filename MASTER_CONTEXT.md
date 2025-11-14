@@ -7,6 +7,63 @@
 
 ---
 
+## 🚀 Quick Start for New Session (شروع سریع برای Session جدید)
+
+> **برای شروع کار در https://claude.ai/code جدید، این بخش را اول بخوانید!**
+
+### آخرین وضعیت (2025-11-14):
+✅ **Manual Race Segmentation: 100% COMPLETE**
+- 188 مسابقه از 5 فاینال استخراج شد
+- همه فایل‌های ویدئو در `data/race_segments/` موجود است
+- همه YAML configs آماده در `configs/race_timestamps/`
+
+### مرحله فعلی: Phase 2 - Pose Estimation & Analysis
+**آماده برای شروع!** همه race clips موجود است.
+
+### فایل‌های کلیدی برای ادامه:
+1. **این فایل**: [MASTER_CONTEXT.md](MASTER_CONTEXT.md) - سند کامل پروژه
+2. **راهنمای Segmentation**: [docs/MANUAL_SEGMENTATION_GUIDE.md](docs/MANUAL_SEGMENTATION_GUIDE.md)
+3. **Race Segments**: `data/race_segments/` (188 MP4 files + metadata)
+4. **Configs**: `configs/race_timestamps/*.yaml` (5 competitions)
+5. **Parser**: [scripts/parse_timestamps_to_yaml.py](scripts/parse_timestamps_to_yaml.py)
+6. **Batch Script**: [scripts/batch_segment_competitions.py](scripts/batch_segment_competitions.py)
+
+### داده‌های موجود:
+```
+data/
+├── raw_videos/                    # 5 ویدئوی اصلی (2-3 ساعته)
+│   ├── Speed_finals_Seoul_2024.mp4
+│   ├── Speed_finals_Villars_2024.mp4
+│   ├── Speed_finals_Chamonix_2024.mp4
+│   ├── Speed_finals_Innsbruck_2024.mp4
+│   └── Speed_finals_Zilina_2025.mp4
+│
+└── race_segments/                 # 188 مسابقه استخراج شده (5-40s هر کدام)
+    ├── seoul_2024/                # 31 races
+    ├── villars_2024/              # 24 races
+    ├── chamonix_2024/             # 32 races
+    ├── innsbruck_2024/            # 32 races
+    └── zilina_2025/               # 69 races
+```
+
+### چک کردن وضعیت:
+```powershell
+# اجرای اسکریپت مانیتورینگ
+powershell -ExecutionPolicy Bypass -File check_progress.ps1
+
+# باید نمایش دهد: 188/188 races (100%)
+```
+
+### مرحله بعدی پیشنهادی:
+1. **Pose Extraction**: استخراج BlazePose keypoints از 188 race clip
+2. **Performance Metrics**: محاسبه سرعت، timing، smoothness
+3. **Visualization**: نمودارهای مقایسه‌ای
+4. **IFSC Calibration**: تبدیل pixel به متر با 20 گیره استاندارد
+
+**راهنمای دقیق**: بخش "🎯 مراحل بعدی (Next Steps)" را در پایین این سند ببینید.
+
+---
+
 ## 📋 وضعیت کنونی پروژه (Current Project Status)
 
 ### ✅ کارهای انجام شده (Completed Tasks)
@@ -194,12 +251,12 @@
 - اضافه کردن start_time برای مسابقات با شروع دیرهنگام (+20s)
 - علامت‌گذاری `late_start` flag برای مسابقات با شروع تأخیری
 - حذف مسابقات invalid (مثل false starts)
-- خروجی: **191 مسابقه** برای 5 فاینال:
+- خروجی: **188 مسابقه** برای 5 فاینال:
   - Seoul 2024: 31 مسابقه (race 15 حذف شد)
   - Villars 2024: 24 مسابقه (rerun 1/8 final men)
   - Chamonix 2024: 32 مسابقه (IFSC World Cup)
   - Innsbruck 2024: 32 مسابقه (European Cup)
-  - Zilina 2025: 72 مسابقه (European Youth Championships - U17/U19/U21)
+  - Zilina 2025: 69 مسابقه (European Youth Championships - races 13, 51, 55 حذف شد)
 
 **قابلیت‌های manual_race_segmenter.py**:
 - برش frame-accurate با ffmpeg
@@ -265,17 +322,23 @@
 
 ## 🔧 کارهای در حال انجام (In Progress)
 
-### Manual Race Segmentation - Final Processing (2025-11-14)
-- ✅ Parser و YAML configs ساخته شد (5 مسابقه، 191 race)
-- ✅ Seoul 2024: COMPLETED (31 مسابقه با اصلاحات)
+### ✅ Manual Race Segmentation - COMPLETED (2025-11-14)
+- ✅ Parser و YAML configs ساخته شد (5 مسابقه، 188 race)
+- ✅ Seoul 2024: COMPLETED (31 مسابقه)
+- ✅ Villars 2024: COMPLETED (24 مسابقه)
+- ✅ Chamonix 2024: COMPLETED (32 مسابقه)
+- ✅ Innsbruck 2024: COMPLETED (32 مسابقه)
+- ✅ Zilina 2025: COMPLETED (69 مسابقه - 3 races removed)
+- ✅ **Total: 188/188 races extracted successfully (100%)**
 - ✅ Timestamps corrections applied:
   - Seoul: +5s corrections, race 15 removed
   - Villars: +4s/+5s corrections, late_start flags
   - Chamonix: +5s/+8s corrections, late_start flags
-  - Innsbruck: +5s/+8s corrections, +20s start for race 2, late_start flags
-  - Zilina: 72 races (European Youth Championships)
-- 🔄 در حال پردازش: Villars, Chamonix, Innsbruck, Zilina (~1.5 hours)
-- 📖 راهنمای کامل کاربر: `docs/MANUAL_SEGMENTATION_GUIDE.md` (Version 3.0)
+  - Innsbruck: +5s/+8s/+20s corrections, late_start flags
+  - Zilina: -4s/-6s/-10s start corrections, +10s end extensions, races 13/51/55 removed
+- 📖 راهنمای کامل کاربر: [docs/MANUAL_SEGMENTATION_GUIDE.md](docs/MANUAL_SEGMENTATION_GUIDE.md) (Version 4.0)
+
+**Output Location**: `data/race_segments/` (188 MP4 clips + 188 metadata JSONs + 5 summary JSONs)
 
 ---
 
@@ -769,23 +832,24 @@ Phase 3: Integration & Testing
 
 ### گام فوری: اتمام پردازش مسابقات (2025-11-14)
 1. ✅ Seoul 2024: COMPLETED (31 مسابقه)
-2. 🔄 **در حال اجرا**: Villars, Chamonix, Innsbruck, Zilina (~1.5 hours)
-   - `python scripts/batch_segment_competitions.py` در حال اجرا
-   - کل 160 مسابقه باقیمانده (24 + 32 + 32 + 72)
-3. ✅ Verify extracted segments:
+2. ✅ Seoul, Villars, Chamonix, Innsbruck: COMPLETED (119 races)
+3. 🔄 **در حال اجرا**: Zilina 2025 (~40 minutes)
+   - `python src/utils/manual_race_segmenter.py` برای Zilina در حال اجرا
+   - 69 مسابقه در حال پردازش
+4. ✅ Verify extracted segments:
    ```bash
    ls -l data/race_segments/*/
-   # Expected: 191 .mp4 files + 191 metadata JSONs + 5 summary JSONs
+   # Expected: 188 .mp4 files + 188 metadata JSONs + 5 summary JSONs
    ```
 
 ### Phase 2: Pose Estimation & Analysis (بعد از اتمام segmentation)
 
 #### گام 1: Pose Estimation روی Race Segments (اولویت بالا)
-**هدف**: استخراج BlazePose keypoints از 191 کلیپ مسابقه
+**هدف**: استخراج BlazePose keypoints از 188 کلیپ مسابقه
 
 **تسک‌ها**:
 1. **Pipeline ساده برای batch processing**:
-   - ورودی: directory از race clips (191 فایل .mp4)
+   - ورودی: directory از race clips (188 فایل .mp4)
    - خروجی: JSON/NPZ files با pose keypoints
    - قابلیت resumable (skip already processed)
 
@@ -841,7 +905,7 @@ Phase 3: Integration & Testing
 ### Priority Roadmap بعد از Phase 2:
 
 1. **Short-term** (1-2 weeks):
-   - ✅ Race segmentation (DONE - 191 races)
+   - ✅ Race segmentation (DONE - 188 races)
    - 🔄 Pose extraction (batch processing)
    - 📊 Basic metrics (velocity, timing)
    - 📈 Simple visualizations
@@ -861,7 +925,7 @@ Phase 3: Integration & Testing
 ### فایل‌های کلیدی برای Phase 2:
 ```
 scripts/
-  batch_pose_extraction.py        # NEW - batch processing for 191 clips
+  batch_pose_extraction.py        # NEW - batch processing for 188 clips
 
 src/analysis/
   performance_metrics.py           # NEW - calculate metrics from poses

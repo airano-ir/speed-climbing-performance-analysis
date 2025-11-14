@@ -1373,6 +1373,53 @@ def parse_zilina_2025_data() -> Dict[str, Any]:
                       'right': {'name': 'Tommaso', 'country': 'Italy', 'bib_color': 'unknown'}}},
     ]
 
+    # Post-processing: Apply timing corrections based on video review
+    # Races that need start time adjusted (earlier)
+    races_start_minus_4s = [4, 5, 6, 7, 9, 10, 11, 14, 17, 21, 22, 23, 24, 25, 26, 31, 32, 33, 35, 36, 37, 39, 40, 42, 43, 45, 47, 48, 49, 50, 53, 54, 57, 59, 60, 61, 64, 65, 66, 67, 68, 69]
+    race_62_start_minus_6s = 62
+    races_start_minus_10s = [56, 58]
+
+    # Races that need end time extended
+    races_end_plus_10s = [15, 16, 19, 20, 38, 48]
+
+    # Races to delete (incomplete/invalid)
+    races_to_delete = [13, 51, 55]
+
+    # Apply corrections
+    races_to_keep = []
+    for race in races:
+        race_id = race['race_id']
+
+        # Skip deleted races
+        if race_id in races_to_delete:
+            continue
+
+        # Apply start time corrections (-4s)
+        if race_id in races_start_minus_4s:
+            race['start_time'] = add_seconds_to_timestamp(race['start_time'], -4)
+            race['notes'] = race.get('notes', '') + ' | Start time -4s (video cut adjustment)' if race.get('notes') else 'Start time -4s (video cut adjustment)'
+
+        # Race 62 special case (-6s)
+        if race_id == race_62_start_minus_6s:
+            race['start_time'] = add_seconds_to_timestamp(race['start_time'], -6)
+            race['notes'] = race.get('notes', '') + ' | Start time -6s (video cut adjustment)' if race.get('notes') else 'Start time -6s (video cut adjustment)'
+
+        # Apply start time corrections (-10s)
+        if race_id in races_start_minus_10s:
+            race['start_time'] = add_seconds_to_timestamp(race['start_time'], -10)
+            race['notes'] = race.get('notes', '') + ' | Start time -10s (video cut adjustment)' if race.get('notes') else 'Start time -10s (video cut adjustment)'
+
+        # Apply end time extensions (+10s)
+        if race_id in races_end_plus_10s:
+            race['end_time'] = add_seconds_to_timestamp(race['end_time'], 10)
+            race['notes'] = race.get('notes', '') + ' | End time +10s (extended replay)' if race.get('notes') else 'End time +10s (extended replay)'
+
+        races_to_keep.append(race)
+
+    # Renumber races after deletions
+    for idx, race in enumerate(races_to_keep, start=1):
+        race['race_id'] = idx
+
     config = {
         'video': {
             'name': 'Speed_finals_Zilina_2025',
@@ -1381,8 +1428,8 @@ def parse_zilina_2025_data() -> Dict[str, Any]:
             'event_type': 'European Youth Championships',
             'fps': 30.0,
         },
-        'races': races,
-        'notes': 'European Youth Championships with U17, U19, and U21 categories. Wall was very slippery causing many falls. Some athlete names incomplete. Finals for U21 Women and Men (races 73-74) have no timestamps in transcript. Notable champions: Leo (France U17) and Aidan (Germany U19) both World and European champions.'
+        'races': races_to_keep,
+        'notes': 'European Youth Championships with U17, U19, and U21 categories. Wall was very slippery causing many falls. Some athlete names incomplete. Races 13, 51, 55 removed (incomplete). Many timing adjustments applied after video review. Notable champions: Leo (France U17) and Aidan (Germany U19) both World and European champions.'
     }
 
     return config

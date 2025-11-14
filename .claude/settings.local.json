@@ -8,7 +8,20 @@
       "Bash(timeout 30 python:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(timeout /t 10)"
+      "Bash(timeout /t 10)",
+      "Bash(dir:*)",
+      "Bash(copy \"C:\\Users\\MCP-WP-AI\\Desktop\\urwl7n2hnnyvhiwiq0xg.pdf\" \"g:\\My Drive\\Projects\\Speed Climbing Performance Analysis\\docs\\IFSC_Speed_Licence_Rules.pdf\")",
+      "Bash(git rm:*)",
+      "Bash(timeout 120 python:*)",
+      "Bash(timeout 300 python:*)",
+      "Bash(tee:*)",
+      "Bash(timeout 180 python:*)",
+      "Bash(timeout 1200 python:*)",
+      "Bash(cat:*)",
+      "Bash(NUL)",
+      "Bash(nul)",
+      "Bash(powershell -Command:*)",
+      "Bash(powershell -ExecutionPolicy Bypass -File check_progress.ps1)"
     ]
   },
   "enableAllProjectMcpServers": true,

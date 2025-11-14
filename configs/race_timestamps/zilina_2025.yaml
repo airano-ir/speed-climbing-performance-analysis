@@ -46,7 +46,7 @@ races:
       bib_color: unknown
 - race_id: 4
   round: 1/8 final - Women U17
-  start_time: '18:26'
+  start_time: '18:22'
   end_time: '18:47'
   athletes:
     left:
@@ -57,9 +57,10 @@ races:
       name: Nora Garcia
       country: Spain
       bib_color: unknown
+  notes: Start time -4s (video cut adjustment)
 - race_id: 5
   round: 1/8 final - Women U17
-  start_time: '19:34'
+  start_time: '19:30'
   end_time: '19:53'
   athletes:
     left:
@@ -70,9 +71,10 @@ races:
       name: Carolina
       country: Italy
       bib_color: unknown
+  notes: Start time -4s (video cut adjustment)
 - race_id: 6
   round: 1/8 final - Women U17 (Rerun)
-  start_time: '25:42'
+  start_time: '25:38'
   end_time: '26:03'
   athletes:
     left:
@@ -83,10 +85,10 @@ races:
       name: Mia
       country: Austria
       bib_color: unknown
-  notes: Rerun - both athletes fell in first attempt
+  notes: Rerun - both athletes fell in first attempt | Start time -4s (video cut adjustment)
 - race_id: 7
   round: 1/8 final - Women U17
-  start_time: '26:49'
+  start_time: '26:45'
   end_time: '27:09'
   athletes:
     left:
@@ -97,6 +99,7 @@ races:
       name: Unknown
       country: Poland
       bib_color: unknown
+  notes: Start time -4s (video cut adjustment)
 - race_id: 8
   round: 1/8 final - Women U17
   start_time: '27:51'
@@ -112,7 +115,7 @@ races:
       bib_color: unknown
 - race_id: 9
   round: 1/8 final - Men U17
-  start_time: '29:11'
+  start_time: '29:07'
   end_time: '29:23'
   athletes:
     left:
@@ -123,9 +126,10 @@ races:
       name: Marc
       country: Slovenia
       bib_color: unknown
+  notes: Start time -4s (video cut adjustment)
 - race_id: 10
   round: 1/8 final - Men U17
-  start_time: '30:13'
+  start_time: '30:09'
   end_time: '30:31'
   athletes:
     left:
@@ -136,9 +140,10 @@ races:
       name: Davide
       country: Italy
       bib_color: unknown
+  notes: Start time -4s (video cut adjustment)
 - race_id: 11
   round: 1/8 final - Men U17
-  start_time: '31:50'
+  start_time: '31:46'
   end_time: '32:05'
   athletes:
     left:
@@ -149,6 +154,7 @@ races:
       name: Dario
       country: Spain
       bib_color: unknown
+  notes: Start time -4s (video cut adjustment)
 - race_id: 12
   round: 1/8 final - Men U17
   start_time: '32:59'
@@ -164,21 +170,7 @@ races:
       bib_color: unknown
 - race_id: 13
   round: 1/8 final - Men U17
-  start_time: '34:15'
-  end_time: '34:20'
-  athletes:
-    left:
-      name: Sean
-      country: Germany
-      bib_color: unknown
-    right:
-      name: Boris
-      country: Bulgaria
-      bib_color: unknown
-  notes: False start by Sean - Boris wins by opponent error
-- race_id: 14
-  round: 1/8 final - Men U17
-  start_time: '35:14'
+  start_time: '35:10'
   end_time: '35:36'
   athletes:
     left:
@@ -189,10 +181,11 @@ races:
       name: Jacobo
       country: Italy
       bib_color: unknown
-- race_id: 15
+  notes: Start time -4s (video cut adjustment)
+- race_id: 14
   round: 1/8 final - Men U17
   start_time: '37:10'
-  end_time: '37:37'
+  end_time: '37:47'
   athletes:
     left:
       name: Anton
@@ -202,10 +195,11 @@ races:
       name: Unknown
       country: Germany
       bib_color: unknown
-- race_id: 16
+  notes: End time +10s (extended replay)
+- race_id: 15
   round: 1/8 final - Women U19
   start_time: '38:31'
-  end_time: '38:53'
+  end_time: '39:03'
   athletes:
     left:
       name: Polina
@@ -215,9 +209,10 @@ races:
       name: Maria
       country: Ukraine
       bib_color: unknown
-- race_id: 17
+  notes: End time +10s (extended replay)
+- race_id: 16
   round: 1/8 final - Women U19
-  start_time: '39:41'
+  start_time: '39:37'
   end_time: '39:56'
   athletes:
     left:
@@ -228,7 +223,8 @@ races:
       name: Martina
       country: Poland
       bib_color: unknown
-- race_id: 18
+  notes: Start time -4s (video cut adjustment)
+- race_id: 17
   round: 1/8 final - Women U19
   start_time: '40:41'
   end_time: '40:57'
@@ -241,10 +237,10 @@ races:
       name: Alyssa
       country: Italy
       bib_color: unknown
-- race_id: 19
+- race_id: 18
   round: 1/8 final - Women U19
   start_time: '41:39'
-  end_time: '42:04'
+  end_time: '42:14'
   athletes:
     left:
       name: Eva
@@ -254,10 +250,11 @@ races:
       name: Nina
       country: Germany
       bib_color: unknown
-- race_id: 20
+  notes: End time +10s (extended replay)
+- race_id: 19
   round: 1/8 final - Women U19
   start_time: '42:36'
-  end_time: '43:07'
+  end_time: '43:17'
   athletes:
     left:
       name: Sara
@@ -267,9 +264,10 @@ races:
       name: Carolina
       country: Poland
       bib_color: unknown
-- race_id: 21
+  notes: End time +10s (extended replay)
+- race_id: 20
   round: 1/8 final - Women U19
-  start_time: '43:55'
+  start_time: '43:51'
   end_time: '44:06'
   athletes:
     left:
@@ -280,9 +278,10 @@ races:
       name: Maria
       country: Ukraine
       bib_color: unknown
-- race_id: 22
+  notes: Start time -4s (video cut adjustment)
+- race_id: 21
   round: 1/8 final - Women U19
-  start_time: '44:46'
+  start_time: '44:42'
   end_time: '45:06'
   athletes:
     left:
@@ -293,9 +292,10 @@ races:
       name: Nela
       country: Germany
       bib_color: unknown
-- race_id: 23
+  notes: Start time -4s (video cut adjustment)
+- race_id: 22
   round: 1/8 final - Women U19
-  start_time: '45:49'
+  start_time: '45:45'
   end_time: '46:08'
   athletes:
     left:
@@ -306,9 +306,10 @@ races:
       name: Eva
       country: United Kingdom
       bib_color: unknown
-- race_id: 24
+  notes: Start time -4s (video cut adjustment)
+- race_id: 23
   round: 1/8 final - Men U19
-  start_time: '47:01'
+  start_time: '46:57'
   end_time: '47:16'
   athletes:
     left:
@@ -319,9 +320,10 @@ races:
       name: Alex
       country: Austria
       bib_color: unknown
-- race_id: 25
+  notes: Start time -4s (video cut adjustment)
+- race_id: 24
   round: 1/8 final - Men U19
-  start_time: '47:58'
+  start_time: '47:54'
   end_time: '48:15'
   athletes:
     left:
@@ -332,9 +334,10 @@ races:
       name: Titian
       country: United Kingdom
       bib_color: unknown
-- race_id: 26
+  notes: Start time -4s (video cut adjustment)
+- race_id: 25
   round: 1/8 final - Men U19
-  start_time: '50:02'
+  start_time: '49:58'
   end_time: '50:17'
   athletes:
     left:
@@ -345,8 +348,8 @@ races:
       name: Unknown
       country: Unknown
       bib_color: unknown
-  notes: No athlete information in transcript
-- race_id: 27
+  notes: No athlete information in transcript | Start time -4s (video cut adjustment)
+- race_id: 26
   round: 1/8 final - Men U19
   start_time: '50:58'
   end_time: '51:15'
@@ -359,7 +362,7 @@ races:
       name: Alex
       country: Ukraine
       bib_color: unknown
-- race_id: 28
+- race_id: 27
   round: 1/8 final - Men U19
   start_time: '52:18'
   end_time: '52:35'
@@ -372,7 +375,7 @@ races:
       name: Tomat
       country: Italy
       bib_color: unknown
-- race_id: 29
+- race_id: 28
   round: 1/8 final - Men U19
   start_time: '53:29'
   end_time: '53:49'
@@ -385,7 +388,7 @@ races:
       name: Colby
       country: France
       bib_color: unknown
-- race_id: 30
+- race_id: 29
   round: 1/8 final - Men U19
   start_time: '54:39'
   end_time: '55:00'
@@ -398,9 +401,9 @@ races:
       name: Samuel
       country: Italy
       bib_color: unknown
-- race_id: 31
+- race_id: 30
   round: Quarter final - Women U17
-  start_time: '56:01'
+  start_time: '55:57'
   end_time: '56:17'
   athletes:
     left:
@@ -411,9 +414,10 @@ races:
       name: Rebecca
       country: Italy
       bib_color: unknown
-- race_id: 32
+  notes: Start time -4s (video cut adjustment)
+- race_id: 31
   round: Quarter final - Women U17
-  start_time: '57:07'
+  start_time: '57:03'
   end_time: '57:19'
   athletes:
     left:
@@ -424,9 +428,10 @@ races:
       name: Gabrielle
       country: France
       bib_color: unknown
-- race_id: 33
+  notes: Start time -4s (video cut adjustment)
+- race_id: 32
   round: Quarter final - Women U17
-  start_time: '58:01'
+  start_time: '57:57'
   end_time: '58:23'
   athletes:
     left:
@@ -437,7 +442,8 @@ races:
       name: Mia
       country: Austria
       bib_color: unknown
-- race_id: 34
+  notes: Start time -4s (video cut adjustment)
+- race_id: 33
   round: Quarter final - Women U17
   start_time: '59:30'
   end_time: '59:48'
@@ -450,9 +456,9 @@ races:
       name: Eda
       country: Germany
       bib_color: unknown
-- race_id: 35
+- race_id: 34
   round: Quarter final - Men U17
-  start_time: 01:00:42
+  start_time: 01:00:38
   end_time: 01:00:58
   athletes:
     left:
@@ -463,9 +469,10 @@ races:
       name: Unknown
       country: Italy
       bib_color: unknown
-- race_id: 36
+  notes: Start time -4s (video cut adjustment)
+- race_id: 35
   round: Quarter final - Men U17
-  start_time: 01:01:52
+  start_time: 01:01:48
   end_time: 01:02:06
   athletes:
     left:
@@ -476,9 +483,10 @@ races:
       name: Anthony
       country: Poland
       bib_color: unknown
-- race_id: 37
+  notes: Start time -4s (video cut adjustment)
+- race_id: 36
   round: Quarter final - Men U17
-  start_time: 01:02:54
+  start_time: 01:02:50
   end_time: 01:03:09
   athletes:
     left:
@@ -489,10 +497,11 @@ races:
       name: Felix
       country: Germany
       bib_color: unknown
-- race_id: 38
+  notes: Start time -4s (video cut adjustment)
+- race_id: 37
   round: Quarter final - Men U17
   start_time: 01:03:57
-  end_time: 01:04:02
+  end_time: 01:04:12
   athletes:
     left:
       name: Sofia
@@ -502,10 +511,10 @@ races:
       name: Anton
       country: Germany
       bib_color: unknown
-  notes: False start - Sofia wins by opponent error
-- race_id: 39
+  notes: False start - Sofia wins by opponent error | End time +10s (extended replay)
+- race_id: 38
   round: Quarter final - Women U19
-  start_time: 01:05:09
+  start_time: 01:05:05
   end_time: 01:05:28
   athletes:
     left:
@@ -516,9 +525,10 @@ races:
       name: Martina
       country: Poland
       bib_color: unknown
-- race_id: 40
+  notes: Start time -4s (video cut adjustment)
+- race_id: 39
   round: Quarter final - Women U19
-  start_time: 01:06:25
+  start_time: 01:06:21
   end_time: 01:06:35
   athletes:
     left:
@@ -529,7 +539,8 @@ races:
       name: Evelina
       country: France
       bib_color: unknown
-- race_id: 41
+  notes: Start time -4s (video cut adjustment)
+- race_id: 40
   round: Quarter final - Women U19
   start_time: 01:07:26
   end_time: 01:07:41
@@ -542,9 +553,9 @@ races:
       name: Natalia
       country: Poland
       bib_color: unknown
-- race_id: 42
+- race_id: 41
   round: Quarter final - Women U19
-  start_time: 01:08:25
+  start_time: 01:08:21
   end_time: 01:08:41
   athletes:
     left:
@@ -555,9 +566,10 @@ races:
       name: Eva
       country: United Kingdom
       bib_color: unknown
-- race_id: 43
+  notes: Start time -4s (video cut adjustment)
+- race_id: 42
   round: Quarter final - Men U19
-  start_time: 01:09:44
+  start_time: 01:09:40
   end_time: 01:10:02
   athletes:
     left:
@@ -568,7 +580,8 @@ races:
       name: Titian
       country: United Kingdom
       bib_color: unknown
-- race_id: 44
+  notes: Start time -4s (video cut adjustment)
+- race_id: 43
   round: Quarter final - Men U19
   start_time: 01:10:57
   end_time: 01:11:15
@@ -581,9 +594,9 @@ races:
       name: Unknown
       country: Italy
       bib_color: unknown
-- race_id: 45
+- race_id: 44
   round: Quarter final - Men U19
-  start_time: 01:12:04
+  start_time: 01:12:00
   end_time: 01:12:29
   athletes:
     left:
@@ -594,7 +607,8 @@ races:
       name: Unknown
       country: Italy
       bib_color: unknown
-- race_id: 46
+  notes: Start time -4s (video cut adjustment)
+- race_id: 45
   round: Quarter final - Men U19
   start_time: 01:13:23
   end_time: 01:13:50
@@ -607,9 +621,9 @@ races:
       name: Anton
       country: Germany
       bib_color: unknown
-- race_id: 47
+- race_id: 46
   round: Quarter final - Women U21
-  start_time: 01:15:01
+  start_time: 01:14:57
   end_time: 01:15:11
   athletes:
     left:
@@ -620,10 +634,11 @@ races:
       name: Lucy
       country: Czech Republic
       bib_color: unknown
-- race_id: 48
+  notes: Start time -4s (video cut adjustment)
+- race_id: 47
   round: Quarter final - Women U21
-  start_time: 01:15:59
-  end_time: 01:16:19
+  start_time: 01:15:55
+  end_time: 01:16:29
   athletes:
     left:
       name: Daria
@@ -633,9 +648,10 @@ races:
       name: Magdalena
       country: Poland
       bib_color: unknown
-- race_id: 49
+  notes: Start time -4s (video cut adjustment) | End time +10s (extended replay)
+- race_id: 48
   round: Quarter final - Women U21
-  start_time: 01:17:02
+  start_time: 01:16:58
   end_time: 01:17:22
   athletes:
     left:
@@ -646,9 +662,10 @@ races:
       name: Catalina
       country: Ukraine
       bib_color: unknown
-- race_id: 50
+  notes: Start time -4s (video cut adjustment)
+- race_id: 49
   round: Quarter final - Women U21
-  start_time: 01:18:13
+  start_time: 01:18:09
   end_time: 01:18:27
   athletes:
     left:
@@ -659,20 +676,8 @@ races:
       name: Unknown
       country: Italy
       bib_color: unknown
-- race_id: 51
-  round: Quarter final - Men U21
-  start_time: 01:20:12
-  end_time: 01:20:43
-  athletes:
-    left:
-      name: Unknown
-      country: Poland
-      bib_color: unknown
-    right:
-      name: Oscar
-      country: Poland
-      bib_color: unknown
-- race_id: 52
+  notes: Start time -4s (video cut adjustment)
+- race_id: 50
   round: Quarter final - Men U21
   start_time: 01:21:27
   end_time: 01:21:47
@@ -685,9 +690,9 @@ races:
       name: Max
       country: France
       bib_color: unknown
-- race_id: 53
+- race_id: 51
   round: Semi final - Women U17
-  start_time: 01:29:58
+  start_time: 01:29:54
   end_time: 01:30:16
   athletes:
     left:
@@ -698,9 +703,10 @@ races:
       name: Lara
       country: Austria
       bib_color: unknown
-- race_id: 54
+  notes: Start time -4s (video cut adjustment)
+- race_id: 52
   round: Semi final - Women U17
-  start_time: 01:31:22
+  start_time: 01:31:18
   end_time: 01:31:38
   athletes:
     left:
@@ -711,22 +717,10 @@ races:
       name: Alicia
       country: Italy
       bib_color: unknown
-- race_id: 55
+  notes: Start time -4s (video cut adjustment)
+- race_id: 53
   round: Semi final - Men U17
-  start_time: 01:32:36
-  end_time: 01:32:53
-  athletes:
-    left:
-      name: Leo
-      country: France
-      bib_color: unknown
-    right:
-      name: Dario
-      country: Spain
-      bib_color: unknown
-- race_id: 56
-  round: Semi final - Men U17
-  start_time: 01:33:56
+  start_time: 01:33:46
   end_time: 01:34:07
   athletes:
     left:
@@ -737,9 +731,10 @@ races:
       name: Sofia
       country: Switzerland
       bib_color: unknown
-- race_id: 57
+  notes: Start time -10s (video cut adjustment)
+- race_id: 54
   round: Semi final - Women U19
-  start_time: 01:35:11
+  start_time: 01:35:07
   end_time: 01:35:24
   athletes:
     left:
@@ -750,9 +745,10 @@ races:
       name: Ksenia
       country: Ukraine
       bib_color: unknown
-- race_id: 58
+  notes: Start time -4s (video cut adjustment)
+- race_id: 55
   round: Semi final - Women U19
-  start_time: 01:36:14
+  start_time: 01:36:04
   end_time: 01:36:27
   athletes:
     left:
@@ -763,9 +759,10 @@ races:
       name: Eva
       country: Italy
       bib_color: unknown
-- race_id: 59
+  notes: Start time -10s (video cut adjustment)
+- race_id: 56
   round: Semi final - Men U19
-  start_time: 01:37:36
+  start_time: 01:37:32
   end_time: 01:37:48
   athletes:
     left:
@@ -776,9 +773,10 @@ races:
       name: Aidan
       country: Germany
       bib_color: unknown
-- race_id: 60
+  notes: Start time -4s (video cut adjustment)
+- race_id: 57
   round: Semi final - Men U19
-  start_time: 01:38:40
+  start_time: 01:38:36
   end_time: 01:38:58
   athletes:
     left:
@@ -789,9 +787,10 @@ races:
       name: Anton
       country: Germany
       bib_color: unknown
-- race_id: 61
+  notes: Start time -4s (video cut adjustment)
+- race_id: 58
   round: Semi final - Women U21
-  start_time: 01:41:04
+  start_time: 01:41:00
   end_time: 01:41:18
   athletes:
     left:
@@ -802,9 +801,10 @@ races:
       name: Unknown
       country: Italy
       bib_color: unknown
-- race_id: 62
+  notes: Start time -4s (video cut adjustment)
+- race_id: 59
   round: Semi final - Men U21
-  start_time: 01:42:12
+  start_time: 01:42:06
   end_time: 01:42:23
   athletes:
     left:
@@ -815,7 +815,8 @@ races:
       name: Oscar
       country: Poland
       bib_color: unknown
-- race_id: 63
+  notes: Start time -6s (video cut adjustment)
+- race_id: 60
   round: Semi final - Men U21
   start_time: 01:43:13
   end_time: 01:43:27
@@ -828,9 +829,9 @@ races:
       name: Dennis
       country: Ukraine
       bib_color: unknown
-- race_id: 64
+- race_id: 61
   round: Small final - Women U17 (Bronze)
-  start_time: 01:44:24
+  start_time: 01:44:20
   end_time: 01:44:42
   athletes:
     left:
@@ -841,9 +842,10 @@ races:
       name: Lara
       country: Austria
       bib_color: unknown
-- race_id: 65
+  notes: Start time -4s (video cut adjustment)
+- race_id: 62
   round: Small final - Men U17 (Bronze)
-  start_time: 01:45:39
+  start_time: 01:45:35
   end_time: 01:45:57
   athletes:
     left:
@@ -854,9 +856,10 @@ races:
       name: Boris
       country: Bulgaria
       bib_color: unknown
-- race_id: 66
+  notes: Start time -4s (video cut adjustment)
+- race_id: 63
   round: Small final - Women U19 (Bronze)
-  start_time: 01:46:44
+  start_time: 01:46:40
   end_time: 01:47:03
   athletes:
     left:
@@ -867,9 +870,10 @@ races:
       name: Eva
       country: Italy
       bib_color: unknown
-- race_id: 67
+  notes: Start time -4s (video cut adjustment)
+- race_id: 64
   round: Small final - Men U19 (Bronze)
-  start_time: 01:48:02
+  start_time: 01:47:58
   end_time: 01:48:23
   athletes:
     left:
@@ -880,9 +884,10 @@ races:
       name: Anton
       country: Germany
       bib_color: unknown
-- race_id: 68
+  notes: Start time -4s (video cut adjustment)
+- race_id: 65
   round: Small final - Men U21 (Bronze) - Rerun
-  start_time: 02:01:37
+  start_time: 02:01:33
   end_time: 02:01:49
   athletes:
     left:
@@ -893,10 +898,11 @@ races:
       name: Dennis
       country: Ukraine
       bib_color: unknown
-  notes: Rerun - both athletes fell simultaneously in first attempt
-- race_id: 69
+  notes: Rerun - both athletes fell simultaneously in first attempt | Start time -4s
+    (video cut adjustment)
+- race_id: 66
   round: Final - Women U17 (Gold)
-  start_time: 02:02:43
+  start_time: 02:02:39
   end_time: 02:03:04
   athletes:
     left:
@@ -907,7 +913,8 @@ races:
       name: Alicia
       country: Italy
       bib_color: unknown
-- race_id: 70
+  notes: Start time -4s (video cut adjustment)
+- race_id: 67
   round: Final - Men U17 (Gold)
   start_time: 02:03:30
   end_time: 02:03:49
@@ -920,7 +927,7 @@ races:
       name: Sofia
       country: Switzerland
       bib_color: unknown
-- race_id: 71
+- race_id: 68
   round: Final - Women U19 (Gold)
   start_time: 02:04:31
   end_time: 02:04:47
@@ -933,7 +940,7 @@ races:
       name: Sara
       country: Italy
       bib_color: unknown
-- race_id: 72
+- race_id: 69
   round: Final - Men U19 (Gold)
   start_time: 02:05:08
   end_time: 02:05:28
@@ -947,6 +954,6 @@ races:
       country: Italy
       bib_color: unknown
 notes: 'European Youth Championships with U17, U19, and U21 categories. Wall was very
-  slippery causing many falls. Some athlete names incomplete. Finals for U21 Women
-  and Men (races 73-74) have no timestamps in transcript. Notable champions: Leo (France
-  U17) and Aidan (Germany U19) both World and European champions.'
+  slippery causing many falls. Some athlete names incomplete. Races 13, 51, 55 removed
+  (incomplete). Many timing adjustments applied after video review. Notable champions:
+  Leo (France U17) and Aidan (Germany U19) both World and European champions.'

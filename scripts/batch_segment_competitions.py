@@ -49,7 +49,7 @@ def main():
             'name': 'Zilina 2025',
             'config': 'configs/race_timestamps/zilina_2025.yaml',
             'output_dir': 'data/race_segments/zilina_2025',
-            'total_races': 72
+            'total_races': 69  # 72 original - 3 deleted (races 13, 51, 55 incomplete)
         }
     ]
 
