@@ -1295,10 +1295,18 @@ git push github main   # GitHub
   - Handles moving cameras while reducing jitter
   - Automatic fallback to last valid calibration
 - ✅ **Created comprehensive test framework**:
-  - scripts/test_calibration_accuracy.py (500+ lines)
+  - scripts/test_calibration_accuracy.py (600+ lines)
   - Tests multiple videos across competitions
   - Statistical analysis with RMSE distribution
   - Pass rate metrics (≤10cm, ≤8cm, ≤5cm)
+- ✅ **Integrated race detection system** (commit 4b69a4b):
+  - Replaced fixed frame skip with dynamic race boundary detection
+  - Uses RaceStartDetector (audio + motion fusion)
+  - Uses RaceFinishDetector (visual + pose-based)
+  - New CLI flags: --use-race-detection and --race-detection-method
+  - Automatic fallback to typical durations if detection fails
+  - **Validation**: Race start detected with 100% confidence (frame 341 vs frame 45 in test videos)
+  - **User requirement addressed**: Accurate timing for biomechanical analysis (COM, velocity, path efficiency)
 - 📊 **Test Results** (10 videos tested, 5 succeeded):
   - **Mean RMSE**: 98.1 cm (outliers from frames with <4 holds)
   - **Median RMSE**: 0.04 cm (EXCELLENT - calibration works well!)
@@ -1324,10 +1332,11 @@ git push github main   # GitHub
   - Outlier frames are pre/post race sections (camera not focused on wall)
   - **Solution**: Skip pre/post frames + PeriodicCalibrator + outlier rejection
 - 🎯 **Corrected Recommendations for UI** (Priority Order):
-  1. **CRITICAL**: **Frame Selection** - Skip pre/post race frames
-     - Option A: Simple skip (first 30 & last 30 frames)
-     - Option B: Use standing pose detection (from race_start_detector.py)
-     - Expected: Pass rate 78% → 95%+, Mean RMSE 98cm → <5cm
+  1. ✅ **CRITICAL**: **Frame Selection with Race Detection** - COMPLETED
+     - Integrated RaceStartDetector and RaceFinishDetector
+     - Dynamic boundary detection replaces fixed 30-frame skip
+     - Validation: frame 341 vs frame 45 shows variable pre-race durations
+     - Usage: `--use-race-detection --race-detection-method fusion`
   2. **CRITICAL**: Use PeriodicCalibrator instead of CameraCalibrator
      - Handles missing frames with fallback to cached calibration
      - Reduces jitter with temporal smoothing
@@ -1337,7 +1346,7 @@ git push github main   # GitHub
   6. **Test on data/race_segments/** (NOT raw_videos - different aspect ratio)
 - 📝 **Documentation**: Detailed analysis report available in data/processed/calibration/calibration_test_report.json
 - 🎯 **Next Steps for UI**:
-  1. Implement frame selection (skip pre/post race)
+  1. ✅ Frame selection with race detection - COMPLETED
   2. Implement PeriodicCalibrator + outlier handling
   3. Test on 10 videos and verify Mean RMSE < 5cm
   4. If successful → proceed to Task 2.4 (Performance Metrics)
