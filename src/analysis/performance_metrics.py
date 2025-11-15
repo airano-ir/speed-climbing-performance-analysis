@@ -36,20 +36,20 @@ class PerformanceMetrics:
     """Container for performance metrics"""
     # Time series data
     timestamps: np.ndarray
-    com_x: np.ndarray  # Center of mass X (pixels)
-    com_y: np.ndarray  # Center of mass Y (pixels - 0 at top)
+    com_x: np.ndarray  # Center of mass X (pixels or meters)
+    com_y: np.ndarray  # Center of mass Y (pixels or meters)
 
-    # Velocities (pixels/second)
+    # Velocities (pixels/second or m/s)
     velocity_x: np.ndarray
     velocity_y: np.ndarray
     velocity_magnitude: np.ndarray
 
-    # Accelerations (pixels/second²)
+    # Accelerations (pixels/second² or m/s²)
     acceleration_x: np.ndarray
     acceleration_y: np.ndarray
     acceleration_magnitude: np.ndarray
 
-    # Jerk (pixels/second³) - smoothness measure
+    # Jerk (pixels/second³ or m/s³) - smoothness measure
     jerk_x: np.ndarray
     jerk_y: np.ndarray
     jerk_magnitude: np.ndarray
@@ -64,6 +64,10 @@ class PerformanceMetrics:
     path_efficiency: float  # straight_distance / path_length
     smoothness_score: float  # Based on jerk (lower = smoother)
 
+    # Calibration info
+    is_calibrated: bool = False  # True if using meter units, False if using pixels
+    units: str = "pixels"  # "pixels" or "meters"
+
     def to_dict(self) -> Dict:
         """Convert to dictionary for JSON serialization"""
         return {
@@ -76,6 +80,8 @@ class PerformanceMetrics:
                 'straight_distance': float(self.straight_distance),
                 'path_efficiency': float(self.path_efficiency),
                 'smoothness_score': float(self.smoothness_score),
+                'is_calibrated': self.is_calibrated,
+                'units': self.units,
             },
             'time_series': {
                 'timestamps': self.timestamps.tolist(),
@@ -227,7 +233,8 @@ class PerformanceAnalyzer:
         self,
         pose_json_path: Path,
         lane: str = 'left',
-        min_visibility: float = 0.5
+        min_visibility: float = 0.5,
+        calibration_path: Optional[Path] = None
     ) -> Optional[PerformanceMetrics]:
         """
         Analyze pose file and calculate performance metrics.
@@ -236,6 +243,8 @@ class PerformanceAnalyzer:
             pose_json_path: Path to pose JSON file
             lane: Which climber to analyze ('left' or 'right')
             min_visibility: Minimum visibility threshold for valid poses
+            calibration_path: Optional path to calibration JSON file.
+                            If provided, metrics will be in meters, otherwise in pixels.
 
         Returns:
             PerformanceMetrics object or None if insufficient data
@@ -248,6 +257,27 @@ class PerformanceAnalyzer:
         if not frames:
             print(f"⚠️  No frames in {pose_json_path}")
             return None
+
+        # Load calibration if provided
+        calibration = None
+        if calibration_path:
+            import sys
+            from pathlib import Path as P
+            # Add src to path for calibration imports
+            sys.path.insert(0, str(P(__file__).parent.parent))
+            from calibration.camera_calibration import CameraCalibrator
+
+            try:
+                calibration = CameraCalibrator.load_calibration(calibration_path)
+                print(f"✓ Loaded calibration from {calibration_path}")
+            except Exception as e:
+                print(f"⚠️  Failed to load calibration: {e}")
+                calibration = None
+
+        # Get frame dimensions from metadata
+        metadata = data.get('metadata', {})
+        frame_width = metadata.get('frame_width', 1280)
+        frame_height = metadata.get('frame_height', 720)
 
         # Extract COM trajectory
         timestamps = []
@@ -274,9 +304,21 @@ class PerformanceAnalyzer:
 
             com_x, com_y = self.calculate_com(keypoints_dict)
 
-            timestamps.append(timestamp)
-            com_x_list.append(com_x)
-            com_y_list.append(com_y)
+            # Convert from normalized [0-1] to pixels
+            com_x_px = com_x * frame_width
+            com_y_px = com_y * frame_height
+
+            # Convert to meters if calibration available
+            if calibration:
+                com_x_m, com_y_m = calibration.pixel_to_meter_func(com_x_px, com_y_px)
+                timestamps.append(timestamp)
+                com_x_list.append(com_x_m)
+                com_y_list.append(com_y_m)
+            else:
+                # Use pixel coordinates
+                timestamps.append(timestamp)
+                com_x_list.append(com_x_px)
+                com_y_list.append(com_y_px)
 
         if len(timestamps) < 10:
             print(f"⚠️  Insufficient valid frames ({len(timestamps)}) in {pose_json_path}")
@@ -352,6 +394,8 @@ class PerformanceAnalyzer:
             straight_distance=straight_distance,
             path_efficiency=path_efficiency,
             smoothness_score=smoothness_score,
+            is_calibrated=calibration is not None,
+            units="meters" if calibration else "pixels",
         )
 
 
@@ -363,6 +407,8 @@ def main():
     parser.add_argument('pose_file', type=str, help='Path to pose JSON file')
     parser.add_argument('--lane', type=str, default='left', choices=['left', 'right'],
                        help='Which climber to analyze')
+    parser.add_argument('--calibration', type=str, default=None,
+                       help='Path to calibration JSON file (optional)')
     parser.add_argument('--output', type=str, default=None,
                        help='Output CSV file path (default: same as input with _metrics.csv)')
     args = parser.parse_args()
@@ -374,24 +420,33 @@ def main():
 
     # Analyze
     analyzer = PerformanceAnalyzer()
-    metrics = analyzer.analyze_pose_file(pose_file, lane=args.lane)
+    calibration_path = Path(args.calibration) if args.calibration else None
+    metrics = analyzer.analyze_pose_file(pose_file, lane=args.lane, calibration_path=calibration_path)
 
     if metrics is None:
         print("❌ Failed to analyze pose file")
         return
 
+    # Determine units
+    units = metrics.units
+    vel_units = "m/s" if units == "meters" else "px/s"
+    acc_units = "m/s²" if units == "meters" else "px/s²"
+    jerk_units = "m/s³" if units == "meters" else "px/s³"
+    dist_units = "m" if units == "meters" else "px"
+
     # Print summary
     print("\n" + "="*70)
     print(f"Performance Metrics - {pose_file.name} ({args.lane} climber)")
+    print(f"Units: {units} {'(calibrated)' if metrics.is_calibrated else '(uncalibrated)'}")
     print("="*70)
-    print(f"Average vertical velocity: {metrics.avg_vertical_velocity:.2f} px/s")
-    print(f"Max vertical velocity:     {metrics.max_vertical_velocity:.2f} px/s")
-    print(f"Average acceleration:      {metrics.avg_acceleration:.2f} px/s²")
-    print(f"Max acceleration:          {metrics.max_acceleration:.2f} px/s²")
-    print(f"Path length:               {metrics.path_length:.2f} px")
-    print(f"Straight distance:         {metrics.straight_distance:.2f} px")
+    print(f"Average vertical velocity: {metrics.avg_vertical_velocity:.2f} {vel_units}")
+    print(f"Max vertical velocity:     {metrics.max_vertical_velocity:.2f} {vel_units}")
+    print(f"Average acceleration:      {metrics.avg_acceleration:.2f} {acc_units}")
+    print(f"Max acceleration:          {metrics.max_acceleration:.2f} {acc_units}")
+    print(f"Path length:               {metrics.path_length:.2f} {dist_units}")
+    print(f"Straight distance:         {metrics.straight_distance:.2f} {dist_units}")
     print(f"Path efficiency:           {metrics.path_efficiency:.2%}")
-    print(f"Smoothness score (jerk):   {metrics.smoothness_score:.2f} px/s³")
+    print(f"Smoothness score (jerk):   {metrics.smoothness_score:.2f} {jerk_units}")
     print("="*70)
 
     # Save to CSV
