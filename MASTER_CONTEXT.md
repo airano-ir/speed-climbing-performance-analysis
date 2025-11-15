@@ -1,7 +1,7 @@
 # MASTER CONTEXT - Speed Climbing Performance Analysis
 # سند راهنمای کامل پروژه تحلیل سنگنوردی سرعتی
 
-**Last Updated**: 2025-11-15 (Phase 3 Complete - Ready for Production Scaling)
+**Last Updated**: 2025-11-15 (Phase 3 Testing - CRITICAL ISSUES FOUND ⚠️)
 **Purpose**: این سند برای ادامه کار در صورت قطع شدن session یا شروع مجدد در conversation جدید
 **Language**: Persian (Farsi) + English
 
@@ -39,8 +39,14 @@
 - **Tests**: 6 climbers, 66.7% prediction accuracy
 - **Deliverables**: 7 scripts, 2 modules, 15+ outputs
 
-### مرحله فعلی: Ready for Production Scaling
-**آماده برای پردازش کامل 188 race و تولید نتایج نهایی!**
+### مرحله فعلی: Phase 3 Testing - CRITICAL ISSUES DISCOVERED ⚠️
+**❌ مشکلات بحرانی در Metrics Pipeline کشف شد - نیاز به رفع فوری!**
+
+**وضعیت**:
+- ✅ Phase 3 implementation: COMPLETE
+- 🧪 Testing with 5 sample races: COMPLETED
+- 🔴 **Two CRITICAL issues discovered**
+- ⏸️ Full 188-race processing: ON HOLD pending fixes
 
 ### فایل‌های کلیدی برای ادامه:
 1. **این فایل**: [MASTER_CONTEXT.md](MASTER_CONTEXT.md) - سند کامل پروژه
@@ -76,13 +82,187 @@ powershell -ExecutionPolicy Bypass -File check_progress.ps1
 # باید نمایش دهد: 188/188 races (100%)
 ```
 
-### مرحله بعدی پیشنهادی:
-1. **Pose Extraction**: استخراج BlazePose keypoints از 188 race clip
-2. **Performance Metrics**: محاسبه سرعت، timing، smoothness
-3. **Visualization**: نمودارهای مقایسه‌ای
-4. **IFSC Calibration**: تبدیل pixel به متر با 20 گیره استاندارد
+---
 
-**راهنمای دقیق**: بخش "🎯 مراحل بعدی (Next Steps)" را در پایین این سند ببینید.
+## 🔴 مشکلات بحرانی شناسایی شده (تاریخ: 2025-11-15)
+
+### خلاصه اجرایی
+**در تست Phase 3 با 5 race نمونه، دو مشکل CRITICAL کشف شد که validity همه metrics را زیر سوال می‌برد:**
+
+### مشکل 1: عدم استفاده از Calibration 🎯
+
+**وضعیت**:
+- ✅ سیستم calibration پیاده‌سازی شده (Phase 2.5)
+- ✅ تست شده و validated (RMSE=0.1±0.2cm)
+- ❌ **اما در production metrics استفاده نمی‌شود!**
+
+**علت**:
+- `batch_calculate_metrics.py` دنبال calibration files می‌گردد
+- اما هیچ calibration file برای 188 race تولید نشده
+- نتیجه: همه metrics در **pixels** هستند، نه **meters**
+
+**تاثیر**:
+```json
+// خروجی فعلی (INVALID):
+{
+  "is_calibrated": false,
+  "units": "pixels",               // ❌ بی‌معنی با دوربین متحرک
+  "avg_vertical_velocity": 12.07   // ❌ pixels/s (چقدر سریع؟ نامعلوم!)
+}
+
+// خروجی صحیح (بعد از fix):
+{
+  "is_calibrated": true,
+  "units": "meters",               // ✅ واحد فیزیکی
+  "avg_vertical_velocity": 2.34    // ✅ m/s (قابل فهم و مقایسه)
+}
+```
+
+**چرا بحرانی است**:
+1. دوربین حرکت می‌کند (پن + زوم) → مقیاس pixel تغییر می‌کند
+2. نمی‌توان races را با هم مقایسه کرد
+3. velocity/acceleration/path length همه بی‌معنی هستند
+4. **هیچ تحلیل بیومکانیکی معتبر نیست!**
+
+**راه‌حل**:
+1. Run batch calibration روی 188 races
+2. Generate calibration JSON files
+3. Re-run metrics calculation (automatically uses calibration)
+
+**زمان تخمینی**: 3-5 ساعت
+
+---
+
+### مشکل 2: عدم فیلتر فریم‌های قبل/بعد مسابقه 📽️
+
+**وضعیت**:
+- ✅ `RaceStartDetector` + `RaceFinishDetector` پیاده‌سازی شده
+- ✅ Race boundaries در metadata ذخیره می‌شوند
+- ❌ **اما performance_metrics.py از آن‌ها استفاده نمی‌کند!**
+
+**علت**:
+- Pose files شامل ALL frames هستند (pre-race + race + post-race)
+- `performance_metrics.py` همه frames را پردازش می‌کند
+- فیلتر بر اساس `detected_start_frame`/`detected_finish_frame` وجود ندارد
+
+**تاثیر**:
+```
+ویدئو نمونه: 4.77 ثانیه (143 فریم)
+├─ قبل مسابقه:  1.50s (45 فریم) ← ایستاده، آماده ❌
+├─ مسابقه:      1.77s (53 فریم) ← صعود واقعی ✅
+└─ بعد مسابقه:  1.50s (45 فریم) ← تمام شده، جشن ❌
+
+فعلاً: 143 فریم (100%) پردازش می‌شود
+صحیح: 53 فریم (37%) باید پردازش شود
+
+خطا: 2.7× underestimation در velocity!
+```
+
+**مثال محاسبه اشتباه**:
+```python
+# فریم‌های pre-race: velocity ≈ 0 (ایستاده)
+# فریم‌های race: velocity = 32.6 px/s (در حال صعود)
+# فریم‌های post-race: velocity ≈ 0 (متوقف شده)
+
+# میانگین اشتباه:
+avg_velocity = (0 + 32.6 + 0) / 3 = 10.9 px/s  # ❌
+
+# میانگین صحیح (فقط race):
+avg_velocity = 32.6 px/s  # ✅ (3× بیشتر!)
+```
+
+**چرا بحرانی است**:
+1. Velocity: 2-3× کمتر از واقعیت (diluted با stationary frames)
+2. Path length: شامل حرکات غیرضروری
+3. Efficiency: چندین برابر پایین‌تر از واقعیت
+4. Acceleration/Jerk: contaminated با start/stop transitions
+5. **تمام pattern analysis بی‌معنی می‌شود!**
+
+**راه‌حل**:
+1. Modify `performance_metrics.py` to accept `start_frame`/`end_frame`
+2. Load race boundaries from metadata
+3. Filter frames during analysis loop
+4. Re-run metrics calculation
+
+**زمان تخمینی**: 2-3 ساعت
+
+---
+
+### ترکیب دو مشکل = فاجعه 💥
+
+```
+خطای مشکل 1: metrics در pixels (× تغییرات مقیاس دوربین)
+خطای مشکل 2: شامل فریم‌های non-race (× 2-3)
+خطای ترکیبی: 5-10× distortion در metrics!
+
+مثال:
+Actual velocity: 2.5 m/s
+Current output: ~0.4 arbitrary units
+```
+
+**این یعنی: همه 188 race باید دوباره پردازش شوند!**
+
+---
+
+### اقدامات فوری مورد نیاز
+
+**Priority 1** (2-3 ساعت): Frame Selection
+- [ ] Modify `src/analysis/performance_metrics.py`
+- [ ] Add `start_frame`/`end_frame` parameters
+- [ ] Load race boundaries from metadata
+- [ ] Test with 5 sample races
+- [ ] Validate: velocity should be 2-3× higher
+
+**Priority 2** (3-5 ساعت): Calibration
+- [ ] Create `scripts/batch_calibration.py`
+- [ ] Run calibration on 188 races (use `PeriodicCalibrator`)
+- [ ] Generate calibration JSON files
+- [ ] Test with 5 sample races
+- [ ] Validate: RMSE < 10cm for 90%+ races
+
+**Priority 3** (1-2 ساعت): Re-process Everything
+- [ ] Re-run `batch_calculate_metrics.py` (auto-detects calibration files)
+- [ ] Validate new metrics (compare old vs new)
+- [ ] Update aggregations and leaderboards
+- [ ] Regenerate visualizations
+
+**جمع زمان**: 6-10 ساعت کار
+
+---
+
+### فایل‌های مرتبط
+
+**Investigation Report**:
+- `docs/SESSION_LOG_PHASE3_TEST.md` - گزارش جلسه تست
+
+**Action Items**:
+- `docs/PROMPT_FOR_UI_FIX_METRICS.md` - Prompt برای UI claude.ai/code
+- `docs/TUTORIAL_METRICS_CALIBRATION_FA.md` - راهنمای آموزشی کامل
+
+**Related Code**:
+- `src/analysis/performance_metrics.py` - نیاز به modification
+- `scripts/batch_calculate_metrics.py` - آماده است، فقط نیاز به calibration files
+- `src/calibration/camera_calibration.py` - آماده و tested
+- `src/phase1_pose_estimation/race_start_detector.py` - آماده
+- `src/phase1_pose_estimation/race_finish_detector.py` - آماده
+
+---
+
+### مرحله بعدی پیشنهادی:
+**❌ OLD (در انتظار رفع مشکلات)**:
+~~1. **Pose Extraction**: استخراج BlazePose keypoints از 188 race clip~~
+~~2. **Performance Metrics**: محاسبه سرعت، timing، smoothness~~
+~~3. **Visualization**: نمودارهای مقایسه‌ای~~
+~~4. **IFSC Calibration**: تبدیل pixel به متر با 20 گیره استاندارد~~
+
+**✅ NEW (اقدامات فوری)**:
+1. **رفع Frame Selection Issue** (Priority 1 - 2-3 ساعت)
+2. **اجرای Batch Calibration** (Priority 2 - 3-5 ساعت)
+3. **Re-process همه Metrics** (Priority 3 - 1-2 ساعت)
+4. **Validation و Testing** (1 ساعت)
+5. **ادامه Phase 3** (پس از تایید correctness)
+
+**راهنمای دقیق**: فایل‌های `docs/PROMPT_FOR_UI_FIX_METRICS.md` و `docs/TUTORIAL_METRICS_CALIBRATION_FA.md`
 
 ### 📦 مدیریت فایل‌های ویدئو (Video Files Management) - Updated 2025-11-14
 
