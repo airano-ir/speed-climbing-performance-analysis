@@ -335,6 +335,10 @@ class RaceFinishDetector:
         # Skip to start frame
         cap.set(cv2.CAP_PROP_POS_FRAMES, start_frame)
 
+        # Initialize result variables
+        pose_result = None
+        visual_result = None
+
         # If poses available, use pose-based detection
         if poses and self.method in ['pose', 'combined']:
             pose_result = self.pose_detector.detect_from_poses(
@@ -355,7 +359,6 @@ class RaceFinishDetector:
             return None
 
         frame_id = start_frame + 1
-        visual_result = None
 
         while frame_id < end_frame:
             ret, curr_frame = cap.read()
