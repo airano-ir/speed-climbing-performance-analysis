@@ -1025,7 +1025,7 @@ Phase 3: Integration & Testing
 ## 📍 وضعیت فعلی و مراحل بعدی (Current Status & Next Steps)
 
 **تاریخ**: 2025-11-15
-**آخرین commit**: 7a9e422
+**آخرین commit**: bb255da
 
 ### وضعیت فعلی ✅
 
@@ -1038,6 +1038,7 @@ Phase 3: Integration & Testing
 - Windows encoding fixed
 - Tested successfully with sample races
 - ✅ **Task 1 (2025-11-15)**: Destructor error fixed (commit 7a9e422)
+- ✅ **Task 2.1 (2025-11-15)**: IFSC route map parser implemented (commit bb255da)
 
 **Batch Processing**: 🔄 در حال اجرا
 ```bash
