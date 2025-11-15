@@ -80,8 +80,8 @@ class CalibrationTester:
         # Initialize race detectors if needed
         if self.use_race_detection:
             self.race_start_detector = RaceStartDetector(method=race_detection_method)
-            self.race_finish_detector = RaceFinishDetector(method='visual')
-            logger.info(f"Race detection enabled: method={race_detection_method}")
+            self.race_finish_detector = RaceFinishDetector(method='combined')
+            logger.info(f"Race detection enabled: start_method={race_detection_method}, finish_method=combined")
         else:
             self.race_start_detector = None
             self.race_finish_detector = None
