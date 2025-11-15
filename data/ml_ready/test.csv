@@ -1,0 +1,3 @@
+race_name,competition,lane,is_calibrated,units,avg_vertical_velocity,max_vertical_velocity,avg_acceleration,max_acceleration,path_length,straight_distance,path_efficiency,smoothness_score
+Speed_finals_Seoul_2024_race013,samples,left,False,pixels,-7.48025490226523,427.65555088812937,764.3429681846864,9578.784972683066,1445.1266711098824,111.83121146638742,0.077385058141996,12771.402795237893
+Speed_finals_Chamonix_2024_race024,samples,right,False,pixels,1.627990437520522,359.6228260517132,932.9858240614966,3680.866715572663,865.6979742934374,91.97605770844764,0.1062449727730001,15424.65463440356
