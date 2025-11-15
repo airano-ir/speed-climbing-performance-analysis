@@ -71,10 +71,18 @@ data/raw_videos/*.part
 !data/raw_videos/*.info.json
 
 # Processed data (gitignored - generated files)
-# NOTE: Race segments are tracked in Gitea (primary repo)
-#       but ignored in GitHub (too large - 705MB)
-# data/race_segments/*.mp4    # Commented out for Gitea
-# data/race_segments/*.avi    # Commented out for Gitea
+# NOTE: Race segments are selectively tracked
+#       - villars_2024 + chamonix_2024: tracked in GitHub (131 MB - suitable)
+#       - Other competitions: ignored (too large - tracked in Gitea only)
+
+# Ignore large competition folders
+data/race_segments/seoul_2024/*.mp4
+data/race_segments/innsbruck_2024/*.mp4
+data/race_segments/zilina_2025/*.mp4
+
+# Keep small competitions for GitHub (villars + chamonix = 131 MB)
+# data/race_segments/villars_2024/*.mp4     # Kept (53 MB)
+# data/race_segments/chamonix_2024/*.mp4    # Kept (78 MB)
 
 # Ignore all processed data by default
 data/processed/
