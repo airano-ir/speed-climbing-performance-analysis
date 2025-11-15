@@ -39,16 +39,22 @@ class CalibrationTester:
     def __init__(
         self,
         route_map_path: str = "configs/ifsc_route_coordinates.json",
-        test_frames: List[int] = [30, 60, 90, 120, 150]
+        test_frames: List[int] = [30, 60, 90, 120, 150],
+        skip_start_frames: int = 0,
+        skip_end_frames: int = 0
     ):
         """Initialize calibration tester.
 
         Args:
             route_map_path: Path to IFSC route coordinates
             test_frames: Frame numbers to test in each video
+            skip_start_frames: Skip first N frames (pre-race section)
+            skip_end_frames: Skip last N frames (post-race section)
         """
         self.route_map_path = route_map_path
         self.test_frames = test_frames
+        self.skip_start_frames = skip_start_frames
+        self.skip_end_frames = skip_end_frames
 
         # Initialize detector and calibrator
         self.hold_detector = HoldDetector(
@@ -92,11 +98,30 @@ class CalibrationTester:
         total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         fps = cap.get(cv2.CAP_PROP_FPS)
 
-        # Adjust test frames based on video length
-        valid_test_frames = [f for f in self.test_frames if f < total_frames]
+        # Apply frame selection (skip pre/post race sections)
+        effective_start = self.skip_start_frames
+        effective_end = total_frames - self.skip_end_frames
+
+        if self.skip_start_frames > 0 or self.skip_end_frames > 0:
+            logger.info(
+                f"  Frame selection: testing frames {effective_start} to {effective_end} "
+                f"(skipping first {self.skip_start_frames} and last {self.skip_end_frames})"
+            )
+
+        # Adjust test frames based on video length and skip settings
+        valid_test_frames = [
+            f for f in self.test_frames
+            if effective_start <= f < effective_end
+        ]
         if not valid_test_frames:
-            # If video too short, use middle frame
-            valid_test_frames = [total_frames // 2]
+            # If video too short or all frames skipped, use middle frame
+            middle_frame = (effective_start + effective_end) // 2
+            if effective_start < effective_end:
+                valid_test_frames = [middle_frame]
+            else:
+                logger.warning(f"  No valid frames after skip settings")
+                cap.release()
+                return None
 
         frame_results = []
 
@@ -463,6 +488,20 @@ def main():
         help="Output report path"
     )
 
+    # Frame selection (for skipping pre/post race sections)
+    parser.add_argument(
+        "--skip-start",
+        type=int,
+        default=0,
+        help="Skip first N frames (pre-race section, default: 0)"
+    )
+    parser.add_argument(
+        "--skip-end",
+        type=int,
+        default=0,
+        help="Skip last N frames (post-race section, default: 0)"
+    )
+
     args = parser.parse_args()
 
     # Get video list
@@ -482,7 +521,11 @@ def main():
         return
 
     # Run tests
-    tester = CalibrationTester(route_map_path=args.route_map)
+    tester = CalibrationTester(
+        route_map_path=args.route_map,
+        skip_start_frames=args.skip_start,
+        skip_end_frames=args.skip_end
+    )
     results = tester.test_multiple_videos(video_paths, lane=args.lane)
 
     if results:

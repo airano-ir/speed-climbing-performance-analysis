@@ -27,7 +27,8 @@
       "Bash(SETUP_WEB_ENVIRONMENT.md)",
       "Bash(requirements_core.txt)",
       "Bash(test_pose_extraction.py)",
-      "Bash($null)"
+      "Bash($null)",
+      "Bash(git push:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

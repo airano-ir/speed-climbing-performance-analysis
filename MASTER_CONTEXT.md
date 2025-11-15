@@ -1306,24 +1306,41 @@ git push github main   # GitHub
   - **Holds detected**: 6.1 avg (NORMAL for moving camera with partial wall view)
   - **Holds used**: 4.3 avg
   - **Assessment**: GOOD - calibration accurate when holds detected, needs outlier handling
-- 💡 **Key Insight** (user feedback): Moving camera shows only partial wall
+- 💡 **Key Insight #1** (user feedback): Moving camera shows only partial wall
   - **6 holds/frame is NORMAL** (camera follows climber, shows only section of wall)
   - Different wall sections visible in different frames as camera moves up
   - **15-20 holds expectation was INCORRECT** (assumes full wall visible - impossible!)
   - **Real issue**: Some frames have <4 holds → calibration failure → outliers
   - **Implication**: Focus on consistency (≥4 holds/frame), not quantity (15-20/frame)
-- ⚠️ **Actual Problem**: Inconsistent hold detection + outlier handling
-  - Need **consistent ≥4 holds** in 90%+ frames (current: ~78%)
-  - Outlier frames (usually start/end of race during camera transitions)
-  - **Solution**: PeriodicCalibrator (fallback to previous) + outlier rejection
-- 🎯 **Corrected Recommendations for UI**:
-  1. **CRITICAL**: Use PeriodicCalibrator instead of CameraCalibrator (handles missing frames)
-  2. Implement outlier rejection (RMSE > 50cm → use cached calibration)
-  3. Minor HSV tuning for consistency (goal: ≥4 holds in 90%+ frames, not more per frame)
-  4. Wall segmentation (optional, only to constrain search area)
-  5. **Test on data/race_segments/** (NOT raw_videos - different aspect ratio)
+- 💡 **Key Insight #2** (user feedback): Video structure has pre/post race sections
+  - **Video structure**: [Pre-race] → [Standing pose] → [RACE] → [Post-race]
+  - **Pre-race** (~30 frames): Athletes standing, camera positioning → few/no holds visible
+  - **Standing pose**: Both athletes in characteristic start position (detectable via pose keypoints)
+  - **Race** (bulk): Partial wall visible as camera follows climbers upward
+  - **Post-race** (~30 frames): Athletes finished, camera transitions → few/no holds visible
+  - **Outlier explanation**: 22% failed frames are mostly pre/post race (not actual race!)
+- ⚠️ **Actual Problem**: Inconsistent hold detection + outlier handling + frame selection
+  - Need **consistent ≥4 holds** in race frames (current: ~78% all frames, likely >95% race frames)
+  - Outlier frames are pre/post race sections (camera not focused on wall)
+  - **Solution**: Skip pre/post frames + PeriodicCalibrator + outlier rejection
+- 🎯 **Corrected Recommendations for UI** (Priority Order):
+  1. **CRITICAL**: **Frame Selection** - Skip pre/post race frames
+     - Option A: Simple skip (first 30 & last 30 frames)
+     - Option B: Use standing pose detection (from race_start_detector.py)
+     - Expected: Pass rate 78% → 95%+, Mean RMSE 98cm → <5cm
+  2. **CRITICAL**: Use PeriodicCalibrator instead of CameraCalibrator
+     - Handles missing frames with fallback to cached calibration
+     - Reduces jitter with temporal smoothing
+  3. Implement outlier rejection (RMSE > 50cm → use cached calibration)
+  4. Minor HSV tuning for consistency (goal: ≥4 holds in 90%+ race frames)
+  5. Wall segmentation (optional, only to constrain search area)
+  6. **Test on data/race_segments/** (NOT raw_videos - different aspect ratio)
 - 📝 **Documentation**: Detailed analysis report available in data/processed/calibration/calibration_test_report.json
-- 🎯 **Next**: UI should implement PeriodicCalibrator + outlier handling, then proceed to Task 2.4
+- 🎯 **Next Steps for UI**:
+  1. Implement frame selection (skip pre/post race)
+  2. Implement PeriodicCalibrator + outlier handling
+  3. Test on 10 videos and verify Mean RMSE < 5cm
+  4. If successful → proceed to Task 2.4 (Performance Metrics)
 
 **2025-11-15 Comprehensive Planning + Documentation**
 - ✅ رفع Windows console encoding در Phase 2 scripts
