@@ -1025,7 +1025,7 @@ Phase 3: Integration & Testing
 ## 📍 وضعیت فعلی و مراحل بعدی (Current Status & Next Steps)
 
 **تاریخ**: 2025-11-15
-**آخرین commit**: 945b83e
+**آخرین commit**: e0974f5
 
 ### وضعیت فعلی ✅
 
@@ -1038,10 +1038,11 @@ Phase 3: Integration & Testing
 - Windows encoding fixed
 - Tested successfully with sample races
 
-**Phase 2-5: IN PROGRESS - 40%**
+**Phase 2-5: IN PROGRESS - 50%**
 - ✅ **Task 1 (2025-11-15)**: Destructor error fixed (commit 7a9e422)
-- ✅ **Task 2.1 (2025-11-15)**: IFSC route map parser implemented (commit bb255da)
-- ✅ **Task 2.2 (2025-11-15)**: Hold detector with HSV implemented (commit 945b83e)
+- ✅ **Task 2.1 (2025-11-15)**: IFSC route map parser - 31 holds (commit bb255da)
+- ✅ **Task 2.2 (2025-11-15)**: Hold detector with HSV - tested on real video (commit 945b83e)
+- ✅ **Task 2.3 (2025-11-15)**: Camera calibration with homography - RMSE=0.154m (commit e0974f5)
 
 **Batch Processing**: 🔄 در حال اجرا
 ```bash
