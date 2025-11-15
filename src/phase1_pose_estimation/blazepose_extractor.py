@@ -442,9 +442,12 @@ class BlazePoseExtractor:
 
     def release(self):
         """Release MediaPipe resources."""
-        if self.pose:
-            self.pose.close()
-            logger.info("BlazePose resources released")
+        if hasattr(self, 'pose') and self.pose is not None:
+            try:
+                self.pose.close()
+                logger.info("BlazePose resources released")
+            except Exception:
+                pass  # Already closed or cleanup error
 
     def __del__(self):
         """Destructor."""
