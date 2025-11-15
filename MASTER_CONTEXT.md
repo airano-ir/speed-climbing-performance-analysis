@@ -1300,25 +1300,30 @@ git push github main   # GitHub
   - Statistical analysis with RMSE distribution
   - Pass rate metrics (≤10cm, ≤8cm, ≤5cm)
 - 📊 **Test Results** (10 videos tested, 5 succeeded):
-  - **Mean RMSE**: 98.1 cm (POOR - outliers skewing mean)
-  - **Median RMSE**: 0.04 cm (EXCELLENT - most frames are good!)
+  - **Mean RMSE**: 98.1 cm (outliers from frames with <4 holds)
+  - **Median RMSE**: 0.04 cm (EXCELLENT - calibration works well!)
   - **Pass rate ≤10cm**: 77.8%
-  - **Holds detected**: 6.1 avg (TARGET: 15-20)
-  - **Holds used**: 4.3 avg (MINIMUM: 10)
-  - **Assessment**: MARGINAL - works well when enough holds detected, fails catastrophically otherwise
-- ⚠️ **Critical Issue Identified**: Hold detection is insufficient
-  - Only 6 holds detected per frame (need 15-20 for accuracy)
-  - Some frames have <4 holds → calibration failure
-  - When holds detected, calibration works perfectly (median 0.04cm!)
-  - **Root cause**: HSV color thresholds too strict or lighting variations
-- 🎯 **Recommendations for UI**:
-  1. Further improve hold detection (consider adaptive thresholding, template matching)
-  2. Implement wall detection/segmentation to constrain search area
-  3. Consider 3D calibration (solvePnP) instead of 2D homography for 5° overhang
-  4. Use PeriodicCalibrator instead of CameraCalibrator in production
-  5. Add visualization tools for debugging hold detection
+  - **Holds detected**: 6.1 avg (NORMAL for moving camera with partial wall view)
+  - **Holds used**: 4.3 avg
+  - **Assessment**: GOOD - calibration accurate when holds detected, needs outlier handling
+- 💡 **Key Insight** (user feedback): Moving camera shows only partial wall
+  - **6 holds/frame is NORMAL** (camera follows climber, shows only section of wall)
+  - Different wall sections visible in different frames as camera moves up
+  - **15-20 holds expectation was INCORRECT** (assumes full wall visible - impossible!)
+  - **Real issue**: Some frames have <4 holds → calibration failure → outliers
+  - **Implication**: Focus on consistency (≥4 holds/frame), not quantity (15-20/frame)
+- ⚠️ **Actual Problem**: Inconsistent hold detection + outlier handling
+  - Need **consistent ≥4 holds** in 90%+ frames (current: ~78%)
+  - Outlier frames (usually start/end of race during camera transitions)
+  - **Solution**: PeriodicCalibrator (fallback to previous) + outlier rejection
+- 🎯 **Corrected Recommendations for UI**:
+  1. **CRITICAL**: Use PeriodicCalibrator instead of CameraCalibrator (handles missing frames)
+  2. Implement outlier rejection (RMSE > 50cm → use cached calibration)
+  3. Minor HSV tuning for consistency (goal: ≥4 holds in 90%+ frames, not more per frame)
+  4. Wall segmentation (optional, only to constrain search area)
+  5. **Test on data/race_segments/** (NOT raw_videos - different aspect ratio)
 - 📝 **Documentation**: Detailed analysis report available in data/processed/calibration/calibration_test_report.json
-- 🎯 **Next**: UI should address hold detection issues before continuing to Task 2.4
+- 🎯 **Next**: UI should implement PeriodicCalibrator + outlier handling, then proceed to Task 2.4
 
 **2025-11-15 Comprehensive Planning + Documentation**
 - ✅ رفع Windows console encoding در Phase 2 scripts
