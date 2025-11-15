@@ -14,7 +14,7 @@ import json
 import logging
 import sys
 from pathlib import Path
-from typing import List, Dict
+from typing import List, Dict, Optional
 import random
 
 import cv2
@@ -25,6 +25,8 @@ sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
 
 from calibration.camera_calibration import CameraCalibrator, PeriodicCalibrator
 from phase1_pose_estimation.hold_detector import HoldDetector
+from phase1_pose_estimation.race_start_detector import RaceStartDetector
+from phase1_pose_estimation.race_finish_detector import RaceFinishDetector
 
 logging.basicConfig(
     level=logging.INFO,
@@ -41,20 +43,26 @@ class CalibrationTester:
         route_map_path: str = "configs/ifsc_route_coordinates.json",
         test_frames: List[int] = [30, 60, 90, 120, 150],
         skip_start_frames: int = 0,
-        skip_end_frames: int = 0
+        skip_end_frames: int = 0,
+        use_race_detection: bool = False,
+        race_detection_method: str = 'fusion'
     ):
         """Initialize calibration tester.
 
         Args:
             route_map_path: Path to IFSC route coordinates
             test_frames: Frame numbers to test in each video
-            skip_start_frames: Skip first N frames (pre-race section)
-            skip_end_frames: Skip last N frames (post-race section)
+            skip_start_frames: Skip first N frames (pre-race section, ignored if use_race_detection=True)
+            skip_end_frames: Skip last N frames (post-race section, ignored if use_race_detection=True)
+            use_race_detection: Use race start/finish detection instead of fixed frame skipping
+            race_detection_method: Race detection method ('audio', 'motion', 'fusion')
         """
         self.route_map_path = route_map_path
         self.test_frames = test_frames
         self.skip_start_frames = skip_start_frames
         self.skip_end_frames = skip_end_frames
+        self.use_race_detection = use_race_detection
+        self.race_detection_method = race_detection_method
 
         # Initialize detector and calibrator
         self.hold_detector = HoldDetector(
@@ -68,6 +76,15 @@ class CalibrationTester:
             min_holds_for_calibration=4,
             ransac_threshold=0.05
         )
+
+        # Initialize race detectors if needed
+        if self.use_race_detection:
+            self.race_start_detector = RaceStartDetector(method=race_detection_method)
+            self.race_finish_detector = RaceFinishDetector(method='visual')
+            logger.info(f"Race detection enabled: method={race_detection_method}")
+        else:
+            self.race_start_detector = None
+            self.race_finish_detector = None
 
         self.results = []
 
@@ -98,15 +115,57 @@ class CalibrationTester:
         total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         fps = cap.get(cv2.CAP_PROP_FPS)
 
-        # Apply frame selection (skip pre/post race sections)
-        effective_start = self.skip_start_frames
-        effective_end = total_frames - self.skip_end_frames
+        # Apply frame selection
+        if self.use_race_detection:
+            # Use race detection to find actual race start/end
+            logger.info(f"  Detecting race boundaries using method: {self.race_detection_method}")
 
-        if self.skip_start_frames > 0 or self.skip_end_frames > 0:
-            logger.info(
-                f"  Frame selection: testing frames {effective_start} to {effective_end} "
-                f"(skipping first {self.skip_start_frames} and last {self.skip_end_frames})"
-            )
+            try:
+                # Detect race start
+                start_result = self.race_start_detector.detect_from_video(str(video_path))
+
+                if start_result and start_result.confidence > 0.3:
+                    effective_start = start_result.frame_id
+                    logger.info(
+                        f"  Race start detected: frame {start_result.frame_id} "
+                        f"({start_result.timestamp:.2f}s, confidence={start_result.confidence:.2f})"
+                    )
+                else:
+                    logger.warning(f"  Race start detection failed or low confidence, using fallback")
+                    effective_start = 30  # Fallback to typical pre-race duration
+
+                # Detect race finish
+                finish_result = self.race_finish_detector.detect_from_video(
+                    Path(video_path),
+                    lane=lane,
+                    start_frame=effective_start
+                )
+
+                if finish_result and finish_result.confidence > 0.3:
+                    effective_end = finish_result.frame_id
+                    logger.info(
+                        f"  Race finish detected: frame {finish_result.frame_id} "
+                        f"({finish_result.timestamp:.2f}s, confidence={finish_result.confidence:.2f})"
+                    )
+                else:
+                    logger.warning(f"  Race finish detection failed or low confidence, using fallback")
+                    effective_end = total_frames - 30  # Fallback to typical post-race duration
+
+            except Exception as e:
+                logger.error(f"  Race detection error: {e}")
+                logger.warning(f"  Falling back to default frame selection")
+                effective_start = 30
+                effective_end = total_frames - 30
+        else:
+            # Use fixed frame skipping
+            effective_start = self.skip_start_frames
+            effective_end = total_frames - self.skip_end_frames
+
+            if self.skip_start_frames > 0 or self.skip_end_frames > 0:
+                logger.info(
+                    f"  Frame selection: testing frames {effective_start} to {effective_end} "
+                    f"(skipping first {self.skip_start_frames} and last {self.skip_end_frames})"
+                )
 
         # Adjust test frames based on video length and skip settings
         valid_test_frames = [
@@ -493,13 +552,25 @@ def main():
         "--skip-start",
         type=int,
         default=0,
-        help="Skip first N frames (pre-race section, default: 0)"
+        help="Skip first N frames (pre-race section, default: 0, ignored if --use-race-detection is set)"
     )
     parser.add_argument(
         "--skip-end",
         type=int,
         default=0,
-        help="Skip last N frames (post-race section, default: 0)"
+        help="Skip last N frames (post-race section, default: 0, ignored if --use-race-detection is set)"
+    )
+    parser.add_argument(
+        "--use-race-detection",
+        action="store_true",
+        help="Use race start/finish detection instead of fixed frame skipping (RECOMMENDED)"
+    )
+    parser.add_argument(
+        "--race-detection-method",
+        type=str,
+        default="fusion",
+        choices=['audio', 'motion', 'fusion'],
+        help="Race start detection method (default: fusion)"
     )
 
     args = parser.parse_args()
@@ -524,7 +595,9 @@ def main():
     tester = CalibrationTester(
         route_map_path=args.route_map,
         skip_start_frames=args.skip_start,
-        skip_end_frames=args.skip_end
+        skip_end_frames=args.skip_end,
+        use_race_detection=args.use_race_detection,
+        race_detection_method=args.race_detection_method
     )
     results = tester.test_multiple_videos(video_paths, lane=args.lane)
 
