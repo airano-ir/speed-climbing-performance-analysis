@@ -26,7 +26,8 @@
       "Bash(git fetch:*)",
       "Bash(SETUP_WEB_ENVIRONMENT.md)",
       "Bash(requirements_core.txt)",
-      "Bash(test_pose_extraction.py)"
+      "Bash(test_pose_extraction.py)",
+      "Bash($null)"
     ]
   },
   "enableAllProjectMcpServers": true,

@@ -50,7 +50,7 @@ class HoldDetector:
         route_coordinates_path: Optional[str] = None,
         min_area: int = 100,
         max_area: int = 50000,
-        min_confidence: float = 0.3
+        min_confidence: float = 0.2
     ):
         """Initialize hold detector.
 
@@ -59,7 +59,7 @@ class HoldDetector:
                                    If None, holds won't be matched to route.
             min_area: Minimum contour area (pixels) to consider as a hold
             max_area: Maximum contour area (pixels) to consider as a hold
-            min_confidence: Minimum confidence threshold for detections
+            min_confidence: Minimum confidence threshold for detections (default: 0.2 for better recall)
         """
         self.min_area = min_area
         self.max_area = max_area

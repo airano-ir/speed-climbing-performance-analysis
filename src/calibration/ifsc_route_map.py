@@ -121,7 +121,7 @@ class IFSCRouteMapParser:
         """Convert panel-local coordinates to wall coordinates in meters.
 
         Args:
-            panel_name: Panel identifier (e.g., 'DX1', 'SN5')
+            panel_name: Panel identifier (e.g., 'DX1', 'SN5', 'SN 8')
                        DX = right lane (Destra), SN = left lane (Sinistra)
                        Number = panel level (1 = bottom, 10 = top)
             x_panel_mm: X coordinate within panel (0-1500mm)
@@ -130,8 +130,8 @@ class IFSCRouteMapParser:
         Returns:
             Tuple of (x_m, y_m) relative to bottom-left corner of wall
         """
-        # Parse panel name
-        panel_name = panel_name.strip().upper()
+        # Parse panel name - normalize by removing spaces and converting to uppercase
+        panel_name = panel_name.strip().replace(' ', '').upper()
         if len(panel_name) < 3:
             raise ValueError(f"Invalid panel name: {panel_name}")
 

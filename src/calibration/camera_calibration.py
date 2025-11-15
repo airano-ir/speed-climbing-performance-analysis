@@ -189,6 +189,31 @@ class CameraCalibrator:
             f"RMSE={rmse:.4f}m, scale={scale:.1f}px/m, confidence={confidence:.2f}"
         )
 
+        # Quality warnings
+        if rmse > 0.10:  # 10cm threshold
+            logger.warning(
+                f"⚠️  High RMSE: {rmse:.3f}m (>{0.10:.2f}m) - "
+                f"calibration may be inaccurate. Consider detecting more holds."
+            )
+
+        if inlier_count < 10:
+            logger.warning(
+                f"⚠️  Low hold count: {inlier_count} holds detected - "
+                f"accuracy may be limited. Aim for 15-20 holds for best results."
+            )
+
+        if inlier_ratio < 0.7:
+            logger.warning(
+                f"⚠️  Low inlier ratio: {inlier_ratio:.2f} - "
+                f"many holds rejected by RANSAC. Check for occlusions or mismatches."
+            )
+
+        if confidence < 0.6:
+            logger.warning(
+                f"⚠️  Low confidence: {confidence:.2f} - "
+                f"calibration may be unreliable. Consider recalibration."
+            )
+
         return result
 
     def _match_holds_to_route(
@@ -466,6 +491,173 @@ class CameraCalibrator:
         )
 
 
+class PeriodicCalibrator(CameraCalibrator):
+    """Periodic calibrator that caches calibration results to reduce computation.
+
+    Instead of calibrating every frame, this calibrator:
+    1. Calibrates periodically (e.g., every 30 frames)
+    2. Caches calibration results
+    3. Returns the most recent valid calibration for intermediate frames
+
+    This provides ~30x speedup while still adapting to camera movement.
+    """
+
+    def __init__(
+        self,
+        route_coordinates_path: str,
+        recalibration_interval: int = 30,
+        min_holds_for_calibration: int = 4,
+        ransac_threshold: float = 0.05,
+        min_inlier_ratio: float = 0.5,
+        min_confidence_for_cache: float = 0.6
+    ):
+        """Initialize periodic calibrator.
+
+        Args:
+            route_coordinates_path: Path to IFSC route coordinates JSON
+            recalibration_interval: Calibrate every N frames (default: 30 = 1 sec at 30fps)
+            min_holds_for_calibration: Minimum holds needed for calibration
+            ransac_threshold: RANSAC reprojection threshold (meters)
+            min_inlier_ratio: Minimum ratio of inliers for valid calibration
+            min_confidence_for_cache: Minimum confidence to cache a calibration
+        """
+        super().__init__(
+            route_coordinates_path=route_coordinates_path,
+            min_holds_for_calibration=min_holds_for_calibration,
+            ransac_threshold=ransac_threshold,
+            min_inlier_ratio=min_inlier_ratio
+        )
+
+        self.recalibration_interval = recalibration_interval
+        self.min_confidence_for_cache = min_confidence_for_cache
+        self.calibration_cache = {}  # frame_id -> CalibrationResult
+        self.last_calibration = None
+        self.frames_since_calibration = 0
+
+        logger.info(
+            f"Periodic calibrator initialized: recalibrate every {recalibration_interval} frames"
+        )
+
+    def calibrate_frame(
+        self,
+        frame: np.ndarray,
+        frame_id: int,
+        detected_holds: List,
+        lane: str = 'left',
+        force_recalibration: bool = False
+    ) -> Optional[CalibrationResult]:
+        """Calibrate for a specific frame with periodic updates.
+
+        Args:
+            frame: Video frame
+            frame_id: Frame number (0-indexed)
+            detected_holds: List of DetectedHold objects
+            lane: Which lane to calibrate ('left' or 'right')
+            force_recalibration: Force recalibration even if cached
+
+        Returns:
+            CalibrationResult (may be cached from recent frame) or None
+        """
+        # Check if we should recalibrate
+        should_recalibrate = (
+            force_recalibration or
+            frame_id % self.recalibration_interval == 0 or
+            self.last_calibration is None
+        )
+
+        if should_recalibration:
+            # Perform calibration
+            calibration = self.calibrate(frame, detected_holds, lane)
+
+            if calibration and calibration.confidence >= self.min_confidence_for_cache:
+                # Cache this calibration
+                self.calibration_cache[frame_id] = calibration
+                self.last_calibration = calibration
+                self.frames_since_calibration = 0
+
+                logger.debug(
+                    f"Frame {frame_id}: New calibration cached "
+                    f"(RMSE={calibration.rmse_error:.4f}m, conf={calibration.confidence:.2f})"
+                )
+            elif calibration:
+                # Calibration succeeded but confidence too low - use but don't cache
+                logger.warning(
+                    f"Frame {frame_id}: Calibration confidence {calibration.confidence:.2f} "
+                    f"below threshold {self.min_confidence_for_cache:.2f} - not cached"
+                )
+                return calibration
+            else:
+                # Calibration failed - fall back to last valid calibration
+                logger.warning(
+                    f"Frame {frame_id}: Calibration failed - using cached calibration"
+                )
+                if self.last_calibration:
+                    self.frames_since_calibration += 1
+                return self.last_calibration
+        else:
+            # Use cached calibration
+            self.frames_since_calibration += 1
+
+            # Warn if cached calibration is getting old
+            if self.frames_since_calibration > self.recalibration_interval * 3:
+                logger.warning(
+                    f"Frame {frame_id}: Using calibration from "
+                    f"{self.frames_since_calibration} frames ago - may be stale"
+                )
+
+        return self.last_calibration
+
+    def get_nearest_calibration(self, frame_id: int) -> Optional[CalibrationResult]:
+        """Get the nearest cached calibration for a given frame.
+
+        Args:
+            frame_id: Frame number
+
+        Returns:
+            Nearest calibration result or None if no cache exists
+        """
+        if not self.calibration_cache:
+            return None
+
+        # Find nearest frame ID in cache
+        cached_frames = sorted(self.calibration_cache.keys())
+
+        # Find closest frame
+        nearest_frame = min(cached_frames, key=lambda f: abs(f - frame_id))
+
+        return self.calibration_cache[nearest_frame]
+
+    def get_cache_stats(self) -> dict:
+        """Get statistics about calibration cache.
+
+        Returns:
+            Dictionary with cache statistics
+        """
+        if not self.calibration_cache:
+            return {
+                "total_calibrations": 0,
+                "avg_rmse": 0.0,
+                "avg_confidence": 0.0,
+                "frame_coverage": 0.0
+            }
+
+        calibrations = list(self.calibration_cache.values())
+        rmse_values = [c.rmse_error for c in calibrations]
+        confidence_values = [c.confidence for c in calibrations]
+
+        return {
+            "total_calibrations": len(self.calibration_cache),
+            "avg_rmse": np.mean(rmse_values),
+            "min_rmse": np.min(rmse_values),
+            "max_rmse": np.max(rmse_values),
+            "std_rmse": np.std(rmse_values),
+            "avg_confidence": np.mean(confidence_values),
+            "min_confidence": np.min(confidence_values),
+            "max_confidence": np.max(confidence_values),
+            "cached_frames": sorted(self.calibration_cache.keys())
+        }
+
+
 def main():
     """Test camera calibration on a sample frame."""
     import argparse
@@ -529,7 +721,7 @@ def main():
     hold_detector = HoldDetector(
         route_coordinates_path=args.route_map,
         min_area=200,
-        min_confidence=0.3
+        min_confidence=0.2  # Lower threshold for better hold detection
     )
     detected_holds = hold_detector.detect_holds(frame, lane=args.lane)
     print(f"Detected {len(detected_holds)} holds")

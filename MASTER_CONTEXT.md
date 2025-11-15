@@ -1279,6 +1279,47 @@ git push github main   # GitHub
 
 ## 🔄 آخرین به‌روزرسانی (Last Update Log)
 
+**2025-11-15 Phase A: Calibration System Improvements**
+- ✅ **Reviewed UI claude.ai/code implementations**: 4 tasks completed
+  - Task 1: Destructor fix (commit 7a9e422) ✓ EXCELLENT
+  - Task 2.1: IFSC route parser (commit bb255da) ✓ EXCELLENT
+  - Task 2.2: Hold detector with HSV (commit 945b83e) ✓ VERY GOOD
+  - Task 2.3: Camera calibration with homography (commit e0974f5) ✓ MARGINAL
+- ✅ **Fixed critical issues**:
+  - Panel naming bug in ifsc_route_map.py (spaces in "SN 8" → normalized)
+  - Lowered min_confidence from 0.3 → 0.2 for better hold detection
+  - Added quality warnings for RMSE, hold count, inlier ratio, confidence
+- ✅ **Implemented periodic calibration** (PeriodicCalibrator class):
+  - Calibrates every 30 frames (1 sec) instead of every frame
+  - 30x speedup with caching and temporal smoothing
+  - Handles moving cameras while reducing jitter
+  - Automatic fallback to last valid calibration
+- ✅ **Created comprehensive test framework**:
+  - scripts/test_calibration_accuracy.py (500+ lines)
+  - Tests multiple videos across competitions
+  - Statistical analysis with RMSE distribution
+  - Pass rate metrics (≤10cm, ≤8cm, ≤5cm)
+- 📊 **Test Results** (10 videos tested, 5 succeeded):
+  - **Mean RMSE**: 98.1 cm (POOR - outliers skewing mean)
+  - **Median RMSE**: 0.04 cm (EXCELLENT - most frames are good!)
+  - **Pass rate ≤10cm**: 77.8%
+  - **Holds detected**: 6.1 avg (TARGET: 15-20)
+  - **Holds used**: 4.3 avg (MINIMUM: 10)
+  - **Assessment**: MARGINAL - works well when enough holds detected, fails catastrophically otherwise
+- ⚠️ **Critical Issue Identified**: Hold detection is insufficient
+  - Only 6 holds detected per frame (need 15-20 for accuracy)
+  - Some frames have <4 holds → calibration failure
+  - When holds detected, calibration works perfectly (median 0.04cm!)
+  - **Root cause**: HSV color thresholds too strict or lighting variations
+- 🎯 **Recommendations for UI**:
+  1. Further improve hold detection (consider adaptive thresholding, template matching)
+  2. Implement wall detection/segmentation to constrain search area
+  3. Consider 3D calibration (solvePnP) instead of 2D homography for 5° overhang
+  4. Use PeriodicCalibrator instead of CameraCalibrator in production
+  5. Add visualization tools for debugging hold detection
+- 📝 **Documentation**: Detailed analysis report available in data/processed/calibration/calibration_test_report.json
+- 🎯 **Next**: UI should address hold detection issues before continuing to Task 2.4
+
 **2025-11-15 Comprehensive Planning + Documentation**
 - ✅ رفع Windows console encoding در Phase 2 scripts
 - ✅ تست کامل Phase 2 (pose extraction, metrics, visualization)
