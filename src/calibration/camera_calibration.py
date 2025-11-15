@@ -565,7 +565,7 @@ class PeriodicCalibrator(CameraCalibrator):
             self.last_calibration is None
         )
 
-        if should_recalibration:
+        if should_recalibrate:
             # Perform calibration
             calibration = self.calibrate(frame, detected_holds, lane)
 

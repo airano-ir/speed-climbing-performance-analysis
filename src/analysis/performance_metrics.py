@@ -68,9 +68,12 @@ class PerformanceMetrics:
     is_calibrated: bool = False  # True if using meter units, False if using pixels
     units: str = "pixels"  # "pixels" or "meters"
 
+    # Race boundaries info (for frame filtering)
+    race_boundaries: Optional[Dict] = None
+
     def to_dict(self) -> Dict:
         """Convert to dictionary for JSON serialization"""
-        return {
+        result = {
             'summary': {
                 'avg_vertical_velocity': float(self.avg_vertical_velocity),
                 'max_vertical_velocity': float(self.max_vertical_velocity),
@@ -95,6 +98,12 @@ class PerformanceMetrics:
                 'acceleration_magnitude': self.acceleration_magnitude.tolist(),
             }
         }
+
+        # Add race boundaries if available
+        if self.race_boundaries:
+            result['race_boundaries'] = self.race_boundaries
+
+        return result
 
     def to_dataframe(self) -> pd.DataFrame:
         """Convert time series data to pandas DataFrame"""
@@ -234,7 +243,10 @@ class PerformanceAnalyzer:
         pose_json_path: Path,
         lane: str = 'left',
         min_visibility: float = 0.5,
-        calibration_path: Optional[Path] = None
+        calibration_path: Optional[Path] = None,
+        start_frame: Optional[int] = None,
+        end_frame: Optional[int] = None,
+        race_metadata: Optional[Dict] = None
     ) -> Optional[PerformanceMetrics]:
         """
         Analyze pose file and calculate performance metrics.
@@ -245,6 +257,9 @@ class PerformanceAnalyzer:
             min_visibility: Minimum visibility threshold for valid poses
             calibration_path: Optional path to calibration JSON file.
                             If provided, metrics will be in meters, otherwise in pixels.
+            start_frame: First frame of race period (optional, for filtering pre-race frames)
+            end_frame: Last frame of race period (optional, for filtering post-race frames)
+            race_metadata: Full race metadata dict (optional)
 
         Returns:
             PerformanceMetrics object or None if insufficient data
@@ -284,9 +299,26 @@ class PerformanceAnalyzer:
         com_x_list = []
         com_y_list = []
 
+        # Track filtering statistics
+        frames_total = len(frames)
+        frames_skipped_pre = 0
+        frames_skipped_post = 0
+        frames_analyzed = 0
+
         climber_key = f'{lane}_climber'
 
         for frame in frames:
+            frame_id = frame.get('frame_id', 0)
+
+            # Filter by race boundaries if provided
+            if start_frame is not None and frame_id < start_frame:
+                frames_skipped_pre += 1
+                continue  # Skip pre-race frames
+
+            if end_frame is not None and frame_id > end_frame:
+                frames_skipped_post += 1
+                continue  # Skip post-race frames
+
             climber_data = frame.get(climber_key)
             if not climber_data or not climber_data.get('keypoints'):
                 continue
@@ -301,6 +333,9 @@ class PerformanceAnalyzer:
             )
             if visible_count < 5:  # Need at least 5 visible keypoints
                 continue
+
+            # Increment analyzed counter
+            frames_analyzed += 1
 
             com_x, com_y = self.calculate_com(keypoints_dict)
 
@@ -373,6 +408,18 @@ class PerformanceAnalyzer:
         # Smoothness score (normalized average jerk)
         smoothness_score = np.mean(jerk_magnitude)
 
+        # Create race boundaries info dict
+        race_boundaries = None
+        if start_frame is not None or end_frame is not None:
+            race_boundaries = {
+                'start_frame': start_frame,
+                'end_frame': end_frame,
+                'total_frames_in_file': frames_total,
+                'frames_analyzed': frames_analyzed,
+                'frames_skipped_pre': frames_skipped_pre,
+                'frames_skipped_post': frames_skipped_post
+            }
+
         return PerformanceMetrics(
             timestamps=timestamps,
             com_x=com_x_smooth,
@@ -396,6 +443,7 @@ class PerformanceAnalyzer:
             smoothness_score=smoothness_score,
             is_calibrated=calibration is not None,
             units="meters" if calibration else "pixels",
+            race_boundaries=race_boundaries,
         )
 
 

@@ -52,7 +52,8 @@ class BatchMetricsCalculator:
         self,
         poses_dir: str = "data/processed/poses",
         calibration_dir: str = "data/processed/calibration",
-        output_dir: str = "data/processed/metrics"
+        output_dir: str = "data/processed/metrics",
+        race_segments_dir: str = "data/race_segments"
     ):
         """Initialize calculator.
 
@@ -60,10 +61,12 @@ class BatchMetricsCalculator:
             poses_dir: Directory containing pose JSON files
             calibration_dir: Directory containing calibration files
             output_dir: Output directory for metrics
+            race_segments_dir: Directory containing race segment metadata
         """
         self.poses_dir = Path(poses_dir)
         self.calibration_dir = Path(calibration_dir)
         self.output_dir = Path(output_dir)
+        self.race_segments_dir = Path(race_segments_dir)
 
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -73,6 +76,7 @@ class BatchMetricsCalculator:
         logger.info(f"  Poses dir: {self.poses_dir}")
         logger.info(f"  Calibration dir: {self.calibration_dir}")
         logger.info(f"  Output dir: {self.output_dir}")
+        logger.info(f"  Race segments dir: {self.race_segments_dir}")
 
     def calculate_race_metrics(
         self,
@@ -96,11 +100,59 @@ class BatchMetricsCalculator:
             race_name = pose_file.stem.replace('_poses', '')
             cal_file = self.calibration_dir / competition / f"{race_name}_calibration.json"
 
-            # Calculate metrics
+            # Load race metadata to get race boundaries
+            metadata_path = self.race_segments_dir / competition / f"{race_name}_metadata.json"
+
+            start_frame = None
+            end_frame = None
+            race_metadata = None
+
+            if metadata_path.exists():
+                try:
+                    with open(metadata_path, 'r', encoding='utf-8') as f:
+                        race_metadata = json.load(f)
+
+                    # Extract race boundaries (original video frame IDs)
+                    start_frame_orig = race_metadata.get('detected_start_frame')
+                    end_frame_orig = race_metadata.get('detected_finish_frame')
+                    start_time_orig = race_metadata.get('detected_start_time')
+                    buffer_before = race_metadata.get('buffer_before', 1.5)
+
+                    # Calculate segment start frame from detected start - buffer
+                    # Assuming 30fps (standard for IFSC videos)
+                    fps = 30.0
+                    segment_start = None
+
+                    if start_frame_orig is not None and buffer_before is not None:
+                        # Segment starts buffer_before seconds before race start
+                        segment_start = int(start_frame_orig - (buffer_before * fps))
+                    elif start_time_orig is not None and buffer_before is not None:
+                        # Calculate from time if frame not available
+                        segment_start_time = start_time_orig - buffer_before
+                        segment_start = int(segment_start_time * fps)
+
+                    # Convert to pose file frame IDs (0-indexed relative to segment start)
+                    if start_frame_orig is not None and segment_start is not None:
+                        start_frame = start_frame_orig - segment_start
+
+                    if end_frame_orig is not None and segment_start is not None:
+                        end_frame = end_frame_orig - segment_start
+
+                    logger.info(f"    Race boundaries: start={start_frame}, end={end_frame} (from segment_start={segment_start})")
+
+                except Exception as e:
+                    logger.warning(f"    Failed to load metadata: {e}")
+            else:
+                logger.warning(f"    Metadata not found: {metadata_path.name} - processing all frames")
+
+            # Calculate metrics with calibration + race boundaries
             metrics = self.analyzer.analyze_pose_file(
                 pose_file,
                 lane=lane,
-                calibration_path=cal_file if cal_file.exists() else None
+                calibration_path=cal_file if cal_file.exists() else None,
+                start_frame=start_frame,
+                end_frame=end_frame,
+                race_metadata=race_metadata
             )
 
             if not metrics:
@@ -337,6 +389,12 @@ def main():
         help="Output directory"
     )
     parser.add_argument(
+        "--race-segments-dir",
+        type=str,
+        default="data/race_segments",
+        help="Race segments directory (for metadata)"
+    )
+    parser.add_argument(
         "--competition",
         type=str,
         help="Process specific competition only"
@@ -369,7 +427,8 @@ def main():
     calculator = BatchMetricsCalculator(
         poses_dir=args.poses_dir,
         calibration_dir=args.calibration_dir,
-        output_dir=args.output_dir
+        output_dir=args.output_dir,
+        race_segments_dir=args.race_segments_dir
     )
 
     # Process
