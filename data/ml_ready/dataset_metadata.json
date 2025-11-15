@@ -1,0 +1,40 @@
+{
+  "dataset_info": {
+    "name": "Speed Climbing Performance Dataset",
+    "version": "1.0.0",
+    "date": "2025-11-15",
+    "total_samples": 6,
+    "features": 8,
+    "competitions": 1,
+    "races": 3
+  },
+  "feature_descriptions": {
+    "avg_vertical_velocity": "Average vertical velocity (px/s)",
+    "max_vertical_velocity": "Maximum vertical velocity (px/s)",
+    "avg_acceleration": "Average acceleration (px/s\u00b2)",
+    "max_acceleration": "Maximum acceleration (px/s\u00b2)",
+    "path_length": "Total path length (px)",
+    "straight_distance": "Straight-line distance (px)",
+    "path_efficiency": "Ratio of straight to actual path",
+    "smoothness_score": "Movement smoothness (lower = smoother)"
+  },
+  "categorical_features": {
+    "lane": "Climbing lane (left/right)",
+    "competition": "Competition name",
+    "race_name": "Race identifier"
+  },
+  "statistics": {
+    "max_velocity": {
+      "mean": 376.64796723653166,
+      "std": 77.66042212448295,
+      "min": 264.19287221431955,
+      "max": 494.3303418088015
+    },
+    "path_efficiency": {
+      "mean": 0.09781160340124073,
+      "std": 0.06186996512619709,
+      "min": 0.0421625007500295,
+      "max": 0.2161054502173495
+    }
+  }
+}

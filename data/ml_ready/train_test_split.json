@@ -1,0 +1,15 @@
+{
+  "train_indices": [
+    0,
+    2,
+    3,
+    5
+  ],
+  "test_indices": [
+    4,
+    1
+  ],
+  "train_size": 4,
+  "test_size": 2,
+  "test_ratio": 0.2
+}
