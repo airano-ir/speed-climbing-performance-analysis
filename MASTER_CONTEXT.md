@@ -106,6 +106,21 @@
 - 🔴 **Next Step**: Manual review of 74 suspicious races using enhanced interface
 - 📊 **Phase 4 Ready**: Technology stack selected, roadmap defined, plugin system in place
 
+🚀 **NEW STRATEGY (2025-11-17): Reliable Data Pipeline** ⭐
+- **Decision**: Process 114 reliable races NOW, add 74 suspicious later
+- **Rationale**:
+  - Don't wait for perfect data - validate pipeline with clean data first
+  - 114 races (60.6%) are sufficient for ML model development
+  - Can add remaining 74 incrementally after manual review
+- **Scope**:
+  - Complete pipeline: Pose Extraction → Calibration → Metrics → ML Export
+  - Quality assurance at each stage
+  - Interactive dashboard for visualization
+  - Baseline performance metrics
+- **Documentation**: [docs/PROMPT_FOR_UI_RELIABLE_DATA_PIPELINE.md](docs/PROMPT_FOR_UI_RELIABLE_DATA_PIPELINE.md)
+- **Estimated Time**: 14-18 hours across 4 sessions
+- **Expected Outputs**: 342+ files (114 × 3 types + aggregations + reports)
+
 ### Latest Discovery - Massive Data Quality Issue 🚨
 **Not 3, but 74 problematic races need manual review:**
 - 5 CRITICAL: Negative or near-zero duration
