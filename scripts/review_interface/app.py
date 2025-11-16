@@ -23,6 +23,9 @@ from scripts.review_interface.metadata_manager import MetadataManager
 from scripts.review_interface.video_player import VideoPlayer
 from scripts.review_interface.validators import RaceValidator
 from scripts.review_interface.video_library import VideoLibrary
+from scripts.review_interface.video_extraction import VideoExtractor
+from scripts.review_interface.bulk_operations import BulkOperationsManager
+from scripts.review_interface.phase_manager import PhaseManager, Phase
 
 
 # =============================================================================
@@ -124,6 +127,12 @@ TRANSLATIONS = {
         'export_format': 'Export Format',
         'export_button': '📥 Export',
         'loading_library': 'Loading video library...',
+        'add_video_page': '➕ Add Video',
+        'bulk_ops_page': '⚡ Bulk Operations',
+        'add_video_title': '➕ Add New Video - Manual Extraction',
+        'add_video_subtitle': 'Extract race segments from source videos with manual timestamps',
+        'bulk_ops_title': '⚡ Bulk Operations - Batch Processing',
+        'bulk_ops_subtitle': 'Process multiple races with export, validation, and reporting',
     },
     'fa': {
         'page_title': '🏔️ سنگنوردی سرعتی - رابط بررسی دستی مسابقات',
@@ -219,6 +228,12 @@ TRANSLATIONS = {
         'export_format': 'فرمت خروجی',
         'export_button': '📥 دریافت',
         'loading_library': 'بارگذاری کتابخانه ویدئو...',
+        'add_video_page': '➕ افزودن ویدئو',
+        'bulk_ops_page': '⚡ عملیات دسته‌ای',
+        'add_video_title': '➕ افزودن ویدئو جدید - استخراج دستی',
+        'add_video_subtitle': 'استخراج بخش‌های مسابقه از ویدیوهای منبع با timestamps دستی',
+        'bulk_ops_title': '⚡ عملیات دسته‌ای - پردازش گروهی',
+        'bulk_ops_subtitle': 'پردازش چندین مسابقه با export، اعتبارسنجی و گزارش‌گیری',
     }
 }
 
@@ -253,11 +268,14 @@ def get_managers():
     progress_tracker = ProgressTracker()
     metadata_mgr = MetadataManager()
     validator = RaceValidator()
-    return config_mgr, progress_tracker, metadata_mgr, validator
+    phase_mgr = PhaseManager(config_mgr)
+    video_extractor = VideoExtractor(config_mgr)
+    bulk_ops_mgr = BulkOperationsManager(config_mgr, metadata_mgr)
+    return config_mgr, progress_tracker, metadata_mgr, validator, phase_mgr, video_extractor, bulk_ops_mgr
 
 
 try:
-    config_mgr, progress_tracker, metadata_mgr, validator = get_managers()
+    config_mgr, progress_tracker, metadata_mgr, validator, phase_mgr, video_extractor, bulk_ops_mgr = get_managers()
 except Exception as e:
     st.error(f"Error initializing application: {e}")
     st.stop()
@@ -304,7 +322,9 @@ if 'current_page' not in st.session_state:
 # Page selector
 page_options = {
     'race_review': get_text('race_review_page'),
-    'video_library': get_text('video_library_page')
+    'video_library': get_text('video_library_page'),
+    'add_video': get_text('add_video_page'),
+    'bulk_operations': get_text('bulk_ops_page')
 }
 
 selected_page = st.radio(
@@ -829,6 +849,428 @@ elif st.session_state['current_page'] == 'video_library':
 
     else:
         st.warning(get_text('no_videos_found'))
+
+
+# =============================================================================
+# PAGE: ADD VIDEO / صفحه: افزودن ویدئو
+# =============================================================================
+
+elif st.session_state['current_page'] == 'add_video':
+
+    st.header(get_text('add_video_title'))
+    st.markdown(f"**{get_text('add_video_subtitle')}**")
+    st.markdown("---")
+
+    # Check FFmpeg availability
+    ffmpeg_available, ffmpeg_msg = video_extractor.check_ffmpeg_available()
+
+    if not ffmpeg_available:
+        st.error(f"❌ {ffmpeg_msg}")
+        st.info("Install FFmpeg to use this feature:")
+        st.code("# Ubuntu/Debian\nsudo apt-get install ffmpeg\n\n# macOS\nbrew install ffmpeg\n\n# Windows\nDownload from https://ffmpeg.org/download.html")
+        st.stop()
+    else:
+        st.success(f"✅ {ffmpeg_msg}")
+
+    st.markdown("---")
+
+    # Step 1: Select competition
+    st.subheader("1️⃣ Competition Selection")
+    competitions = config_mgr.get_competitions()
+    comp_options = {c.key: f"{c.name} ({c.date})" for c in competitions}
+
+    selected_comp_key = st.selectbox(
+        "Select Competition",
+        options=list(comp_options.keys()),
+        format_func=lambda x: comp_options[x]
+    )
+
+    comp_config = config_mgr.get_competition(selected_comp_key)
+
+    # Step 2: Source video selection
+    st.subheader("2️⃣ Source Video")
+
+    col1, col2 = st.columns([3, 1])
+    with col1:
+        source_video_path = st.text_input(
+            "Source Video Path",
+            value="",
+            placeholder="/path/to/source_video.mp4"
+        )
+    with col2:
+        # Suggest race ID
+        suggested_race_id = video_extractor.suggest_race_id(selected_comp_key)
+        st.text_input("Suggested Race ID", value=suggested_race_id, disabled=True)
+
+    # Get video info if path provided
+    if source_video_path and Path(source_video_path).exists():
+        video_info = video_extractor.get_video_info(Path(source_video_path))
+        if video_info:
+            col1, col2, col3 = st.columns(3)
+            with col1:
+                st.metric("Duration", f"{video_info.get('duration', 0):.1f}s")
+            with col2:
+                st.metric("FPS", f"{video_info.get('fps', 0):.1f}")
+            with col3:
+                st.metric("Resolution", video_info.get('resolution', 'Unknown'))
+
+    # Step 3: Race information
+    st.subheader("3️⃣ Race Information")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        race_id = st.text_input(
+            "Race ID",
+            value=suggested_race_id,
+            help="Unique identifier for this race"
+        )
+    with col2:
+        round_name = st.text_input(
+            "Round Name",
+            value="",
+            placeholder="e.g., 1/8 final - Men"
+        )
+
+    # Step 4: Timestamps
+    st.subheader("4️⃣ Manual Timestamps")
+    st.caption("Enter start and finish times in MM:SS or HH:MM:SS format")
+
+    col1, col2, col3, col4 = st.columns(4)
+    with col1:
+        start_time = st.text_input(
+            "Start Time",
+            value="",
+            placeholder="01:30 or 00:01:30",
+            help="Time when race starts (MM:SS or HH:MM:SS)"
+        )
+    with col2:
+        end_time = st.text_input(
+            "End Time",
+            value="",
+            placeholder="01:36 or 00:01:36",
+            help="Time when race finishes"
+        )
+    with col3:
+        buffer_before = st.number_input(
+            "Buffer Before (s)",
+            min_value=0.0,
+            max_value=10.0,
+            value=3.0,
+            step=0.5,
+            help="Seconds to include before start"
+        )
+    with col4:
+        buffer_after = st.number_input(
+            "Buffer After (s)",
+            min_value=0.0,
+            max_value=10.0,
+            value=1.5,
+            step=0.5,
+            help="Seconds to include after finish"
+        )
+
+    # Validate timestamps
+    if start_time and end_time:
+        valid_start, msg_start, start_seconds = video_extractor.validate_timestamp(start_time)
+        valid_end, msg_end, end_seconds = video_extractor.validate_timestamp(end_time)
+
+        if not valid_start:
+            st.error(f"❌ Start time error: {msg_start}")
+        elif not valid_end:
+            st.error(f"❌ End time error: {msg_end}")
+        elif end_seconds <= start_seconds:
+            st.error("❌ End time must be after start time")
+        else:
+            race_duration = end_seconds - start_seconds
+            st.success(f"✅ Valid timestamps - Race duration: {race_duration:.2f}s")
+
+    # Step 5: Athlete information
+    st.subheader("5️⃣ Athlete Information")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.markdown("**Left Lane**")
+        left_name = st.text_input("Athlete Name (Left)", value="", placeholder="John Doe")
+        left_country = st.text_input("Country (Left)", value="", placeholder="USA")
+        left_bib = st.selectbox("Bib Color (Left)", ["red", "blue", "yellow", "green"], index=0)
+
+    with col2:
+        st.markdown("**Right Lane**")
+        right_name = st.text_input("Athlete Name (Right)", value="", placeholder="Jane Smith")
+        right_country = st.text_input("Country (Right)", value="", placeholder="FRA")
+        right_bib = st.selectbox("Bib Color (Right)", ["blue", "red", "yellow", "green"], index=1)
+
+    # Step 6: Extract button
+    st.markdown("---")
+    st.subheader("6️⃣ Extract Race Segment")
+
+    # Validation before extraction
+    can_extract = (
+        source_video_path and Path(source_video_path).exists() and
+        race_id and start_time and end_time and
+        left_name and right_name
+    )
+
+    if not can_extract:
+        st.warning("⚠️ Please fill in all required fields: Source Video, Race ID, Timestamps, and Athlete Names")
+
+    if st.button("🎬 Extract Race Segment", type="primary", disabled=not can_extract):
+        with st.spinner("Extracting race segment with FFmpeg..."):
+            # Prepare athlete dicts
+            left_athlete = {
+                "name": left_name,
+                "country": left_country,
+                "bib_color": left_bib
+            }
+            right_athlete = {
+                "name": right_name,
+                "country": right_country,
+                "bib_color": right_bib
+            }
+
+            # Extract segment
+            success, message, output_path = video_extractor.extract_manual_segment(
+                source_video=Path(source_video_path),
+                competition_key=selected_comp_key,
+                race_id=race_id,
+                start_time=start_time,
+                end_time=end_time,
+                left_athlete=left_athlete,
+                right_athlete=right_athlete,
+                round_name=round_name,
+                buffer_before=buffer_before,
+                buffer_after=buffer_after
+            )
+
+            if success:
+                st.success(f"✅ {message}")
+                st.balloons()
+                st.info(f"📁 Video saved to: {output_path}")
+                st.info(f"📝 Metadata saved to: {output_path.with_name(f'{race_id}_metadata.json')}")
+
+                # Clear inputs
+                if st.button("🔄 Extract Another Race"):
+                    st.rerun()
+            else:
+                st.error(f"❌ {message}")
+
+
+# =============================================================================
+# PAGE: BULK OPERATIONS / صفحه: عملیات دسته‌ای
+# =============================================================================
+
+elif st.session_state['current_page'] == 'bulk_operations':
+
+    st.header(get_text('bulk_ops_title'))
+    st.markdown(f"**{get_text('bulk_ops_subtitle')}**")
+    st.markdown("---")
+
+    # Initialize VideoLibrary for race selection
+    video_lib = VideoLibrary(config_mgr)
+    all_videos = video_lib.get_all_videos()
+
+    # Step 1: Race Selection
+    st.subheader("1️⃣ Select Races")
+
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        # Filter by competition
+        comp_options = ['all'] + [c.key for c in config_mgr.get_competitions()]
+        selected_comp = st.selectbox(
+            "Filter by Competition",
+            comp_options,
+            format_func=lambda x: "All Competitions" if x == 'all' else x
+        )
+
+    with col2:
+        # Filter by status
+        status_options = ['all', 'reviewed', 'suspicious', 'pending', 'failed']
+        selected_status = st.selectbox(
+            "Filter by Status",
+            status_options,
+            format_func=lambda x: "All Statuses" if x == 'all' else x.title()
+        )
+
+    with col3:
+        # Search
+        search_query = st.text_input(
+            "Search",
+            placeholder="Race ID, athlete names..."
+        )
+
+    # Apply filters
+    filtered_videos = video_lib.filter_videos(
+        all_videos,
+        competition=selected_comp if selected_comp != 'all' else None,
+        status=selected_status if selected_status != 'all' else None,
+        search_query=search_query if search_query else None
+    )
+
+    st.info(f"Selected {len(filtered_videos)} races (from {len(all_videos)} total)")
+
+    # Display selected races
+    if filtered_videos:
+        with st.expander(f"📋 View Selected Races ({len(filtered_videos)})", expanded=False):
+            race_list = "\n".join([f"- {v.race_id} ({v.competition})" for v in filtered_videos[:20]])
+            if len(filtered_videos) > 20:
+                race_list += f"\n... and {len(filtered_videos) - 20} more"
+            st.text(race_list)
+
+    st.markdown("---")
+
+    # Step 2: Operation Type
+    st.subheader("2️⃣ Select Operation")
+
+    operation_type = st.radio(
+        "Operation Type",
+        ["Export", "Validate", "Summary Report"],
+        horizontal=True
+    )
+
+    st.markdown("---")
+
+    # Step 3: Operation-specific options
+    st.subheader("3️⃣ Configure Operation")
+
+    if operation_type == "Export":
+        col1, col2 = st.columns(2)
+
+        with col1:
+            export_format = st.selectbox(
+                "Export Format",
+                ['json', 'csv', 'yaml', 'npz'],
+                format_func=lambda x: {
+                    'json': 'JSON (Full data)',
+                    'csv': 'CSV (Spreadsheet)',
+                    'yaml': 'YAML (Config-friendly)',
+                    'npz': 'NPZ (ML-ready NumPy)'
+                }[x]
+            )
+
+        with col2:
+            include_metrics = st.checkbox(
+                "Include Performance Metrics",
+                value=False,
+                help="Include calculated metrics if available (velocity, acceleration, etc.)"
+            )
+
+        st.caption(f"**Format info**: {{\n'json': 'Full metadata for each race',\n'csv': 'Tabular format for Excel/Sheets',\n'yaml': 'Human-readable config format',\n'npz': 'NumPy arrays for ML training'\n}}['{export_format}']")
+
+    elif operation_type == "Validate":
+        st.info("Batch validation will check all selected races for issues")
+        validation_strict = st.checkbox("Strict Validation", value=False, help="Enable stricter validation rules")
+
+    elif operation_type == "Summary Report":
+        st.info("Generate statistical summary of selected races")
+        include_plots = st.checkbox("Include Visualizations", value=False, help="Add charts (requires matplotlib)")
+
+    st.markdown("---")
+
+    # Step 4: Execute
+    st.subheader("4️⃣ Execute Operation")
+
+    if not filtered_videos:
+        st.warning("⚠️ No races selected. Adjust filters to select races.")
+    else:
+        if st.button(f"▶️ Execute {operation_type}", type="primary"):
+            from datetime import datetime
+            timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+
+            with st.spinner(f"Processing {len(filtered_videos)} races..."):
+
+                if operation_type == "Export":
+                    output_filename = f"bulk_export_{selected_comp}_{timestamp}.{export_format}"
+                    output_path = Path(output_filename)
+
+                    success, message = bulk_ops_mgr.export_multiple_races(
+                        filtered_videos,
+                        export_format,
+                        output_path,
+                        include_metrics=include_metrics
+                    )
+
+                    if success:
+                        st.success(f"✅ {message}")
+
+                        # Provide download button
+                        with open(output_path, 'rb') as f:
+                            st.download_button(
+                                label=f"📥 Download {output_filename}",
+                                data=f.read(),
+                                file_name=output_filename,
+                                mime=f"application/{export_format}"
+                            )
+                    else:
+                        st.error(f"❌ {message}")
+
+                elif operation_type == "Validate":
+                    results = bulk_ops_mgr.validate_multiple_races(filtered_videos, validator)
+
+                    # Display results
+                    success_count = sum(1 for r in results if r.success)
+                    failed_count = len(results) - success_count
+
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        st.metric("✅ Valid", success_count)
+                    with col2:
+                        st.metric("❌ Invalid", failed_count)
+
+                    # Show details
+                    with st.expander("📊 Validation Details"):
+                        for result in results:
+                            if result.success:
+                                st.success(f"✅ {result.race_id}: {result.message}")
+                            else:
+                                st.error(f"❌ {result.race_id}: {result.message}")
+                                if result.data and 'issues' in result.data:
+                                    for issue in result.data['issues']:
+                                        st.caption(f"  - {issue}")
+
+                elif operation_type == "Summary Report":
+                    output_filename = f"summary_report_{selected_comp}_{timestamp}.json"
+                    output_path = Path(output_filename)
+
+                    success, message = bulk_ops_mgr.generate_summary_report(
+                        filtered_videos,
+                        output_path
+                    )
+
+                    if success:
+                        st.success(f"✅ {message}")
+
+                        # Display summary
+                        import json
+                        with open(output_path, 'r') as f:
+                            report = json.load(f)
+
+                        st.subheader("📊 Summary Statistics")
+
+                        col1, col2, col3 = st.columns(3)
+                        with col1:
+                            st.metric("Total Races", report['total_races'])
+                        with col2:
+                            st.metric("Competitions", len(report['summary']['by_competition']))
+                        with col3:
+                            if report['summary']['duration_stats']:
+                                st.metric("Avg Duration", f"{report['summary']['duration_stats']['mean']:.2f}s")
+
+                        # Show breakdown
+                        with st.expander("🔍 Detailed Breakdown"):
+                            st.json(report['summary'])
+
+                        # Download button
+                        with open(output_path, 'rb') as f:
+                            st.download_button(
+                                label=f"📥 Download Full Report",
+                                data=f.read(),
+                                file_name=output_filename,
+                                mime="application/json"
+                            )
+                    else:
+                        st.error(f"❌ {message}")
 
 
 # =============================================================================
