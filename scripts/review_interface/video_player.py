@@ -69,19 +69,50 @@ class VideoPlayer:
 
         current_frame = st.session_state[f'{key_prefix}_current_frame']
 
-        # Frame slider
-        current_frame = st.slider(
-            labels['frame_label'],
-            min_value=0,
-            max_value=max(0, self.total_frames - 1),
-            value=current_frame,
-            step=1,
-            key=f"{key_prefix}_frame_slider"
-        )
+        # ═══════════════════════════════════════════════════════════
+        # ⭐ ENHANCED: Frame Selection with Slider + Text Input
+        # ═══════════════════════════════════════════════════════════
+        st.markdown(f"**{labels['frame_navigation']}**")
+
+        col_slider, col_text = st.columns([3, 1])
+
+        with col_slider:
+            # Frame slider (existing)
+            slider_frame = st.slider(
+                labels['frame_label'],
+                min_value=0,
+                max_value=max(0, self.total_frames - 1),
+                value=current_frame,
+                step=1,
+                key=f"{key_prefix}_frame_slider",
+                label_visibility="collapsed"  # Hide label since we have it above
+            )
+
+        with col_text:
+            # ⭐ NEW: Direct text input for frame number
+            text_input_frame = st.number_input(
+                labels['frame_input_label'],
+                min_value=0,
+                max_value=max(0, self.total_frames - 1),
+                value=current_frame,
+                step=1,
+                key=f"{key_prefix}_frame_text_input",
+                help=labels['frame_input_help']
+            )
+
+        # Sync frame from either input method
+        # Priority: text input (more recent user action takes precedence)
+        if text_input_frame != current_frame:
+            current_frame = text_input_frame
+            # Update slider via session state (will reflect on next render)
+            st.session_state[f'{key_prefix}_current_frame'] = current_frame
+        elif slider_frame != current_frame:
+            current_frame = slider_frame
+            st.session_state[f'{key_prefix}_current_frame'] = current_frame
 
         # Time display
         current_time = current_frame / self.fps if self.fps > 0 else 0
-        st.text(f"{labels['time_label']}: {current_time:.3f}s ({labels['frame_text']} {current_frame})")
+        st.caption(f"{labels['time_label']}: **{current_time:.3f}s** | {labels['frame_text']}: **{current_frame}/{self.total_frames - 1}**")
 
         # Navigation buttons
         col1, col2, col3, col4, col5, col6 = st.columns(6)
@@ -192,7 +223,10 @@ class VideoPlayer:
                 'total_frames': 'مجموع فریم‌ها',
                 'fps': 'فریم در ثانیه',
                 'duration': 'مدت زمان',
+                'frame_navigation': 'انتخاب فریم',
                 'frame_label': 'فریم',
+                'frame_input_label': 'شماره فریم',
+                'frame_input_help': 'مستقیم شماره فریم را وارد کنید (سریع‌تر از اسلایدر)',
                 'time_label': 'زمان',
                 'frame_text': 'فریم',
                 'error_loading': 'خطا در بارگذاری فریم'
@@ -203,7 +237,10 @@ class VideoPlayer:
                 'total_frames': 'Total Frames',
                 'fps': 'FPS',
                 'duration': 'Duration',
+                'frame_navigation': 'Frame Navigation',
                 'frame_label': 'Frame',
+                'frame_input_label': 'Frame #',
+                'frame_input_help': 'Enter frame number directly (faster than slider)',
                 'time_label': 'Time',
                 'frame_text': 'Frame',
                 'error_loading': 'Failed to load frame'
