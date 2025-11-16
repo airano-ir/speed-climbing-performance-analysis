@@ -395,6 +395,14 @@ if filtered_races:
                 # Correction interface
                 st.subheader(get_text('correct_boundaries'))
 
+                # Warning if detected frames are from original video
+                if (metadata.get('detected_start_frame', 0) >= player.total_frames or
+                    metadata.get('detected_finish_frame', 0) >= player.total_frames):
+                    st.warning(
+                        "⚠️ **Note**: Detected frames are from the original video (not this extracted segment). "
+                        "Please use the video player to find the correct start and finish frames in this segment."
+                    )
+
                 col1, col2 = st.columns(2)
 
                 with col1:
@@ -405,11 +413,16 @@ if filtered_races:
                         st.session_state['new_start_frame'] = current_frame
                         st.success(get_text('marked_at', frame=current_frame, time=current_time))
 
+                    # Clamp detected frame to valid range for extracted video
+                    default_start = metadata.get('detected_start_frame', 0)
+                    if default_start >= player.total_frames:
+                        default_start = 0  # Reset to beginning if out of range
+
                     new_start_frame = st.number_input(
                         get_text('new_start_frame'),
                         min_value=0,
                         max_value=player.total_frames - 1,
-                        value=st.session_state.get('new_start_frame', metadata['detected_start_frame']),
+                        value=st.session_state.get('new_start_frame', default_start),
                         key="start_frame_input"
                     )
 
@@ -421,11 +434,16 @@ if filtered_races:
                         st.session_state['new_finish_frame'] = current_frame
                         st.success(get_text('marked_at', frame=current_frame, time=current_time))
 
+                    # Clamp detected frame to valid range for extracted video
+                    default_finish = metadata.get('detected_finish_frame', player.total_frames - 1)
+                    if default_finish >= player.total_frames:
+                        default_finish = player.total_frames - 1  # Reset to end if out of range
+
                     new_finish_frame = st.number_input(
                         get_text('new_finish_frame'),
                         min_value=0,
                         max_value=player.total_frames - 1,
-                        value=st.session_state.get('new_finish_frame', metadata['detected_finish_frame']),
+                        value=st.session_state.get('new_finish_frame', default_finish),
                         key="finish_frame_input"
                     )
 
