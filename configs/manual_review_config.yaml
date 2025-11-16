@@ -303,3 +303,43 @@ documentation:
     - issue: "False start or replay included"
       solution: "Find actual race start after false start reset"
       example: "Race023 (Zilina 2025)"
+
+# =============================================================================
+# MULTI-PHASE SUPPORT (Phase 1.5.1 Feature)
+# =============================================================================
+# Configure which phases are enabled and which plugins are active per phase
+phases:
+
+  phase1:
+    enabled: true
+    plugins:
+      - video_extraction
+      - manual_review
+      - bulk_operations
+    description: "Race segmentation and manual metadata correction"
+
+  phase2:
+    enabled: true
+    plugins:
+      - pose_extractor
+      - pose_visualizer
+    description: "Extract athlete poses using MediaPipe BlazePose"
+
+  phase3:
+    enabled: true
+    plugins:
+      - metrics_calculator
+      - metrics_visualizer
+    description: "Calculate biomechanical performance metrics"
+
+  phase4:
+    enabled: false  # Future phase - requires model training
+    plugins:
+      - ml_predictor
+      - real_time_stream
+      - graphql_api
+    description: "CNN-Transformer predictions and real-time streaming"
+    notes: |
+      Phase 4 uses CNN-Transformer hybrid model (92% accuracy) and
+      physics-informed validation (88.5% accuracy) based on 2024-2025 research.
+      See PHASE4_RESEARCH_REPORT.md for technology decisions.
