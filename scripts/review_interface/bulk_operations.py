@@ -14,7 +14,7 @@ Features:
 """
 
 from pathlib import Path
-from typing import List, Dict, Optional, Callable
+from typing import List, Dict, Optional, Callable, Tuple
 from dataclasses import dataclass
 import json
 import csv
