@@ -4,11 +4,11 @@
   "round": "1/8 final - Men U19",
   "manual_start_time": "46:57",
   "manual_end_time": "47:16",
-  "detected_start_frame": 84510,
+  "detected_start_frame": 84876,
   "detected_finish_frame": 85080,
-  "detected_start_time": 2817,
-  "detected_finish_time": 2836,
-  "race_duration": 19,
+  "detected_start_time": 2829.2,
+  "detected_finish_time": 2836.0,
+  "race_duration": 6.8,
   "left_athlete": {
     "name": "Paco Lehman",
     "country": "France",
@@ -27,5 +27,9 @@
   "buffer_before": 1.5,
   "buffer_after": 1.5,
   "extraction_date": "2025-11-14T16:42:30.413310",
-  "notes": "Start time -4s (video cut adjustment)"
+  "notes": "MANUAL CORRECTION: Original detection triggered on false start/replay. Corrected based on manual video review. Original: 19.00s (included false start). Used LEFT lane finish time. Start time -4s (video cut adjustment)",
+  "original_detected_start_frame": 84510,
+  "original_detected_finish_frame": 85080,
+  "original_race_duration": 19,
+  "manual_correction": true
 }

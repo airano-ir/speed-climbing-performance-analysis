@@ -4,11 +4,11 @@
   "round": "1/8 final - Women",
   "manual_start_time": "27:44",
   "manual_end_time": "27:56",
-  "detected_start_frame": 49920,
+  "detected_start_frame": 50055,
   "detected_finish_frame": 50280,
-  "detected_start_time": 1664,
-  "detected_finish_time": 1676,
-  "race_duration": 12,
+  "detected_start_time": 1668.5,
+  "detected_finish_time": 1676.0,
+  "race_duration": 7.5,
   "left_athlete": {
     "name": "Erica",
     "country": "Italy",
@@ -27,5 +27,9 @@
   "buffer_before": 3.0,
   "buffer_after": 1.5,
   "extraction_date": "2025-11-14T13:38:04.275879",
-  "notes": "End time extended +5s (early finish) | Late start (needs more buffer)"
+  "notes": "MANUAL CORRECTION: Original detection started too early (included warmup). Corrected based on manual video review. Original: 12.00s (included pre-race movement). End time extended +5s (early finish) | Late start (needs more buffer)",
+  "original_detected_start_frame": 49920,
+  "original_detected_finish_frame": 50280,
+  "original_race_duration": 12,
+  "manual_correction": true
 }
