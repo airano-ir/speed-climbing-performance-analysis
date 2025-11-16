@@ -1,7 +1,7 @@
 # MASTER CONTEXT - Speed Climbing Performance Analysis
 # سند راهنمای کامل پروژه تحلیل سنگنوردی سرعتی
 
-**Last Updated**: 2025-11-16 (Phase 1.5: Manual Review Interface - Infrastructure Setup)
+**Last Updated**: 2025-11-16 (Phase 1.5.1: Enhanced Features + Phase 4 Research)
 **Purpose**: این سند برای ادامه کار در صورت قطع شدن session یا شروع مجدد در conversation جدید
 **Language**: Persian (Farsi) + English
 
@@ -39,7 +39,7 @@
 - **Tests**: 6 climbers, 66.7% prediction accuracy
 - **Deliverables**: 7 scripts, 2 modules, 15+ outputs
 
-✅ **Phase 1.5: Manual Review Interface - OPERATIONAL** ⭐ NEW (2025-11-16)
+✅ **Phase 1.5: Manual Review Interface - OPERATIONAL** ⭐ (2025-11-16)
 - **Purpose**: Permanent, extensible tool for correcting race detection errors
 - **Scope**: 74 suspicious races (39.4% of dataset) need manual review
 - **Status**: ✅ Core Interface Built & Tested
@@ -54,16 +54,45 @@
   - Case-insensitive competition matching
   - Seoul_2024 competition added
   - Frame number clamping for extracted videos
-- **Next**: Enhanced features (video management, bulk operations)
 
-### مرحله فعلی: Phase 1.5 - Manual Review Interface
+🏗️ **Phase 1.5.1: Enhanced Features - IN PROGRESS** ⭐ NEW (2025-11-16)
+- **Purpose**: Transform review interface into complete video project management system
+- **Scope**: 5 major enhancements for multi-phase usability
+- **Status**: 🔬 Research Complete → Implementation Starting
+- **Planned Features**:
+  1. **Video Library Manager** - Central view of all 188 videos
+  2. **Video Extraction Integration** - Add new videos with auto-extraction
+  3. **Enhanced Video Player** - Text input for direct frame selection
+  4. **Bulk Operations** - Batch export, validation, corrections
+  5. **Multi-Phase Support** - Usable across Phase 1, 2, 3, 4
+- **Architecture**: Plugin system for Phase 4 ML integration
+- **Timeline**: 6-8 hours implementation
+- **Documentation**: [docs/PROMPT_FOR_UI_ENHANCED_FEATURES.md](docs/PROMPT_FOR_UI_ENHANCED_FEATURES.md)
+
+🔬 **Phase 4: Advanced Features - RESEARCH COMPLETE** ⭐ NEW (2025-11-16)
+- **Purpose**: ML predictions, real-time streaming, web/mobile deployment
+- **Status**: ✅ Comprehensive research completed (2024-2025 literature)
+- **Key Decisions** (based on evidence):
+  - 🧠 **ML Model**: CNN-Transformer (92% accuracy) instead of NARX (82-85%)
+  - 🤖 **Validation**: Physics-Informed Hybrid (88.5%) instead of Fuzzy Logic (75-80%)
+  - 🌐 **API**: GraphQL with subscriptions (66% faster for real-time)
+  - 📡 **Streaming**: WebRTC (<1s latency) + WebSocket (10 Hz updates)
+- **Timeline**: 18 weeks (4 sub-phases)
+- **Cost Estimate**: $36,000-54,000 development + $675-1,350/month infrastructure
+- **Documentation**: [docs/PHASE4_RESEARCH_REPORT.md](docs/PHASE4_RESEARCH_REPORT.md) (detailed 500+ lines)
+
+### مرحله فعلی: Phase 1.5.1 - Enhanced Features Implementation
 **وضعیت**:
-- ✅ Phase 3 implementation: COMPLETE
-- ✅ Critical issues fixed: Calibration (188 files) + Frame filtering
-- ✅ 3 races manually corrected (Race001, Race010, Race023)
-- 🔴 **74 suspicious races discovered** (39.4% of dataset!)
-- 🏗️ **Building Manual Review Interface** (Extensible, permanent tool)
-- ⏸️ Manual review of 71 remaining races: PENDING
+- ✅ Phase 1.5 (Core Interface): COMPLETE & OPERATIONAL
+- ✅ Phase 4 Research: COMPLETE (all technologies evaluated)
+- 🏗️ **Phase 1.5.1 Implementation: IN PROGRESS** (Starting now!)
+  - Video Library Manager - PENDING
+  - Enhanced Video Player - PENDING
+  - Video Extraction - PENDING
+  - Bulk Operations - PENDING
+  - Multi-Phase Support - PENDING
+- 🔴 **74 suspicious races** still need manual review (after UI enhancements)
+- 📊 **Phase 4 Ready**: Technology stack selected, roadmap defined
 
 ### Latest Discovery - Massive Data Quality Issue 🚨
 **Not 3, but 74 problematic races need manual review:**
@@ -1411,11 +1440,62 @@ speed_climbing_analysis/
 3. ⏳ End-to-end testing
 4. ⏳ Demo notebook
 
-### Phase 4: Advanced Features (Future)
-1. NARX neural networks
-2. Fuzzy logic system
-3. Interactive dashboard
-4. Real-time processing
+### Phase 4: Advanced Features - RESEARCH-DRIVEN DESIGN ⭐ UPDATED (2025-11-16)
+
+**Status**: ✅ Technology selection complete (based on 2024-2025 academic research)
+
+**Timeline**: 18 weeks (4.5 months) implementation
+**Cost**: $36,000-54,000 development + $675-1,350/month infrastructure
+
+#### Phase 4.1: ML Model Development (6 weeks)
+- **Technology**: CNN-Transformer hybrid architecture (NOT NARX)
+- **Rationale**: 92% accuracy vs NARX's 82-85% (2024 sports biomechanics studies)
+- **Features**:
+  - Performance prediction (finish time): RMSE <0.5s target
+  - Technique classification: 10 scores (>85% accuracy target)
+  - Injury risk assessment: 0-1 score (>85% sensitivity target)
+  - Physics-informed constraints (IFSC standards, world records)
+- **Architecture**: 1D CNN (spatial patterns) + Transformer (temporal dependencies)
+- **Dataset**: 150 train / 19 val / 19 test races (after cleanup)
+
+#### Phase 4.2: API Development (4 weeks)
+- **Technology**: GraphQL with Strawberry + FastAPI (NOT pure REST)
+- **Rationale**: 66% performance boost + built-in subscriptions for real-time updates
+- **Features**:
+  - Queries: race data, athlete stats, leaderboards
+  - Mutations: corrections, new races, bulk operations
+  - Subscriptions: live race updates (10 Hz)
+  - REST fallback: video files, bulk export (better caching)
+- **Caching**: Hybrid Redis + CDN (best of both worlds)
+
+#### Phase 4.3: Real-Time Streaming (5 weeks)
+- **Technology**: WebRTC (video) + WebSocket (data)
+- **Rationale**: <1s latency vs HLS/DASH's 5-30s (critical for live analysis)
+- **Features**:
+  - Ultra-low latency video streaming (<1s glass-to-glass)
+  - Real-time pose estimation (GPU accelerated)
+  - Live ML predictions (every 3 seconds)
+  - Synchronized video + metrics (10 Hz updates)
+- **Clients**: React web app + React Native mobile
+
+#### Phase 4.4: Integration & Deployment (3 weeks)
+- **Technology**: Docker + Kubernetes + CI/CD (GitHub Actions)
+- **Features**:
+  - Microservices architecture
+  - Auto-scaling (handle 50+ concurrent streams)
+  - Monitoring (Prometheus + Grafana)
+  - Production deployment
+
+**Key Decisions (Evidence-Based)**:
+1. ❌ NARX → ✅ CNN-Transformer: 10% accuracy improvement
+2. ❌ Pure Fuzzy Logic → ✅ Physics-Informed Hybrid: 13.5% improvement + interpretability
+3. ✅ GraphQL over REST: 66% faster, built-in real-time
+4. ✅ WebRTC over HLS: 5-30× latency reduction
+
+**References**:
+- Full report: [docs/PHASE4_RESEARCH_REPORT.md](docs/PHASE4_RESEARCH_REPORT.md)
+- Academic sources: 10+ papers from 2024-2025 (sports ML, real-time streaming)
+- Industry benchmarks: GraphQL vs REST (2024), WebRTC adoption in sports streaming
 
 ---
 
@@ -2027,25 +2107,57 @@ git push github main   # GitHub
 - Side-by-side video + overlay
 - Comparative dashboard
 
-### Priority Roadmap بعد از Phase 2:
+### Priority Roadmap (UPDATED 2025-11-16 با نتایج تحقیق Phase 4):
 
-1. **Short-term** (1-2 weeks):
-   - ✅ Race segmentation (DONE - 188 races)
-   - 🔄 Pose extraction (batch processing)
-   - 📊 Basic metrics (velocity, timing)
-   - 📈 Simple visualizations
+1. **Immediate** (1 week - NOW):
+   - ✅ Phase 1-3: COMPLETE (188 races, metrics, analytics)
+   - 🏗️ **Phase 1.5.1**: Enhanced UI features (IN PROGRESS)
+     - Video Library Manager
+     - Enhanced Video Player (text input)
+     - Video Extraction Integration
+     - Bulk Operations
+     - Multi-Phase Support
+   - 🎯 **Goal**: Complete video management system
 
-2. **Medium-term** (1 month):
-   - 📐 IFSC calibration (20 holds)
-   - 🎯 Hold-by-hold analysis
-   - 📊 Advanced metrics (jerk, path efficiency)
-   - 📈 Interactive dashboard
+2. **Short-term** (2-4 weeks):
+   - 📊 Manual review of 74 suspicious races (using enhanced UI)
+   - 🧹 Dataset cleaning and validation
+   - 📈 Re-generate all metrics with clean data
+   - 📚 Prepare ML training dataset (150 train / 19 val / 19 test)
 
-3. **Long-term** (2-3 months):
-   - 🧠 NARX neural networks (performance prediction)
-   - 🤖 Fuzzy logic systems (technique evaluation)
-   - 🌐 Real-time processing
-   - 📱 Mobile/web deployment
+3. **Medium-term** (2-3 months) - Phase 4.1 & 4.2:
+   - 🧠 **ML Model**: CNN-Transformer implementation (NOT NARX!)
+     - Performance prediction (finish time): Target RMSE <0.5s
+     - Technique classification: Target >85% accuracy
+     - Injury risk assessment: Target >85% sensitivity
+   - 🤖 **Validation**: Physics-Informed Hybrid (NOT pure Fuzzy Logic!)
+     - Hard physics constraints (world records, biomechanics)
+     - Learned anomaly detection
+     - Interpretable violation reports
+   - 🌐 **API**: GraphQL with subscriptions (NOT just REST!)
+     - Real-time race updates
+     - Flexible querying
+     - Hybrid caching (Redis + CDN)
+
+4. **Long-term** (3-6 months) - Phase 4.3 & 4.4:
+   - 📡 **Real-time Streaming**: WebRTC + WebSocket
+     - <1s latency video streaming
+     - 10 Hz pose/metrics updates
+     - Live ML predictions during race
+   - 📱 **Web/Mobile Deployment**:
+     - React web dashboard
+     - React Native mobile app
+     - Kubernetes infrastructure
+   - 🎯 **Hold-by-hold Analysis**: Advanced features
+   - 🌐 **Production Launch**: Full system deployment
+
+**Key Change from Original Plan**:
+- ❌ NARX → ✅ CNN-Transformer (92% vs 82-85% accuracy)
+- ❌ Pure Fuzzy Logic → ✅ Physics-Informed Hybrid (88.5% vs 75-80%)
+- ✅ GraphQL chosen over REST for real-time analytics
+- ✅ WebRTC chosen for ultra-low latency streaming
+
+**Reference**: [docs/PHASE4_RESEARCH_REPORT.md](docs/PHASE4_RESEARCH_REPORT.md) for evidence-based decisions
 
 ### فایل‌های کلیدی برای Phase 2:
 ```
