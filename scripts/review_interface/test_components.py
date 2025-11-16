@@ -30,17 +30,17 @@ def print_header(text: str):
 
 def print_success(text: str):
     """Print success message."""
-    print(f"  ✓ {text}")
+    print(f"  [PASS] {text}")
 
 
 def print_error(text: str):
     """Print error message."""
-    print(f"  ✗ {text}")
+    print(f"  [FAIL] {text}")
 
 
 def test_config_manager():
     """Test ConfigManager component."""
-    print_header("Testing ConfigManager / تست مدیر پیکربندی")
+    print_header("Testing ConfigManager")
 
     try:
         # Initialize
@@ -74,7 +74,7 @@ def test_config_manager():
 
 def test_progress_tracker():
     """Test ProgressTracker component."""
-    print_header("Testing ProgressTracker / تست ردیاب پیشرفت")
+    print_header("Testing ProgressTracker")
 
     try:
         # Initialize
@@ -117,7 +117,7 @@ def test_progress_tracker():
 
 def test_metadata_manager():
     """Test MetadataManager component."""
-    print_header("Testing MetadataManager / تست مدیر متادیتا")
+    print_header("Testing MetadataManager")
 
     try:
         # Initialize
@@ -169,7 +169,7 @@ def test_metadata_manager():
 
 def test_validators():
     """Test RaceValidator component."""
-    print_header("Testing RaceValidator / تست اعتبارسنجی")
+    print_header("Testing RaceValidator")
 
     try:
         # Initialize
@@ -193,7 +193,7 @@ def test_validators():
                 duration = (finish - start) / fps
                 print(f"    - Duration: {duration:.2f}s")
                 for check_name, (valid, msg, severity) in results.items():
-                    status = "✓" if valid else "✗"
+                    status = "[OK]" if valid else "[ERR]"
                     print(f"    - {status} {check_name}: {msg}")
             else:
                 print_error(f"Test '{name}': Unexpected result!")
@@ -208,10 +208,9 @@ def test_validators():
 def run_all_tests():
     """Run all component tests."""
     print("\n")
-    print("╔═══════════════════════════════════════════════════════════════════╗")
-    print("║  MANUAL REVIEW INTERFACE - COMPONENT TESTS                       ║")
-    print("║  تست کامپوننت‌های رابط بررسی دستی                                ║")
-    print("╚═══════════════════════════════════════════════════════════════════╝")
+    print("=" * 70)
+    print("  MANUAL REVIEW INTERFACE - COMPONENT TESTS")
+    print("=" * 70)
 
     results = {
         'ConfigManager': test_config_manager(),
@@ -221,14 +220,14 @@ def run_all_tests():
     }
 
     # Summary
-    print_header("Test Summary / خلاصه تست‌ها")
+    print_header("Test Summary")
 
     all_passed = all(results.values())
     passed = sum(results.values())
     total = len(results)
 
     for component, result in results.items():
-        status = "✓ PASS" if result else "✗ FAIL"
+        status = "[PASS]" if result else "[FAIL]"
         print(f"  {status}: {component}")
 
     print()
@@ -236,23 +235,22 @@ def run_all_tests():
 
     if all_passed:
         print()
-        print("  ╔═══════════════════════════════════════════════════════════╗")
-        print("  ║  ✓ ALL TESTS PASSED! / همه تست‌ها موفق!                  ║")
-        print("  ║                                                           ║")
-        print("  ║  You can now run the interface:                           ║")
-        print("  ║  می‌توانید رابط را اجرا کنید:                              ║")
-        print("  ║                                                           ║")
-        print("  ║    cd scripts/review_interface                            ║")
-        print("  ║    streamlit run app.py                                   ║")
-        print("  ╚═══════════════════════════════════════════════════════════╝")
+        print("  " + "=" * 60)
+        print("  [SUCCESS] ALL TESTS PASSED!")
+        print("  " + "=" * 60)
+        print()
+        print("  You can now run the interface:")
+        print("    cd scripts/review_interface")
+        print("    streamlit run app.py")
+        print()
     else:
         print()
-        print("  ╔═══════════════════════════════════════════════════════════╗")
-        print("  ║  ✗ SOME TESTS FAILED / برخی تست‌ها شکست خوردند            ║")
-        print("  ║                                                           ║")
-        print("  ║  Please fix the errors before running the interface.     ║")
-        print("  ║  لطفاً خطاها را قبل از اجرای رابط رفع کنید.               ║")
-        print("  ╚═══════════════════════════════════════════════════════════╝")
+        print("  " + "=" * 60)
+        print("  [ERROR] SOME TESTS FAILED")
+        print("  " + "=" * 60)
+        print()
+        print("  Please fix the errors before running the interface.")
+        print()
 
     return all_passed
 
