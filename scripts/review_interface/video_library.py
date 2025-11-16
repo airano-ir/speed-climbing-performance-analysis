@@ -36,13 +36,16 @@ class VideoEntry:
 
     def to_dict(self) -> Dict:
         """Convert to dictionary for display."""
+        notes_text = self.notes if self.notes else ""
+        notes_display = notes_text[:50] + '...' if len(notes_text) > 50 else notes_text
+
         return {
             'race_id': self.race_id,
             'competition': self.competition,
             'duration': self.duration,
             'status': self.status,
             'review_date': self.review_date or 'Not reviewed',
-            'notes': self.notes[:50] + '...' if len(self.notes) > 50 else self.notes,
+            'notes': notes_display,
             'athletes': f"{self.left_athlete} vs {self.right_athlete}"
         }
 
@@ -172,7 +175,7 @@ class VideoLibrary:
             filtered = [
                 v for v in filtered
                 if query_lower in v.race_id.lower()
-                or query_lower in v.notes.lower()
+                or (v.notes and query_lower in v.notes.lower())
                 or query_lower in v.left_athlete.lower()
                 or query_lower in v.right_athlete.lower()
             ]

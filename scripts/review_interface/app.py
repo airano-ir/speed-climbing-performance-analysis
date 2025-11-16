@@ -752,13 +752,17 @@ elif st.session_state['current_page'] == 'video_library':
         # Create dataframe
         df_data = []
         for video in filtered_videos:
+            # Handle None values
+            notes_text = video.notes if video.notes else ""
+            notes_display = notes_text[:40] + '...' if len(notes_text) > 40 else notes_text
+
             df_data.append({
                 get_text('race_id_col'): video.race_id,
                 get_text('competition_col'): video.competition,
                 get_text('duration_col'): f"{video.duration:.2f}",
                 get_text('status_col'): get_text(video.status) if video.status in ['reviewed', 'suspicious', 'pending', 'failed'] else video.status,
                 get_text('athletes_col'): f"{video.left_athlete} vs {video.right_athlete}",
-                get_text('notes_col'): video.notes[:40] + '...' if len(video.notes) > 40 else video.notes
+                get_text('notes_col'): notes_display
             })
 
         df = pd.DataFrame(df_data)
@@ -766,7 +770,7 @@ elif st.session_state['current_page'] == 'video_library':
         # Display table
         st.dataframe(
             df,
-            use_container_width=True,
+            width='stretch',
             hide_index=True,
             height=400
         )
