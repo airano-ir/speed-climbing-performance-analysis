@@ -22,6 +22,7 @@ from scripts.review_interface.progress import ProgressTracker, RaceReviewStatus
 from scripts.review_interface.metadata_manager import MetadataManager
 from scripts.review_interface.video_player import VideoPlayer
 from scripts.review_interface.validators import RaceValidator
+from scripts.review_interface.video_library import VideoLibrary
 
 
 # =============================================================================
@@ -95,6 +96,34 @@ TRANSLATIONS = {
         'has_errors': '❌ Validation errors found',
         'critical_errors': 'Critical Errors',
         'warnings': 'Warnings',
+        'page_selector': 'Page',
+        'race_review_page': '🏁 Race Review',
+        'video_library_page': '📚 Video Library',
+        'video_library_title': '📚 Video Library - All Races',
+        'library_subtitle': 'View and manage all race videos across all competitions',
+        'filter_competition': 'Filter by Competition',
+        'filter_status': 'Filter by Status',
+        'search_videos': 'Search',
+        'search_placeholder': 'Search race ID, athlete names, or notes...',
+        'library_stats': 'Library Statistics',
+        'reviewed': 'Reviewed',
+        'suspicious': 'Suspicious',
+        'failed': 'Failed',
+        'video_table': 'Videos',
+        'race_id_col': 'Race ID',
+        'competition_col': 'Competition',
+        'duration_col': 'Duration (s)',
+        'status_col': 'Status',
+        'athletes_col': 'Athletes',
+        'notes_col': 'Notes',
+        'no_videos_found': 'No videos found matching the filters',
+        'quick_actions': 'Quick Actions',
+        'select_race_action': 'Select race for action:',
+        'view_in_player': '👁️ View in Player',
+        'export_library': '📥 Export Library',
+        'export_format': 'Export Format',
+        'export_button': '📥 Export',
+        'loading_library': 'Loading video library...',
     },
     'fa': {
         'page_title': '🏔️ سنگنوردی سرعتی - رابط بررسی دستی مسابقات',
@@ -162,6 +191,34 @@ TRANSLATIONS = {
         'has_errors': '❌ خطاهای اعتبارسنجی یافت شد',
         'critical_errors': 'خطاهای بحرانی',
         'warnings': 'هشدارها',
+        'page_selector': 'صفحه',
+        'race_review_page': '🏁 بررسی مسابقات',
+        'video_library_page': '📚 کتابخانه ویدئو',
+        'video_library_title': '📚 کتابخانه ویدئو - همه مسابقات',
+        'library_subtitle': 'مشاهده و مدیریت تمام ویدیوهای مسابقه در همه رقابت‌ها',
+        'filter_competition': 'فیلتر بر اساس مسابقه',
+        'filter_status': 'فیلتر بر اساس وضعیت',
+        'search_videos': 'جستجو',
+        'search_placeholder': 'جستجوی شناسه مسابقه، نام ورزشکاران یا یادداشت‌ها...',
+        'library_stats': 'آمار کتابخانه',
+        'reviewed': 'بررسی شده',
+        'suspicious': 'مشکوک',
+        'failed': 'ناموفق',
+        'video_table': 'ویدیوها',
+        'race_id_col': 'شناسه مسابقه',
+        'competition_col': 'مسابقه',
+        'duration_col': 'مدت زمان (ثانیه)',
+        'status_col': 'وضعیت',
+        'athletes_col': 'ورزشکاران',
+        'notes_col': 'یادداشت‌ها',
+        'no_videos_found': 'هیچ ویدیویی با فیلترها پیدا نشد',
+        'quick_actions': 'اقدامات سریع',
+        'select_race_action': 'انتخاب مسابقه برای اقدام:',
+        'view_in_player': '👁️ مشاهده در پلیر',
+        'export_library': '📥 خروجی کتابخانه',
+        'export_format': 'فرمت خروجی',
+        'export_button': '📥 دریافت',
+        'loading_library': 'بارگذاری کتابخانه ویدئو...',
     }
 }
 
@@ -237,353 +294,537 @@ st.markdown(f"**{get_text('subtitle')}**")
 
 
 # =============================================================================
-# SIDEBAR - STATISTICS & NAVIGATION / نوار کناری - آمار و ناوبری
+# PAGE SELECTOR / انتخاب صفحه
 # =============================================================================
 
-with st.sidebar:
-    st.header(get_text('sidebar_stats'))
+# Initialize page in session state
+if 'current_page' not in st.session_state:
+    st.session_state['current_page'] = 'race_review'
 
-    stats = progress_tracker.get_statistics()
-    progress_pct = progress_tracker.get_progress_percentage()
+# Page selector
+page_options = {
+    'race_review': get_text('race_review_page'),
+    'video_library': get_text('video_library_page')
+}
 
-    col1, col2 = st.columns(2)
-    with col1:
-        st.metric(get_text('total_races'), stats['total'])
-        st.metric(
-            get_text('completed'),
-            stats['completed'],
-            delta=get_text('progress_percentage', percent=progress_pct)
+selected_page = st.radio(
+    get_text('page_selector'),
+    options=list(page_options.keys()),
+    format_func=lambda x: page_options[x],
+    horizontal=True,
+    key='page_selector_radio'
+)
+
+if selected_page != st.session_state['current_page']:
+    st.session_state['current_page'] = selected_page
+    st.rerun()
+
+st.markdown("---")
+
+
+# =============================================================================
+# PAGE: RACE REVIEW / صفحه: بررسی مسابقات
+# =============================================================================
+
+if st.session_state['current_page'] == 'race_review':
+
+    # SIDEBAR - Statistics & Filters
+    with st.sidebar:
+        st.header(get_text('sidebar_stats'))
+
+        stats = progress_tracker.get_statistics()
+        progress_pct = progress_tracker.get_progress_percentage()
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric(get_text('total_races'), stats['total'])
+            st.metric(
+                get_text('completed'),
+                stats['completed'],
+                delta=get_text('progress_percentage', percent=progress_pct)
+            )
+        with col2:
+            st.metric(get_text('pending'), stats['pending'])
+            st.metric(
+                get_text('critical'),
+                stats['critical'],
+                delta="Priority 1",
+                delta_color="inverse"
+            )
+
+        st.markdown("---")
+
+        # Competition filter
+        st.header(get_text('filter_races'))
+
+        competitions = config_mgr.get_competitions()
+        competition_names = [get_text('all')] + [c.name for c in competitions]
+        selected_competition = st.selectbox(get_text('competition'), competition_names)
+
+        # Priority filter
+        priority_options = [
+            get_text('all'),
+            "Critical (1)",
+            "High (2)",
+            "Medium (3)",
+            "Low (4)"
+        ]
+        selected_priority = st.selectbox(get_text('priority'), priority_options)
+
+        # Status filter
+        status_options = [
+            get_text('pending_only'),
+            get_text('all'),
+            "Completed",
+            "Skipped"
+        ]
+        selected_status = st.selectbox(get_text('status'), status_options)
+
+
+    # =============================================================================
+    # MAIN CONTENT - RACE LIST AND REVIEW / محتوای اصلی
+    # =============================================================================
+
+    st.header(get_text('race_review'))
+
+    # Load races based on filters
+    all_races = progress_tracker.load_all_races()
+
+    # Apply filters
+    filtered_races = all_races
+
+    if selected_competition != get_text('all'):
+        comp_key = next((c.key for c in competitions if c.name == selected_competition), None)
+        if comp_key:
+            filtered_races = [r for r in filtered_races if r.competition == comp_key]
+
+    if selected_priority != get_text('all'):
+        priority_num = int(selected_priority.split('(')[1].strip(')'))
+        filtered_races = [r for r in filtered_races if r.priority == priority_num]
+
+    if selected_status == get_text('pending_only'):
+        filtered_races = [r for r in filtered_races if r.review_status == 'Pending']
+    elif selected_status != get_text('all'):
+        filtered_races = [r for r in filtered_races if r.review_status == selected_status]
+
+    # Sort by priority
+    filtered_races.sort(key=lambda r: (r.priority, r.race_id))
+
+    st.info(get_text('showing_races', count=len(filtered_races), total=len(all_races)))
+
+
+    # =============================================================================
+    # RACE SELECTION AND REVIEW / انتخاب و بررسی مسابقه
+    # =============================================================================
+
+    if filtered_races:
+        race_options = [
+            f"[P{r.priority}] {r.race_id} ({r.detected_duration_s:.2f}s → {r.issue_description})"
+            for r in filtered_races
+        ]
+        selected_race_idx = st.selectbox(
+            get_text('select_race'),
+            range(len(race_options)),
+            format_func=lambda i: race_options[i]
         )
-    with col2:
-        st.metric(get_text('pending'), stats['pending'])
-        st.metric(
-            get_text('critical'),
-            stats['critical'],
-            delta="Priority 1",
-            delta_color="inverse"
-        )
 
-    st.markdown("---")
+        selected_race = filtered_races[selected_race_idx]
 
-    # Competition filter
-    st.header(get_text('filter_races'))
+        st.markdown("---")
 
-    competitions = config_mgr.get_competitions()
-    competition_names = [get_text('all')] + [c.name for c in competitions]
-    selected_competition = st.selectbox(get_text('competition'), competition_names)
+        # Display race information
+        col1, col2, col3 = st.columns(3)
 
-    # Priority filter
-    priority_options = [
-        get_text('all'),
-        "Critical (1)",
-        "High (2)",
-        "Medium (3)",
-        "Low (4)"
-    ]
-    selected_priority = st.selectbox(get_text('priority'), priority_options)
+        with col1:
+            st.subheader(get_text('race_info'))
+            st.text(f"{get_text('race_id')}: {selected_race.race_id}")
+            st.text(f"{get_text('competition')}: {selected_race.competition}")
+            st.text(f"{get_text('priority')}: {selected_race.priority}")
+            st.text(f"{get_text('status')}: {selected_race.review_status}")
 
-    # Status filter
-    status_options = [
-        get_text('pending_only'),
-        get_text('all'),
-        "Completed",
-        "Skipped"
-    ]
-    selected_status = st.selectbox(get_text('status'), status_options)
+        with col2:
+            st.subheader(get_text('detection_issue'))
+            st.error(f"**{selected_race.issue_description}**")
+            st.text(f"{get_text('detected_duration')}: {selected_race.detected_duration_s:.2f}s")
+            st.text(f"{get_text('frames')}: {selected_race.duration_frames}")
+            st.text(f"{get_text('start_confidence')}: {selected_race.confidence_start:.2f}")
+            st.text(f"{get_text('finish_confidence')}: {selected_race.confidence_finish:.2f}")
 
+        with col3:
+            st.subheader(get_text('correction_status'))
+            if selected_race.corrected_duration_s:
+                st.success(f"{get_text('corrected')}: {selected_race.corrected_duration_s}s")
+                st.text(f"{get_text('start_frame')}: {selected_race.corrected_start_frame}")
+                st.text(f"{get_text('finish_frame')}: {selected_race.corrected_finish_frame}")
+            else:
+                st.warning(get_text('not_corrected'))
 
-# =============================================================================
-# MAIN CONTENT - RACE LIST AND REVIEW / محتوای اصلی
-# =============================================================================
+        st.markdown("---")
 
-st.header(get_text('race_review'))
+        # Load video and metadata
+        competition_config = config_mgr.get_competition(selected_race.competition)
 
-# Load races based on filters
-all_races = progress_tracker.load_all_races()
+        if competition_config:
+            video_path = metadata_mgr.get_video_path(selected_race.competition, selected_race.race_id)
 
-# Apply filters
-filtered_races = all_races
+            if video_path.exists():
+                # Load current metadata
+                try:
+                    metadata = metadata_mgr.load_metadata(selected_race.competition, selected_race.race_id)
 
-if selected_competition != get_text('all'):
-    comp_key = next((c.key for c in competitions if c.name == selected_competition), None)
-    if comp_key:
-        filtered_races = [r for r in filtered_races if r.competition == comp_key]
-
-if selected_priority != get_text('all'):
-    priority_num = int(selected_priority.split('(')[1].strip(')'))
-    filtered_races = [r for r in filtered_races if r.priority == priority_num]
-
-if selected_status == get_text('pending_only'):
-    filtered_races = [r for r in filtered_races if r.review_status == 'Pending']
-elif selected_status != get_text('all'):
-    filtered_races = [r for r in filtered_races if r.review_status == selected_status]
-
-# Sort by priority
-filtered_races.sort(key=lambda r: (r.priority, r.race_id))
-
-st.info(get_text('showing_races', count=len(filtered_races), total=len(all_races)))
-
-
-# =============================================================================
-# RACE SELECTION AND REVIEW / انتخاب و بررسی مسابقه
-# =============================================================================
-
-if filtered_races:
-    race_options = [
-        f"[P{r.priority}] {r.race_id} ({r.detected_duration_s:.2f}s → {r.issue_description})"
-        for r in filtered_races
-    ]
-    selected_race_idx = st.selectbox(
-        get_text('select_race'),
-        range(len(race_options)),
-        format_func=lambda i: race_options[i]
-    )
-
-    selected_race = filtered_races[selected_race_idx]
-
-    st.markdown("---")
-
-    # Display race information
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-        st.subheader(get_text('race_info'))
-        st.text(f"{get_text('race_id')}: {selected_race.race_id}")
-        st.text(f"{get_text('competition')}: {selected_race.competition}")
-        st.text(f"{get_text('priority')}: {selected_race.priority}")
-        st.text(f"{get_text('status')}: {selected_race.review_status}")
-
-    with col2:
-        st.subheader(get_text('detection_issue'))
-        st.error(f"**{selected_race.issue_description}**")
-        st.text(f"{get_text('detected_duration')}: {selected_race.detected_duration_s:.2f}s")
-        st.text(f"{get_text('frames')}: {selected_race.duration_frames}")
-        st.text(f"{get_text('start_confidence')}: {selected_race.confidence_start:.2f}")
-        st.text(f"{get_text('finish_confidence')}: {selected_race.confidence_finish:.2f}")
-
-    with col3:
-        st.subheader(get_text('correction_status'))
-        if selected_race.corrected_duration_s:
-            st.success(f"{get_text('corrected')}: {selected_race.corrected_duration_s}s")
-            st.text(f"{get_text('start_frame')}: {selected_race.corrected_start_frame}")
-            st.text(f"{get_text('finish_frame')}: {selected_race.corrected_finish_frame}")
-        else:
-            st.warning(get_text('not_corrected'))
-
-    st.markdown("---")
-
-    # Load video and metadata
-    competition_config = config_mgr.get_competition(selected_race.competition)
-
-    if competition_config:
-        video_path = metadata_mgr.get_video_path(selected_race.competition, selected_race.race_id)
-
-        if video_path.exists():
-            # Load current metadata
-            try:
-                metadata = metadata_mgr.load_metadata(selected_race.competition, selected_race.race_id)
-
-                # Video player
-                player = VideoPlayer(video_path, competition_config.fps)
-                current_frame, current_time = player.render(
-                    key_prefix=f"race_{selected_race.race_id}",
-                    language=st.session_state['language']
-                )
-
-                st.markdown("---")
-
-                # Correction interface
-                st.subheader(get_text('correct_boundaries'))
-
-                # Warning if detected frames are from original video
-                if (metadata.get('detected_start_frame', 0) >= player.total_frames or
-                    metadata.get('detected_finish_frame', 0) >= player.total_frames):
-                    st.warning(
-                        "⚠️ **Note**: Detected frames are from the original video (not this extracted segment). "
-                        "Please use the video player to find the correct start and finish frames in this segment."
+                    # Video player
+                    player = VideoPlayer(video_path, competition_config.fps)
+                    current_frame, current_time = player.render(
+                        key_prefix=f"race_{selected_race.race_id}",
+                        language=st.session_state['language']
                     )
 
-                col1, col2 = st.columns(2)
+                    st.markdown("---")
 
-                with col1:
-                    st.markdown(f"**🟢 {get_text('start_frame')}**")
-                    st.text(f"{get_text('current_detected')}: {metadata['detected_start_frame']}")
+                    # Correction interface
+                    st.subheader(get_text('correct_boundaries'))
 
-                    if st.button(get_text('mark_start'), key="mark_start"):
-                        st.session_state['new_start_frame'] = current_frame
-                        st.success(get_text('marked_at', frame=current_frame, time=current_time))
+                    # Warning if detected frames are from original video
+                    if (metadata.get('detected_start_frame', 0) >= player.total_frames or
+                        metadata.get('detected_finish_frame', 0) >= player.total_frames):
+                        st.warning(
+                            "⚠️ **Note**: Detected frames are from the original video (not this extracted segment). "
+                            "Please use the video player to find the correct start and finish frames in this segment."
+                        )
 
-                    # Clamp detected frame to valid range for extracted video
-                    default_start = metadata.get('detected_start_frame', 0)
-                    if default_start >= player.total_frames:
-                        default_start = 0  # Reset to beginning if out of range
+                    col1, col2 = st.columns(2)
 
-                    new_start_frame = st.number_input(
-                        get_text('new_start_frame'),
-                        min_value=0,
-                        max_value=player.total_frames - 1,
-                        value=st.session_state.get('new_start_frame', default_start),
-                        key="start_frame_input"
+                    with col1:
+                        st.markdown(f"**🟢 {get_text('start_frame')}**")
+                        st.text(f"{get_text('current_detected')}: {metadata['detected_start_frame']}")
+
+                        if st.button(get_text('mark_start'), key="mark_start"):
+                            st.session_state['new_start_frame'] = current_frame
+                            st.success(get_text('marked_at', frame=current_frame, time=current_time))
+
+                        # Clamp detected frame to valid range for extracted video
+                        default_start = metadata.get('detected_start_frame', 0)
+                        if default_start >= player.total_frames:
+                            default_start = 0  # Reset to beginning if out of range
+
+                        new_start_frame = st.number_input(
+                            get_text('new_start_frame'),
+                            min_value=0,
+                            max_value=player.total_frames - 1,
+                            value=st.session_state.get('new_start_frame', default_start),
+                            key="start_frame_input"
+                        )
+
+                    with col2:
+                        st.markdown(f"**🔴 {get_text('finish_frame')}**")
+                        st.text(f"{get_text('current_detected')}: {metadata['detected_finish_frame']}")
+
+                        if st.button(get_text('mark_finish'), key="mark_finish"):
+                            st.session_state['new_finish_frame'] = current_frame
+                            st.success(get_text('marked_at', frame=current_frame, time=current_time))
+
+                        # Clamp detected frame to valid range for extracted video
+                        default_finish = metadata.get('detected_finish_frame', player.total_frames - 1)
+                        if default_finish >= player.total_frames:
+                            default_finish = player.total_frames - 1  # Reset to end if out of range
+
+                        new_finish_frame = st.number_input(
+                            get_text('new_finish_frame'),
+                            min_value=0,
+                            max_value=player.total_frames - 1,
+                            value=st.session_state.get('new_finish_frame', default_finish),
+                            key="finish_frame_input"
+                        )
+
+                    # Calculate new duration
+                    new_duration_frames = new_finish_frame - new_start_frame
+                    new_duration_seconds = new_duration_frames / competition_config.fps
+
+                    st.markdown("---")
+
+                    # Validation
+                    validation_results = validator.validate_all(
+                        new_start_frame,
+                        new_finish_frame,
+                        competition_config.fps,
+                        player.total_frames
                     )
 
-                with col2:
-                    st.markdown(f"**🔴 {get_text('finish_frame')}**")
-                    st.text(f"{get_text('current_detected')}: {metadata['detected_finish_frame']}")
+                    col1, col2, col3 = st.columns(3)
+                    with col1:
+                        st.metric(get_text('new_duration_s'), f"{new_duration_seconds:.2f}")
+                    with col2:
+                        st.metric(get_text('new_duration_frames'), new_duration_frames)
+                    with col3:
+                        # Check validation
+                        validation_rules = config_mgr.get_validation_rules()
+                        min_dur = validation_rules['duration']['min']
+                        max_dur = validation_rules['duration']['max']
 
-                    if st.button(get_text('mark_finish'), key="mark_finish"):
-                        st.session_state['new_finish_frame'] = current_frame
-                        st.success(get_text('marked_at', frame=current_frame, time=current_time))
-
-                    # Clamp detected frame to valid range for extracted video
-                    default_finish = metadata.get('detected_finish_frame', player.total_frames - 1)
-                    if default_finish >= player.total_frames:
-                        default_finish = player.total_frames - 1  # Reset to end if out of range
-
-                    new_finish_frame = st.number_input(
-                        get_text('new_finish_frame'),
-                        min_value=0,
-                        max_value=player.total_frames - 1,
-                        value=st.session_state.get('new_finish_frame', default_finish),
-                        key="finish_frame_input"
-                    )
-
-                # Calculate new duration
-                new_duration_frames = new_finish_frame - new_start_frame
-                new_duration_seconds = new_duration_frames / competition_config.fps
-
-                st.markdown("---")
-
-                # Validation
-                validation_results = validator.validate_all(
-                    new_start_frame,
-                    new_finish_frame,
-                    competition_config.fps,
-                    player.total_frames
-                )
-
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    st.metric(get_text('new_duration_s'), f"{new_duration_seconds:.2f}")
-                with col2:
-                    st.metric(get_text('new_duration_frames'), new_duration_frames)
-                with col3:
-                    # Check validation
-                    validation_rules = config_mgr.get_validation_rules()
-                    min_dur = validation_rules['duration']['min']
-                    max_dur = validation_rules['duration']['max']
-
-                    if new_duration_seconds < min_dur:
-                        st.error(get_text('below_minimum', min=min_dur))
-                    elif new_duration_seconds > max_dur:
-                        st.error(get_text('above_maximum', max=max_dur))
-                    else:
-                        st.success(get_text('valid_duration'))
-
-                # Display validation results
-                st.subheader(get_text('validation_results'))
-                if validator.is_all_valid(validation_results):
-                    st.success(get_text('all_valid'))
-                else:
-                    st.warning(get_text('has_errors'))
-
-                    # Show critical errors
-                    critical_errors = validator.get_critical_errors(validation_results)
-                    if critical_errors:
-                        st.error(f"**{get_text('critical_errors')}:**")
-                        for err in critical_errors:
-                            st.error(f"- {err}")
-
-                    # Show warnings
-                    warnings = validator.get_warnings(validation_results)
-                    if warnings:
-                        st.warning(f"**{get_text('warnings')}:**")
-                        for warn in warnings:
-                            st.warning(f"- {warn}")
-
-                # Correction reason
-                st.markdown("---")
-                st.subheader(get_text('correction_details'))
-
-                correction_reason = st.text_input(
-                    get_text('correction_reason'),
-                    value="",
-                    placeholder=get_text('correction_reason_placeholder')
-                )
-
-                reviewer_notes = st.text_area(
-                    get_text('reviewer_notes'),
-                    value="",
-                    placeholder=get_text('reviewer_notes_placeholder')
-                )
-
-                # Save buttons
-                col1, col2, col3 = st.columns(3)
-
-                with col1:
-                    if st.button(get_text('save_correction'), type="primary", key="save_correction"):
-                        if not correction_reason:
-                            st.error(get_text('provide_reason'))
+                        if new_duration_seconds < min_dur:
+                            st.error(get_text('below_minimum', min=min_dur))
+                        elif new_duration_seconds > max_dur:
+                            st.error(get_text('above_maximum', max=max_dur))
                         else:
-                            # Update metadata
-                            updated_metadata = metadata_mgr.update_race_boundaries(
-                                competition=selected_race.competition,
-                                race_id=selected_race.race_id,
-                                new_start_frame=int(new_start_frame),
-                                new_finish_frame=int(new_finish_frame),
-                                fps=competition_config.fps,
-                                correction_reason=correction_reason,
-                                reviewer_notes=reviewer_notes
-                            )
+                            st.success(get_text('valid_duration'))
 
-                            # Update progress tracker
-                            selected_race.review_status = 'Completed'
-                            selected_race.corrected_duration_s = str(new_duration_seconds)
-                            selected_race.corrected_start_frame = str(int(new_start_frame))
-                            selected_race.corrected_finish_frame = str(int(new_finish_frame))
-                            selected_race.reviewer_notes = reviewer_notes
-                            selected_race.review_date = updated_metadata['correction_metadata']['correction_date']
+                    # Display validation results
+                    st.subheader(get_text('validation_results'))
+                    if validator.is_all_valid(validation_results):
+                        st.success(get_text('all_valid'))
+                    else:
+                        st.warning(get_text('has_errors'))
 
+                        # Show critical errors
+                        critical_errors = validator.get_critical_errors(validation_results)
+                        if critical_errors:
+                            st.error(f"**{get_text('critical_errors')}:**")
+                            for err in critical_errors:
+                                st.error(f"- {err}")
+
+                        # Show warnings
+                        warnings = validator.get_warnings(validation_results)
+                        if warnings:
+                            st.warning(f"**{get_text('warnings')}:**")
+                            for warn in warnings:
+                                st.warning(f"- {warn}")
+
+                    # Correction reason
+                    st.markdown("---")
+                    st.subheader(get_text('correction_details'))
+
+                    correction_reason = st.text_input(
+                        get_text('correction_reason'),
+                        value="",
+                        placeholder=get_text('correction_reason_placeholder')
+                    )
+
+                    reviewer_notes = st.text_area(
+                        get_text('reviewer_notes'),
+                        value="",
+                        placeholder=get_text('reviewer_notes_placeholder')
+                    )
+
+                    # Save buttons
+                    col1, col2, col3 = st.columns(3)
+
+                    with col1:
+                        if st.button(get_text('save_correction'), type="primary", key="save_correction"):
+                            if not correction_reason:
+                                st.error(get_text('provide_reason'))
+                            else:
+                                # Update metadata
+                                updated_metadata = metadata_mgr.update_race_boundaries(
+                                    competition=selected_race.competition,
+                                    race_id=selected_race.race_id,
+                                    new_start_frame=int(new_start_frame),
+                                    new_finish_frame=int(new_finish_frame),
+                                    fps=competition_config.fps,
+                                    correction_reason=correction_reason,
+                                    reviewer_notes=reviewer_notes
+                                )
+
+                                # Update progress tracker
+                                selected_race.review_status = 'Completed'
+                                selected_race.corrected_duration_s = str(new_duration_seconds)
+                                selected_race.corrected_start_frame = str(int(new_start_frame))
+                                selected_race.corrected_finish_frame = str(int(new_finish_frame))
+                                selected_race.reviewer_notes = reviewer_notes
+                                selected_race.review_date = updated_metadata['correction_metadata']['correction_date']
+
+                                progress_tracker.update_race(selected_race)
+
+                                st.success(get_text('correction_saved'))
+                                st.balloons()
+
+                                # Clear session state
+                                if 'new_start_frame' in st.session_state:
+                                    del st.session_state['new_start_frame']
+                                if 'new_finish_frame' in st.session_state:
+                                    del st.session_state['new_finish_frame']
+
+                                st.rerun()
+
+                    with col2:
+                        if st.button(get_text('skip_race'), key="skip_race"):
+                            selected_race.review_status = 'Skipped'
                             progress_tracker.update_race(selected_race)
+                            st.info(get_text('race_skipped'))
+                            st.rerun()
 
-                            st.success(get_text('correction_saved'))
-                            st.balloons()
-
-                            # Clear session state
+                    with col3:
+                        if st.button(get_text('reset'), key="reset_form"):
                             if 'new_start_frame' in st.session_state:
                                 del st.session_state['new_start_frame']
                             if 'new_finish_frame' in st.session_state:
                                 del st.session_state['new_finish_frame']
-
                             st.rerun()
 
-                with col2:
-                    if st.button(get_text('skip_race'), key="skip_race"):
-                        selected_race.review_status = 'Skipped'
-                        progress_tracker.update_race(selected_race)
-                        st.info(get_text('race_skipped'))
-                        st.rerun()
+                    # Cleanup
+                    player.close()
 
-                with col3:
-                    if st.button(get_text('reset'), key="reset_form"):
-                        if 'new_start_frame' in st.session_state:
-                            del st.session_state['new_start_frame']
-                        if 'new_finish_frame' in st.session_state:
-                            del st.session_state['new_finish_frame']
-                        st.rerun()
+                except Exception as e:
+                    st.error(f"Error loading race data: {e}")
 
-                # Cleanup
-                player.close()
-
-            except Exception as e:
-                st.error(f"Error loading race data: {e}")
-
+            else:
+                st.error(f"{get_text('video_not_found')}: {video_path}")
         else:
-            st.error(f"{get_text('video_not_found')}: {video_path}")
-    else:
-        st.error(f"{get_text('competition_not_found')}: {selected_race.competition}")
+            st.error(f"{get_text('competition_not_found')}: {selected_race.competition}")
 
-else:
-    st.info(get_text('no_races'))
+    else:
+        st.info(get_text('no_races'))
+
+
+# =============================================================================
+# PAGE: VIDEO LIBRARY / صفحه: کتابخانه ویدئو
+# =============================================================================
+
+elif st.session_state['current_page'] == 'video_library':
+
+    st.header(get_text('video_library_title'))
+    st.markdown(f"**{get_text('library_subtitle')}**")
+
+    # Initialize VideoLibrary
+    video_lib = VideoLibrary(config_mgr)
+
+    with st.spinner(get_text('loading_library')):
+        all_videos = video_lib.get_all_videos()
+
+    st.markdown("---")
+
+    # Filters in sidebar
+    with st.sidebar:
+        st.header(get_text('library_stats'))
+
+        # Get statistics
+        stats = video_lib.get_statistics(all_videos)
+
+        col1, col2 = st.columns(2)
+        with col1:
+            st.metric(get_text('total_races'), stats['total'])
+            st.metric(get_text('reviewed'), stats['by_status'].get('reviewed', 0))
+        with col2:
+            st.metric(get_text('suspicious'), stats['by_status'].get('suspicious', 0))
+            st.metric(get_text('pending'), stats['by_status'].get('pending', 0))
+
+        st.markdown("---")
+
+        # Filters
+        st.subheader(get_text('filter_competition'))
+        competitions = config_mgr.get_competitions()
+        comp_options = ['all'] + [c.key for c in competitions]
+        selected_comp_filter = st.selectbox(
+            get_text('competition'),
+            comp_options,
+            format_func=lambda x: get_text('all') if x == 'all' else x
+        )
+
+        st.subheader(get_text('filter_status'))
+        status_options = ['all', 'reviewed', 'suspicious', 'pending', 'failed']
+        selected_status_filter = st.selectbox(
+            get_text('status'),
+            status_options,
+            format_func=lambda x: get_text(x) if x != 'all' else get_text('all')
+        )
+
+        st.subheader(get_text('search_videos'))
+        search_query = st.text_input(
+            get_text('search_videos'),
+            placeholder=get_text('search_placeholder'),
+            label_visibility='collapsed'
+        )
+
+    # Apply filters
+    filtered_videos = video_lib.filter_videos(
+        all_videos,
+        competition=selected_comp_filter,
+        status=selected_status_filter if selected_status_filter != 'all' else None,
+        search_query=search_query if search_query else None
+    )
+
+    # Display filtered count
+    st.info(f"Showing {len(filtered_videos)} videos (filtered from {len(all_videos)} total)")
+
+    # Display videos in table
+    if filtered_videos:
+        import pandas as pd
+
+        # Create dataframe
+        df_data = []
+        for video in filtered_videos:
+            df_data.append({
+                get_text('race_id_col'): video.race_id,
+                get_text('competition_col'): video.competition,
+                get_text('duration_col'): f"{video.duration:.2f}",
+                get_text('status_col'): get_text(video.status) if video.status in ['reviewed', 'suspicious', 'pending', 'failed'] else video.status,
+                get_text('athletes_col'): f"{video.left_athlete} vs {video.right_athlete}",
+                get_text('notes_col'): video.notes[:40] + '...' if len(video.notes) > 40 else video.notes
+            })
+
+        df = pd.DataFrame(df_data)
+
+        # Display table
+        st.dataframe(
+            df,
+            use_container_width=True,
+            hide_index=True,
+            height=400
+        )
+
+        # Quick actions
+        st.markdown("---")
+        st.subheader(get_text('quick_actions'))
+
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            selected_race_id = st.selectbox(
+                get_text('select_race_action'),
+                [v.race_id for v in filtered_videos]
+            )
+        with col2:
+            if st.button(get_text('view_in_player')):
+                # Switch to race review page with this race selected
+                st.session_state['current_page'] = 'race_review'
+                st.session_state['selected_race_id'] = selected_race_id
+                st.rerun()
+
+        # Export functionality
+        st.markdown("---")
+        st.subheader(get_text('export_library'))
+
+        col1, col2 = st.columns([2, 1])
+        with col1:
+            export_format = st.selectbox(
+                get_text('export_format'),
+                ['json', 'csv', 'yaml']
+            )
+        with col2:
+            if st.button(get_text('export_button')):
+                from datetime import datetime
+                timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+                output_path = Path(f"video_library_export_{timestamp}.{export_format}")
+
+                success, message = video_lib.export_library_info(
+                    filtered_videos,
+                    output_path,
+                    export_format
+                )
+
+                if success:
+                    st.success(message)
+                    # Provide download button
+                    with open(output_path, 'rb') as f:
+                        st.download_button(
+                            label=f"Download {output_path.name}",
+                            data=f.read(),
+                            file_name=output_path.name,
+                            mime=f"application/{export_format}"
+                        )
+                else:
+                    st.error(message)
+
+    else:
+        st.warning(get_text('no_videos_found'))
 
 
 # =============================================================================
