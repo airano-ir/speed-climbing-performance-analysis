@@ -1,7 +1,7 @@
 # MASTER CONTEXT - Speed Climbing Performance Analysis
 # سند راهنمای کامل پروژه تحلیل سنگنوردی سرعتی
 
-**Last Updated**: 2025-11-15 (Phase 3 Testing - CRITICAL ISSUES FOUND ⚠️)
+**Last Updated**: 2025-11-16 (Phase 3 Testing - 3 CRITICAL ISSUES FOUND ⚠️)
 **Purpose**: این سند برای ادامه کار در صورت قطع شدن session یا شروع مجدد در conversation جدید
 **Language**: Persian (Farsi) + English
 
@@ -204,29 +204,128 @@ Current output: ~0.4 arbitrary units
 
 ---
 
+### مشکل 3: خطاهای بحرانی در Race Detection 🚨 **NEW - 2025-11-16**
+
+**وضعیت**:
+- ✅ سیستم automated race detection پیاده‌سازی شده (Phase 1)
+- ✅ Manual YAML timestamps به عنوان ground truth
+- ❌ **3 race با خطاهای بحرانی در detection کشف شد!**
+
+**Races مشکل‌دار** (بررسی manual توسط کاربر):
+
+| Race | Detected Duration | Actual Duration | Error | Root Cause |
+|------|------------------|-----------------|-------|------------|
+| **Race001 (Chamonix)** | 1.77s (53 frames) | ~6.5s (~195 frames) | **3.7× underestimated** | سقوط ورزشکار به عنوان finish تشخیص داده شد |
+| **Race010 (Innsbruck)** | 12.00s (360 frames) | ~7.5s (~225 frames) | **1.6× overestimated** | شروع خیلی زودتر تشخیص داده شد (گرم کردن/حرکت دوربین) |
+| **Race023 (Zilina)** | 19.00s (570 frames) | ~6.6-7s (~198-210 frames) | **2.7× overestimated** | شروع روی false start یا replay trigger شد |
+
+**ریشه مشکلات** (تحقیق جامع انجام شد):
+
+1. **Motion-based Start Detection** - بیش از حد حساس:
+   - Optical flow (Farneback) threshold خیلی پایین (5.0)
+   - Trigger می‌شود روی: حرکت دوربین، گرم کردن، حرکات جمعیت
+   - هیچ multi-frame confirmation ندارد
+
+2. **Visual Finish Detection** - بسیار ناموثق:
+   - Color change detection در top 15% frame
+   - Confidence همیشه پایین (~0.40) برای همه races
+   - False triggers: سقوط، camera angle change, lighting change
+
+3. **No Validation Layer**:
+   - هیچ duration check ندارد (min: world record 5.0s, max: 15s reasonable)
+   - Single-frame noise می‌تواند detection را trigger کند
+   - هیچ diagnostic data برای debug
+
+**تاثیر**:
+```
+Race001: Metrics فقط برای 1.77s محاسبه شد
+         اما race واقعی 6.5s بود
+         → 70% از race data از دست رفته!
+
+Race010: Metrics شامل 4.5s pre-race warmup
+         → Velocity و acceleration diluted شد
+
+Race023: Metrics شامل false start + actual race
+         → Pattern analysis کاملاً invalid
+```
+
+**چرا بحرانی است**:
+1. **Data integrity**: 3/188 races (1.6%) خراب هستند، اما ممکن است بیشتر باشند
+2. **ML training**: Invalid data → biased models
+3. **Comparative analysis**: این 3 race قابل مقایسه با دیگران نیستند
+4. **Scientific validity**: زیر سوال رفتن کل pipeline detection
+
+**راه‌حل فوری** (2-3 ساعت):
+1. **Manual correction** برای 3 race مشکل‌دار:
+   - Race001: Update metadata با actual start/finish times
+   - Race010: تصحیح detected_start_frame
+   - Race023: تصحیح race boundaries
+
+2. **Add validation layer** برای 185 race دیگر:
+   - Duration check: flag races خارج از 4.5s-15s
+   - Pose-based validation: hand reaches top 10% frame
+   - Multi-frame confirmation: 5 consecutive frames
+
+**راه‌حل بلندمدت** (6-8 هفته):
+- **YOLOv9** برای finish button detection
+- **Audio analysis** برای starting beep (800-1200 Hz)
+- **Pose-based finish**: hand velocity → 0 at top
+- **Deep learning optical flow** به جای Farneback
+
+**فایل‌های مرتبط**:
+- `docs/PROMPT_FOR_UI_FIX_RACE_DETECTION.md` - راهنمای کامل رفع
+- Race detection code: `src/phase1_pose_estimation/race_*_detector.py`
+- Research: Academic papers on sports timing (2024)
+
+**Reference**: World Records (2024) - Men: 5.00s | Women: 6.53s
+
+---
+
 ### اقدامات فوری مورد نیاز
 
+**Priority 0** (2-3 ساعت): Race Detection Correction ⚡ **URGENT**
+- [x] Manual review of 3 problematic races ✅
+- [ ] Fix Race001 metadata (actual: 6.5s vs detected: 1.77s)
+- [ ] Fix Race010 metadata (actual: 7.5s vs detected: 12.00s)
+- [ ] Fix Race023 metadata (actual: 6.6-7s vs detected: 19.00s)
+- [ ] Add duration validation (4.5s - 15s range)
+- [ ] Flag other suspicious races for review
+- [ ] Test corrected metrics
+
 **Priority 1** (2-3 ساعت): Frame Selection
-- [ ] Modify `src/analysis/performance_metrics.py`
-- [ ] Add `start_frame`/`end_frame` parameters
-- [ ] Load race boundaries from metadata
-- [ ] Test with 5 sample races
-- [ ] Validate: velocity should be 2-3× higher
+- [x] ~~Modify `src/analysis/performance_metrics.py`~~ ✅ DONE by UI
+- [x] ~~Add `start_frame`/`end_frame` parameters~~ ✅ DONE
+- [x] ~~Load race boundaries from metadata~~ ✅ DONE
+- [x] ~~Test with 5 sample races~~ ✅ DONE
+- [x] ~~Validate: velocity should be 2-3× higher~~ ✅ CONFIRMED
 
 **Priority 2** (3-5 ساعت): Calibration
-- [ ] Create `scripts/batch_calibration.py`
-- [ ] Run calibration on 188 races (use `PeriodicCalibrator`)
-- [ ] Generate calibration JSON files
-- [ ] Test with 5 sample races
-- [ ] Validate: RMSE < 10cm for 90%+ races
+- [x] ~~Create `scripts/batch_calibration.py`~~ ✅ DONE by UI
+- [x] ~~Run calibration on 188 races (use `PeriodicCalibrator`)~~ ✅ DONE
+- [x] ~~Generate calibration JSON files~~ ✅ 188 files created
+- [x] ~~Test with 5 sample races~~ ✅ DONE
+- [x] ~~Validate: RMSE < 10cm for 90%+ races~~ ✅ RMSE < 1cm!
 
 **Priority 3** (1-2 ساعت): Re-process Everything
+- [ ] Fix 3 bad races first (Priority 0)
 - [ ] Re-run `batch_calculate_metrics.py` (auto-detects calibration files)
 - [ ] Validate new metrics (compare old vs new)
 - [ ] Update aggregations and leaderboards
 - [ ] Regenerate visualizations
 
-**جمع زمان**: 6-10 ساعت کار
+**Priority 4** (Optional - Long-term): Improve Detection System
+- [ ] Implement pose-based finish detection
+- [ ] Add multi-frame confirmation (5 frames)
+- [ ] Add duration validation layer
+- [ ] Consider YOLO/audio-based methods
+
+**Status Update**:
+- ✅ Calibration: COMPLETE (188 files, excellent quality)
+- ✅ Frame filtering: COMPLETE (code updated)
+- ❌ Race detection: 3 critical errors found, need immediate fix
+- ⏸️ Full pipeline: Blocked pending Priority 0
+
+**جمع زمان**: 8-13 ساعت کار (با race detection fix)
 
 ---
 
