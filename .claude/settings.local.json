@@ -28,7 +28,14 @@
       "Bash(requirements_core.txt)",
       "Bash(test_pose_extraction.py)",
       "Bash($null)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(Get-ChildItem -Path \"data\\processed\\poses\" -Directory)",
+      "Bash(Select-Object Name)",
+      "Bash(Get-ChildItem -Path \"data\\processed\\metrics\" -Directory -ErrorAction SilentlyContinue)",
+      "Bash(if [ -f test_pose_extraction.py ])",
+      "Bash(then rm test_pose_extraction.py)",
+      "Bash(fi)",
+      "Bash(git reset:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

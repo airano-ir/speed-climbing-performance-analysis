@@ -1,0 +1,55 @@
+{
+  "_comment": "Template for Manually Corrected Race Metadata",
+  "_instructions": [
+    "This template shows the format for corrected race metadata.",
+    "After manual review, update the race metadata JSON file with corrected values.",
+    "ALWAYS preserve original values for reference and auditability.",
+    "Set manual_correction: true to flag that this race was manually reviewed."
+  ],
+
+  "race_id": "Speed_finals_<Competition>_<Year>_race<NNN>",
+  "competition": "<competition_name>_<year>",
+  "video_path": "data/race_segments/<competition>/<race_id>.mp4",
+
+  "detected_start_frame": "<CORRECTED_START_FRAME>",
+  "detected_finish_frame": "<CORRECTED_FINISH_FRAME>",
+  "detected_start_time": "<CORRECTED_START_TIME>",
+  "detected_finish_time": "<CORRECTED_FINISH_TIME>",
+  "race_duration": "<CORRECTED_DURATION_IN_SECONDS>",
+
+  "confidence_start": 1.0,
+  "confidence_finish": 1.0,
+
+  "manual_correction": true,
+  "correction_metadata": {
+    "original_detected_start_frame": "<ORIGINAL_WRONG_VALUE>",
+    "original_detected_finish_frame": "<ORIGINAL_WRONG_VALUE>",
+    "original_detected_duration": "<ORIGINAL_WRONG_VALUE> (INVALID)",
+    "correction_date": "<YYYY-MM-DD>",
+    "correction_reason": "<Why was correction needed? e.g., 'Climber fall detected as finish'>",
+    "reviewer_notes": "<Any additional notes about the correction>"
+  },
+
+  "buffer_before": 150,
+  "buffer_after": 150,
+
+  "segment_start_frame": "<calculated automatically>",
+  "segment_end_frame": "<calculated automatically>",
+
+  "fps": 30.0,
+  "total_frames": "<from video file>",
+  "duration": "<from video file>",
+
+  "lanes": {
+    "left": {
+      "climber_name": "<if known>",
+      "final_time": "<if known>"
+    },
+    "right": {
+      "climber_name": "<if known>",
+      "final_time": "<if known>"
+    }
+  },
+
+  "_example_reference": "See data/race_segments/chamonix_2024/Speed_finals_Chamonix_2024_race001_metadata.json for a real example"
+}

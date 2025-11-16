@@ -144,14 +144,14 @@ def main():
         metadata_result = validate_metadata(race_id, expected_duration, tolerance, competition)
 
         if metadata_result['status'] == 'PASS':
-            print(f"   ✓ PASS")
+            print(f"   [PASS]")
             print(f"     Duration: {metadata_result['duration']:.2f}s")
-            print(f"     Frames: {metadata_result['start_frame']} → {metadata_result['finish_frame']}")
+            print(f"     Frames: {metadata_result['start_frame']} -> {metadata_result['finish_frame']}")
             print(f"     Manual correction: {metadata_result['manual_correction']}")
         elif metadata_result['status'] == 'WARNING':
-            print(f"   ⚠️  WARNING: {metadata_result['reason']}")
+            print(f"   [WARNING]: {metadata_result['reason']}")
         else:
-            print(f"   ❌ FAIL: {metadata_result['reason']}")
+            print(f"   [FAIL]: {metadata_result['reason']}")
             all_passed = False
 
         # Validate metrics
@@ -161,21 +161,21 @@ def main():
         for lane in ['left', 'right']:
             result = metrics_results[lane]
             if result['status'] == 'PASS':
-                print(f"   ✓ {lane.upper()} lane: PASS")
+                print(f"   [PASS] {lane.upper()} lane")
                 print(f"     Avg velocity: {result['avg_velocity']:.2f} pixels/frame")
                 print(f"     Max velocity: {result['max_velocity']:.2f} pixels/frame")
                 print(f"     Path length: {result['path_length']:.2f} pixels")
             else:
-                print(f"   ❌ {lane.upper()} lane: FAIL - {result['reason']}")
+                print(f"   [FAIL] {lane.upper()} lane - {result['reason']}")
                 all_passed = False
 
         print()
 
     print("=" * 80)
     if all_passed:
-        print("✓ ALL VALIDATIONS PASSED")
+        print("[SUCCESS] ALL VALIDATIONS PASSED")
     else:
-        print("❌ SOME VALIDATIONS FAILED")
+        print("[ERROR] SOME VALIDATIONS FAILED")
     print("=" * 80)
 
     print("\nSummary:")

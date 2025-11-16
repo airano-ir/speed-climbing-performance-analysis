@@ -1,0 +1,58 @@
+# Template for Adding New Competition to Manual Review Config
+# ===========================================================
+# Copy this template and modify values to add a new competition.
+# Then add the modified version to configs/manual_review_config.yaml
+# under the 'competitions' section.
+
+# INSTRUCTIONS:
+# 1. Replace all <PLACEHOLDER> values with actual data
+# 2. Update the competition_key (e.g., "paris_2026")
+# 3. Add to manual_review_config.yaml competitions section
+# 4. Run validation: python scripts/validate_race_durations.py
+# 5. Add suspicious races to progress_tracker.csv
+
+competition_key:  # e.g., "paris_2026"
+  name: "<Competition Full Name>"  # e.g., "Speed Finals Paris 2026"
+  date: "<YYYY-MM-DD>"  # or just "<YYYY>"
+
+  # Video specifications
+  video_format: "mp4"  # or "avi", "mov", etc.
+  fps: 30.0  # Frames per second (typically 30 or 60)
+
+  # Data paths
+  race_segments_path: "data/race_segments/<competition_key>"
+  original_video_path: "data/original_videos/<competition_key>"  # Optional
+
+  # Race information
+  total_races: 0  # Total number of races in this competition
+
+  # Optional: Competition-specific notes
+  notes: "Any special notes about this competition, video quality, known issues, etc."
+
+  # Optional: Override default settings (uncomment if needed)
+  # custom_settings:
+  #   buffer_before: 180  # Custom buffer (in frames) before race start
+  #   buffer_after: 180   # Custom buffer (in frames) after race finish
+  #
+  #   # Custom validation thresholds (if this competition has different standards)
+  #   validation:
+  #     duration_min: 4.5
+  #     duration_max: 15.0
+  #
+  #   # Video player settings (if different from defaults)
+  #   video_player:
+  #     default_playback_speed: 1.0
+
+# EXAMPLE (Paris 2026):
+#
+# paris_2026:
+#   name: "Speed Finals Paris 2026"
+#   date: "2026-07-15"
+#   video_format: "mp4"
+#   fps: 60.0  # Note: 60fps instead of 30fps
+#   race_segments_path: "data/race_segments/paris_2026"
+#   total_races: 32
+#   notes: "Olympics - higher quality 60fps videos"
+#   custom_settings:
+#     buffer_before: 300  # 5 seconds at 60fps
+#     buffer_after: 300

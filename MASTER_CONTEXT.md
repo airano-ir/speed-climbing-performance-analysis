@@ -1,7 +1,7 @@
 # MASTER CONTEXT - Speed Climbing Performance Analysis
 # سند راهنمای کامل پروژه تحلیل سنگنوردی سرعتی
 
-**Last Updated**: 2025-11-16 (Phase 3 Testing - 3 CRITICAL ISSUES FOUND ⚠️)
+**Last Updated**: 2025-11-16 (Phase 1.5: Manual Review Interface - Infrastructure Setup)
 **Purpose**: این سند برای ادامه کار در صورت قطع شدن session یا شروع مجدد در conversation جدید
 **Language**: Persian (Farsi) + English
 
@@ -30,7 +30,7 @@
 - Calibration validated: RMSE=0.1±0.2cm, 100% pass rate
 - **Assessment**: EXCELLENT - Production ready
 
-✅ **Phase 3: Advanced Analytics - 100% COMPLETE** ⭐ NEW
+✅ **Phase 3: Advanced Analytics - 100% COMPLETE** ⭐
 - Metrics aggregation pipeline (batch calculator + aggregator)
 - Comparative analysis tools (race comparator + winner predictor)
 - Advanced visualizations (3 plot types)
@@ -39,14 +39,34 @@
 - **Tests**: 6 climbers, 66.7% prediction accuracy
 - **Deliverables**: 7 scripts, 2 modules, 15+ outputs
 
-### مرحله فعلی: Phase 3 Testing - CRITICAL ISSUES DISCOVERED ⚠️
-**❌ مشکلات بحرانی در Metrics Pipeline کشف شد - نیاز به رفع فوری!**
+🏗️ **Phase 1.5: Manual Review Interface - IN PROGRESS** ⭐ NEW
+- **Purpose**: Permanent tool for correcting race detection errors
+- **Scope**: 74 suspicious races (39.4% of dataset) need manual review
+- **Infrastructure Created**:
+  - Config-driven architecture ([configs/manual_review_config.yaml](configs/manual_review_config.yaml))
+  - Progress tracking system ([data/manual_review/progress_tracker.csv](data/manual_review/progress_tracker.csv))
+  - Extensible templates for future competitions
+  - Validation scripts for data integrity
+- **Design**: Modular, plugin-based, supports future competitions in <5 min
+- **Next**: Build Streamlit interface (delegated to UI Claude)
+- **Timeline**: Infrastructure done, UI build 4-6 hours
 
+### مرحله فعلی: Phase 1.5 - Manual Review Interface
 **وضعیت**:
 - ✅ Phase 3 implementation: COMPLETE
-- 🧪 Testing with 5 sample races: COMPLETED
-- 🔴 **Two CRITICAL issues discovered**
-- ⏸️ Full 188-race processing: ON HOLD pending fixes
+- ✅ Critical issues fixed: Calibration (188 files) + Frame filtering
+- ✅ 3 races manually corrected (Race001, Race010, Race023)
+- 🔴 **74 suspicious races discovered** (39.4% of dataset!)
+- 🏗️ **Building Manual Review Interface** (Extensible, permanent tool)
+- ⏸️ Manual review of 71 remaining races: PENDING
+
+### Latest Discovery - Massive Data Quality Issue 🚨
+**Not 3, but 74 problematic races need manual review:**
+- 5 CRITICAL: Negative or near-zero duration
+- 58 Zilina 2025: Systematic failure (84% of that competition!)
+- 11 Others: Too short or too long
+
+**Solution**: Building extensible manual review tool (not one-time fix!)
 
 ### فایل‌های کلیدی برای ادامه:
 1. **این فایل**: [MASTER_CONTEXT.md](MASTER_CONTEXT.md) - سند کامل پروژه
@@ -283,14 +303,15 @@ Race023: Metrics شامل false start + actual race
 
 ### اقدامات فوری مورد نیاز
 
-**Priority 0** (2-3 ساعت): Race Detection Correction ⚡ **URGENT**
+**Priority 0** (2-3 ساعت): Race Detection Correction ⚡ **DONE + EXPANDED**
 - [x] Manual review of 3 problematic races ✅
-- [ ] Fix Race001 metadata (actual: 6.5s vs detected: 1.77s)
-- [ ] Fix Race010 metadata (actual: 7.5s vs detected: 12.00s)
-- [ ] Fix Race023 metadata (actual: 6.6-7s vs detected: 19.00s)
-- [ ] Add duration validation (4.5s - 15s range)
-- [ ] Flag other suspicious races for review
-- [ ] Test corrected metrics
+- [x] Fix Race001 metadata (actual: 6.5s vs detected: 1.77s) ✅ DONE
+- [x] Fix Race010 metadata (actual: 7.5s vs detected: 12.00s) ✅ DONE
+- [x] Fix Race023 metadata (actual: 6.6-7s vs detected: 19.00s) ✅ DONE
+- [x] Add duration validation (4.5s - 15s range) ✅ DONE
+- [x] Flag other suspicious races for review ✅ 74 races found!
+- [ ] Manual review of 71 remaining suspicious races ⏳ IN PROGRESS (Phase 1.5)
+- [ ] Test corrected metrics (partially done for 3 races)
 
 **Priority 1** (2-3 ساعت): Frame Selection
 - [x] ~~Modify `src/analysis/performance_metrics.py`~~ ✅ DONE by UI
@@ -319,13 +340,15 @@ Race023: Metrics شامل false start + actual race
 - [ ] Add duration validation layer
 - [ ] Consider YOLO/audio-based methods
 
-**Status Update**:
+**Status Update** (2025-11-16):
 - ✅ Calibration: COMPLETE (188 files, excellent quality)
 - ✅ Frame filtering: COMPLETE (code updated)
-- ❌ Race detection: 3 critical errors found, need immediate fix
-- ⏸️ Full pipeline: Blocked pending Priority 0
+- ✅ Race detection: 3 races manually corrected
+- 🔴 **74 suspicious races discovered** (39.4% of dataset!)
+- 🏗️ Phase 1.5: Manual Review Interface (infrastructure complete, UI build in progress)
+- ⏸️ Full clean pipeline: Blocked pending 71 race reviews
 
-**جمع زمان**: 8-13 ساعت کار (با race detection fix)
+**جمع زمان**: 15-20 ساعت برای review کامل 74 race (در چند session)
 
 ---
 
@@ -344,6 +367,177 @@ Race023: Metrics شامل false start + actual race
 - `src/calibration/camera_calibration.py` - آماده و tested
 - `src/phase1_pose_estimation/race_start_detector.py` - آماده
 - `src/phase1_pose_estimation/race_finish_detector.py` - آماده
+
+---
+
+## 🏗️ Phase 1.5: Manual Review Interface (Infrastructure Phase) ⭐ NEW
+
+**Purpose**: Build permanent, extensible tool for correcting race detection errors.
+
+**Background**:
+During Phase 3 testing, we discovered not just 3, but **74 suspicious races (39.4% of dataset)** with detection errors. Rather than fixing them one-by-one manually, we're building a **reusable interface** that can:
+- Handle current 74 problematic races
+- Support future competitions (add new competition in <5 minutes)
+- Be extended with ML suggestions, batch processing, etc.
+
+### Current Status (2025-11-16)
+
+**Infrastructure: ✅ COMPLETE**
+- [x] Config system created ([configs/manual_review_config.yaml](configs/manual_review_config.yaml))
+- [x] Progress tracker created ([data/manual_review/progress_tracker.csv](data/manual_review/progress_tracker.csv))
+- [x] Templates created for future competitions
+- [x] Validation scripts fixed (Unicode issues resolved)
+- [x] MASTER_CONTEXT.md updated with Phase 1.5
+
+**UI Build: ⏳ DELEGATED TO UI Claude**
+- [ ] Build Streamlit interface (modular architecture)
+- [ ] Implement video player with frame-by-frame navigation
+- [ ] Metadata editor with validation
+- [ ] Progress tracker integration
+- [ ] Export corrected data pipeline
+
+### Architecture Design
+
+**Config-Driven System**:
+```yaml
+# configs/manual_review_config.yaml
+competitions:
+  paris_2026:  # Add new competition in 2 minutes!
+    name: "Speed Finals Paris 2026"
+    fps: 60.0
+    race_segments_path: "data/race_segments/paris_2026"
+```
+
+**Modular Components**:
+```
+scripts/review_interface/
+├── app.py                # Streamlit entry point
+├── config.py             # Config manager
+├── video_player.py       # Reusable video player component
+├── metadata_manager.py   # CRUD for race metadata
+├── validators.py         # Validation engine (pluggable)
+├── progress.py           # Progress tracker
+└── export.py             # Export corrected data
+```
+
+**Plugin System** (Future):
+- Custom validators per competition
+- ML-based correction suggestions
+- Audio analysis integration
+- Collaborative review support
+
+### Deliverables Created
+
+**1. Configuration System**:
+- `configs/manual_review_config.yaml` (300+ lines)
+  - General settings (FPS, buffers, autosave)
+  - Validation rules (duration thresholds, world records)
+  - Competition definitions (current 4 + template)
+  - Feature flags (current + future)
+  - Custom validators (plugin system)
+
+**2. Progress Tracking**:
+- `data/manual_review/progress_tracker.csv` (74 suspicious races)
+  - Priority-sorted (critical → high → medium → low)
+  - Tracks: review status, corrected values, notes
+  - Auto-populated from validation report
+
+**3. Templates** ([data/manual_review/templates/](data/manual_review/templates/)):
+- `new_competition_template.yaml` - Add competitions easily
+- `corrected_metadata_template.json` - Metadata format reference
+- `review_history_template.json` - Audit trail format
+- `README.md` - Usage instructions
+
+**4. Validation Scripts**:
+- `scripts/validate_corrected_races.py` (fixed Unicode issues)
+- `scripts/validate_race_durations.py` (already existed)
+
+### 74 Suspicious Races Breakdown
+
+**By Severity**:
+- 🔴 **CRITICAL (5 races)**: Negative or near-zero duration
+  - Example: `Villars_2024_race015` (-2.57s - impossible!)
+  - Example: `Villars_2024_race023` (0.03s - near-zero)
+
+- 🟠 **HIGH (58 races)**: Zilina 2025 systematic failure
+  - 84% of Zilina competition affected
+  - Likely: different video format or timing system
+  - Requires systematic review
+
+- 🟡 **MEDIUM (11 races)**: Too short or too long
+  - Duration < 4.5s (below world record)
+  - Duration > 15s (includes non-race footage)
+
+**By Competition**:
+```
+Zilina 2025:    58 races (84% of that competition!)
+Villars 2024:    5 races (critical errors)
+Others:         11 races (scattered issues)
+```
+
+### Next Steps
+
+**Immediate** (Delegated to UI Claude - 4-6 hours):
+1. Build Streamlit interface following modular architecture
+2. Implement config-driven competition loading
+3. Create video player with frame navigation
+4. Add metadata editor with real-time validation
+5. Integrate progress tracker (CSV read/write)
+6. Test with sample race + hypothetical future competition
+
+**After UI Build** (User work - 15-20 hours across sessions):
+1. Manual review of 5 CRITICAL races (priority 1)
+2. Systematic review of 58 Zilina races (priority 2)
+3. Review remaining 11 races (priority 3)
+4. Batch re-process all corrected races
+5. Validate metrics quality
+
+**Long-Term Enhancements**:
+- ML-based correction suggestions (analyze similar races)
+- Audio-based start detection (starting beep)
+- Batch review mode (review multiple races sequentially)
+- Collaborative review (multi-user support)
+- Pose overlay visualization (show detected keypoints)
+
+### Integration with Project Pipeline
+
+**Position in Project**:
+```
+Phase 1: Manual Race Segmentation ✅
+  ↓
+Phase 1.5: Manual Review Interface 🏗️ (Current - Fix detection errors)
+  ↓
+Phase 2: Pose Estimation & Analysis ✅
+  ↓
+Phase 2.5: Calibration System ✅
+  ↓
+Phase 3: Advanced Analytics ✅
+  ↓
+Phase 4: ML Models & Predictions (Future)
+```
+
+**Why Phase 1.5?**
+Initially planned to fix 3 races quickly. Discovered 74 problematic races.
+Building infrastructure now saves 10-15 hours vs. manual fixes.
+Tool will be permanent asset for future competitions.
+
+### Related Files
+
+**Created in This Session**:
+- [configs/manual_review_config.yaml](configs/manual_review_config.yaml)
+- [data/manual_review/progress_tracker.csv](data/manual_review/progress_tracker.csv)
+- [data/manual_review/templates/*](data/manual_review/templates/)
+
+**To Be Created by UI**:
+- `docs/PROMPT_FOR_UI_BUILD_REVIEW_INTERFACE.md` (comprehensive instructions)
+- `scripts/review_interface/` (Streamlit app + modules)
+- `docs/manual_review_interface_user_guide.md` (usage documentation)
+- `docs/manual_review_interface_developer_guide.md` (extension guide)
+
+**Related Documentation**:
+- [docs/RACE_DETECTION_FIX_SUMMARY.md](docs/RACE_DETECTION_FIX_SUMMARY.md) - UI's work on 3 races
+- [docs/PROMPT_FOR_UI_FIX_RACE_DETECTION.md](docs/PROMPT_FOR_UI_FIX_RACE_DETECTION.md) - Original fix instructions
+- [docs/RACE_DETECTION_INVESTIGATION_REPORT.md](docs/RACE_DETECTION_INVESTIGATION_REPORT.md) - Root cause analysis
 
 ---
 

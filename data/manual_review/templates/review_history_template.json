@@ -1,0 +1,85 @@
+{
+  "_comment": "Review History Template",
+  "_description": "This file tracks all manual reviews and corrections made to race metadata.",
+  "_location": "data/manual_review/review_history.json",
+
+  "project_info": {
+    "name": "Speed Climbing Performance Analysis 2024-2025",
+    "total_races": 188,
+    "total_suspicious": 74,
+    "reviews_completed": 0,
+    "last_updated": "YYYY-MM-DD HH:MM:SS"
+  },
+
+  "reviews": [
+    {
+      "race_id": "Speed_finals_<Competition>_<Year>_race<NNN>",
+      "competition": "<competition_name>_<year>",
+      "review_date": "YYYY-MM-DD",
+
+      "original_detection": {
+        "start_frame": 0,
+        "finish_frame": 0,
+        "duration_seconds": 0.0,
+        "confidence_start": 0.0,
+        "confidence_finish": 0.0
+      },
+
+      "corrected_values": {
+        "start_frame": 0,
+        "finish_frame": 0,
+        "duration_seconds": 0.0,
+        "start_time_video": "MM:SS",
+        "finish_time_video": "MM:SS"
+      },
+
+      "issue_type": "One of: climber_fall | pre_race_warmup | false_start | camera_motion | other",
+      "priority": "One of: critical | high | medium | low",
+
+      "correction_method": "manual_video_review",
+
+      "notes": "Detailed explanation of what was wrong and how it was corrected",
+
+      "validation": {
+        "duration_valid": true,
+        "poses_reextracted": true,
+        "metrics_recalculated": true,
+        "validation_passed": true
+      }
+    }
+  ],
+
+  "_example_real_review": {
+    "race_id": "Speed_finals_Chamonix_2024_race001",
+    "competition": "chamonix_2024",
+    "review_date": "2025-11-16",
+
+    "original_detection": {
+      "start_frame": 11784,
+      "finish_frame": 11837,
+      "duration_seconds": 1.77,
+      "confidence_start": 1.0,
+      "confidence_finish": 0.40
+    },
+
+    "corrected_values": {
+      "start_frame": 14049,
+      "finish_frame": 14244,
+      "duration_seconds": 6.5,
+      "start_time_video": "07:47",
+      "finish_time_video": "14:17"
+    },
+
+    "issue_type": "climber_fall",
+    "priority": "critical",
+    "correction_method": "manual_video_review",
+    "notes": "Left climber fell during race. Original detection incorrectly identified the fall as finish. Corrected to use right lane finish time when hand hit button.",
+
+    "validation": {
+      "duration_valid": true,
+      "poses_reextracted": true,
+      "metrics_recalculated": true,
+      "validation_passed": true
+    }
+  }
+}

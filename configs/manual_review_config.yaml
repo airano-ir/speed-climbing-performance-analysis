@@ -1,0 +1,296 @@
+# Manual Review Interface Configuration
+# =====================================
+# This config file drives the manual race review interface.
+# Add new competitions, validators, and features by modifying this file.
+#
+# Version: 1.0
+# Last Updated: 2025-11-16
+
+# =============================================================================
+# GENERAL SETTINGS
+# =============================================================================
+general:
+  # Default FPS for all videos (can be overridden per competition)
+  default_fps: 30.0
+
+  # Buffer frames around race boundaries
+  buffer_before: 150  # 5 seconds at 30fps
+  buffer_after: 150   # 5 seconds at 30fps
+
+  # Auto-save interval (seconds)
+  autosave_interval: 60
+
+  # Interface language (for future i18n)
+  language: "en"
+
+  # Video player settings
+  video_player:
+    default_playback_speed: 1.0
+    available_speeds: [0.25, 0.5, 1.0, 1.5, 2.0]
+    frame_step_sizes: [1, 5, 10, 30]  # Frame skip options
+    seek_precision: "frame"  # "frame" or "second"
+
+# =============================================================================
+# VALIDATION RULES
+# =============================================================================
+validation:
+  # Duration validation (seconds)
+  duration:
+    min: 4.5   # Slightly below world record
+    max: 15.0  # Slower climbers + falls allowed
+
+    # World records for reference (informational only)
+    world_records:
+      men: 5.00     # Reza Alipour, 2023
+      women: 6.53   # Aleksandra Miroslaw, 2024
+
+  # Confidence thresholds
+  confidence:
+    start_min: 0.0   # Currently not strict
+    finish_min: 0.0  # Currently not strict
+
+  # Validation severity levels
+  severity_levels:
+    critical: "Negative duration or < 3s"
+    high: "Duration < 4.5s or > 20s"
+    medium: "Duration < 5s or > 15s"
+    low: "Finish confidence < 0.5"
+
+# =============================================================================
+# CURRENT PROJECT - SUSPICIOUS RACES (Priority Queue)
+# =============================================================================
+# This section lists races flagged by validation that need manual review.
+# After review, move races from 'pending' to 'completed' or 'skipped'.
+
+current_project:
+  name: "Speed Climbing Performance Analysis 2024-2025"
+  total_races: 188
+
+  # Review progress tracking
+  review_status:
+    total_suspicious: 74
+    completed: 3  # Race001, Race010, Race023
+    pending: 71
+    skipped: 0
+
+  # Priority categories (races sorted by severity)
+  priority_categories:
+
+    # CRITICAL: Must fix before any analysis (5 races)
+    critical:
+      - race_id: "Speed_finals_Villars_2024_race015"
+        competition: "villars_2024"
+        detected_duration: -2.57
+        issue: "Negative duration - critical error"
+        priority: 1
+
+      - race_id: "Speed_finals_Villars_2024_race023"
+        competition: "villars_2024"
+        detected_duration: 0.03
+        issue: "Near-zero duration"
+        priority: 1
+
+      # Add other critical races here...
+
+    # HIGH: Zilina 2025 systematic issue (58 races)
+    high_zilina_2025:
+      description: "Systematic detection failure - likely different video format"
+      count: 58
+      # Load from validation report dynamically
+      # Or list explicitly if needed for manual priority ordering
+
+    # MEDIUM: Other suspicious races (11 races)
+    medium:
+      # Load from validation report dynamically
+      count: 11
+
+# =============================================================================
+# COMPETITIONS CONFIGURATION
+# =============================================================================
+# Add new competitions here. Each competition can have custom settings.
+
+competitions:
+
+  # --- 2024 Season ---
+
+  chamonix_2024:
+    name: "Speed Finals Chamonix 2024"
+    date: "2024"
+    video_format: "mp4"
+    fps: 30.0
+    race_segments_path: "data/race_segments/chamonix_2024"
+    total_races: 26
+    notes: "Race001 manually corrected (climber fall detected as finish)"
+
+  innsbruck_2024:
+    name: "Speed Finals Innsbruck 2024"
+    date: "2024"
+    video_format: "mp4"
+    fps: 30.0
+    race_segments_path: "data/race_segments/innsbruck_2024"
+    total_races: 26
+    notes: "Race010 manually corrected (pre-race warmup included)"
+
+  villars_2024:
+    name: "Speed Finals Villars 2024"
+    date: "2024"
+    video_format: "mp4"
+    fps: 30.0
+    race_segments_path: "data/race_segments/villars_2024"
+    total_races: 26
+    notes: "Multiple critical errors - systematic issue suspected"
+
+  # --- 2025 Season ---
+
+  zilina_2025:
+    name: "Speed Finals Zilina 2025"
+    date: "2025"
+    video_format: "mp4"
+    fps: 30.0
+    race_segments_path: "data/race_segments/zilina_2025"
+    total_races: 69
+    notes: "Race023 manually corrected. 84% of races have detection issues - likely systematic video format difference"
+
+  # --- TEMPLATE FOR FUTURE COMPETITIONS ---
+  # Copy and modify this template when adding new competitions
+
+  # competition_name_YYYY:
+  #   name: "Competition Full Name Year"
+  #   date: "YYYY-MM-DD"  # or just "YYYY"
+  #   video_format: "mp4"
+  #   fps: 30.0
+  #   race_segments_path: "data/race_segments/competition_name_YYYY"
+  #   total_races: 0
+  #   notes: "Any special notes about this competition"
+  #
+  #   # Optional: Override default settings
+  #   custom_settings:
+  #     buffer_before: 180  # Custom buffer if needed
+  #     buffer_after: 180
+
+# =============================================================================
+# DATA PATHS
+# =============================================================================
+paths:
+  # Input data
+  race_segments: "data/race_segments"
+  original_videos: "data/original_videos"
+
+  # Processed data
+  poses: "data/processed/poses"
+  metrics: "data/processed/metrics"
+  calibration: "data/processed/calibration"
+
+  # Manual review data
+  review_progress: "data/manual_review/progress_tracker.csv"
+  review_history: "data/manual_review/review_history.json"
+  review_templates: "data/manual_review/templates"
+
+  # Reports
+  validation_report: "data/processed/race_duration_validation_report.json"
+
+# =============================================================================
+# INTERFACE FEATURES (Extensibility Flags)
+# =============================================================================
+# Enable/disable features for future development
+
+features:
+  # Current features
+  video_playback: true
+  frame_by_frame_navigation: true
+  metadata_editing: true
+  validation_feedback: true
+  progress_tracking: true
+  export_corrections: true
+
+  # Future features (disabled for now)
+  ml_suggestions: false          # AI-suggested corrections
+  batch_review_mode: false        # Review multiple races in sequence
+  collaborative_review: false     # Multi-user review support
+  pose_overlay: false             # Show detected poses on video
+  confidence_visualization: false # Show detection confidence over time
+  audio_analysis: false           # Audio-based start detection
+  comparison_view: false          # Compare with similar races
+
+# =============================================================================
+# EXPORT SETTINGS
+# =============================================================================
+export:
+  # Formats for exporting corrected data
+  formats:
+    - json      # Corrected metadata files
+    - csv       # Summary report
+    - yaml      # Batch correction scripts
+
+  # What to include in exports
+  include:
+    original_values: true      # Preserve original detection
+    correction_notes: true     # Include reviewer notes
+    timestamps: true           # Include review timestamps
+    reviewer_info: false       # Don't include reviewer identity (privacy)
+
+# =============================================================================
+# CUSTOM VALIDATORS (Plugin System)
+# =============================================================================
+# Define custom validation functions for specific use cases
+
+custom_validators:
+
+  # Example: Detect if finish frame is before start frame
+  - name: "negative_duration_check"
+    enabled: true
+    severity: "critical"
+    description: "Checks if finish_frame < start_frame"
+
+  # Example: Detect unrealistic velocities (requires calibration)
+  - name: "velocity_sanity_check"
+    enabled: false  # Disabled until calibration is validated
+    severity: "medium"
+    parameters:
+      max_velocity: 5.0  # m/s (theoretical max for speed climbing)
+
+  # Example: Detect if race includes multiple climbs (replay/false start)
+  - name: "multiple_climb_detection"
+    enabled: false  # Future feature
+    severity: "high"
+
+# =============================================================================
+# UI THEME & APPEARANCE
+# =============================================================================
+ui:
+  theme: "light"  # "light" or "dark"
+
+  # Color coding for validation results
+  colors:
+    critical: "#FF0000"   # Red
+    high: "#FF8C00"       # Dark orange
+    medium: "#FFD700"     # Gold
+    low: "#90EE90"        # Light green
+    pass: "#00FF00"       # Green
+
+  # Layout preferences
+  layout:
+    sidebar_width: 300
+    video_player_height: 600
+
+# =============================================================================
+# NOTES & DOCUMENTATION
+# =============================================================================
+documentation:
+  user_guide: "docs/manual_review_interface_user_guide.md"
+  developer_guide: "docs/manual_review_interface_developer_guide.md"
+  changelog: "docs/manual_review_interface_changelog.md"
+
+  # Quick reference for common issues
+  common_issues:
+    - issue: "Climber fall detected as finish"
+      solution: "Find actual finish time when hand hits button"
+      example: "Race001 (Chamonix 2024)"
+
+    - issue: "Pre-race warmup included in start"
+      solution: "Find frame where climber's feet leave ground"
+      example: "Race010 (Innsbruck 2024)"
+
+    - issue: "False start or replay included"
+      solution: "Find actual race start after false start reset"
+      example: "Race023 (Zilina 2025)"
