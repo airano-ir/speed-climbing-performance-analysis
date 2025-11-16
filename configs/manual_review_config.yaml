@@ -113,6 +113,15 @@ competitions:
 
   # --- 2024 Season ---
 
+  seoul_2024:
+    name: "Speed Finals Seoul 2024"
+    date: "2024"
+    video_format: "mp4"
+    fps: 30.0
+    race_segments_path: "data/race_segments/seoul_2024"
+    total_races: 31
+    notes: "First competition of 2024 season"
+
   chamonix_2024:
     name: "Speed Finals Chamonix 2024"
     date: "2024"

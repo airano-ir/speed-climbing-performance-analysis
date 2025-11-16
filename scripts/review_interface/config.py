@@ -88,17 +88,19 @@ class ConfigManager:
 
     def get_competition(self, key: str) -> Optional[CompetitionConfig]:
         """
-        Get specific competition by key.
+        Get specific competition by key (case-insensitive).
 
         Args:
-            key: Competition key (e.g., "chamonix_2024")
+            key: Competition key (e.g., "chamonix_2024" or "Chamonix_2024")
 
         Returns:
             CompetitionConfig or None if not found
         """
         comps = self.get_competitions()
+        # Case-insensitive matching
+        key_lower = key.lower()
         for comp in comps:
-            if comp.key == key:
+            if comp.key.lower() == key_lower:
                 return comp
         return None
 

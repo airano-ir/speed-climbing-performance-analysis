@@ -154,26 +154,30 @@ class MetadataManager:
         Get path to metadata JSON file.
 
         Args:
-            competition: Competition key
+            competition: Competition key (case-insensitive)
             race_id: Race ID
 
         Returns:
             Path to metadata file
         """
-        return self.race_segments_dir / competition / f"{race_id}_metadata.json"
+        # Normalize to lowercase for filesystem path
+        competition_lower = competition.lower()
+        return self.race_segments_dir / competition_lower / f"{race_id}_metadata.json"
 
     def get_video_path(self, competition: str, race_id: str) -> Path:
         """
         Get path to race video file.
 
         Args:
-            competition: Competition key
+            competition: Competition key (case-insensitive)
             race_id: Race ID
 
         Returns:
             Path to video file
         """
-        return self.race_segments_dir / competition / f"{race_id}.mp4"
+        # Normalize to lowercase for filesystem path
+        competition_lower = competition.lower()
+        return self.race_segments_dir / competition_lower / f"{race_id}.mp4"
 
     def metadata_exists(self, competition: str, race_id: str) -> bool:
         """
