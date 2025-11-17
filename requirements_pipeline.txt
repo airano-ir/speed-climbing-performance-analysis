@@ -1,0 +1,23 @@
+# Requirements for Reliable Data Pipeline
+# Install: pip install -r requirements_pipeline.txt
+
+# Core Dependencies (REQUIRED)
+opencv-python>=4.8.0        # Video processing and frame extraction
+mediapipe>=0.10.0           # BlazePose keypoint extraction
+numpy>=1.24.0               # Numerical computations
+pandas>=2.0.0               # Data aggregation and CSV handling
+
+# Optional Dependencies (RECOMMENDED)
+scikit-learn>=1.3.0         # ML train/test splits and preprocessing
+plotly>=5.17.0              # Interactive dashboard visualizations
+tqdm>=4.66.0                # Progress bars for batch processing
+
+# Already Installed (from project requirements)
+# streamlit                 # Manual review interface (Phase 1.5)
+# pyyaml                    # Configuration files
+# Pillow                    # Image processing
+
+# Development Dependencies (OPTIONAL)
+# jupyter                   # Notebook analysis
+# matplotlib                # Static plots
+# seaborn                   # Statistical visualizations
