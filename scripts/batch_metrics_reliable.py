@@ -157,6 +157,10 @@ def calculate_simple_metrics(pose_data, calibration, metadata):
     fps = pose_data.get('fps', 30.0)
     pixel_to_meter = calibration.get('pixel_to_meter_scale', 0.025)
 
+    # Get frame dimensions (needed to convert normalized coords to pixels)
+    frame_width = pose_data.get('frame_width', 1920)
+    frame_height = pose_data.get('frame_height', 1080)
+
     # Extract COM positions (simple average of visible landmarks)
     com_positions = []
     timestamps = []
@@ -186,8 +190,10 @@ def calculate_simple_metrics(pose_data, calibration, metadata):
     # Calculate metrics
     com_array = np.array(com_positions)
 
+    # FIXED: Convert normalized coords to pixels BEFORE applying calibration
     # Vertical movement (upward is negative y in image coords)
-    vertical_displacement_px = com_array[0, 1] - com_array[-1, 1]  # Start y - End y
+    vertical_displacement_normalized = com_array[0, 1] - com_array[-1, 1]  # Start y - End y
+    vertical_displacement_px = vertical_displacement_normalized * frame_height
     vertical_displacement_m = abs(vertical_displacement_px * pixel_to_meter)
 
     # Total time
@@ -199,30 +205,30 @@ def calculate_simple_metrics(pose_data, calibration, metadata):
     else:
         avg_velocity_ms = 0
 
-    # Path length (total distance traveled)
+    # FIXED: Path length calculation
     path_length_px = 0
     for i in range(1, len(com_array)):
-        dx = com_array[i, 0] - com_array[i-1, 0]
-        dy = com_array[i, 1] - com_array[i-1, 1]
+        dx = (com_array[i, 0] - com_array[i-1, 0]) * frame_width
+        dy = (com_array[i, 1] - com_array[i-1, 1]) * frame_height
         path_length_px += np.sqrt(dx**2 + dy**2)
 
     path_length_m = path_length_px * pixel_to_meter
 
-    # Efficiency (straight line / actual path)
+    # FIXED: Efficiency calculation
     straight_distance_px = np.sqrt(
-        (com_array[-1, 0] - com_array[0, 0])**2 +
-        (com_array[-1, 1] - com_array[0, 1])**2
+        ((com_array[-1, 0] - com_array[0, 0]) * frame_width)**2 +
+        ((com_array[-1, 1] - com_array[0, 1]) * frame_height)**2
     )
     straight_distance_m = straight_distance_px * pixel_to_meter
 
     efficiency = straight_distance_m / path_length_m if path_length_m > 0 else 0
 
-    # Smoothness (standard deviation of velocity changes)
+    # FIXED: Smoothness calculation
     velocities = []
     for i in range(1, len(com_array)):
         dt = timestamps[i] - timestamps[i-1]
         if dt > 0:
-            dy = abs(com_array[i-1, 1] - com_array[i, 1]) * pixel_to_meter
+            dy = abs((com_array[i-1, 1] - com_array[i, 1]) * frame_height) * pixel_to_meter
             v = dy / dt
             velocities.append(v)
 

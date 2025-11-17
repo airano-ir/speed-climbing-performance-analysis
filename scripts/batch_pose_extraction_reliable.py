@@ -113,6 +113,10 @@ class BatchPoseExtractor:
             else:
                 missing_frames += 1
 
+        # Get frame dimensions from video before releasing
+        frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
         cap.release()
 
         # Quality metrics
@@ -130,7 +134,9 @@ class BatchPoseExtractor:
             'extraction_date': datetime.now().isoformat(),
             'start_frame': start_frame,
             'finish_frame': finish_frame,
-            'fps': fps
+            'fps': fps,
+            'frame_width': frame_width,
+            'frame_height': frame_height
         }
 
     def process_all_reliable_races(self, reliable_races_file: Path):
