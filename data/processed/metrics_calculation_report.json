@@ -4,27 +4,27 @@
   "failed": 0,
   "failed_races": [],
   "quality_metrics": {
-    "valid_velocity_count": 0,
+    "valid_velocity_count": 30,
     "valid_duration_count": 113,
-    "avg_velocity_ms": 0,
-    "avg_duration_s": 7.824778761061947,
-    "min_velocity_ms": 0,
-    "max_velocity_ms": 0,
+    "avg_velocity_ms": 0.7601817113700949,
+    "avg_duration_s": 7.808554572271387,
+    "min_velocity_ms": 0.5041267349106537,
+    "max_velocity_ms": 1.8829007644706701,
     "min_duration_s": 4.7,
     "max_duration_s": 13.933333333333334
   },
   "metrics_quality": [
     {
       "race_id": "Speed_finals_Chamonix_2024_race001",
-      "avg_velocity_ms": 0.0007670539599808375,
+      "avg_velocity_ms": 0.5520356562205514,
       "total_time_s": 3.2333333333333334,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": false
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race002",
-      "avg_velocity_ms": 0.00036779470486911794,
+      "avg_velocity_ms": 0.2782826549191523,
       "total_time_s": 7.366666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -32,15 +32,15 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race003",
-      "avg_velocity_ms": 0.0006987018620563084,
+      "avg_velocity_ms": 0.5041267349106537,
       "total_time_s": 6.6,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race004",
-      "avg_velocity_ms": 0.00045054852128473684,
+      "avg_velocity_ms": 0.32343606561867155,
       "total_time_s": 6.7,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -48,7 +48,7 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race005",
-      "avg_velocity_ms": 0.0003435156488157658,
+      "avg_velocity_ms": 0.24704176286303323,
       "total_time_s": 6.333333333333333,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -56,23 +56,23 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race006",
-      "avg_velocity_ms": 0.00032360637812195615,
-      "total_time_s": 7.4,
+      "avg_velocity_ms": 0.2325533057575103,
+      "total_time_s": 7.333333333333333,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race007",
-      "avg_velocity_ms": 0.0007559965091151377,
+      "avg_velocity_ms": 0.5394293958587306,
       "total_time_s": 6.0,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race008",
-      "avg_velocity_ms": 0.0005673671042902419,
+      "avg_velocity_ms": 0.4082661349284515,
       "total_time_s": 5.933333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -80,7 +80,7 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race009",
-      "avg_velocity_ms": 3.8768665579857544e-05,
+      "avg_velocity_ms": 0.022924810636697115,
       "total_time_s": 6.133333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -88,15 +88,15 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race011",
-      "avg_velocity_ms": 0.0009319888139256899,
+      "avg_velocity_ms": 0.7492482239661151,
       "total_time_s": 4.866666666666666,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race012",
-      "avg_velocity_ms": 0.00048510605420075723,
+      "avg_velocity_ms": 0.3416886180639267,
       "total_time_s": 5.2,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -104,31 +104,31 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race014",
-      "avg_velocity_ms": 0.0001699656088780884,
-      "total_time_s": 5.633333333333334,
+      "avg_velocity_ms": 0.4538698764327836,
+      "total_time_s": 5.6,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race015",
-      "avg_velocity_ms": 0.0004983469125633037,
-      "total_time_s": 5.933333333333334,
+      "avg_velocity_ms": 0.05778539652204799,
+      "total_time_s": 5.9,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race016",
-      "avg_velocity_ms": 0.00014303117280914683,
-      "total_time_s": 5.833333333333333,
+      "avg_velocity_ms": 0.22568426937925007,
+      "total_time_s": 5.866666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race017",
-      "avg_velocity_ms": 0.00024788564362153345,
+      "avg_velocity_ms": 0.17827790634115517,
       "total_time_s": 4.966666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -136,15 +136,15 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race018",
-      "avg_velocity_ms": 0.0008302346511802576,
+      "avg_velocity_ms": 0.5861157191415819,
       "total_time_s": 6.933333333333334,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race019",
-      "avg_velocity_ms": 0.0006396519395733073,
+      "avg_velocity_ms": 0.44009094703701657,
       "total_time_s": 7.233333333333333,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -152,7 +152,7 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race020",
-      "avg_velocity_ms": 0.00027711927352545726,
+      "avg_velocity_ms": 0.2069168689043878,
       "total_time_s": 5.133333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -160,23 +160,23 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race021",
-      "avg_velocity_ms": 0.00018420430218301148,
-      "total_time_s": 5.466666666666667,
+      "avg_velocity_ms": 0.1324448407053235,
+      "total_time_s": 5.566666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race022",
-      "avg_velocity_ms": 0.0009231817494349399,
+      "avg_velocity_ms": 0.6383805500930697,
       "total_time_s": 4.7,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race023",
-      "avg_velocity_ms": 2.0023346431609956e-05,
+      "avg_velocity_ms": 0.008771329598016695,
       "total_time_s": 5.966666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -184,7 +184,7 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race025",
-      "avg_velocity_ms": 0.0006289875759563829,
+      "avg_velocity_ms": 0.4638052395798944,
       "total_time_s": 7.5,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -192,23 +192,23 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race026",
-      "avg_velocity_ms": 0.0010798681425486453,
+      "avg_velocity_ms": 1.1741013442305932,
       "total_time_s": 5.266666666666667,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race027",
-      "avg_velocity_ms": 0.00032064504482133213,
-      "total_time_s": 5.3,
+      "avg_velocity_ms": 0.24778271246967576,
+      "total_time_s": 5.333333333333333,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race028",
-      "avg_velocity_ms": 0.0003481691939726708,
+      "avg_velocity_ms": 0.3382321026224592,
       "total_time_s": 5.133333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -216,15 +216,15 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race029",
-      "avg_velocity_ms": 0.0007184096924259725,
-      "total_time_s": 6.366666666666666,
+      "avg_velocity_ms": 0.00907868364353507,
+      "total_time_s": 6.333333333333333,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race030",
-      "avg_velocity_ms": 4.012174482678693e-05,
+      "avg_velocity_ms": 0.04767084251279413,
       "total_time_s": 5.066666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -232,23 +232,23 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race031",
-      "avg_velocity_ms": 0.0007006839544482404,
+      "avg_velocity_ms": 0.5066547310419929,
       "total_time_s": 6.133333333333334,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race032",
-      "avg_velocity_ms": 9.589779027385087e-05,
-      "total_time_s": 5.933333333333334,
+      "avg_velocity_ms": 0.04912237363704805,
+      "total_time_s": 5.966666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race002",
-      "avg_velocity_ms": 0.00018110233485160577,
+      "avg_velocity_ms": 0.13038842706875287,
       "total_time_s": 8.966666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -256,7 +256,7 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race003",
-      "avg_velocity_ms": 1.7075571465678966e-06,
+      "avg_velocity_ms": 0.0031243408715449007,
       "total_time_s": 5.566666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -264,31 +264,31 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race005",
-      "avg_velocity_ms": 0.0010325197924933916,
+      "avg_velocity_ms": 0.7432312143678157,
       "total_time_s": 11.133333333333333,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race006",
-      "avg_velocity_ms": 0.00450820326596415,
-      "total_time_s": 7.933333333333334,
+      "avg_velocity_ms": 4.0466065595143945,
+      "total_time_s": 6.566666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race007",
-      "avg_velocity_ms": 0.001236287408623548,
-      "total_time_s": 9.933333333333334,
+      "avg_velocity_ms": 0.49612082092458987,
+      "total_time_s": 9.966666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race008",
-      "avg_velocity_ms": 8.778116799868298e-05,
+      "avg_velocity_ms": 0.05688103774375895,
       "total_time_s": 6.966666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -296,7 +296,7 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race009",
-      "avg_velocity_ms": 0.0004902803745838428,
+      "avg_velocity_ms": 0.32042743074053925,
       "total_time_s": 5.633333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -304,7 +304,7 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race010",
-      "avg_velocity_ms": 8.115667129634205e-05,
+      "avg_velocity_ms": 0.058516949471261535,
       "total_time_s": 7.5,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -312,7 +312,7 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race012",
-      "avg_velocity_ms": 0.00048093875259547296,
+      "avg_velocity_ms": 0.4256957324618638,
       "total_time_s": 11.933333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -320,7 +320,7 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race013",
-      "avg_velocity_ms": 0.0003099525960842295,
+      "avg_velocity_ms": 0.22183857565479623,
       "total_time_s": 12.0,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -328,7 +328,7 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race014",
-      "avg_velocity_ms": 0.00011255502258603526,
+      "avg_velocity_ms": 0.27381245699651335,
       "total_time_s": 8.966666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -336,7 +336,7 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race015",
-      "avg_velocity_ms": 9.654609252582465e-07,
+      "avg_velocity_ms": 0.0013311894024804491,
       "total_time_s": 13.9,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -344,47 +344,47 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race016",
-      "avg_velocity_ms": 0.00028207309672686283,
-      "total_time_s": 12.966666666666667,
+      "avg_velocity_ms": 0.2037805721536828,
+      "total_time_s": 12.933333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race017",
-      "avg_velocity_ms": 0.00012631179789780262,
-      "total_time_s": 8.2,
+      "avg_velocity_ms": 0.08508094138321953,
+      "total_time_s": 8.233333333333333,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race018",
-      "avg_velocity_ms": 0.0009303418447098663,
+      "avg_velocity_ms": 0.6698360862700564,
       "total_time_s": 13.933333333333334,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race019",
-      "avg_velocity_ms": 0.0026148427243824824,
+      "avg_velocity_ms": 1.8829007644706701,
       "total_time_s": 8.933333333333334,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race020",
-      "avg_velocity_ms": 0.0007153440123738329,
-      "total_time_s": 10.466666666666667,
+      "avg_velocity_ms": 0.5133524499833584,
+      "total_time_s": 10.5,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race021",
-      "avg_velocity_ms": 0.0006088047449790158,
+      "avg_velocity_ms": 0.4383546649589778,
       "total_time_s": 6.966666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -392,7 +392,7 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race022",
-      "avg_velocity_ms": 4.8858229762678656e-05,
+      "avg_velocity_ms": 0.09083927370611625,
       "total_time_s": 12.833333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -400,23 +400,23 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race023",
-      "avg_velocity_ms": 0.000729446395003585,
-      "total_time_s": 5.9,
+      "avg_velocity_ms": 0.49083070788490646,
+      "total_time_s": 5.933333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race024",
-      "avg_velocity_ms": 0.0012066621169459014,
+      "avg_velocity_ms": 1.0790147220789927,
       "total_time_s": 9.933333333333334,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race025",
-      "avg_velocity_ms": 8.594792778820809e-06,
+      "avg_velocity_ms": 0.006320581124887653,
       "total_time_s": 11.966666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -424,31 +424,31 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race026",
-      "avg_velocity_ms": 0.002291433159280968,
-      "total_time_s": 8.9,
+      "avg_velocity_ms": 3.352809041056592,
+      "total_time_s": 7.266666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race027",
-      "avg_velocity_ms": 0.0006931953476779164,
-      "total_time_s": 7.966666666666667,
+      "avg_velocity_ms": 0.3966915098637899,
+      "total_time_s": 8.0,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race028",
-      "avg_velocity_ms": 0.0013103524972036622,
+      "avg_velocity_ms": 0.943409229190492,
       "total_time_s": 11.933333333333334,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race029",
-      "avg_velocity_ms": 1.6015895498899638e-05,
+      "avg_velocity_ms": 0.01157608443057524,
       "total_time_s": 11.633333333333333,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -456,15 +456,15 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race030",
-      "avg_velocity_ms": 0.00023951629055207456,
-      "total_time_s": 11.9,
+      "avg_velocity_ms": 0.12957143549018602,
+      "total_time_s": 13.533333333333333,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race031",
-      "avg_velocity_ms": 0.00021634775302722476,
+      "avg_velocity_ms": 0.0865320270467485,
       "total_time_s": 5.8,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -472,15 +472,15 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race032",
-      "avg_velocity_ms": 0.0009571735094845734,
+      "avg_velocity_ms": 0.6786324781065256,
       "total_time_s": 7.8,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race001",
-      "avg_velocity_ms": 0.0006618039947547933,
+      "avg_velocity_ms": 0.4762109787214415,
       "total_time_s": 6.6,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -488,7 +488,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race002",
-      "avg_velocity_ms": 5.47755485900711e-05,
+      "avg_velocity_ms": 0.03930125075081975,
       "total_time_s": 7.2,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -496,7 +496,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race003",
-      "avg_velocity_ms": 0.0003736873547877034,
+      "avg_velocity_ms": 0.27751562785648176,
       "total_time_s": 7.6,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -504,7 +504,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race004",
-      "avg_velocity_ms": 0.0002573455256450311,
+      "avg_velocity_ms": 0.18452104847659592,
       "total_time_s": 7.9,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -512,7 +512,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race005",
-      "avg_velocity_ms": 0.00012085060186033945,
+      "avg_velocity_ms": 0.07609205172210201,
       "total_time_s": 7.133333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -520,7 +520,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race006",
-      "avg_velocity_ms": 0.00016283436731823038,
+      "avg_velocity_ms": 0.11506463059683161,
       "total_time_s": 6.966666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -528,7 +528,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race007",
-      "avg_velocity_ms": 0.00030965905352925075,
+      "avg_velocity_ms": 0.22291143107645767,
       "total_time_s": 9.633333333333333,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -536,7 +536,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race008",
-      "avg_velocity_ms": 0.0001723160331072398,
+      "avg_velocity_ms": 0.12440193152190647,
       "total_time_s": 10.933333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -544,7 +544,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race009",
-      "avg_velocity_ms": 0.00035080639138200976,
+      "avg_velocity_ms": 0.25347928688222277,
       "total_time_s": 7.2,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -552,7 +552,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race010",
-      "avg_velocity_ms": 0.0004049792540088375,
+      "avg_velocity_ms": 0.29149553142848617,
       "total_time_s": 10.533333333333333,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -560,23 +560,23 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race011",
-      "avg_velocity_ms": 0.0010107159028755117,
+      "avg_velocity_ms": 0.7276959352804204,
       "total_time_s": 6.933333333333334,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race012",
-      "avg_velocity_ms": 0.0007200862127475832,
+      "avg_velocity_ms": 0.5455025226142926,
       "total_time_s": 4.733333333333333,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race013",
-      "avg_velocity_ms": 8.57388272155956e-05,
+      "avg_velocity_ms": 0.062192827360477765,
       "total_time_s": 10.366666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -584,7 +584,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race014",
-      "avg_velocity_ms": 0.0005318103676303204,
+      "avg_velocity_ms": 0.3871187785377571,
       "total_time_s": 5.366666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -592,7 +592,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race015",
-      "avg_velocity_ms": 0.0003643929137541808,
+      "avg_velocity_ms": 0.2626340813298203,
       "total_time_s": 10.533333333333333,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -600,15 +600,15 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race016",
-      "avg_velocity_ms": 0.0006503455114814133,
-      "total_time_s": 6.633333333333334,
+      "avg_velocity_ms": 0.4792199194235665,
+      "total_time_s": 6.566666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race017",
-      "avg_velocity_ms": 0.000144676017739317,
+      "avg_velocity_ms": 0.1026732844746664,
       "total_time_s": 10.2,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -616,7 +616,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race018",
-      "avg_velocity_ms": 0.00012200749761453181,
+      "avg_velocity_ms": 0.08795594034547156,
       "total_time_s": 6.6,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -624,7 +624,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race019",
-      "avg_velocity_ms": 0.0005384694856211869,
+      "avg_velocity_ms": 0.3873151954020555,
       "total_time_s": 9.766666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -632,7 +632,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race020",
-      "avg_velocity_ms": 7.180830027759221e-05,
+      "avg_velocity_ms": 0.051844556988934754,
       "total_time_s": 6.0,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -640,15 +640,15 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race021",
-      "avg_velocity_ms": 0.0007087615718381403,
+      "avg_velocity_ms": 0.5098076539243607,
       "total_time_s": 6.233333333333333,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race024",
-      "avg_velocity_ms": 0.0004771939753266424,
+      "avg_velocity_ms": 0.34397412589672544,
       "total_time_s": 10.433333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -656,7 +656,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race025",
-      "avg_velocity_ms": 7.526730752593891e-06,
+      "avg_velocity_ms": 0.002716366859379021,
       "total_time_s": 12.433333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -664,15 +664,15 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race026",
-      "avg_velocity_ms": 0.0007769616465870438,
+      "avg_velocity_ms": 0.5535321326224835,
       "total_time_s": 6.6,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race027",
-      "avg_velocity_ms": 9.979485856512431e-05,
+      "avg_velocity_ms": 0.07238337555183823,
       "total_time_s": 5.333333333333333,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -680,7 +680,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race028",
-      "avg_velocity_ms": 0.0001771283882439461,
+      "avg_velocity_ms": 0.12773301421093342,
       "total_time_s": 9.633333333333333,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -688,7 +688,7 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race029",
-      "avg_velocity_ms": 8.952625580539496e-05,
+      "avg_velocity_ms": 0.061388001136924206,
       "total_time_s": 6.433333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -696,15 +696,15 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race030",
-      "avg_velocity_ms": 0.00027932831130567066,
-      "total_time_s": 7.0,
+      "avg_velocity_ms": 0.22290039430614075,
+      "total_time_s": 6.966666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race031",
-      "avg_velocity_ms": 0.000430749434950949,
+      "avg_velocity_ms": 0.3081752851678821,
       "total_time_s": 5.8,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -712,15 +712,15 @@
     },
     {
       "race_id": "Speed_finals_Villars_2024_race001",
-      "avg_velocity_ms": 0.0007637204675989143,
+      "avg_velocity_ms": 0.533940574964839,
       "total_time_s": 5.766666666666667,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Villars_2024_race003",
-      "avg_velocity_ms": 5.479547658364698e-07,
+      "avg_velocity_ms": 0.010619588563487522,
       "total_time_s": 5.133333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -728,7 +728,7 @@
     },
     {
       "race_id": "Speed_finals_Villars_2024_race004",
-      "avg_velocity_ms": 0.00038585850076924686,
+      "avg_velocity_ms": 0.22365719712221913,
       "total_time_s": 5.366666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -736,63 +736,63 @@
     },
     {
       "race_id": "Speed_finals_Villars_2024_race005",
-      "avg_velocity_ms": 0.0015988141801073284,
+      "avg_velocity_ms": 1.1544688257348277,
       "total_time_s": 4.8,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Villars_2024_race006",
-      "avg_velocity_ms": 0.001008109315424352,
-      "total_time_s": 4.933333333333334,
+      "avg_velocity_ms": 1.6529849283954934,
+      "total_time_s": 4.966666666666667,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Villars_2024_race007",
-      "avg_velocity_ms": 0.0006376135748319535,
-      "total_time_s": 6.4,
+      "avg_velocity_ms": 0.27603239002015434,
+      "total_time_s": 6.333333333333333,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Villars_2024_race008",
-      "avg_velocity_ms": 4.029752156449508e-05,
-      "total_time_s": 8.233333333333333,
+      "avg_velocity_ms": 0.25390701499124074,
+      "total_time_s": 8.066666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Villars_2024_race009",
-      "avg_velocity_ms": 0.00020494607061420273,
-      "total_time_s": 8.2,
+      "avg_velocity_ms": 0.25833317224540286,
+      "total_time_s": 8.166666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Villars_2024_race010",
-      "avg_velocity_ms": 0.0007542780949544216,
+      "avg_velocity_ms": 0.5486911188771921,
       "total_time_s": 6.633333333333334,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Villars_2024_race011",
-      "avg_velocity_ms": 0.0009499372508408788,
+      "avg_velocity_ms": 0.6848024541864167,
       "total_time_s": 8.4,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Villars_2024_race012",
-      "avg_velocity_ms": 8.79272302338589e-05,
+      "avg_velocity_ms": 0.0998791916310647,
       "total_time_s": 6.766666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -800,7 +800,7 @@
     },
     {
       "race_id": "Speed_finals_Villars_2024_race014",
-      "avg_velocity_ms": 0.0006730454838516548,
+      "avg_velocity_ms": 0.4959662770262418,
       "total_time_s": 5.366666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -808,31 +808,31 @@
     },
     {
       "race_id": "Speed_finals_Villars_2024_race016",
-      "avg_velocity_ms": 0.0007459554188100717,
+      "avg_velocity_ms": 0.5372408179367484,
       "total_time_s": 5.5,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Villars_2024_race017",
-      "avg_velocity_ms": 0.00040385470935615063,
-      "total_time_s": 6.766666666666667,
+      "avg_velocity_ms": 0.5322537183422935,
+      "total_time_s": 6.6,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Villars_2024_race018",
-      "avg_velocity_ms": 0.0007091930909387367,
-      "total_time_s": 6.966666666666667,
+      "avg_velocity_ms": 0.5852971468681477,
+      "total_time_s": 6.9,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Villars_2024_race020",
-      "avg_velocity_ms": 0.00020245655773103245,
+      "avg_velocity_ms": 0.14567003066498643,
       "total_time_s": 10.166666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -840,7 +840,7 @@
     },
     {
       "race_id": "Speed_finals_Villars_2024_race021",
-      "avg_velocity_ms": 0.00025215869176459525,
+      "avg_velocity_ms": 0.1814057775500371,
       "total_time_s": 8.433333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -848,15 +848,15 @@
     },
     {
       "race_id": "Speed_finals_Villars_2024_race022",
-      "avg_velocity_ms": 0.0006221543826574321,
-      "total_time_s": 7.033333333333333,
+      "avg_velocity_ms": 0.44537907099305346,
+      "total_time_s": 7.066666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Villars_2024_race024",
-      "avg_velocity_ms": 0.00021149046731248412,
+      "avg_velocity_ms": 0.1330200389055871,
       "total_time_s": 5.1,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -864,31 +864,31 @@
     },
     {
       "race_id": "Speed_finals_Zilina_2025_race012",
-      "avg_velocity_ms": 0.00020255382242035267,
-      "total_time_s": 8.8,
+      "avg_velocity_ms": 0.13503176392108768,
+      "total_time_s": 8.833333333333334,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Zilina_2025_race020",
-      "avg_velocity_ms": 0.0006816906096564918,
-      "total_time_s": 10.766666666666667,
+      "avg_velocity_ms": 0.49535845611244433,
+      "total_time_s": 10.666666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Zilina_2025_race023",
-      "avg_velocity_ms": 0.0013032172723756088,
+      "avg_velocity_ms": 0.9382781081206792,
       "total_time_s": 6.066666666666666,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Zilina_2025_race037",
-      "avg_velocity_ms": 0.00019906813719851167,
+      "avg_velocity_ms": 0.14346355503086014,
       "total_time_s": 12.166666666666666,
       "is_calibrated": true,
       "valid_velocity": false,
@@ -896,36 +896,36 @@
     },
     {
       "race_id": "Speed_finals_Zilina_2025_race039",
-      "avg_velocity_ms": 0.0009015294634814067,
+      "avg_velocity_ms": 0.6513194406390262,
       "total_time_s": 11.833333333333334,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Zilina_2025_race040",
-      "avg_velocity_ms": 0.001233560963407611,
-      "total_time_s": 9.7,
+      "avg_velocity_ms": 0.8891666626644278,
+      "total_time_s": 9.666666666666666,
       "is_calibrated": true,
-      "valid_velocity": false,
+      "valid_velocity": true,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Zilina_2025_race046",
-      "avg_velocity_ms": 0.00015732083215751802,
-      "total_time_s": 11.8,
+      "avg_velocity_ms": 0.11295866561531173,
+      "total_time_s": 11.766666666666667,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     },
     {
       "race_id": "Speed_finals_Zilina_2025_race060",
-      "avg_velocity_ms": 0.00018547296316112432,
-      "total_time_s": 12.866666666666667,
+      "avg_velocity_ms": 0.340756960117751,
+      "total_time_s": 12.9,
       "is_calibrated": true,
       "valid_velocity": false,
       "valid_duration": true
     }
   ],
-  "completion_date": "2025-11-17T06:25:25.165313"
+  "completion_date": "2025-11-17T04:48:54.996922"
 }
