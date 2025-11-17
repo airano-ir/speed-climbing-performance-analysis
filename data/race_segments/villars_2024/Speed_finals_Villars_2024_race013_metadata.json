@@ -4,11 +4,11 @@
   "round": "Quarter final - Men",
   "manual_start_time": "01:12:29",
   "manual_end_time": "01:12:33",
-  "detected_start_frame": 130470,
-  "detected_finish_frame": 130546,
-  "detected_start_time": 4349,
-  "detected_finish_time": 4351.533333333334,
-  "race_duration": 2.5333333333337578,
+  "detected_start_frame": 0,
+  "detected_finish_frame": 150,
+  "detected_start_time": 0.0,
+  "detected_finish_time": 5.0,
+  "race_duration": 5.0,
   "left_athlete": {
     "name": "Matteo Zurloni",
     "country": "Italy",
@@ -27,5 +27,16 @@
   "buffer_before": 3.0,
   "buffer_after": 1.5,
   "extraction_date": "2025-11-14T12:04:03.918458",
-  "notes": "Late start (needs more buffer)"
+  "notes": "Late start (needs more buffer)",
+  "correction_metadata": {
+    "original_detected_start_frame": 130470,
+    "original_detected_finish_frame": 130546,
+    "original_detected_duration": "2.5333333333337578s (INVALID)",
+    "correction_date": "2025-11-17 03:27:24",
+    "correction_reason": "Review",
+    "reviewer_notes": ""
+  },
+  "manual_correction": true,
+  "confidence_start": 1.0,
+  "confidence_finish": 1.0
 }

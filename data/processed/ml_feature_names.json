@@ -1,0 +1,14 @@
+{
+  "features": [
+    "average_velocity_ms",
+    "max_velocity_ms",
+    "smoothness_score",
+    "total_time_s",
+    "path_length_m"
+  ],
+  "target": "average_velocity_ms",
+  "train_samples": 91,
+  "test_samples": 23,
+  "num_features": 5,
+  "export_date": "2025-11-17T06:42:02.066223"
+}

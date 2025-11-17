@@ -49,9 +49,21 @@ class BatchPoseExtractor:
         with open(metadata_path, 'r', encoding='utf-8') as f:
             metadata = json.load(f)
 
-        start_frame = metadata.get('detected_start_frame', 0)
-        finish_frame = metadata.get('detected_finish_frame', 10000)
+        # Frame numbers in original video
+        detected_start_frame = metadata.get('detected_start_frame', 0)
+        detected_finish_frame = metadata.get('detected_finish_frame', 10000)
         fps = metadata.get('fps', 30.0)
+        buffer_before = metadata.get('buffer_before', 1.5)
+
+        # Calculate buffer in frames
+        buffer_before_frames = int(buffer_before * fps)
+
+        # Calculate where segment starts in original video
+        segment_start_in_original = detected_start_frame - buffer_before_frames
+
+        # Convert to segment-relative frame numbers
+        start_frame = detected_start_frame - segment_start_in_original
+        finish_frame = detected_finish_frame - segment_start_in_original
 
         # Open video
         cap = cv2.VideoCapture(str(video_path))

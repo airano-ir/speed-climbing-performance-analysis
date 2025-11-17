@@ -103,6 +103,15 @@ data/processed/
 !data/processed/videos/samples/
 !data/processed/videos/samples/*.mp4
 
+# Keep reliable pipeline outputs (small summary/report files)
+!data/processed/reliable_races_list.json
+!data/processed/*_report.json
+!data/processed/aggregated_metrics_reliable.csv
+!data/processed/ml_feature_names.json
+!data/processed/leaderboard_*.csv
+!data/processed/dashboard_reliable_races.html
+!data/processed/pipeline_execution_log.json
+
 data/calibration/
 
 # Keep race segment metadata (always tracked)

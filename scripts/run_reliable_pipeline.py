@@ -1,4 +1,4 @@
-"""
+﻿"""
 Run Complete Reliable Data Pipeline
 ====================================
 Execute all 7 phases of the reliable races pipeline in sequence.
@@ -137,7 +137,7 @@ class PipelineRunner:
 
         # Check if already completed
         if self.check_phase_completed(phase_info):
-            print(f"✓ Checkpoint found: {phase_info['checkpoint']}")
+            print(f"âœ“ Checkpoint found: {phase_info['checkpoint']}")
             response = input("Phase appears completed. Re-run anyway? (y/N): ")
             if response.lower() != 'y':
                 print("Skipping phase (already completed)")
@@ -157,7 +157,7 @@ class PipelineRunner:
                 capture_output=False  # Show output in real-time
             )
 
-            print(f"\n✅ Phase {phase_num} completed successfully")
+            print(f"\nâœ… Phase {phase_num} completed successfully")
             self.log['current_execution']['phases_completed'].append({
                 'phase': phase_num,
                 'name': name,
@@ -167,7 +167,7 @@ class PipelineRunner:
             return True
 
         except subprocess.CalledProcessError as e:
-            print(f"\n❌ Phase {phase_num} failed with error code {e.returncode}")
+            print(f"\nâŒ Phase {phase_num} failed with error code {e.returncode}")
             self.log['current_execution']['phases_failed'].append({
                 'phase': phase_num,
                 'name': name,
@@ -178,7 +178,7 @@ class PipelineRunner:
             return False
 
         except KeyboardInterrupt:
-            print(f"\n⚠️  Phase {phase_num} interrupted by user")
+            print(f"\nâš ï¸  Phase {phase_num} interrupted by user")
             raise
 
     def run_all(self, start_phase=1, resume=False):
@@ -192,10 +192,10 @@ class PipelineRunner:
         print("="*70)
 
         if self.dry_run:
-            print("\n⚠️  DRY RUN MODE - No scripts will be executed")
+            print("\nâš ï¸  DRY RUN MODE - No scripts will be executed")
 
         if resume:
-            print("\n📋 Resume mode: Checking for completed phases...")
+            print("\nðŸ“‹ Resume mode: Checking for completed phases...")
 
         for phase_info in self.scripts:
             if phase_info['phase'] < start_phase:
@@ -203,13 +203,13 @@ class PipelineRunner:
 
             # Skip if resuming and phase is completed
             if resume and self.check_phase_completed(phase_info):
-                print(f"\n✓ Phase {phase_info['phase']} already completed, skipping")
+                print(f"\nâœ“ Phase {phase_info['phase']} already completed, skipping")
                 continue
 
             success = self.run_phase(phase_info)
 
             if not success:
-                print(f"\n❌ Pipeline stopped due to phase {phase_info['phase']} failure")
+                print(f"\nâŒ Pipeline stopped due to phase {phase_info['phase']} failure")
                 return False
 
         # Mark execution as complete
@@ -219,7 +219,7 @@ class PipelineRunner:
         self.save_log()
 
         print("\n" + "="*70)
-        print("🎉 PIPELINE COMPLETED SUCCESSFULLY!")
+        print("ðŸŽ‰ PIPELINE COMPLETED SUCCESSFULLY!")
         print("="*70)
         print(f"End time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         print(f"Phases completed: {len(self.log['current_execution']['phases_completed'])}/7")
@@ -276,12 +276,12 @@ Examples:
         sys.exit(0 if success else 1)
 
     except KeyboardInterrupt:
-        print("\n\n⚠️  Pipeline interrupted by user")
+        print("\n\nâš ï¸  Pipeline interrupted by user")
         print("Progress has been saved. Use --resume to continue from where you left off.")
         sys.exit(130)
 
     except Exception as e:
-        print(f"\n\n❌ Unexpected error: {e}")
+        print(f"\n\nâŒ Unexpected error: {e}")
         import traceback
         traceback.print_exc()
         sys.exit(1)
@@ -289,3 +289,4 @@ Examples:
 
 if __name__ == "__main__":
     main()
+

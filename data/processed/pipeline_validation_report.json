@@ -1,0 +1,952 @@
+{
+  "total_races": 114,
+  "file_completeness": {
+    "total_expected": 342,
+    "total_missing": 0,
+    "missing_files": {
+      "pose": [],
+      "calibration": [],
+      "metrics": []
+    },
+    "pass_rate": 100.0
+  },
+  "data_quality": {
+    "total_checked": 114,
+    "races_with_issues": 114,
+    "quality_issues": [
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race001",
+        "issues": [
+          "velocity_too_low",
+          "duration_too_short"
+        ],
+        "avg_velocity_ms": 0.0007670539599808375,
+        "total_time_s": 3.2333333333333334
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race002",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00036779470486911794,
+        "total_time_s": 7.366666666666666
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race003",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0006987018620563084,
+        "total_time_s": 6.6
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race004",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00045054852128473684,
+        "total_time_s": 6.7
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race005",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0003435156488157658,
+        "total_time_s": 6.333333333333333
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race006",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00032360637812195615,
+        "total_time_s": 7.4
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race007",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0007559965091151377,
+        "total_time_s": 6.0
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race008",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0005673671042902419,
+        "total_time_s": 5.933333333333334
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race009",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 3.8768665579857544e-05,
+        "total_time_s": 6.133333333333334
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race011",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0009319888139256899,
+        "total_time_s": 4.866666666666666
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race012",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00048510605420075723,
+        "total_time_s": 5.2
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race014",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0001699656088780884,
+        "total_time_s": 5.633333333333334
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race015",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0004983469125633037,
+        "total_time_s": 5.933333333333334
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race016",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00014303117280914683,
+        "total_time_s": 5.833333333333333
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race017",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00024788564362153345,
+        "total_time_s": 4.966666666666667
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race018",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0008302346511802576,
+        "total_time_s": 6.933333333333334
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race019",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0006396519395733073,
+        "total_time_s": 7.233333333333333
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race020",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00027711927352545726,
+        "total_time_s": 5.133333333333334
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race021",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00018420430218301148,
+        "total_time_s": 5.466666666666667
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race022",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0009231817494349399,
+        "total_time_s": 4.7
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race023",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 2.0023346431609956e-05,
+        "total_time_s": 5.966666666666667
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race025",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0006289875759563829,
+        "total_time_s": 7.5
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race026",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0010798681425486453,
+        "total_time_s": 5.266666666666667
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race027",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00032064504482133213,
+        "total_time_s": 5.3
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race028",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0003481691939726708,
+        "total_time_s": 5.133333333333334
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race029",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0007184096924259725,
+        "total_time_s": 6.366666666666666
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race030",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 4.012174482678693e-05,
+        "total_time_s": 5.066666666666666
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race031",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0007006839544482404,
+        "total_time_s": 6.133333333333334
+      },
+      {
+        "race_id": "Speed_finals_Chamonix_2024_race032",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 9.589779027385087e-05,
+        "total_time_s": 5.933333333333334
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race002",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00018110233485160577,
+        "total_time_s": 8.966666666666667
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race003",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 1.7075571465678966e-06,
+        "total_time_s": 5.566666666666666
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race005",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0010325197924933916,
+        "total_time_s": 11.133333333333333
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race006",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00450820326596415,
+        "total_time_s": 7.933333333333334
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race007",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.001236287408623548,
+        "total_time_s": 9.933333333333334
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race008",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 8.778116799868298e-05,
+        "total_time_s": 6.966666666666667
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race009",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0004902803745838428,
+        "total_time_s": 5.633333333333334
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race010",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 8.115667129634205e-05,
+        "total_time_s": 7.5
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race012",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00048093875259547296,
+        "total_time_s": 11.933333333333334
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race013",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0003099525960842295,
+        "total_time_s": 12.0
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race014",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00011255502258603526,
+        "total_time_s": 8.966666666666667
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race015",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 9.654609252582465e-07,
+        "total_time_s": 13.9
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race016",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00028207309672686283,
+        "total_time_s": 12.966666666666667
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race017",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00012631179789780262,
+        "total_time_s": 8.2
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race018",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0009303418447098663,
+        "total_time_s": 13.933333333333334
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race019",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0026148427243824824,
+        "total_time_s": 8.933333333333334
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race020",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0007153440123738329,
+        "total_time_s": 10.466666666666667
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race021",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0006088047449790158,
+        "total_time_s": 6.966666666666667
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race022",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 4.8858229762678656e-05,
+        "total_time_s": 12.833333333333334
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race023",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.000729446395003585,
+        "total_time_s": 5.9
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race024",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0012066621169459014,
+        "total_time_s": 9.933333333333334
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race025",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 8.594792778820809e-06,
+        "total_time_s": 11.966666666666667
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race026",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.002291433159280968,
+        "total_time_s": 8.9
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race027",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0006931953476779164,
+        "total_time_s": 7.966666666666667
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race028",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0013103524972036622,
+        "total_time_s": 11.933333333333334
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race029",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 1.6015895498899638e-05,
+        "total_time_s": 11.633333333333333
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race030",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00023951629055207456,
+        "total_time_s": 11.9
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race031",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00021634775302722476,
+        "total_time_s": 5.8
+      },
+      {
+        "race_id": "Speed_finals_Innsbruck_2024_race032",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0009571735094845734,
+        "total_time_s": 7.8
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race001",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0006618039947547933,
+        "total_time_s": 6.6
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race002",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 5.47755485900711e-05,
+        "total_time_s": 7.2
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race003",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0003736873547877034,
+        "total_time_s": 7.6
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race004",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0002573455256450311,
+        "total_time_s": 7.9
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race005",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00012085060186033945,
+        "total_time_s": 7.133333333333334
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race006",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00016283436731823038,
+        "total_time_s": 6.966666666666667
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race007",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00030965905352925075,
+        "total_time_s": 9.633333333333333
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race008",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0001723160331072398,
+        "total_time_s": 10.933333333333334
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race009",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00035080639138200976,
+        "total_time_s": 7.2
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race010",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0004049792540088375,
+        "total_time_s": 10.533333333333333
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race011",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0010107159028755117,
+        "total_time_s": 6.933333333333334
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race012",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0007200862127475832,
+        "total_time_s": 4.733333333333333
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race013",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 8.57388272155956e-05,
+        "total_time_s": 10.366666666666667
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race014",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0005318103676303204,
+        "total_time_s": 5.366666666666666
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race015",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0003643929137541808,
+        "total_time_s": 10.533333333333333
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race016",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0006503455114814133,
+        "total_time_s": 6.633333333333334
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race017",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.000144676017739317,
+        "total_time_s": 10.2
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race018",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00012200749761453181,
+        "total_time_s": 6.6
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race019",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0005384694856211869,
+        "total_time_s": 9.766666666666667
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race020",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 7.180830027759221e-05,
+        "total_time_s": 6.0
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race021",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0007087615718381403,
+        "total_time_s": 6.233333333333333
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race024",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0004771939753266424,
+        "total_time_s": 10.433333333333334
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race025",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 7.526730752593891e-06,
+        "total_time_s": 12.433333333333334
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race026",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0007769616465870438,
+        "total_time_s": 6.6
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race027",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 9.979485856512431e-05,
+        "total_time_s": 5.333333333333333
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race028",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0001771283882439461,
+        "total_time_s": 9.633333333333333
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race029",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 8.952625580539496e-05,
+        "total_time_s": 6.433333333333334
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race030",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00027932831130567066,
+        "total_time_s": 7.0
+      },
+      {
+        "race_id": "Speed_finals_Seoul_2024_race031",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.000430749434950949,
+        "total_time_s": 5.8
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race001",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0007637204675989143,
+        "total_time_s": 5.766666666666667
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race003",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 5.479547658364698e-07,
+        "total_time_s": 5.133333333333334
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race004",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00038585850076924686,
+        "total_time_s": 5.366666666666666
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race005",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0015988141801073284,
+        "total_time_s": 4.8
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race006",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.001008109315424352,
+        "total_time_s": 4.933333333333334
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race007",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0006376135748319535,
+        "total_time_s": 6.4
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race008",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 4.029752156449508e-05,
+        "total_time_s": 8.233333333333333
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race009",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00020494607061420273,
+        "total_time_s": 8.2
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race010",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0007542780949544216,
+        "total_time_s": 6.633333333333334
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race011",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0009499372508408788,
+        "total_time_s": 8.4
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race012",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 8.79272302338589e-05,
+        "total_time_s": 6.766666666666667
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race014",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0006730454838516548,
+        "total_time_s": 5.366666666666666
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race016",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0007459554188100717,
+        "total_time_s": 5.5
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race017",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00040385470935615063,
+        "total_time_s": 6.766666666666667
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race018",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0007091930909387367,
+        "total_time_s": 6.966666666666667
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race020",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00020245655773103245,
+        "total_time_s": 10.166666666666666
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race021",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00025215869176459525,
+        "total_time_s": 8.433333333333334
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race022",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0006221543826574321,
+        "total_time_s": 7.033333333333333
+      },
+      {
+        "race_id": "Speed_finals_Villars_2024_race024",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00021149046731248412,
+        "total_time_s": 5.1
+      },
+      {
+        "race_id": "Speed_finals_Zilina_2025_race012",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00020255382242035267,
+        "total_time_s": 8.8
+      },
+      {
+        "race_id": "Speed_finals_Zilina_2025_race020",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0006816906096564918,
+        "total_time_s": 10.766666666666667
+      },
+      {
+        "race_id": "Speed_finals_Zilina_2025_race023",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0013032172723756088,
+        "total_time_s": 6.066666666666666
+      },
+      {
+        "race_id": "Speed_finals_Zilina_2025_race037",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00019906813719851167,
+        "total_time_s": 12.166666666666666
+      },
+      {
+        "race_id": "Speed_finals_Zilina_2025_race039",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.0009015294634814067,
+        "total_time_s": 11.833333333333334
+      },
+      {
+        "race_id": "Speed_finals_Zilina_2025_race040",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.001233560963407611,
+        "total_time_s": 9.7
+      },
+      {
+        "race_id": "Speed_finals_Zilina_2025_race046",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00015732083215751802,
+        "total_time_s": 11.8
+      },
+      {
+        "race_id": "Speed_finals_Zilina_2025_race060",
+        "issues": [
+          "velocity_too_low"
+        ],
+        "avg_velocity_ms": 0.00018547296316112432,
+        "total_time_s": 12.866666666666667
+      }
+    ],
+    "pass_rate": 0.0
+  },
+  "performance_benchmarks": {
+    "total_races": 114,
+    "competitions": 1,
+    "avg_velocity_ms": 0.000529723631039023,
+    "min_velocity_ms": 5.479547658364698e-07,
+    "max_velocity_ms": 0.0045082032659641,
+    "std_velocity_ms": 0.0005807018602549623,
+    "avg_duration_s": 7.784502923976608,
+    "min_duration_s": 3.2333333333333334,
+    "max_duration_s": 13.933333333333334,
+    "std_duration_s": 2.471127990656439,
+    "world_record_comparison": {
+      "men_wr_s": 5.0,
+      "women_wr_s": 6.53,
+      "fastest_in_dataset_s": 3.2333333333333334,
+      "note": "World records as of 2024"
+    }
+  },
+  "validation_date": "2025-11-17T06:42:47.444912"
+}

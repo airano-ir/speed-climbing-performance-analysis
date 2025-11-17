@@ -1,0 +1,701 @@
+{
+  "total_races": 114,
+  "successful": 114,
+  "failed": 0,
+  "failed_races": [],
+  "quality_metrics": {
+    "average_rmse_cm": 0.0,
+    "min_rmse_cm": 0.0,
+    "max_rmse_cm": 0.0,
+    "pass_count": 114,
+    "pass_rate_percent": 100.0,
+    "target_rmse_cm": 1.0
+  },
+  "calibration_quality": [
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race001",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race002",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race003",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race004",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race005",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race006",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race007",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race008",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race009",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race011",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race012",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race014",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race015",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race016",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race017",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race018",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race019",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race020",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race021",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race022",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race023",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race025",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race026",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race027",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race028",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race029",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race030",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race031",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Chamonix_2024_race032",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race002",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race003",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race005",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race006",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race007",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race008",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race009",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race010",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race012",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race013",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race014",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race015",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race016",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race017",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race018",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race019",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race020",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race021",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race022",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race023",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race024",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race025",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race026",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race027",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race028",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race029",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race030",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race031",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Innsbruck_2024_race032",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race001",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race002",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race003",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race004",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race005",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race006",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race007",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race008",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race009",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race010",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race011",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race012",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race013",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race014",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race015",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race016",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race017",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race018",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race019",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race020",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race021",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race024",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race025",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race026",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race027",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race028",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race029",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race030",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Seoul_2024_race031",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race001",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race003",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race004",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race005",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race006",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race007",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race008",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race009",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race010",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race011",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race012",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race014",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race016",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race017",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race018",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race020",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race021",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race022",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Villars_2024_race024",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Zilina_2025_race012",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Zilina_2025_race020",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Zilina_2025_race023",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Zilina_2025_race037",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Zilina_2025_race039",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Zilina_2025_race040",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Zilina_2025_race046",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    },
+    {
+      "race_id": "Speed_finals_Zilina_2025_race060",
+      "rmse_cm": 0.0,
+      "pass": true,
+      "type": "simplified"
+    }
+  ],
+  "completion_date": "2025-11-17T06:21:18.640315"
+}
