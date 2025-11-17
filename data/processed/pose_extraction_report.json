@@ -4,9 +4,9 @@
   "failed": 0,
   "failed_races": [],
   "quality_metrics": {
-    "average_success_rate": 96.78917865915848,
-    "total_frames_extracted": 26682,
-    "races_with_high_quality": 97
+    "average_success_rate": 97.04827706263681,
+    "total_frames_extracted": 26737,
+    "races_with_high_quality": 99
   },
   "quality_stats": [
     {
@@ -41,8 +41,8 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race006",
-      "success_rate": 99.10313901345292,
-      "extracted_frames": 221,
+      "success_rate": 100.0,
+      "extracted_frames": 223,
       "total_frames": 223
     },
     {
@@ -77,20 +77,20 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race014",
-      "success_rate": 99.41176470588235,
-      "extracted_frames": 169,
+      "success_rate": 100.0,
+      "extracted_frames": 170,
       "total_frames": 170
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race015",
-      "success_rate": 99.4413407821229,
-      "extracted_frames": 178,
+      "success_rate": 100.0,
+      "extracted_frames": 179,
       "total_frames": 179
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race016",
-      "success_rate": 100.0,
-      "extracted_frames": 177,
+      "success_rate": 99.43502824858757,
+      "extracted_frames": 176,
       "total_frames": 177
     },
     {
@@ -119,8 +119,8 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race021",
-      "success_rate": 98.24561403508771,
-      "extracted_frames": 168,
+      "success_rate": 96.49122807017544,
+      "extracted_frames": 165,
       "total_frames": 171
     },
     {
@@ -149,8 +149,8 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race027",
-      "success_rate": 100.0,
-      "extracted_frames": 161,
+      "success_rate": 99.37888198757764,
+      "extracted_frames": 160,
       "total_frames": 161
     },
     {
@@ -161,8 +161,8 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race029",
-      "success_rate": 99.47916666666666,
-      "extracted_frames": 191,
+      "success_rate": 100.0,
+      "extracted_frames": 192,
       "total_frames": 192
     },
     {
@@ -179,8 +179,8 @@
     },
     {
       "race_id": "Speed_finals_Chamonix_2024_race032",
-      "success_rate": 100.0,
-      "extracted_frames": 180,
+      "success_rate": 99.44444444444444,
+      "extracted_frames": 179,
       "total_frames": 180
     },
     {
@@ -203,14 +203,14 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race006",
-      "success_rate": 82.15767634854771,
-      "extracted_frames": 198,
+      "success_rate": 99.1701244813278,
+      "extracted_frames": 239,
       "total_frames": 241
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race007",
-      "success_rate": 99.66777408637874,
-      "extracted_frames": 300,
+      "success_rate": 99.33554817275747,
+      "extracted_frames": 299,
       "total_frames": 301
     },
     {
@@ -257,14 +257,14 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race016",
-      "success_rate": 99.48849104859335,
-      "extracted_frames": 389,
+      "success_rate": 99.74424552429667,
+      "extracted_frames": 390,
       "total_frames": 391
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race017",
-      "success_rate": 82.39202657807309,
-      "extracted_frames": 248,
+      "success_rate": 82.05980066445183,
+      "extracted_frames": 247,
       "total_frames": 301
     },
     {
@@ -281,8 +281,8 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race020",
-      "success_rate": 87.53462603878116,
-      "extracted_frames": 316,
+      "success_rate": 87.25761772853186,
+      "extracted_frames": 315,
       "total_frames": 361
     },
     {
@@ -299,8 +299,8 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race023",
-      "success_rate": 69.1119691119691,
-      "extracted_frames": 179,
+      "success_rate": 68.72586872586872,
+      "extracted_frames": 178,
       "total_frames": 259
     },
     {
@@ -317,14 +317,14 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race026",
-      "success_rate": 80.81180811808119,
-      "extracted_frames": 219,
+      "success_rate": 98.8929889298893,
+      "extracted_frames": 268,
       "total_frames": 271
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race027",
-      "success_rate": 100.0,
-      "extracted_frames": 241,
+      "success_rate": 99.5850622406639,
+      "extracted_frames": 240,
       "total_frames": 241
     },
     {
@@ -341,8 +341,8 @@
     },
     {
       "race_id": "Speed_finals_Innsbruck_2024_race030",
-      "success_rate": 90.2439024390244,
-      "extracted_frames": 407,
+      "success_rate": 79.37915742793791,
+      "extracted_frames": 358,
       "total_frames": 451
     },
     {
@@ -449,8 +449,8 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race016",
-      "success_rate": 99.0,
-      "extracted_frames": 198,
+      "success_rate": 100.0,
+      "extracted_frames": 200,
       "total_frames": 200
     },
     {
@@ -521,8 +521,8 @@
     },
     {
       "race_id": "Speed_finals_Seoul_2024_race030",
-      "success_rate": 99.05660377358491,
-      "extracted_frames": 210,
+      "success_rate": 99.52830188679245,
+      "extracted_frames": 211,
       "total_frames": 212
     },
     {
@@ -557,26 +557,26 @@
     },
     {
       "race_id": "Speed_finals_Villars_2024_race006",
-      "success_rate": 99.33774834437085,
-      "extracted_frames": 150,
+      "success_rate": 98.67549668874173,
+      "extracted_frames": 149,
       "total_frames": 151
     },
     {
       "race_id": "Speed_finals_Villars_2024_race007",
-      "success_rate": 98.96373056994818,
-      "extracted_frames": 191,
+      "success_rate": 100.0,
+      "extracted_frames": 193,
       "total_frames": 193
     },
     {
       "race_id": "Speed_finals_Villars_2024_race008",
-      "success_rate": 92.74809160305344,
-      "extracted_frames": 243,
+      "success_rate": 94.65648854961832,
+      "extracted_frames": 248,
       "total_frames": 262
     },
     {
       "race_id": "Speed_finals_Villars_2024_race009",
-      "success_rate": 99.19354838709677,
-      "extracted_frames": 246,
+      "success_rate": 99.59677419354838,
+      "extracted_frames": 247,
       "total_frames": 248
     },
     {
@@ -611,14 +611,14 @@
     },
     {
       "race_id": "Speed_finals_Villars_2024_race017",
-      "success_rate": 97.54901960784314,
-      "extracted_frames": 199,
+      "success_rate": 100.0,
+      "extracted_frames": 204,
       "total_frames": 204
     },
     {
       "race_id": "Speed_finals_Villars_2024_race018",
-      "success_rate": 98.5781990521327,
-      "extracted_frames": 208,
+      "success_rate": 99.52606635071089,
+      "extracted_frames": 210,
       "total_frames": 211
     },
     {
@@ -635,8 +635,8 @@
     },
     {
       "race_id": "Speed_finals_Villars_2024_race022",
-      "success_rate": 98.15668202764977,
-      "extracted_frames": 213,
+      "success_rate": 97.6958525345622,
+      "extracted_frames": 212,
       "total_frames": 217
     },
     {
@@ -647,14 +647,14 @@
     },
     {
       "race_id": "Speed_finals_Zilina_2025_race012",
-      "success_rate": 68.03069053708441,
-      "extracted_frames": 266,
+      "success_rate": 67.77493606138107,
+      "extracted_frames": 265,
       "total_frames": 391
     },
     {
       "race_id": "Speed_finals_Zilina_2025_race020",
-      "success_rate": 71.17516629711751,
-      "extracted_frames": 321,
+      "success_rate": 71.84035476718404,
+      "extracted_frames": 324,
       "total_frames": 451
     },
     {
@@ -677,22 +677,22 @@
     },
     {
       "race_id": "Speed_finals_Zilina_2025_race040",
-      "success_rate": 64.52328159645234,
-      "extracted_frames": 291,
+      "success_rate": 64.7450110864745,
+      "extracted_frames": 292,
       "total_frames": 451
     },
     {
       "race_id": "Speed_finals_Zilina_2025_race046",
-      "success_rate": 84.08551068883611,
-      "extracted_frames": 354,
+      "success_rate": 84.32304038004752,
+      "extracted_frames": 355,
       "total_frames": 421
     },
     {
       "race_id": "Speed_finals_Zilina_2025_race060",
-      "success_rate": 92.16152019002375,
-      "extracted_frames": 388,
+      "success_rate": 91.92399049881234,
+      "extracted_frames": 387,
       "total_frames": 421
     }
   ],
-  "completion_date": "2025-11-17T04:45:21.949119"
+  "completion_date": "2025-11-17T14:18:15.157693"
 }
