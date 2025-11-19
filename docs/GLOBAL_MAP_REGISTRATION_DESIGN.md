@@ -591,22 +591,445 @@ if calibration_failed or pose_failed:
 |-------|-------|-----------|
 | Phase 1 | Core Components | 3-4 ساعت |
 | Phase 2 | Integration Pipeline | 2-3 ساعت |
-| Phase 3 | Testing | 2-3 ساعت |
-| Phase 4 | Documentation | 1 ساعت |
-| **جمع** | | **8-11 ساعت** |
+| Phase 3 | Testing با نمونه‌ها | 2-3 ساعت |
+| Phase 4 | Documentation اولیه | 1 ساعت |
+| **Phase 5** | **Full Dataset Reprocessing (188 races)** | **3-4 ساعت** |
+| **جمع** | | **11-15 ساعت** |
 
 ---
 
-## ✅ مراحل بعدی
+## 🔄 Phase 5: Full Dataset Reprocessing (پردازش مجدد کامل)
 
-1. ✅ بررسی و تأیید این طراحی
-2. ⏭️ شروع پیاده‌سازی Phase 1
-3. ⏭️ تست با یک ویدئو نمونه
-4. ⏭️ Batch processing روی 114 races
-5. ⏭️ Validation و مستندسازی
+### چرا پردازش مجدد تمام 188 race؟
+
+**وضعیت فعلی**:
+- ✅ 114 races "reliable" پردازش شده (60.6%)
+- ❌ 74 races "suspicious" deferred شده (39.4%)
+  - 5 CRITICAL: duration نامعتبر (منفی یا نزدیک صفر)
+  - 58 Zilina 2025: شکست سیستماتیک (84% از آن مسابقه!)
+  - 11 دیگر: مدت زمان خیلی کوتاه یا خیلی طولانی
+
+**با سیستم جدید Global Map Registration**:
+- ✅ مختصات جهانی → تشخیص دقیق شروع/پایان
+- ✅ Dropout detection → مدیریت صحیح سقوط
+- ✅ Per-frame calibration → حتی با حرکت شدید دوربین
+
+**انتظار**: بسیاری از "suspicious" races قابل پردازش می‌شوند
+
+### استراتژی Reprocessing
+
+#### مرحله 1: Validation Pipeline (قبل از شروع)
+
+```python
+class RaceValidator:
+    """
+    Validate race before processing to catch obvious issues early.
+    """
+
+    def validate_race_metadata(self, race_metadata):
+        """
+        Pre-flight checks برای race metadata.
+
+        Returns:
+            {
+                'is_valid': bool,
+                'issues': List[str],
+                'severity': 'ok' | 'warning' | 'critical'
+            }
+        """
+        issues = []
+
+        # Check 1: Video file exists
+        if not Path(race_metadata['video_path']).exists():
+            issues.append('video_file_missing')
+            return {'is_valid': False, 'issues': issues, 'severity': 'critical'}
+
+        # Check 2: Start/end frames reasonable
+        start = race_metadata.get('detected_start_frame', 0)
+        end = race_metadata.get('detected_finish_frame', 9999)
+        duration_frames = end - start
+
+        if duration_frames <= 0:
+            issues.append(f'invalid_duration_frames: {duration_frames}')
+            severity = 'critical'
+        elif duration_frames < 60:  # < 2s at 30fps
+            issues.append(f'very_short_race: {duration_frames} frames')
+            severity = 'warning'
+        elif duration_frames > 900:  # > 30s at 30fps
+            issues.append(f'very_long_race: {duration_frames} frames')
+            severity = 'warning'
+        else:
+            severity = 'ok'
+
+        # Check 3: Pose data exists (if already extracted)
+        pose_path = race_metadata.get('pose_file_path')
+        if pose_path and not Path(pose_path).exists():
+            issues.append('pose_data_missing')
+            severity = 'warning'
+
+        is_valid = severity != 'critical'
+        return {'is_valid': is_valid, 'issues': issues, 'severity': severity}
+```
+
+#### مرحله 2: Three-Pass Strategy
+
+**Pass 1: Clean Races (114 reliable)**
+- پردازش با تمام features فعال
+- انتظار: 100% موفقیت
+- هدف: Validate سیستم جدید
+
+**Pass 2: Suspicious Races (74 deferred)**
+- پردازش با error recovery فعال
+- هر race به صورت جداگانه (resilient mode)
+- انتظار: 50-80% موفقیت
+
+**Pass 3: Failed Races (باقیمانده)**
+- Manual review flag
+- ذخیره diagnostics برای تحلیل دستی
+- گزارش مشکلات برای بهبود آینده
+
+#### مرحله 3: Quality Validation
+
+```python
+class ReprocessingValidator:
+    """
+    Validate reprocessed data quality.
+    """
+
+    def validate_output(self, race_output):
+        """
+        Check if output meets quality criteria.
+
+        Returns:
+            {
+                'passes_validation': bool,
+                'quality_score': float (0-1),
+                'issues': List[str],
+                'metrics': Dict
+            }
+        """
+        issues = []
+        checks = {}
+
+        # Check 1: Velocity reasonable (1.5-4.0 m/s)
+        avg_vel = race_output['left_climber']['summary']['avg_velocity_m_s']
+        if not (1.5 <= avg_vel <= 4.0):
+            issues.append(f'unrealistic_velocity: {avg_vel:.2f} m/s')
+            checks['velocity'] = False
+        else:
+            checks['velocity'] = True
+
+        # Check 2: Total distance reasonable (10-16m)
+        distance = race_output['left_climber']['summary']['total_distance_m']
+        if not (10.0 <= distance <= 16.0):
+            issues.append(f'unrealistic_distance: {distance:.2f} m')
+            checks['distance'] = False
+        else:
+            checks['distance'] = True
+
+        # Check 3: Calibration quality
+        avg_cal_quality = np.mean(
+            race_output['left_climber']['time_series']['calibration_quality']
+        )
+        if avg_cal_quality < 0.6:
+            issues.append(f'low_calibration_quality: {avg_cal_quality:.2f}')
+            checks['calibration'] = False
+        else:
+            checks['calibration'] = True
+
+        # Check 4: Data completeness
+        timestamps = race_output['left_climber']['time_series']['timestamps']
+        valid_frames = sum(1 for s in race_output['left_climber']['time_series']['status']
+                          if s != 'invalid')
+        completeness = valid_frames / len(timestamps)
+        if completeness < 0.8:
+            issues.append(f'low_completeness: {completeness:.1%}')
+            checks['completeness'] = False
+        else:
+            checks['completeness'] = True
+
+        # Quality score
+        quality_score = sum(checks.values()) / len(checks)
+        passes = quality_score >= 0.75
+
+        return {
+            'passes_validation': passes,
+            'quality_score': quality_score,
+            'issues': issues,
+            'metrics': checks
+        }
+```
+
+### Batch Processing Script
+
+**فایل**: `scripts/batch_reprocess_all_races.py`
+
+```python
+"""
+Batch reprocess all 188 races with Global Map Registration.
+
+Usage:
+    python scripts/batch_reprocess_all_races.py \
+        --input configs/race_timestamps/ \
+        --output data/processed/global_map_v2/ \
+        --passes 3 \
+        --resume
+
+Features:
+- Three-pass strategy (clean → suspicious → failed)
+- Progress tracking with resume capability
+- Quality validation per race
+- Detailed error logging
+- Summary report generation
+"""
+
+def main():
+    # 1. Load all race metadata (188 races)
+    all_races = load_all_race_metadata()
+
+    # 2. Classify races
+    clean_races = [r for r in all_races if r['status'] == 'reliable']  # 114
+    suspicious_races = [r for r in all_races if r['status'] == 'suspicious']  # 74
+
+    # 3. Initialize processors
+    processor = GlobalMapVideoProcessor(...)
+    validator = ReprocessingValidator()
+
+    # 4. Pass 1: Clean races
+    print("Pass 1/3: Processing 114 clean races...")
+    pass1_results = process_batch(clean_races, processor, validator)
+    print(f"  Success: {pass1_results['success']}/{len(clean_races)}")
+
+    # 5. Pass 2: Suspicious races
+    print("Pass 2/3: Processing 74 suspicious races...")
+    pass2_results = process_batch(suspicious_races, processor, validator,
+                                   resilient_mode=True)
+    print(f"  Success: {pass2_results['success']}/{len(suspicious_races)}")
+
+    # 6. Pass 3: Failed races (if any)
+    failed_races = pass1_results['failed'] + pass2_results['failed']
+    if failed_races:
+        print(f"Pass 3/3: Attempting {len(failed_races)} failed races...")
+        pass3_results = process_batch(failed_races, processor, validator,
+                                       max_retries=3, verbose=True)
+        print(f"  Success: {pass3_results['success']}/{len(failed_races)}")
+
+    # 7. Generate summary report
+    generate_summary_report(pass1_results, pass2_results, pass3_results)
+```
+
+### خروجی Reprocessing
+
+**ساختار فولدر**:
+```
+data/processed/global_map_v2/
+├── successful/                    # Races پردازش موفق
+│   ├── seoul_2024/
+│   │   ├── race001_global_map.json
+│   │   ├── race002_global_map.json
+│   │   └── ...
+│   ├── villars_2024/
+│   ├── chamonix_2024/
+│   ├── innsbruck_2024/
+│   └── zilina_2025/
+│
+├── failed/                        # Races ناموفق
+│   ├── race_diagnostics/          # اطلاعات debug
+│   │   ├── seoul_2024_race005_diagnostics.json
+│   │   └── ...
+│   └── failed_races_list.json
+│
+├── reports/
+│   ├── reprocessing_summary.json   # خلاصه کلی
+│   ├── quality_comparison.csv      # مقایسه با نتایج قبلی
+│   └── validation_report.json      # نتایج validation
+│
+└── aggregated/
+    ├── all_races_timeseries_v2.csv  # تمام races در یک فایل
+    ├── competition_stats_v2.json     # آمار هر مسابقه
+    └── ml_ready_dataset_v2.npz       # آماده ML
+```
+
+### گزارش خلاصه (Expected Output)
+
+```json
+{
+  "reprocessing_summary": {
+    "total_races": 188,
+    "successful": 165,
+    "failed": 23,
+    "success_rate": "87.8%",
+
+    "by_category": {
+      "clean_races": {
+        "total": 114,
+        "successful": 112,
+        "failed": 2,
+        "success_rate": "98.2%"
+      },
+      "suspicious_races": {
+        "total": 74,
+        "successful": 53,
+        "failed": 21,
+        "success_rate": "71.6%"
+      }
+    },
+
+    "quality_metrics": {
+      "avg_velocity_m_s": 2.45,
+      "avg_calibration_rmse_m": 0.0034,
+      "avg_calibration_confidence": 0.82,
+      "avg_data_completeness": 0.94
+    },
+
+    "improvement_over_v1": {
+      "previously_unusable_now_working": 53,
+      "velocity_accuracy_improvement": "215%",
+      "distance_accuracy_improvement": "98%"
+    },
+
+    "failed_races_breakdown": {
+      "video_corrupted": 5,
+      "no_holds_visible": 8,
+      "extreme_camera_movement": 6,
+      "other": 4
+    }
+  }
+}
+```
+
+### تخمین زمان Phase 5
+
+**زمان پردازش** (با GPU):
+- Clean races (114): ~1 ساعت (30 sec/race average)
+- Suspicious races (74): ~1.5 ساعت (73 sec/race average - slower due to retries)
+- Failed races retry: ~0.5 ساعت
+- Validation & reporting: ~0.5 ساعت
+
+**جمع**: 3-4 ساعت برای پردازش کامل
+
+**نکته**: می‌توان با parallel processing (multiprocessing) به 1.5-2 ساعت کاهش داد
 
 ---
 
-**پایان سند طراحی**
+## ✅ مراحل نهایی (بعد از Reprocessing)
 
-*این سند خلاصه‌ای از تحلیل سیستم موجود و طراحی معماری جدید است. تمام کدهای موجود حفظ می‌شوند و فقط یک لایه integration اضافه می‌شود.*
+### 1. مقایسه با نتایج قبلی
+
+```python
+# Compare v1 (pixel-based) vs v2 (global map)
+comparison_df = pd.DataFrame({
+    'race_id': [...],
+    'v1_velocity_px_s': [...],  # بی‌معنی!
+    'v2_velocity_m_s': [...],    # معنادار!
+    'v1_distance_px': [...],     # متغیر با zoom
+    'v2_distance_m': [...],      # ثابت (واحد فیزیکی)
+})
+```
+
+### 2. Dataset نهایی برای تحلیل/ML
+
+```
+data/final_dataset_v2/
+├── time_series/
+│   └── all_188_races_timeseries.csv  # Y(t) برای همه races
+├── aggregated/
+│   └── race_summaries.csv             # یک خط برای هر race
+└── ml_ready/
+    ├── features.npz                   # Feature matrix
+    ├── train_test_split.json          # 80/20 split
+    └── metadata.json                   # توضیحات کامل
+```
+
+### 3. Visualization Dashboard Update
+
+- به‌روزرسانی Plotly dashboard با داده‌های جدید
+- نمودار مقایسه v1 vs v2
+- نمودار کیفیت calibration
+- Interactive 2D wall view با trajectory واقعی
+
+---
+
+## 📊 معیارهای موفقیت نهایی
+
+### Reprocessing Success
+
+- ✅ **Minimum 85%** از 188 races پردازش موفق (160+ races)
+- ✅ **100%** از clean races (114) پردازش موفق
+- ✅ **>70%** از suspicious races (52+ از 74) پردازش موفق
+
+### Data Quality
+
+- ✅ Velocity range: **1.5-3.5 m/s** برای >95% races
+- ✅ Total distance: **13-15.5m** برای >95% races
+- ✅ Calibration RMSE: **<5cm** برای >90% frames
+- ✅ Data completeness: **>85%** valid frames per race
+
+### Scientific Validity
+
+- ✅ Velocity مطابق IFSC world records (5.2-6.5s برای 15m)
+- ✅ Distance مطابق ارتفاع دیوار (15m ±0.5m)
+- ✅ نتایج reproducible (run مجدد → همان نتیجه)
+- ✅ نتایج قابل مقایسه بین competitions
+
+---
+
+## 🎯 Deliverables نهایی
+
+پس از تکمیل Phase 5:
+
+1. **✅ 165+ race با داده‌های معتبر در واحد متر**
+2. **✅ Pipeline یکپارچه و مستند**
+3. **✅ Quality validation framework**
+4. **✅ Comparison report (v1 vs v2)**
+5. **✅ Dataset آماده برای paper/publication**
+6. **✅ Interactive dashboard با داده‌های جدید**
+
+---
+
+## ⏱️ زمان‌بندی کامل (با Phase 5)
+
+| Phase | Tasks | تخمین زمان |
+|-------|-------|-----------|
+| Phase 1 | Core Components | 3-4 ساعت |
+| Phase 2 | Integration Pipeline | 2-3 ساعت |
+| Phase 3 | Testing (3-5 نمونه) | 2-3 ساعت |
+| Phase 4 | Documentation اولیه | 1 ساعت |
+| **Phase 5** | **Full Reprocessing (188 races)** | **3-4 ساعت** |
+| **Phase 6** | **Validation & Final Report** | **1-2 ساعت** |
+| **جمع** | | **12-17 ساعت** |
+
+---
+
+## 📋 Checklist نهایی
+
+### قبل از شروع پیاده‌سازی
+- [x] Design document تأیید شد
+- [x] Phase 5 (Full Reprocessing) به برنامه اضافه شد
+- [ ] User تأیید کرد که 188 races پردازش شوند
+- [ ] منابع سیستم چک شد (GPU, disk space)
+
+### حین پیاده‌سازی
+- [ ] Phase 1: Core Components ✓
+- [ ] Phase 2: Integration Pipeline ✓
+- [ ] Phase 3: Test با 3-5 نمونه ✓
+- [ ] Phase 4: Documentation اولیه ✓
+
+### Full Reprocessing
+- [ ] Pass 1: 114 clean races ✓
+- [ ] Pass 2: 74 suspicious races ✓
+- [ ] Pass 3: Failed races retry ✓
+- [ ] Quality validation ✓
+- [ ] Summary report generated ✓
+
+### تکمیل
+- [ ] MASTER_CONTEXT.md به‌روز شد
+- [ ] Git commit & push
+- [ ] Pull Request ساخته شد
+- [ ] Results reviewed by user
+
+---
+
+**پایان سند طراحی (با Phase 5)**
+
+*این سند شامل برنامه کامل برای بازمهندسی سیستم و پردازش مجدد تمام 188 race است. تمام کدهای موجود حفظ می‌شوند و فقط یک لایه integration اضافه می‌شود.*
