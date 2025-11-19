@@ -35,7 +35,7 @@ import cv2
 import numpy as np
 
 # Add src to path
-sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from calibration.world_coordinate_tracker import WorldCoordinateTracker
 from calibration.dropout_handler import DropoutHandler
@@ -218,7 +218,7 @@ class GlobalMapVideoProcessor:
                 logger.info(f"  Processed {frames_processed}/{end_frame - start_frame} frames...")
 
             # Detect lane boundary
-            lane_boundary = self.lane_detector.detect_boundary(frame)
+            lane_boundary = self.lane_detector.detect_lane_boundary(frame)
 
             # Process each lane
             for lane in ['left', 'right']:
@@ -227,12 +227,13 @@ class GlobalMapVideoProcessor:
                     continue
 
                 # Extract pose for this lane
-                pose_result = self.pose_extractor.extract_pose(
+                pose_result = self.pose_extractor.process_frame(
                     frame,
-                    return_annotated=False
+                    frame_id=frame_id,
+                    timestamp=timestamp
                 )
 
-                has_pose = pose_result is not None and pose_result.is_valid
+                has_pose = pose_result is not None and pose_result.has_detection
 
                 # Calculate COM if pose is valid
                 if has_pose:
@@ -242,8 +243,8 @@ class GlobalMapVideoProcessor:
 
                     if left_hip and right_hip:
                         # Average of hips
-                        com_x_norm = (left_hip['x'] + right_hip['x']) / 2
-                        com_y_norm = (left_hip['y'] + right_hip['y']) / 2
+                        com_x_norm = (left_hip.x + right_hip.x) / 2
+                        com_y_norm = (left_hip.y + right_hip.y) / 2
 
                         # Convert to pixels
                         com_x_px = com_x_norm * frame.shape[1]
