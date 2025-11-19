@@ -196,11 +196,10 @@ class WorldCoordinateTracker:
         com_x_m, com_y_m = calibration.pixel_to_meter_func(com_x_px, com_y_px)
 
         # Step 4: Convert to wall-relative coordinates
-        # Wall coordinate system: Y=0 at bottom, Y=15 at top
-        # We want: Y=0 at start pad, Y=15 at top button
-        # So: y_from_start = wall_height - wall_y_coord
+        # Route map already has Y=0 at bottom (start pad), Y=15 at top (button)
+        # So we can use com_y_m directly (no inversion needed)
 
-        y_from_start_m = self.wall_height_m - com_y_m
+        y_from_start_m = com_y_m
 
         # X coordinate: distance from center of lane
         # Lane width = 1.5m (half of 3m wall width)
