@@ -220,43 +220,51 @@ class GlobalMapVideoProcessor:
             # Detect lane boundary
             lane_boundary = self.lane_detector.detect_lane_boundary(frame)
 
+            # Extract pose ONCE per frame (BlazePose detects one person)
+            pose_result = self.pose_extractor.process_frame(
+                frame,
+                frame_id=frame_id,
+                timestamp=timestamp
+            )
+
+            has_pose = pose_result is not None and pose_result.has_detection
+
+            # Calculate COM and determine which lane if pose is valid
+            com_x_px, com_y_px, detected_lane = None, None, None
+            if has_pose:
+                # Get hip position as COM (simple approximation)
+                left_hip = pose_result.keypoints.get('left_hip')
+                right_hip = pose_result.keypoints.get('right_hip')
+
+                if left_hip and right_hip:
+                    # Average of hips
+                    com_x_norm = (left_hip.x + right_hip.x) / 2
+                    com_y_norm = (left_hip.y + right_hip.y) / 2
+
+                    # Convert to pixels
+                    com_x_px = com_x_norm * frame.shape[1]
+                    com_y_px = com_y_norm * frame.shape[0]
+
+                    # Determine which lane based on COM x-position
+                    if com_x_px < lane_boundary.x_pixel:
+                        detected_lane = 'left'
+                    else:
+                        detected_lane = 'right'
+                else:
+                    has_pose = False
+
             # Process each lane
             for lane in ['left', 'right']:
                 # Check if already dropped out
                 if builders[lane].is_finished():
                     continue
 
-                # Extract pose for this lane
-                pose_result = self.pose_extractor.process_frame(
-                    frame,
-                    frame_id=frame_id,
-                    timestamp=timestamp
-                )
-
-                has_pose = pose_result is not None and pose_result.has_detection
-
-                # Calculate COM if pose is valid
-                if has_pose:
-                    # Get hip position as COM (simple approximation)
-                    left_hip = pose_result.keypoints.get('left_hip')
-                    right_hip = pose_result.keypoints.get('right_hip')
-
-                    if left_hip and right_hip:
-                        # Average of hips
-                        com_x_norm = (left_hip.x + right_hip.x) / 2
-                        com_y_norm = (left_hip.y + right_hip.y) / 2
-
-                        # Convert to pixels
-                        com_x_px = com_x_norm * frame.shape[1]
-                        com_y_px = com_y_norm * frame.shape[0]
-                    else:
-                        has_pose = False
-                        com_x_px, com_y_px = None, None
-                else:
-                    com_x_px, com_y_px = None, None
-
-                # Track world coordinates
-                if has_pose and com_x_px is not None:
+                # Only process this lane if it matches the detected pose
+                # (or if no pose was detected)
+                if has_pose and detected_lane != lane:
+                    # No pose for this lane - add invalid frame
+                    world_coords = None
+                elif has_pose and com_x_px is not None:
                     world_coords = self.trackers[lane].process_frame(
                         frame=frame,
                         frame_id=frame_id,
@@ -268,8 +276,9 @@ class GlobalMapVideoProcessor:
                     world_coords = None
 
                 # Check dropout
+                has_pose_in_lane = (has_pose and detected_lane == lane)
                 dropout_status = self.dropout_handlers[lane].check_dropout(
-                    has_pose=has_pose,
+                    has_pose=has_pose_in_lane,
                     has_calibration=world_coords.is_valid if world_coords else False,
                     y_position_m=world_coords.y_position_m if world_coords and world_coords.is_valid else None,
                     calibration_confidence=world_coords.calibration_quality if world_coords else 0.0

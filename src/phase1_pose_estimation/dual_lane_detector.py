@@ -27,7 +27,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 import json
 
-from blazepose_extractor import BlazePoseExtractor, PoseResult
+from phase1_pose_estimation.blazepose_extractor import BlazePoseExtractor, PoseResult
 
 # Optional: Kalman filter for boundary smoothing
 try:
