@@ -100,6 +100,7 @@ def visualize_calibration(video_path, frame_number=None, output_path="debug_cali
 
     if calibration:
         print(f"Calibration Successful! Confidence: {calibration.confidence:.2f}, RMSE: {calibration.rmse_error:.2f}")
+        print(f"Homography:\n{calibration.homography_matrix}")
         
         # Draw Projected Route Map Holds (Green)
         route_map = tracker.calibrator.route_map
@@ -108,12 +109,13 @@ def visualize_calibration(video_path, frame_number=None, output_path="debug_cali
         for hold in route_map['holds']:
             if hold['panel'].startswith(lane_prefix):
                 mx, my = hold['wall_x_m'], hold['wall_y_m']
-                px, py = calibration.meter_to_pixel_func(mx, my)
-                
-                # Draw circle for expected position
-                cv2.circle(vis_frame, (int(px), int(py)), 4, (0, 255, 0), 2)
-                # Draw line to show error if close to a detected hold
-                # (Simplified: just show the green circle)
+                try:
+                    px, py = calibration.meter_to_pixel_func(mx, my)
+                    # Check for reasonable bounds before drawing
+                    if -10000 < px < 10000 and -10000 < py < 10000:
+                        cv2.circle(vis_frame, (int(px), int(py)), 4, (0, 255, 0), 2)
+                except (OverflowError, ValueError):
+                    continue
         
         # Draw Wall Boundaries
         corners_m = [
@@ -121,14 +123,19 @@ def visualize_calibration(video_path, frame_number=None, output_path="debug_cali
         ]
         corners_px = []
         for mx, my in corners_m:
-            px, py = calibration.meter_to_pixel_func(mx, my)
-            corners_px.append((int(px), int(py)))
+            try:
+                px, py = calibration.meter_to_pixel_func(mx, my)
+                if -10000 < px < 10000 and -10000 < py < 10000:
+                    corners_px.append((int(px), int(py)))
+            except (OverflowError, ValueError):
+                pass
         
         # Draw boundary lines
-        for i in range(4):
-            p1 = corners_px[i]
-            p2 = corners_px[(i+1)%4]
-            cv2.line(vis_frame, p1, p2, (255, 255, 0), 2)
+        if len(corners_px) == 4:
+            for i in range(4):
+                p1 = corners_px[i]
+                p2 = corners_px[(i+1)%4]
+                cv2.line(vis_frame, p1, p2, (255, 255, 0), 2)
             
         cv2.putText(vis_frame, f"Calibration OK (Conf: {calibration.confidence:.2f})", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     else:
