@@ -36,6 +36,8 @@ The project is being migrated to a domain-driven structure:
     *   Completed migration of `TimeSeriesBuilder`, `DropoutHandler`, `WorldCoordinateTracker`, and `GlobalMapVideoProcessor`.
     *   Verified full pipeline with `scripts/run_new_pipeline.py`.
     *   Successful end-to-end test on `race001` (14.39m detected distance).
+    *   **Cleanup**: Removed legacy `src/` directory.
+    *   **Batch Processing**: Added `scripts/batch_process_races.py` and documentation.
 
 ## Known Issues / Focus Areas
 *   **Hold Detection**: Sensitivity to lighting/angle. (Mitigation: Tuning HSV, Area filters).
@@ -43,6 +45,6 @@ The project is being migrated to a domain-driven structure:
 *   **Physical Validation**: Initial prototype showed some height discrepancies (Physical Validation: FAIL in prototype), but full pipeline produced reasonable total distance. Needs fine-tuning.
 
 ## Next Steps
-1.  Clean up legacy code in `src/`.
-2.  Implement "Calibration Quality" visualization.
-3.  Run batch processing on more races to validate robustness.
+1.  Run batch processing on more races using `scripts/batch_process_races.py`.
+2.  Analyze batch results to identify common failure modes.
+3.  Implement "Calibration Quality" visualization.
