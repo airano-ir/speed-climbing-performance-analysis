@@ -1,0 +1,91 @@
+{
+  "left_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0,
+        0.03336666666666667,
+        0.06673333333333334,
+        0.10010000000000001
+      ],
+      "y_position_m": [
+        0.0,
+        9.761695093013971,
+        13.17708601933888,
+        17.87219350785861
+      ],
+      "x_position_m": [
+        0.0,
+        1.4612316045561893,
+        1.4946406891508868,
+        1.5081467772031856
+      ],
+      "status": [
+        "climbing",
+        "climbing",
+        "climbing",
+        "finished"
+      ],
+      "calibration_quality": [
+        0.0,
+        0.99999999999994,
+        0.99999999999994,
+        0.99999999999994
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.10010000000000001,
+      "total_distance_m": 13.17708601933888,
+      "avg_velocity_m_s": 131.63922097241638,
+      "max_velocity_m_s": 292.5582944959232,
+      "final_height_m": 17.87219350785861
+    }
+  },
+  "right_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0,
+        0.03336666666666667,
+        0.06673333333333334,
+        0.10010000000000001
+      ],
+      "y_position_m": [
+        9.553516587429302,
+        10.651599832010074,
+        15.450848797254299,
+        21.132344614040544
+      ],
+      "x_position_m": [
+        1.4620056762433837,
+        1.4775902151331213,
+        1.5157503540299349,
+        1.5161732228895992
+      ],
+      "status": [
+        "climbing",
+        "climbing",
+        "finished",
+        "finished"
+      ],
+      "calibration_quality": [
+        0.99999999999994,
+        0.99999999999994,
+        0.99999999999994,
+        0.99999999999994
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.10010000000000001,
+      "total_distance_m": 1.0980832445807724,
+      "avg_velocity_m_s": 10.969862583224499,
+      "max_velocity_m_s": 170.27459990368368,
+      "final_height_m": 21.132344614040544
+    }
+  },
+  "metadata": {
+    "video_path": "data\\race_segments\\seoul_2024\\Speed_finals_Seoul_2024_race006.mp4",
+    "processing_date": "2025-11-20T04:38:18.750028",
+    "calibration_method": "per_frame_homography",
+    "units": "meters",
+    "reference_point": "start_pad"
+  }
+}

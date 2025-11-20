@@ -1,0 +1,71 @@
+{
+  "left_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0,
+        0.03336666666666667
+      ],
+      "y_position_m": [
+        0.0,
+        22.052713558781612
+      ],
+      "x_position_m": [
+        0.0,
+        -0.011708359555533156
+      ],
+      "status": [
+        "climbing",
+        "finished"
+      ],
+      "calibration_quality": [
+        0.0,
+        0.8571428571428571
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.03336666666666667,
+      "total_distance_m": 0.0,
+      "avg_velocity_m_s": 0.0,
+      "max_velocity_m_s": 660.9204862771711,
+      "final_height_m": 22.052713558781612
+    }
+  },
+  "right_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0,
+        0.03336666666666667
+      ],
+      "y_position_m": [
+        21.738927795345287,
+        22.228270394894945
+      ],
+      "x_position_m": [
+        0.01206299049734941,
+        -0.026180472128191523
+      ],
+      "status": [
+        "finished",
+        "finished"
+      ],
+      "calibration_quality": [
+        0.8571428571428571,
+        0.8571428571428571
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.03336666666666667,
+      "total_distance_m": 0.0,
+      "avg_velocity_m_s": 0.0,
+      "max_velocity_m_s": 14.66561237411564,
+      "final_height_m": 22.228270394894945
+    }
+  },
+  "metadata": {
+    "video_path": "data\\race_segments\\seoul_2024\\Speed_finals_Seoul_2024_race029.mp4",
+    "processing_date": "2025-11-20T04:42:36.740143",
+    "calibration_method": "per_frame_homography",
+    "units": "meters",
+    "reference_point": "start_pad"
+  }
+}

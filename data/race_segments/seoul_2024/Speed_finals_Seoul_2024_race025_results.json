@@ -1,0 +1,61 @@
+{
+  "left_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0
+      ],
+      "y_position_m": [
+        29.698853909920846
+      ],
+      "x_position_m": [
+        2.298336973287799
+      ],
+      "status": [
+        "finished"
+      ],
+      "calibration_quality": [
+        0.8571428571428571
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.0,
+      "total_distance_m": 0.0,
+      "avg_velocity_m_s": 0.0,
+      "max_velocity_m_s": 0.0,
+      "final_height_m": 29.698853909920846
+    }
+  },
+  "right_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0
+      ],
+      "y_position_m": [
+        29.110320635795002
+      ],
+      "x_position_m": [
+        2.2494404076615866
+      ],
+      "status": [
+        "finished"
+      ],
+      "calibration_quality": [
+        0.8571428571428571
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.0,
+      "total_distance_m": 0.0,
+      "avg_velocity_m_s": 0.0,
+      "max_velocity_m_s": 0.0,
+      "final_height_m": 29.110320635795002
+    }
+  },
+  "metadata": {
+    "video_path": "data\\race_segments\\seoul_2024\\Speed_finals_Seoul_2024_race025.mp4",
+    "processing_date": "2025-11-20T04:42:14.784925",
+    "calibration_method": "per_frame_homography",
+    "units": "meters",
+    "reference_point": "start_pad"
+  }
+}

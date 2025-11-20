@@ -1,0 +1,91 @@
+{
+  "left_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0,
+        0.03333333333333333,
+        0.06666666666666667,
+        0.1
+      ],
+      "y_position_m": [
+        14.491014881305185,
+        14.127117884256583,
+        14.352086595997928,
+        14.508041102227734
+      ],
+      "x_position_m": [
+        0.11782730469603706,
+        0.12709695564147358,
+        0.12555698503952195,
+        0.14194177881569053
+      ],
+      "status": [
+        "climbing",
+        "climbing",
+        "climbing",
+        "finished"
+      ],
+      "calibration_quality": [
+        0.9999999999999947,
+        0.9999999999999947,
+        0.9999999999999947,
+        0.9999999999999947
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.1,
+      "total_distance_m": 0.36389699704860234,
+      "avg_velocity_m_s": 3.6389699704860234,
+      "max_velocity_m_s": 6.749061352240364,
+      "final_height_m": 14.508041102227734
+    }
+  },
+  "right_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0,
+        0.03333333333333333,
+        0.06666666666666667,
+        0.1
+      ],
+      "y_position_m": [
+        14.157310260719902,
+        14.225569836545166,
+        14.398649391702824,
+        14.55857635547077
+      ],
+      "x_position_m": [
+        0.12282042660434915,
+        0.12694875879972253,
+        0.12798038046397087,
+        0.15013821730510588
+      ],
+      "status": [
+        "climbing",
+        "climbing",
+        "climbing",
+        "finished"
+      ],
+      "calibration_quality": [
+        0.9999999999999947,
+        0.9999999999999947,
+        0.9999999999999947,
+        0.9999999999999947
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.1,
+      "total_distance_m": 0.24133913098292226,
+      "avg_velocity_m_s": 2.4133913098292226,
+      "max_velocity_m_s": 5.1923866547297415,
+      "final_height_m": 14.55857635547077
+    }
+  },
+  "metadata": {
+    "video_path": "data\\race_segments\\innsbruck_2024\\Speed_finals_Innsbruck_2024_race016.mp4",
+    "processing_date": "2025-11-20T04:55:26.169505",
+    "calibration_method": "per_frame_homography",
+    "units": "meters",
+    "reference_point": "start_pad"
+  }
+}

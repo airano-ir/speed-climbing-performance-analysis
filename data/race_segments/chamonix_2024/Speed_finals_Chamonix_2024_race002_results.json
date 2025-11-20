@@ -1,0 +1,71 @@
+{
+  "left_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0,
+        0.03333333333333333
+      ],
+      "y_position_m": [
+        2.9765927607866436,
+        15.988149085152102
+      ],
+      "x_position_m": [
+        0.7434752434336561,
+        0.9128212130717875
+      ],
+      "status": [
+        "climbing",
+        "finished"
+      ],
+      "calibration_quality": [
+        0.8571428571428571,
+        0.8571428571428571
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.03333333333333333,
+      "total_distance_m": 0.0,
+      "avg_velocity_m_s": 0.0,
+      "max_velocity_m_s": 390.34668973096376,
+      "final_height_m": 15.988149085152102
+    }
+  },
+  "right_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0,
+        0.03333333333333333
+      ],
+      "y_position_m": [
+        38.938509916070345,
+        15.281373045040148
+      ],
+      "x_position_m": [
+        0.928287791058357,
+        0.9312047179799545
+      ],
+      "status": [
+        "finished",
+        "finished"
+      ],
+      "calibration_quality": [
+        0.8571428571428571,
+        0.8571428571428571
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.03333333333333333,
+      "total_distance_m": 0.0,
+      "avg_velocity_m_s": 0.0,
+      "max_velocity_m_s": -709.7141061309059,
+      "final_height_m": 15.281373045040148
+    }
+  },
+  "metadata": {
+    "video_path": "data\\race_segments\\chamonix_2024\\Speed_finals_Chamonix_2024_race002.mp4",
+    "processing_date": "2025-11-20T04:50:27.145960",
+    "calibration_method": "per_frame_homography",
+    "units": "meters",
+    "reference_point": "start_pad"
+  }
+}

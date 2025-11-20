@@ -1,0 +1,61 @@
+{
+  "left_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0
+      ],
+      "y_position_m": [
+        16.12010325656216
+      ],
+      "x_position_m": [
+        1.297565210389192
+      ],
+      "status": [
+        "finished"
+      ],
+      "calibration_quality": [
+        0.75
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.0,
+      "total_distance_m": 0.0,
+      "avg_velocity_m_s": 0.0,
+      "max_velocity_m_s": 0.0,
+      "final_height_m": 16.12010325656216
+    }
+  },
+  "right_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0
+      ],
+      "y_position_m": [
+        16.043221300180676
+      ],
+      "x_position_m": [
+        1.2946383425562626
+      ],
+      "status": [
+        "finished"
+      ],
+      "calibration_quality": [
+        0.75
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.0,
+      "total_distance_m": 0.0,
+      "avg_velocity_m_s": 0.0,
+      "max_velocity_m_s": 0.0,
+      "final_height_m": 16.043221300180676
+    }
+  },
+  "metadata": {
+    "video_path": "data\\race_segments\\zilina_2025\\Speed_finals_Zilina_2025_race049.mp4",
+    "processing_date": "2025-11-20T04:48:53.519949",
+    "calibration_method": "per_frame_homography",
+    "units": "meters",
+    "reference_point": "start_pad"
+  }
+}

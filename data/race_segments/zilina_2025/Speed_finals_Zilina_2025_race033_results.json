@@ -1,0 +1,81 @@
+{
+  "left_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0,
+        0.03333333333333333,
+        0.06666666666666667
+      ],
+      "y_position_m": [
+        -8.34349703451631,
+        -9.14436549300793,
+        0.0
+      ],
+      "x_position_m": [
+        0.9407906799715344,
+        0.9212232341049296,
+        0.0
+      ],
+      "status": [
+        "climbing",
+        "climbing",
+        "out_of_frame"
+      ],
+      "calibration_quality": [
+        0.75,
+        0.75,
+        0.75
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.06666666666666667,
+      "total_distance_m": 0.8008684584916193,
+      "avg_velocity_m_s": 12.013026877374289,
+      "max_velocity_m_s": 274.3309647902379,
+      "final_height_m": 0.0
+    }
+  },
+  "right_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0,
+        0.03333333333333333,
+        0.06666666666666667
+      ],
+      "y_position_m": [
+        -10.048924273555814,
+        -4.981066584612433,
+        0.0
+      ],
+      "x_position_m": [
+        1.0012896148672252,
+        0.8193096518267774,
+        0.0
+      ],
+      "status": [
+        "climbing",
+        "climbing",
+        "out_of_frame"
+      ],
+      "calibration_quality": [
+        0.75,
+        0.75,
+        0.75
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.06666666666666667,
+      "total_distance_m": 5.067857688943381,
+      "avg_velocity_m_s": 76.01786533415071,
+      "max_velocity_m_s": 152.03573066830143,
+      "final_height_m": 0.0
+    }
+  },
+  "metadata": {
+    "video_path": "data\\race_segments\\zilina_2025\\Speed_finals_Zilina_2025_race033.mp4",
+    "processing_date": "2025-11-20T04:48:03.766944",
+    "calibration_method": "per_frame_homography",
+    "units": "meters",
+    "reference_point": "start_pad"
+  }
+}

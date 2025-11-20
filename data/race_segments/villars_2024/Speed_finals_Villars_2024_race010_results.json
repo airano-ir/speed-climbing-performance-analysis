@@ -1,0 +1,61 @@
+{
+  "left_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0
+      ],
+      "y_position_m": [
+        38.85447035818467
+      ],
+      "x_position_m": [
+        -0.11499671582089753
+      ],
+      "status": [
+        "finished"
+      ],
+      "calibration_quality": [
+        0.999999999999993
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.0,
+      "total_distance_m": 0.0,
+      "avg_velocity_m_s": 0.0,
+      "max_velocity_m_s": 0.0,
+      "final_height_m": 38.85447035818467
+    }
+  },
+  "right_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0
+      ],
+      "y_position_m": [
+        35.910996587374456
+      ],
+      "x_position_m": [
+        -0.9423251214610812
+      ],
+      "status": [
+        "finished"
+      ],
+      "calibration_quality": [
+        0.999999999999993
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.0,
+      "total_distance_m": 0.0,
+      "avg_velocity_m_s": 0.0,
+      "max_velocity_m_s": 0.0,
+      "final_height_m": 35.910996587374456
+    }
+  },
+  "metadata": {
+    "video_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race010.mp4",
+    "processing_date": "2025-11-20T04:52:14.327718",
+    "calibration_method": "per_frame_homography",
+    "units": "meters",
+    "reference_point": "start_pad"
+  }
+}

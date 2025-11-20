@@ -1,0 +1,71 @@
+{
+  "left_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0,
+        0.03333333333333333
+      ],
+      "y_position_m": [
+        0.0,
+        16.13550605605778
+      ],
+      "x_position_m": [
+        0.0,
+        0.7987425841173323
+      ],
+      "status": [
+        "climbing",
+        "finished"
+      ],
+      "calibration_quality": [
+        0.9999999999999825,
+        0.9999999999999825
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.03333333333333333,
+      "total_distance_m": 0.0,
+      "avg_velocity_m_s": 0.0,
+      "max_velocity_m_s": 484.06518168173335,
+      "final_height_m": 16.13550605605778
+    }
+  },
+  "right_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0,
+        0.03333333333333333
+      ],
+      "y_position_m": [
+        16.14303535854419,
+        16.130808120015118
+      ],
+      "x_position_m": [
+        0.7987658823187446,
+        0.7987252294318541
+      ],
+      "status": [
+        "finished",
+        "finished"
+      ],
+      "calibration_quality": [
+        0.9999999999999825,
+        0.9999999999999825
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.03333333333333333,
+      "total_distance_m": 0.0,
+      "avg_velocity_m_s": 0.0,
+      "max_velocity_m_s": -0.36681715587214114,
+      "final_height_m": 16.130808120015118
+    }
+  },
+  "metadata": {
+    "video_path": "data\\race_segments\\innsbruck_2024\\Speed_finals_Innsbruck_2024_race022.mp4",
+    "processing_date": "2025-11-20T04:56:08.080534",
+    "calibration_method": "per_frame_homography",
+    "units": "meters",
+    "reference_point": "start_pad"
+  }
+}

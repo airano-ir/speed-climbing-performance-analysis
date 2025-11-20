@@ -1,0 +1,91 @@
+{
+  "left_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0,
+        0.03333333333333333,
+        0.06666666666666667,
+        0.1
+      ],
+      "y_position_m": [
+        0.0,
+        14.08654552587171,
+        14.33273079564811,
+        14.919848455651762
+      ],
+      "x_position_m": [
+        0.0,
+        0.8473245401792003,
+        0.8113923909157496,
+        0.7333227163764613
+      ],
+      "status": [
+        "climbing",
+        "climbing",
+        "climbing",
+        "finished"
+      ],
+      "calibration_quality": [
+        0.9999999999999905,
+        0.9999999999999905,
+        0.9999999999999905,
+        0.9999999999999905
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.1,
+      "total_distance_m": 14.33273079564811,
+      "avg_velocity_m_s": 143.3273079564811,
+      "max_velocity_m_s": 422.5963657761513,
+      "final_height_m": 14.919848455651762
+    }
+  },
+  "right_climber": {
+    "time_series": {
+      "timestamps": [
+        0.0,
+        0.03333333333333333,
+        0.06666666666666667,
+        0.1
+      ],
+      "y_position_m": [
+        14.13788999932294,
+        14.173406430645853,
+        14.359861435544143,
+        14.734048844444764
+      ],
+      "x_position_m": [
+        0.8432518510637346,
+        0.8363310908945766,
+        0.8065180918105045,
+        0.742860170937277
+      ],
+      "status": [
+        "climbing",
+        "climbing",
+        "climbing",
+        "finished"
+      ],
+      "calibration_quality": [
+        0.9999999999999905,
+        0.9999999999999905,
+        0.9999999999999905,
+        0.9999999999999905
+      ]
+    },
+    "summary": {
+      "total_time_s": 0.1,
+      "total_distance_m": 0.22197143622120308,
+      "avg_velocity_m_s": 2.219714362212031,
+      "max_velocity_m_s": 11.225622267018627,
+      "final_height_m": 14.734048844444764
+    }
+  },
+  "metadata": {
+    "video_path": "data\\race_segments\\villars_2024\\Speed_finals_Villars_2024_race019.mp4",
+    "processing_date": "2025-11-20T04:53:35.943185",
+    "calibration_method": "per_frame_homography",
+    "units": "meters",
+    "reference_point": "start_pad"
+  }
+}
