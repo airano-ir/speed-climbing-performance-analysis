@@ -33,9 +33,11 @@ def visualize_calibration(video_path, frame_number=None, output_path="debug_cali
         print("Error: Could not read frame")
         return
 
-    # Initialize tracker
+    # Initialize tracker and pose extractor
     route_map_path = "configs/ifsc_route_coordinates.json"
     tracker = WorldCoordinateTracker(route_map_path)
+    from speed_climbing.vision.pose import BlazePoseExtractor
+    pose_extractor = BlazePoseExtractor()
     
     # We need to manually detect holds to visualize them, as process_frame doesn't return them
     # But process_frame does the calibration.
@@ -43,9 +45,36 @@ def visualize_calibration(video_path, frame_number=None, output_path="debug_cali
     
     lane = 'left' # Default to left lane for visualization
     
-    # 1. Detect Holds
+    # 0. Detect Pose and Create Mask
+    print("Detecting pose for masking...")
+    pose_result = pose_extractor.extract_pose(frame)
+    
+    mask = np.ones(frame.shape[:2], dtype=np.uint8) * 255
+    if pose_result and pose_result.has_detection:
+        print("Pose detected, creating mask...")
+        # Collect all keypoints
+        points = []
+        h, w = frame.shape[:2]
+        for kp in pose_result.keypoints.values():
+            if kp.confidence > 0.3:
+                points.append((int(kp.x * w), int(kp.y * h)))
+        
+        if points:
+            # Create a convex hull around the climber
+            hull = cv2.convexHull(np.array(points))
+            # Dilate the hull to cover loose clothing/limbs
+            cv2.fillConvexPoly(mask, hull, 0)
+            # Dilate the black area (erode the white mask) to expand the exclusion zone
+            kernel = np.ones((20, 20), np.uint8) # 20px margin
+            mask = cv2.erode(mask, kernel, iterations=1)
+            
+    # Apply mask to frame for detection only
+    masked_frame = frame.copy()
+    masked_frame[mask == 0] = [0, 0, 0] # Black out the climber
+    
+    # 1. Detect Holds (on masked frame)
     print("Detecting holds...")
-    detected_holds = tracker.hold_detector.detect_holds(frame, lane=lane)
+    detected_holds = tracker.hold_detector.detect_holds(masked_frame, lane=lane)
     print(f"Detected {len(detected_holds)} holds in {lane} lane.")
     
     # 2. Calibrate
