@@ -27,11 +27,13 @@ import numpy as np
 import json
 
 # Add src to path
-sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
+# Add project root to path
+project_root = Path(__file__).parent.parent
+sys.path.append(str(project_root))
 
-from calibration.camera_calibration import CameraCalibrator
-# from calibration.ifsc_route_map import IFSCRouteMapParser  # Not needed for prototype
-from phase1_pose_estimation.hold_detector import HoldDetector
+from speed_climbing.vision.calibration import CameraCalibrator
+# from speed_climbing.vision.calibration import IFSCRouteMapParser  # Not needed for prototype
+from speed_climbing.vision.holds import HoldDetector
 
 
 def main():
