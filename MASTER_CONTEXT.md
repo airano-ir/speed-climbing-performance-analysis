@@ -3,8 +3,8 @@
 ## Project Overview
 **Goal**: Build an automated video analysis system for speed climbing that tracks athletes, maps their position to the official IFSC wall (15m), and calculates performance metrics (velocity, splits, etc.).
 
-**Current Status**: **Refactoring & Migration (Phase 2.5)**
-We are currently restructuring the project into a modular `speed_climbing` package to improve maintainability and testability.
+**Current Status**: **Refactoring Complete & Testing (Phase 2.6)**
+All core components have been migrated to the `speed_climbing` package. The full pipeline has been verified on a test video.
 
 ## Architecture (New)
 The project is being migrated to a domain-driven structure:
@@ -32,14 +32,17 @@ The project is being migrated to a domain-driven structure:
     *   Transform Athlete COM (Center of Mass) to Wall Coordinates (Meters).
 
 ## Recent Updates
-*   **2025-11-20**: Started major refactoring. Created `speed_climbing` package. Migrated Vision and Processing components. Verified `HoldDetector` with user images.
+*   **2025-11-20**: 
+    *   Completed migration of `TimeSeriesBuilder`, `DropoutHandler`, `WorldCoordinateTracker`, and `GlobalMapVideoProcessor`.
+    *   Verified full pipeline with `scripts/run_new_pipeline.py`.
+    *   Successful end-to-end test on `race001` (14.39m detected distance).
 
 ## Known Issues / Focus Areas
 *   **Hold Detection**: Sensitivity to lighting/angle. (Mitigation: Tuning HSV, Area filters).
 *   **Calibration**: Needs robust RANSAC to handle partial wall visibility.
-*   **Testing**: Need to run full pipeline test on video segments.
+*   **Physical Validation**: Initial prototype showed some height discrepancies (Physical Validation: FAIL in prototype), but full pipeline produced reasonable total distance. Needs fine-tuning.
 
 ## Next Steps
-1.  Complete migration of entry point scripts.
-2.  Run full pipeline test on `race001` or `race003`.
-3.  Implement "Calibration Quality" visualization.
+1.  Clean up legacy code in `src/`.
+2.  Implement "Calibration Quality" visualization.
+3.  Run batch processing on more races to validate robustness.
