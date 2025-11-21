@@ -74,11 +74,15 @@ class GlobalMapVideoProcessor:
                 # A. Pose Estimation
                 # This is a placeholder for the actual pose extraction call
                 # In a real migration, we'd ensure BlazePoseExtractor is fully compatible
-                pose = self.pose_extractor.extract_pose(frame, lane=lane) 
+                pose = self.pose_extractor.extract_pose(frame, lane=lane)
+
+                # Create mask to hide climber from hold detector
+                masked_frame = self._create_climber_mask(frame, pose)
 
                 # B. World Tracking
-                tracker_result = self.world_tracker.process_frame(frame, current_frame, lane)
-                
+                # Use masked frame to avoid detecting climber as holds
+                tracker_result = self.world_tracker.process_frame(masked_frame, current_frame, lane)
+
                 y_pos = None
                 x_pos = None
                 
@@ -131,3 +135,41 @@ class GlobalMapVideoProcessor:
                 'reference_point': 'start_pad'
             }
         }
+
+    def _create_climber_mask(self, frame: np.ndarray, pose) -> np.ndarray:
+        """
+        Create a version of the frame where the climber is masked out (blacked out).
+        This prevents the hold detector from mistaking the climber for a hold.
+
+        Args:
+            frame: Input video frame
+            pose: PoseResult from BlazePoseExtractor
+
+        Returns:
+            Frame with climber masked out
+        """
+        if not pose or not pose.has_detection:
+            return frame
+
+        mask = np.ones(frame.shape[:2], dtype=np.uint8) * 255
+
+        # Collect all keypoints
+        points = []
+        h, w = frame.shape[:2]
+        for kp in pose.keypoints.values():
+            if kp.confidence > 0.3:
+                points.append((int(kp.x * w), int(kp.y * h)))
+
+        if points:
+            # Create a convex hull around the climber
+            hull = cv2.convexHull(np.array(points))
+            # Dilate the hull to cover loose clothing/limbs
+            cv2.fillConvexPoly(mask, hull, 0)
+            # Dilate the black area (erode the white mask) to expand the exclusion zone
+            kernel = np.ones((20, 20), np.uint8)  # 20px margin
+            mask = cv2.erode(mask, kernel, iterations=1)
+
+        masked_frame = frame.copy()
+        masked_frame[mask == 0] = [0, 0, 0]  # Black out the climber
+
+        return masked_frame
