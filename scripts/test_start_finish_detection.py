@@ -45,7 +45,7 @@ class StartFinishValidator:
         self.visualize = visualize
 
         # Load route map
-        with open(route_map_path, 'r') as f:
+        with open(route_map_path, 'r', encoding='utf-8') as f:
             self.route_map = json.load(f)
 
         # Initialize components

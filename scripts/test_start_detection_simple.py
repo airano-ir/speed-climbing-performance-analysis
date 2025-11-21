@@ -27,7 +27,7 @@ def test_with_calibration(video_path: str, route_map_path: str, max_frames: int 
     print(f"{'='*60}\n")
 
     # Load route map
-    with open(route_map_path, 'r') as f:
+    with open(route_map_path, 'r', encoding='utf-8') as f:
         route_map = json.load(f)
 
     cap = cv2.VideoCapture(video_path)

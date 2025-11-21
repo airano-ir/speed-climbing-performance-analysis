@@ -43,7 +43,7 @@ class CameraCalibrator:
         self.min_inlier_ratio = min_inlier_ratio
 
         try:
-            with open(route_coordinates_path, 'r') as f:
+            with open(route_coordinates_path, 'r', encoding='utf-8') as f:
                 self.route_map = json.load(f)
         except Exception as e:
             logger.error(f"Failed to load route map: {e}")
