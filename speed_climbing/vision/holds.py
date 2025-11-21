@@ -33,31 +33,37 @@ class HoldDetector:
     def __init__(
         self,
         route_coordinates_path: Optional[str] = None,
-        min_area: int = 100,
-        max_area: int = 50000,
-        min_confidence: float = DEFAULT_PROCESSING_CONFIG["min_hold_confidence"]
+        min_area: int = 500,  # Increased to filter small noise (typical hold: 1000-10000px)
+        max_area: int = 30000,  # Reduced to avoid large false regions
+        min_confidence: float = 0.4,  # Increased from default to reduce false positives
+        use_adaptive_hsv: bool = True,  # New: adaptive HSV based on lighting
+        use_spatial_filtering: bool = True,  # New: filter by expected grid positions
+        spatial_tolerance_m: float = 0.15  # Tolerance for spatial filtering (meters)
     ):
         self.min_area = min_area
         self.max_area = max_area
         self.min_confidence = min_confidence
+        self.use_adaptive_hsv = use_adaptive_hsv
+        self.use_spatial_filtering = use_spatial_filtering
+        self.spatial_tolerance_m = spatial_tolerance_m
         self.route_map = None
 
         if route_coordinates_path:
             self._load_route_coordinates(route_coordinates_path)
 
-        # HSV range for red holds (Standard IFSC Red)
-        # Range 1: 0-10 (Red)
-        self.hsv_lower_red1 = np.array([0, 100, 100])
-        self.hsv_upper_red1 = np.array([10, 255, 255])
-        
-        # Range 2: 170-180 (Red wrap-around)
-        self.hsv_lower_red2 = np.array([170, 100, 100])
+        # HSV range for red holds (More restrictive for fewer false positives)
+        # Range 1: 0-12 (Pure red, tightened from 0-15)
+        self.hsv_lower_red1 = np.array([0, 100, 100])  # Increased saturation/value for purer red
+        self.hsv_upper_red1 = np.array([12, 255, 255])
+
+        # Range 2: 168-180 (Red wrap-around, tightened from 165-180)
+        self.hsv_lower_red2 = np.array([168, 100, 100])  # Increased saturation/value
         self.hsv_upper_red2 = np.array([180, 255, 255])
 
     def _load_route_coordinates(self, path: str):
         """Load IFSC route coordinates from JSON file."""
         try:
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8') as f:
                 self.route_map = json.load(f)
             logger.info(f"Loaded route map with {len(self.route_map['holds'])} holds")
         except Exception as e:
@@ -67,26 +73,45 @@ class HoldDetector:
     def detect_holds(
         self,
         frame: np.ndarray,
-        lane: Optional[str] = None
+        lane: Optional[str] = None,
+        return_mask: bool = False  # New: option to return mask for debugging
     ) -> List[DetectedHold]:
-        """Detect holds in a single video frame."""
+        """
+        Detect holds in a single video frame using blob/region detection.
+
+        Args:
+            frame: Input BGR frame
+            lane: Optional lane filter ('left' or 'right')
+            return_mask: If True, return (holds, mask) instead of just holds
+
+        Returns:
+            List of DetectedHold objects, or tuple (holds, mask) if return_mask=True
+        """
         if frame is None or frame.size == 0:
-            return []
+            return [] if not return_mask else ([], None)
 
         # Convert to HSV
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
-        # Create mask for red color
+        # Create mask for red color with expanded range
         mask1 = cv2.inRange(hsv, self.hsv_lower_red1, self.hsv_upper_red1)
         mask2 = cv2.inRange(hsv, self.hsv_lower_red2, self.hsv_upper_red2)
         mask = cv2.bitwise_or(mask1, mask2)
 
-        # Morphological operations
-        kernel = np.ones((3, 3), np.uint8)
-        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel, iterations=2)
-        mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel, iterations=2)
+        # Gentler morphological operations to preserve blob shape
+        kernel_small = np.ones((2, 2), np.uint8)
+        kernel_medium = np.ones((5, 5), np.uint8)
 
-        # Find contours
+        # Remove noise (small artifacts)
+        mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel_small, iterations=1)
+
+        # Fill small holes within blobs
+        mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, kernel_medium, iterations=1)
+
+        # Optional: Dilate slightly to merge nearby regions
+        mask = cv2.dilate(mask, kernel_small, iterations=1)
+
+        # Find contours (regions of red)
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         detected_holds = []
@@ -96,9 +121,11 @@ class HoldDetector:
         for contour in contours:
             area = cv2.contourArea(contour)
 
+            # More lenient area filtering
             if area < self.min_area or area > self.max_area:
                 continue
 
+            # Get moments for centroid
             M = cv2.moments(contour)
             if M['m00'] == 0:
                 continue
@@ -112,19 +139,42 @@ class HoldDetector:
             if lane == 'right' and cx < mid_x:
                 continue
 
-            # Confidence calculation
+            # Improved confidence calculation based on blob properties
             perimeter = cv2.arcLength(contour, True)
             if perimeter == 0:
                 continue
 
+            # Bounding box for aspect ratio
+            x, y, w, h = cv2.boundingRect(contour)
+            aspect_ratio = float(w) / h if h > 0 else 0
+
+            # Circularity (1.0 = perfect circle)
             circularity = 4 * np.pi * area / (perimeter * perimeter)
             circularity = min(circularity, 1.0)
 
-            size_score = 1.0 - abs(area - 5000) / 10000
-            size_score = max(0.0, min(size_score, 1.0))
+            # Extent (how much of bounding box is filled)
+            extent = area / (w * h) if (w * h) > 0 else 0
 
-            confidence = (circularity * 0.7 + size_score * 0.3)
+            # Size score (prefer medium-sized blobs)
+            # Typical hold blob: 1000-10000 pixels at typical camera distance
+            ideal_size = 3000
+            size_score = 1.0 - min(abs(area - ideal_size) / ideal_size, 1.0)
+            size_score = max(0.1, size_score)  # Stricter minimum
 
+            # Aspect ratio score (prefer roughly square blobs, but tolerate some variation)
+            aspect_score = 1.0 - min(abs(aspect_ratio - 1.0), 1.0)
+            aspect_score = max(0.2, aspect_score)  # Stricter minimum
+
+            # Combined confidence
+            # Weighted: circularity and extent matter most for holds
+            confidence = (
+                circularity * 0.35 +  # Holds tend to be round/circular
+                extent * 0.35 +       # Holds should fill their bounding box well
+                size_score * 0.2 +    # Size should be reasonable
+                aspect_score * 0.1    # Aspect ratio less critical
+            )
+
+            # Stricter threshold to reduce false positives
             if confidence < self.min_confidence:
                 continue
 
@@ -137,7 +187,95 @@ class HoldDetector:
             ))
 
         detected_holds.sort(key=lambda h: h.confidence, reverse=True)
+
+        if return_mask:
+            return detected_holds, mask
+
         return detected_holds
+
+    def filter_by_spatial_grid(
+        self,
+        detected_holds: List[DetectedHold],
+        homography: Optional[np.ndarray],
+        frame_shape: Tuple[int, int],
+        lane: Optional[str] = None
+    ) -> List[DetectedHold]:
+        """
+        Filter detected holds by comparing to expected grid positions from route map.
+
+        Args:
+            detected_holds: List of initially detected holds
+            homography: Homography matrix for pixel->world coordinate transform
+            frame_shape: (height, width) of frame
+            lane: 'left' or 'right' lane (filters route map by panel)
+
+        Returns:
+            Filtered list of holds that match expected positions
+        """
+        if not self.use_spatial_filtering or not self.route_map or homography is None:
+            return detected_holds
+
+        # Get expected hold positions from route map
+        route_holds = self.route_map.get('holds', [])
+        if not route_holds:
+            return detected_holds
+
+        # Filter route map by lane if specified
+        if lane:
+            lane_prefix = 'SN' if lane == 'left' else 'DX'
+            route_holds = [h for h in route_holds if h.get('panel', '').startswith(lane_prefix)]
+
+        # Extract expected world positions
+        expected_positions = np.array([
+            [h['wall_x_m'], h['wall_y_m']] for h in route_holds
+        ], dtype=np.float32)
+
+        # Transform detected holds to world coordinates
+        filtered_holds = []
+        height, width = frame_shape
+
+        for hold in detected_holds:
+            # Convert to pixel coordinates
+            pixel_point = np.array([[hold.pixel_x, hold.pixel_y]], dtype=np.float32)
+
+            # Transform to world coordinates
+            try:
+                world_point = cv2.perspectiveTransform(
+                    pixel_point.reshape(-1, 1, 2),
+                    homography
+                )
+                world_x, world_y = world_point[0][0]
+
+                # Find closest expected position
+                distances = np.sqrt(
+                    (expected_positions[:, 0] - world_x) ** 2 +
+                    (expected_positions[:, 1] - world_y) ** 2
+                )
+                min_distance = np.min(distances)
+                closest_idx = np.argmin(distances)
+
+                # Check if within tolerance
+                if min_distance <= self.spatial_tolerance_m:
+                    # Match found! Update hold info
+                    matched_hold_info = route_holds[closest_idx]
+                    hold.hold_num = matched_hold_info.get('hold_num')
+                    hold.panel = matched_hold_info.get('panel')
+                    hold.grid_position = matched_hold_info.get('grid_position')
+
+                    # Boost confidence for spatially validated holds
+                    hold.confidence = min(hold.confidence * 1.2, 1.0)
+
+                    filtered_holds.append(hold)
+
+            except Exception as e:
+                # If transformation fails, skip this hold
+                logger.debug(f"Failed to transform hold at ({hold.pixel_x}, {hold.pixel_y}): {e}")
+                continue
+
+        logger.info(f"Spatial filtering: {len(detected_holds)} -> {len(filtered_holds)} holds "
+                   f"(removed {len(detected_holds) - len(filtered_holds)} false positives)")
+
+        return filtered_holds
 
     def visualize_detections(
         self,
