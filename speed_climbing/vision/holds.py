@@ -203,6 +203,10 @@ class HoldDetector:
         """
         Filter detected holds by comparing to expected grid positions from route map.
 
+        This method can be called independently and will perform spatial filtering
+        regardless of the use_spatial_filtering flag (which only controls automatic
+        filtering in detect_holds).
+
         Args:
             detected_holds: List of initially detected holds
             homography: Homography matrix for pixel->world coordinate transform
@@ -212,7 +216,8 @@ class HoldDetector:
         Returns:
             Filtered list of holds that match expected positions
         """
-        if not self.use_spatial_filtering or not self.route_map or homography is None:
+        # Only check for required dependencies (not the use_spatial_filtering flag)
+        if not self.route_map or homography is None:
             return detected_holds
 
         # Get expected hold positions from route map
