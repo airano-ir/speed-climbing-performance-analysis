@@ -33,9 +33,9 @@ class HoldDetector:
     def __init__(
         self,
         route_coordinates_path: Optional[str] = None,
-        min_area: int = 50,  # Reduced to catch smaller blobs
-        max_area: int = 100000,  # Increased to catch larger regions
-        min_confidence: float = DEFAULT_PROCESSING_CONFIG["min_hold_confidence"],
+        min_area: int = 500,  # Increased to filter small noise (typical hold: 1000-10000px)
+        max_area: int = 30000,  # Reduced to avoid large false regions
+        min_confidence: float = 0.4,  # Increased from default to reduce false positives
         use_adaptive_hsv: bool = True  # New: adaptive HSV based on lighting
     ):
         self.min_area = min_area
@@ -47,13 +47,13 @@ class HoldDetector:
         if route_coordinates_path:
             self._load_route_coordinates(route_coordinates_path)
 
-        # HSV range for red holds (Expanded for better detection)
-        # Range 1: 0-15 (Red) - Expanded upper bound
-        self.hsv_lower_red1 = np.array([0, 70, 70])  # Reduced saturation/value thresholds
-        self.hsv_upper_red1 = np.array([15, 255, 255])
+        # HSV range for red holds (More restrictive for fewer false positives)
+        # Range 1: 0-12 (Pure red, tightened from 0-15)
+        self.hsv_lower_red1 = np.array([0, 100, 100])  # Increased saturation/value for purer red
+        self.hsv_upper_red1 = np.array([12, 255, 255])
 
-        # Range 2: 165-180 (Red wrap-around) - Expanded lower bound
-        self.hsv_lower_red2 = np.array([165, 70, 70])  # Reduced saturation/value thresholds
+        # Range 2: 168-180 (Red wrap-around, tightened from 165-180)
+        self.hsv_lower_red2 = np.array([168, 100, 100])  # Increased saturation/value
         self.hsv_upper_red2 = np.array([180, 255, 255])
 
     def _load_route_coordinates(self, path: str):
@@ -151,27 +151,27 @@ class HoldDetector:
             # Extent (how much of bounding box is filled)
             extent = area / (w * h) if (w * h) > 0 else 0
 
-            # Size score (prefer medium-sized blobs, but be more lenient)
-            # Typical hold blob: 500-15000 pixels
+            # Size score (prefer medium-sized blobs)
+            # Typical hold blob: 1000-10000 pixels at typical camera distance
             ideal_size = 3000
             size_score = 1.0 - min(abs(area - ideal_size) / ideal_size, 1.0)
-            size_score = max(0.2, size_score)  # Minimum score of 0.2
+            size_score = max(0.1, size_score)  # Stricter minimum
 
-            # Aspect ratio score (prefer roughly square blobs)
+            # Aspect ratio score (prefer roughly square blobs, but tolerate some variation)
             aspect_score = 1.0 - min(abs(aspect_ratio - 1.0), 1.0)
-            aspect_score = max(0.3, aspect_score)  # Minimum score of 0.3
+            aspect_score = max(0.2, aspect_score)  # Stricter minimum
 
             # Combined confidence
-            # Weighted: size matters most, then extent (filled blob), then circularity
+            # Weighted: circularity and extent matter most for holds
             confidence = (
-                size_score * 0.4 +
-                extent * 0.3 +
-                circularity * 0.2 +
-                aspect_score * 0.1
+                circularity * 0.35 +  # Holds tend to be round/circular
+                extent * 0.35 +       # Holds should fill their bounding box well
+                size_score * 0.2 +    # Size should be reasonable
+                aspect_score * 0.1    # Aspect ratio less critical
             )
 
-            # More lenient threshold
-            if confidence < max(self.min_confidence * 0.5, 0.2):
+            # Stricter threshold to reduce false positives
+            if confidence < self.min_confidence:
                 continue
 
             detected_holds.append(DetectedHold(
