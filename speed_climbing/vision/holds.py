@@ -36,12 +36,16 @@ class HoldDetector:
         min_area: int = 500,  # Increased to filter small noise (typical hold: 1000-10000px)
         max_area: int = 30000,  # Reduced to avoid large false regions
         min_confidence: float = 0.4,  # Increased from default to reduce false positives
-        use_adaptive_hsv: bool = True  # New: adaptive HSV based on lighting
+        use_adaptive_hsv: bool = True,  # New: adaptive HSV based on lighting
+        use_spatial_filtering: bool = True,  # New: filter by expected grid positions
+        spatial_tolerance_m: float = 0.15  # Tolerance for spatial filtering (meters)
     ):
         self.min_area = min_area
         self.max_area = max_area
         self.min_confidence = min_confidence
         self.use_adaptive_hsv = use_adaptive_hsv
+        self.use_spatial_filtering = use_spatial_filtering
+        self.spatial_tolerance_m = spatial_tolerance_m
         self.route_map = None
 
         if route_coordinates_path:
@@ -188,6 +192,90 @@ class HoldDetector:
             return detected_holds, mask
 
         return detected_holds
+
+    def filter_by_spatial_grid(
+        self,
+        detected_holds: List[DetectedHold],
+        homography: Optional[np.ndarray],
+        frame_shape: Tuple[int, int],
+        lane: Optional[str] = None
+    ) -> List[DetectedHold]:
+        """
+        Filter detected holds by comparing to expected grid positions from route map.
+
+        Args:
+            detected_holds: List of initially detected holds
+            homography: Homography matrix for pixel->world coordinate transform
+            frame_shape: (height, width) of frame
+            lane: 'left' or 'right' lane (filters route map by panel)
+
+        Returns:
+            Filtered list of holds that match expected positions
+        """
+        if not self.use_spatial_filtering or not self.route_map or homography is None:
+            return detected_holds
+
+        # Get expected hold positions from route map
+        route_holds = self.route_map.get('holds', [])
+        if not route_holds:
+            return detected_holds
+
+        # Filter route map by lane if specified
+        if lane:
+            lane_prefix = 'SN' if lane == 'left' else 'DX'
+            route_holds = [h for h in route_holds if h.get('panel', '').startswith(lane_prefix)]
+
+        # Extract expected world positions
+        expected_positions = np.array([
+            [h['wall_x_m'], h['wall_y_m']] for h in route_holds
+        ], dtype=np.float32)
+
+        # Transform detected holds to world coordinates
+        filtered_holds = []
+        height, width = frame_shape
+
+        for hold in detected_holds:
+            # Convert to pixel coordinates
+            pixel_point = np.array([[hold.pixel_x, hold.pixel_y]], dtype=np.float32)
+
+            # Transform to world coordinates
+            try:
+                world_point = cv2.perspectiveTransform(
+                    pixel_point.reshape(-1, 1, 2),
+                    homography
+                )
+                world_x, world_y = world_point[0][0]
+
+                # Find closest expected position
+                distances = np.sqrt(
+                    (expected_positions[:, 0] - world_x) ** 2 +
+                    (expected_positions[:, 1] - world_y) ** 2
+                )
+                min_distance = np.min(distances)
+                closest_idx = np.argmin(distances)
+
+                # Check if within tolerance
+                if min_distance <= self.spatial_tolerance_m:
+                    # Match found! Update hold info
+                    matched_hold_info = route_holds[closest_idx]
+                    hold.hold_num = matched_hold_info.get('hold_num')
+                    hold.panel = matched_hold_info.get('panel')
+                    hold.grid_position = matched_hold_info.get('grid_position')
+
+                    # Boost confidence for spatially validated holds
+                    hold.confidence = min(hold.confidence * 1.2, 1.0)
+
+                    filtered_holds.append(hold)
+
+            except Exception as e:
+                # If transformation fails, skip this hold
+                logger.debug(f"Failed to transform hold at ({hold.pixel_x}, {hold.pixel_y}): {e}")
+                continue
+
+        logger.info(f"Spatial filtering: {len(detected_holds)} -> {len(filtered_holds)} holds "
+                   f"(removed {len(detected_holds) - len(filtered_holds)} false positives)")
+
+        return filtered_holds
 
     def visualize_detections(
         self,
