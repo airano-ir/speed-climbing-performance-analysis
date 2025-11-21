@@ -51,11 +51,14 @@ def test_spatial_filtering(video_path: str, route_map_path: str, output_path: st
     # Initialize components
     hold_detector = HoldDetector(
         route_coordinates_path=route_map_path,
-        use_spatial_filtering=False  # We'll do it manually to compare
+        use_spatial_filtering=True,  # Enable spatial filtering
+        spatial_tolerance_m=0.06  # Strict 6cm tolerance
     )
 
     calibrator = CameraCalibrator(route_coordinates_path=route_map_path)
 
+    # Detect holds WITHOUT spatial filtering first (to compare)
+    hold_detector.use_spatial_filtering = False
     print("Step 1: Initial hold detection (without spatial filtering)...")
     initial_holds = hold_detector.detect_holds(frame)
     print(f"  Detected: {len(initial_holds)} holds")
@@ -88,10 +91,12 @@ def test_spatial_filtering(video_path: str, route_map_path: str, output_path: st
     print(f"  Inliers: {calibration_result.inlier_count}/{calibration_result.total_holds}")
 
     print("\nStep 3: Spatial filtering...")
+    # Try both with and without lane filter
     filtered_holds = hold_detector.filter_by_spatial_grid(
         initial_holds,
         homography,
-        frame.shape[:2]
+        frame.shape[:2],
+        lane='left'  # Assuming left lane (SN panels)
     )
     print(f"  After filtering: {len(filtered_holds)} holds")
     print(f"  Removed: {len(initial_holds) - len(filtered_holds)} false positives")
