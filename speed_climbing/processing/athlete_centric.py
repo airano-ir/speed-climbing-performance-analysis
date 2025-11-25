@@ -587,10 +587,11 @@ class RelativeMotionTracker:
     """
     Tracks athlete position using frame-to-frame relative motion.
 
-    This approach is more robust than absolute positioning because:
-    1. It doesn't require continuous hold detection
-    2. It handles camera movement naturally
-    3. Small errors don't accumulate as badly with proper filtering
+    KEY INSIGHT for moving camera scenarios:
+    - When camera follows athlete UP, athlete appears to move DOWN in frame
+    - We track CUMULATIVE UPWARD distance separately from position
+    - Cumulative distance is the sum of all upward movements (ignoring downward)
+    - This gives us the actual climbing distance regardless of camera motion
     """
 
     def __init__(self, config: Dict = None):
@@ -604,6 +605,9 @@ class RelativeMotionTracker:
         self.max_velocity_m_s = 3.5  # Maximum climbing velocity
         self.max_acceleration_m_s2 = 15.0  # Maximum acceleration
 
+        # Noise filtering
+        self.min_movement_threshold = 0.01  # Ignore movements smaller than 1cm
+
     def update(
         self,
         state: LaneState,
@@ -615,6 +619,10 @@ class RelativeMotionTracker:
     ) -> Dict:
         """
         Update position tracking with new frame data.
+
+        For MOVING CAMERA scenarios:
+        - cumulative_distance_m: Sum of all upward movements (RELIABLE)
+        - current_height_m: Estimated absolute height (LESS RELIABLE)
 
         Args:
             state: Current lane state
@@ -657,30 +665,49 @@ class RelativeMotionTracker:
                 # Apply physical constraints
                 velocity = np.clip(velocity, -self.max_velocity_m_s, self.max_velocity_m_s)
 
-                # Update cumulative distance (only count upward movement during racing)
-                if state.phase == RacePhase.RACING and meter_delta > 0:
-                    state.cumulative_distance_m += meter_delta
+                # CRITICAL: For moving camera, only accumulate UPWARD movement
+                # Downward "movement" is often just the camera moving up
+                if state.phase == RacePhase.RACING:
+                    if meter_delta > self.min_movement_threshold:
+                        # Genuine upward movement - add to cumulative distance
+                        state.cumulative_distance_m += meter_delta
 
-                # Update current height estimate
-                state.current_height_m += meter_delta
-                state.current_height_m = max(0, state.current_height_m)  # Can't go below ground
+                        # Update current height (this may be inaccurate due to camera)
+                        state.current_height_m += meter_delta
 
-                # Track maximum height
-                if state.current_height_m > state.max_height_m:
-                    state.max_height_m = state.current_height_m
+                        # Track maximum height
+                        if state.current_height_m > state.max_height_m:
+                            state.max_height_m = state.current_height_m
+
+                        result['distance_delta_m'] = meter_delta
+
+                    elif meter_delta < -self.min_movement_threshold:
+                        # Downward movement in frame - could be:
+                        # 1. Camera moving up (most common)
+                        # 2. Athlete actually moving down briefly
+                        # 3. Noise
+
+                        # Don't subtract from cumulative distance
+                        # But do update current height estimate
+                        # (though this makes it less accurate with moving camera)
+
+                        # For now, assume most downward is camera motion
+                        # Only update height if the downward movement is small
+                        if abs(meter_delta) < 0.3:  # Less than 30cm
+                            state.current_height_m += meter_delta
+                            state.current_height_m = max(0.5, state.current_height_m)
 
                 # Update velocity tracking
                 state.current_velocity_m_s = velocity
-                if abs(velocity) > state.max_velocity_m_s:
-                    state.max_velocity_m_s = abs(velocity)
+                if velocity > 0 and velocity > state.max_velocity_m_s:
+                    state.max_velocity_m_s = velocity
 
                 # Add to history for smoothing
-                state.position_history.append(state.current_height_m)
+                state.position_history.append(state.cumulative_distance_m)  # Track cumulative, not position
                 state.velocity_history.append(velocity)
 
                 result['height_m'] = state.current_height_m
                 result['velocity_m_s'] = velocity
-                result['distance_delta_m'] = max(0, meter_delta)
                 result['is_valid'] = True
 
         # Update state for next frame
@@ -978,6 +1005,12 @@ class AthleteCentricPipeline:
     ):
         """Handle racing phase: track climbing progress."""
 
+        # Initialize tracking state if needed
+        if not hasattr(state, 'negative_velocity_count'):
+            state.negative_velocity_count = 0
+        if not hasattr(state, 'camera_offset'):
+            state.camera_offset = 0.0  # Estimated camera movement
+
         # Update position using relative motion
         motion_result = self.motion_tracker.update(
             state,
@@ -988,25 +1021,57 @@ class AthleteCentricPipeline:
             fps
         )
 
-        result.height_m = motion_result['height_m']
+        # Compensate for camera following athlete
+        # Key insight: In a moving camera, athlete stays roughly centered
+        # So we track CUMULATIVE upward movement, not absolute position
+        if motion_result['distance_delta_m'] > 0:
+            # Upward movement is real climbing
+            state.negative_velocity_count = 0
+        elif motion_result['velocity_m_s'] is not None and motion_result['velocity_m_s'] < -0.5:
+            # Downward movement could be:
+            # 1. Camera moving up (athlete appears to go down)
+            # 2. Actual downward movement
+            # 3. Fall
+
+            # If we're still early in the race and haven't climbed much, it's probably camera movement
+            if state.cumulative_distance_m < 5.0:
+                # Assume it's camera movement, not tracking error
+                # Estimate that the camera moved up
+                state.camera_offset += abs(motion_result['velocity_m_s'] / fps)
+                logger.debug(f"Lane {state.lane}: Camera movement compensation applied")
+            else:
+                state.negative_velocity_count += 1
+
+        result.height_m = state.current_height_m
         result.velocity_m_s = motion_result['velocity_m_s']
         result.cumulative_distance_m = state.cumulative_distance_m
 
-        # Check for finish
-        if state.current_height_m >= self.config["finish_height_threshold_m"]:
+        # Check for finish based on cumulative distance (more reliable than absolute height)
+        if state.cumulative_distance_m >= 13.0:  # 13m+ is close to finish
+            # Use a lower threshold since we might miss some small movements
             state.phase = RacePhase.FINISHED
             state.finish_frame = frame_id
             result.is_finish_frame = True
             logger.info(f"Lane {state.lane}: RACE FINISHED at frame {frame_id} "
-                       f"(t={timestamp:.2f}s, height={state.current_height_m:.2f}m)")
+                       f"(t={timestamp:.2f}s, distance={state.cumulative_distance_m:.2f}m)")
 
-        # Check for fall (sudden downward movement)
-        if (motion_result['velocity_m_s'] is not None and
+        # Fall detection: more robust criteria
+        # Only detect fall if:
+        # 1. Athlete has climbed significantly (> 3m)
+        # 2. AND sustained negative velocity for multiple frames (> 10 frames = 0.3s)
+        # 3. AND large cumulative downward distance
+        if (state.cumulative_distance_m > 3.0 and
+            state.negative_velocity_count > 10 and
+            motion_result['velocity_m_s'] is not None and
             motion_result['velocity_m_s'] < self.config["fall_velocity_threshold_m_s"]):
-            state.phase = RacePhase.FALL
-            state.fall_frame = frame_id
-            result.is_fall_frame = True
-            logger.warning(f"Lane {state.lane}: FALL detected at frame {frame_id}")
+
+            # Additional check: see if the athlete has actually lost height
+            if state.current_height_m < state.max_height_m - 2.0:  # Dropped more than 2m from max
+                state.phase = RacePhase.FALL
+                state.fall_frame = frame_id
+                result.is_fall_frame = True
+                logger.warning(f"Lane {state.lane}: FALL detected at frame {frame_id} "
+                              f"(dropped from {state.max_height_m:.1f}m to {state.current_height_m:.1f}m)")
 
     def _handle_post_race(self, state: LaneState, result: FrameResult):
         """Handle post-race phase."""
