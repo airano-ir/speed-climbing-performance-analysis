@@ -88,17 +88,22 @@ class HoldDetector:
     def __init__(
         self,
         route_coordinates_path: Optional[str] = None,
-        min_area: int = 800,  # Minimum contour area in pixels
-        max_area: int = 25000,  # Maximum contour area
-        min_confidence: float = 0.45,  # Minimum combined confidence
+        min_area: int = 300,  # Minimum contour area in pixels (lowered for distant holds)
+        max_area: int = 20000,  # Maximum contour area
+        min_confidence: float = 0.50,  # Minimum combined confidence
         lighting_condition: LightingCondition = LightingCondition.AUTO,
         use_star_detection: bool = True,  # Enable star shape analysis
         use_spatial_filtering: bool = True,  # Filter by expected positions
         spatial_tolerance_m: float = 0.20,  # Tolerance in meters
-        star_weight: float = 0.35,  # Weight for star shape in confidence
+        star_weight: float = 0.40,  # Weight for star shape in confidence (increased)
         color_weight: float = 0.35,  # Weight for color match
-        size_weight: float = 0.20,  # Weight for size appropriateness
+        size_weight: float = 0.15,  # Weight for size appropriateness
         aspect_weight: float = 0.10,  # Weight for aspect ratio
+        min_solidity: float = 0.45,  # Minimum solidity for star-like shapes
+        max_solidity: float = 0.85,  # Maximum solidity (too high = circle/blob)
+        min_aspect_ratio: float = 0.4,  # Minimum width/height ratio
+        max_aspect_ratio: float = 2.5,  # Maximum width/height ratio
+        min_star_score: float = 0.30,  # Minimum star shape score to be considered a hold
     ):
         self.min_area = min_area
         self.max_area = max_area
@@ -114,6 +119,13 @@ class HoldDetector:
         self.color_weight = color_weight
         self.size_weight = size_weight
         self.aspect_weight = aspect_weight
+
+        # Shape filtering parameters
+        self.min_solidity = min_solidity
+        self.max_solidity = max_solidity
+        self.min_aspect_ratio = min_aspect_ratio
+        self.max_aspect_ratio = max_aspect_ratio
+        self.min_star_score = min_star_score
 
         # Will be set based on lighting condition
         self._hsv_preset = None
@@ -366,7 +378,7 @@ class HoldDetector:
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         detected_holds = []
-        debug_info = {"candidates": 0, "filtered_area": 0, "filtered_confidence": 0}
+        debug_info = {"candidates": 0, "filtered_area": 0, "filtered_shape": 0, "filtered_confidence": 0}
         frame_height, frame_width = frame.shape[:2]
         mid_x = frame_width / 2
 
@@ -393,21 +405,44 @@ class HoldDetector:
             if lane == 'right' and cx < mid_x:
                 continue
 
-            # Calculate shape scores
-            star_score = self._calculate_star_score(contour) if self.use_star_detection else 0.5
-            color_score = self._calculate_color_score(frame, contour)
-
             # Bounding box analysis
             x, y, w, h = cv2.boundingRect(contour)
             aspect_ratio = float(w) / h if h > 0 else 0
+
+            # Early shape filtering based on aspect ratio
+            if aspect_ratio < self.min_aspect_ratio or aspect_ratio > self.max_aspect_ratio:
+                debug_info["filtered_shape"] += 1
+                continue
+
+            # Calculate solidity for shape filtering
+            hull = cv2.convexHull(contour)
+            hull_area = cv2.contourArea(hull)
+            solidity = area / hull_area if hull_area > 0 else 0
+
+            # Solidity filtering - stars have moderate solidity (not too high, not too low)
+            if solidity < self.min_solidity or solidity > self.max_solidity:
+                debug_info["filtered_shape"] += 1
+                continue
+
+            # Calculate shape scores
+            star_score = self._calculate_star_score(contour) if self.use_star_detection else 0.5
+
+            # Filter by minimum star score to eliminate non-star shapes (e.g., athlete clothing)
+            if self.use_star_detection and star_score < self.min_star_score:
+                debug_info["filtered_shape"] += 1
+                continue
+
+            color_score = self._calculate_color_score(frame, contour)
 
             # Aspect ratio score (stars are roughly square)
             aspect_score = 1.0 - min(abs(aspect_ratio - 1.0), 1.0)
             aspect_score = max(0.3, aspect_score)
 
-            # Size score (prefer medium-sized blobs)
-            ideal_size = 3000
-            size_score = 1.0 - min(abs(area - ideal_size) / ideal_size, 0.8)
+            # Size score - adaptive based on frame size
+            # For a 1024px wide frame, ideal hold is ~600-1500px area
+            frame_scale = frame_width / 1024.0
+            ideal_size = 800 * (frame_scale ** 2)
+            size_score = 1.0 - min(abs(area - ideal_size) / (ideal_size * 2), 0.8)
             size_score = max(0.2, size_score)
 
             # Combined confidence
