@@ -35,7 +35,13 @@
       "Bash(if [ -f test_pose_extraction.py ])",
       "Bash(then rm test_pose_extraction.py)",
       "Bash(fi)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(set GH_TOKEN=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)",
+      "Bash(gh repo create:*)",
+      "Bash(curl -X POST -H \"Authorization: token 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\" -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/orgs/airano-ir/repos -d \"{\"\"name\"\":\"\"speed-climbing-performance-analysis\"\",\"\"description\"\":\"\"AI-powered speed climbing performance analysis using pose estimation and computer vision\"\",\"\"private\"\":false}\")",
+      "Bash(curl --ssl-no-revoke -X POST -H \"Authorization: token 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\" -H \"Accept: application/vnd.github.v3+json\" https://api.github.com/orgs/airano-ir/repos -d \"{\"\"name\"\":\"\"speed-climbing-performance-analysis\"\",\"\"description\"\":\"\"AI-powered speed climbing performance analysis using pose estimation and computer vision\"\",\"\"private\"\":false}\")",
+      "Bash(curl:*)",
+      "Bash(git remote set-url:*)"
     ]
   },
   "enableAllProjectMcpServers": true,

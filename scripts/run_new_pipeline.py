@@ -17,6 +17,18 @@ project_root = Path(__file__).parent.parent
 sys.path.append(str(project_root))
 
 from speed_climbing.processing.pipeline import GlobalMapVideoProcessor
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler("calibration_debug.log", mode='w', encoding='utf-8'),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+
 
 def main():
     parser = argparse.ArgumentParser(description='Run Speed Climbing Pipeline')

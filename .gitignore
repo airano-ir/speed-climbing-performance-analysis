@@ -151,3 +151,4 @@ Thumbs.db
 
 # Claude local settings (user-specific)
 .claude/settings.local.json
+.claude/settings.local.json
