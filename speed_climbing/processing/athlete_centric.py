@@ -872,6 +872,15 @@ class AthleteCentricPipeline:
                 logger.info(f"Lane {state.lane}: Scale calibrated at {state.scale_pixels_per_meter:.1f} px/m "
                            f"(confidence: {state.scale_confidence:.2f})")
 
+        # Track COM positions to detect movement pattern
+        if not hasattr(state, 'com_history'):
+            state.com_history = []
+        state.com_history.append(com_y)
+
+        # Keep only last 30 frames for analysis
+        if len(state.com_history) > 30:
+            state.com_history = state.com_history[-30:]
+
         # Check for stillness (athlete in ready position)
         if state.baseline_com_normalized is None:
             state.baseline_com_normalized = com_y
@@ -886,9 +895,31 @@ class AthleteCentricPipeline:
                     state.baseline_com_normalized = com_y
                     logger.info(f"Lane {state.lane}: Athlete in READY position at frame {frame_id}")
             else:
-                # Movement detected - reset baseline
+                # Movement detected - check if it's significant upward movement
+                # This handles videos where the race has already started
+                if len(state.com_history) >= 5:
+                    recent_movement = state.com_history[-5][0] if isinstance(state.com_history[-5], tuple) else state.com_history[-5]
+                    current = com_y
+                    upward = recent_movement - current  # Positive = moving up (y decreases)
+
+                    # If significant sustained upward movement, skip to RACING
+                    if upward > self.config["stillness_threshold"] * 5:
+                        logger.info(f"Lane {state.lane}: Detected ongoing race - skipping to RACING at frame {frame_id}")
+                        state.phase = RacePhase.RACING
+                        state.start_frame = max(0, frame_id - 5)  # Estimate start was 5 frames ago
+                        state.current_height_m = self.config["com_standing_height_min_m"]
+                        result.is_start_frame = True
+                        return
+
+                # Reset baseline
                 state.baseline_com_normalized = com_y
                 state.stillness_counter = 1
+
+        # Fallback: if no stillness detected after many frames, transition anyway
+        if frame_id > self.config["pre_race_min_frames"] * 2:
+            logger.warning(f"Lane {state.lane}: No clear ready position found, starting tracking at frame {frame_id}")
+            state.phase = RacePhase.READY
+            state.baseline_com_normalized = com_y
 
     def _handle_ready(
         self,
@@ -900,6 +931,11 @@ class AthleteCentricPipeline:
     ):
         """Handle ready phase: waiting for start signal."""
 
+        # Track ready frames
+        if not hasattr(state, 'ready_frame_count'):
+            state.ready_frame_count = 0
+        state.ready_frame_count += 1
+
         if state.baseline_com_normalized is None:
             state.baseline_com_normalized = com_y
             return
@@ -908,14 +944,26 @@ class AthleteCentricPipeline:
         # Note: In image coords, lower y = higher position
         upward_movement = state.baseline_com_normalized - com_y
 
-        if upward_movement > self.config["stillness_threshold"] * 3:
+        # Use a lower threshold for start detection
+        start_threshold = self.config["stillness_threshold"] * 2  # 0.04 = 4% of frame
+
+        if upward_movement > start_threshold:
             # Significant upward movement - race has started!
             state.phase = RacePhase.RACING
             state.start_frame = frame_id
             state.current_height_m = self.config["com_standing_height_min_m"]  # Initial COM height
 
             result.is_start_frame = True
-            logger.info(f"Lane {state.lane}: RACE STARTED at frame {frame_id} (t={timestamp:.2f}s)")
+            logger.info(f"Lane {state.lane}: RACE STARTED at frame {frame_id} (t={timestamp:.2f}s), "
+                       f"upward_movement={upward_movement:.4f}")
+
+        # Fallback: if stuck in ready for too long, start tracking
+        elif state.ready_frame_count > 60:  # 2 seconds at 30fps
+            logger.warning(f"Lane {state.lane}: Stuck in READY, forcing transition to RACING at frame {frame_id}")
+            state.phase = RacePhase.RACING
+            state.start_frame = frame_id
+            state.current_height_m = self.config["com_standing_height_min_m"]
+            result.is_start_frame = True
 
     def _handle_racing(
         self,
