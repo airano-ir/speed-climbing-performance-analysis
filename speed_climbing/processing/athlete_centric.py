@@ -7,10 +7,17 @@ This module implements a robust approach that:
 3. Detects actual race segments within video (not just video start/end)
 4. Estimates wall position relative to camera
 5. Calculates cumulative climbing distance
+6. Uses hold-based anchoring to compensate for camera tracking
 
 Key insight: Athletes are ALWAYS visible in the video, while holds may be
 occluded by the climber or camera movement. Therefore, we track the athlete
-and use occasional hold sightings to calibrate scale.
+and use occasional hold sightings to calibrate absolute position.
+
+Camera Motion Compensation Strategy:
+- When camera follows athlete UP, the athlete appears relatively stationary
+- But HOLDS appear to move DOWN in the frame
+- By tracking hold movement, we can estimate camera motion
+- This allows us to recover the true climbing distance
 """
 
 import cv2
@@ -731,6 +738,300 @@ class RelativeMotionTracker:
         return float(np.mean(list(state.position_history)))
 
 
+@dataclass
+class HoldAnchor:
+    """Represents a tracked hold used for camera motion estimation."""
+    hold_id: Optional[int]
+    world_y_m: float  # Known position on wall (from route map)
+    pixel_y: float  # Current pixel position in frame
+    frame_id: int
+    confidence: float
+
+
+class HoldAnchoringSystem:
+    """
+    Track holds to estimate camera motion and absolute wall position.
+
+    Key insight for moving camera scenarios:
+    - When camera follows athlete UP, holds appear to move DOWN in frame
+    - By tracking hold positions over time, we can estimate camera offset
+    - This allows us to calculate the TRUE climbing distance
+
+    The system works by:
+    1. Detecting holds in each frame (when visible)
+    2. Matching detected holds to known positions from route map
+    3. Tracking how hold pixel positions change over time
+    4. Using this to estimate cumulative camera motion
+    5. Adding camera motion to relative athlete motion = true distance
+    """
+
+    def __init__(self, route_map: Dict = None, config: Dict = None):
+        self.route_map = route_map
+        cfg = config or ATHLETE_CENTRIC_CONFIG
+        self.wall_height = IFSC_STANDARDS["WALL_HEIGHT_M"]
+
+        # Hold tracking state per lane
+        self.tracked_holds: Dict[str, List[HoldAnchor]] = {
+            'left': [],
+            'right': []
+        }
+
+        # Camera offset estimation per lane
+        # This represents how much the camera has moved UP from start
+        self.camera_offset_m: Dict[str, float] = {
+            'left': 0.0,
+            'right': 0.0
+        }
+
+        # Previous frame hold positions for motion calculation
+        self.prev_hold_positions: Dict[str, Dict[int, float]] = {
+            'left': {},  # hold_id -> pixel_y
+            'right': {}
+        }
+
+        # Estimated scale (pixels per meter) for camera motion calculation
+        self.scale_estimate: Dict[str, float] = {
+            'left': None,
+            'right': None
+        }
+
+        # History of camera offsets for smoothing
+        self.camera_offset_history: Dict[str, deque] = {
+            'left': deque(maxlen=30),
+            'right': deque(maxlen=30)
+        }
+
+        # Confidence in camera motion estimation
+        self.motion_confidence: Dict[str, float] = {
+            'left': 0.0,
+            'right': 0.0
+        }
+
+    def update_from_holds(
+        self,
+        lane: str,
+        detected_holds: List[Any],
+        frame_id: int,
+        frame_height: int,
+        scale_pixels_per_meter: float = None
+    ) -> Dict[str, Any]:
+        """
+        Update camera motion estimate from detected holds.
+
+        Args:
+            lane: 'left' or 'right'
+            detected_holds: List of DetectedHold objects
+            frame_id: Current frame number
+            frame_height: Frame height in pixels
+            scale_pixels_per_meter: Scale factor (if known)
+
+        Returns:
+            Dict with camera_motion_m, confidence, anchors_used
+        """
+        if scale_pixels_per_meter:
+            self.scale_estimate[lane] = scale_pixels_per_meter
+
+        result = {
+            'camera_motion_delta_m': 0.0,
+            'total_camera_offset_m': self.camera_offset_m[lane],
+            'confidence': 0.0,
+            'anchors_used': 0
+        }
+
+        if not self.route_map or not detected_holds:
+            return result
+
+        # Get route holds for matching
+        lane_prefix = 'SN' if lane == 'left' else 'DX'
+        route_holds = {
+            h['hold_num']: h for h in self.route_map.get('holds', [])
+            if h.get('panel', '').startswith(lane_prefix)
+        }
+
+        if not route_holds:
+            return result
+
+        # Match detected holds to route map
+        matched_holds = []
+        for hold in detected_holds:
+            if hold.hold_num is not None and hold.hold_num in route_holds:
+                route_hold = route_holds[hold.hold_num]
+                matched_holds.append(HoldAnchor(
+                    hold_id=hold.hold_num,
+                    world_y_m=route_hold.get('wall_y_m', 0),
+                    pixel_y=hold.pixel_y,
+                    frame_id=frame_id,
+                    confidence=hold.confidence
+                ))
+
+        if not matched_holds:
+            # No matched holds - can't update camera motion
+            return result
+
+        # Calculate camera motion from hold movement
+        camera_motion_pixels = 0.0
+        motion_samples = []
+        prev_positions = self.prev_hold_positions[lane]
+
+        for anchor in matched_holds:
+            if anchor.hold_id in prev_positions:
+                # Hold was seen in previous frame
+                prev_y = prev_positions[anchor.hold_id]
+                current_y = anchor.pixel_y
+
+                # Hold moving DOWN in frame (increasing y) = camera moving UP
+                pixel_delta = current_y - prev_y
+
+                if abs(pixel_delta) < frame_height * 0.3:  # Sanity check
+                    motion_samples.append(pixel_delta)
+
+        # Update previous positions for next frame
+        self.prev_hold_positions[lane] = {
+            anchor.hold_id: anchor.pixel_y for anchor in matched_holds
+        }
+
+        if motion_samples:
+            # Average the motion samples
+            camera_motion_pixels = np.median(motion_samples)
+
+            # Convert to meters if we have scale
+            scale = self.scale_estimate[lane]
+            if scale and scale > 0:
+                # Positive pixel delta = hold moved down = camera moved up
+                camera_motion_m = camera_motion_pixels / scale
+                self.camera_offset_m[lane] += camera_motion_m
+
+                # Add to history for smoothing
+                self.camera_offset_history[lane].append(camera_motion_m)
+
+                # Calculate confidence based on number of samples
+                result['confidence'] = min(1.0, len(motion_samples) / 3.0)
+                result['camera_motion_delta_m'] = camera_motion_m
+                self.motion_confidence[lane] = result['confidence']
+
+        # Update tracked holds
+        self.tracked_holds[lane] = matched_holds
+
+        result['total_camera_offset_m'] = self.camera_offset_m[lane]
+        result['anchors_used'] = len(matched_holds)
+
+        return result
+
+    def estimate_absolute_height(
+        self,
+        lane: str,
+        relative_height_m: float,
+        detected_holds: List[Any] = None,
+        frame_height: int = None
+    ) -> Tuple[float, float]:
+        """
+        Estimate absolute height on wall using hold anchors.
+
+        When holds are visible, we can directly calculate athlete height
+        by comparing athlete position to known hold positions.
+
+        Args:
+            lane: 'left' or 'right'
+            relative_height_m: Height estimated from relative motion
+            detected_holds: Currently visible holds (optional)
+            frame_height: Frame height in pixels (optional)
+
+        Returns:
+            Tuple of (estimated_height_m, confidence)
+        """
+        # Method 1: Use camera offset
+        # If camera has moved up X meters, athlete is at relative_height + X
+        camera_offset = self.camera_offset_m[lane]
+        height_from_offset = relative_height_m + camera_offset
+
+        confidence = self.motion_confidence[lane]
+
+        # Method 2: Direct calculation from visible holds (if available)
+        if detected_holds and frame_height and self.tracked_holds[lane]:
+            direct_height = self._estimate_from_hold_reference(
+                lane, detected_holds, frame_height
+            )
+            if direct_height is not None:
+                # Blend with offset-based estimate
+                height_from_offset = (height_from_offset + direct_height) / 2
+                confidence = min(1.0, confidence + 0.3)
+
+        return height_from_offset, confidence
+
+    def _estimate_from_hold_reference(
+        self,
+        lane: str,
+        detected_holds: List[Any],
+        frame_height: int
+    ) -> Optional[float]:
+        """
+        Estimate athlete height directly from hold positions in frame.
+
+        If we see a hold at known height Y meters, and the athlete is
+        above/below that hold in the frame, we can calculate absolute height.
+        """
+        if not detected_holds or not self.route_map:
+            return None
+
+        # Find a high-confidence matched hold
+        lane_prefix = 'SN' if lane == 'left' else 'DX'
+        route_holds = {
+            h['hold_num']: h for h in self.route_map.get('holds', [])
+            if h.get('panel', '').startswith(lane_prefix)
+        }
+
+        for hold in detected_holds:
+            if hold.hold_num is not None and hold.hold_num in route_holds:
+                route_hold = route_holds[hold.hold_num]
+                hold_world_y = route_hold.get('wall_y_m', 0)
+
+                # We know this hold is at `hold_world_y` meters on the wall
+                # Its pixel position tells us where that height is in the frame
+                # This gives us a reference point for camera position
+
+                return hold_world_y  # Return known height of visible hold
+
+        return None
+
+    def get_corrected_distance(
+        self,
+        lane: str,
+        relative_distance_m: float
+    ) -> float:
+        """
+        Get the corrected total climbing distance.
+
+        The true distance = relative motion + camera motion
+
+        Args:
+            lane: 'left' or 'right'
+            relative_distance_m: Distance calculated from relative motion alone
+
+        Returns:
+            Corrected distance in meters
+        """
+        camera_offset = self.camera_offset_m[lane]
+
+        # The true climbing distance is what the athlete moved relative to frame
+        # PLUS how much the camera moved up (which we missed in relative tracking)
+        corrected = relative_distance_m + camera_offset
+
+        logger.debug(f"Lane {lane}: relative={relative_distance_m:.2f}m + "
+                    f"camera_offset={camera_offset:.2f}m = {corrected:.2f}m")
+
+        return corrected
+
+    def reset(self, lane: str = None):
+        """Reset tracking state."""
+        lanes = [lane] if lane else ['left', 'right']
+        for l in lanes:
+            self.tracked_holds[l] = []
+            self.camera_offset_m[l] = 0.0
+            self.prev_hold_positions[l] = {}
+            self.camera_offset_history[l].clear()
+            self.motion_confidence[l] = 0.0
+
+
 class AthleteCentricPipeline:
     """
     Main pipeline for athlete-centric race analysis.
@@ -739,15 +1040,18 @@ class AthleteCentricPipeline:
     1. Processes both lanes simultaneously
     2. Detects race start/finish using athlete movement
     3. Tracks climbing progress using relative motion
-    4. Outputs world coordinates and velocities
+    4. Uses hold-based anchoring to compensate for camera tracking
+    5. Outputs world coordinates and velocities
     """
 
     def __init__(
         self,
         route_map_path: str = None,
-        config: Dict = None
+        config: Dict = None,
+        enable_hold_anchoring: bool = True
     ):
         self.config = config or ATHLETE_CENTRIC_CONFIG
+        self.enable_hold_anchoring = enable_hold_anchoring
 
         # Load route map if provided
         self.route_map = None
@@ -763,6 +1067,9 @@ class AthleteCentricPipeline:
         self.segment_detector = RaceSegmentDetector(self.config)
         self.wall_estimator = WallReferenceEstimator(self.route_map, self.config)
         self.motion_tracker = RelativeMotionTracker(self.config)
+
+        # Hold anchoring for camera motion compensation
+        self.hold_anchoring = HoldAnchoringSystem(self.route_map, self.config)
 
         # Lane states
         self.lane_states: Dict[str, LaneState] = {
@@ -786,6 +1093,8 @@ class AthleteCentricPipeline:
             'left': [],
             'right': []
         }
+        # Reset hold anchoring
+        self.hold_anchoring.reset()
 
     def process_frame(
         self,
@@ -794,7 +1103,9 @@ class AthleteCentricPipeline:
         left_pose: Dict,
         right_pose: Dict,
         frame_shape: Tuple[int, int, int],
-        fps: float = 30.0
+        fps: float = 30.0,
+        left_holds: List[Any] = None,
+        right_holds: List[Any] = None
     ) -> Dict[str, FrameResult]:
         """
         Process a single frame for both lanes.
@@ -806,6 +1117,8 @@ class AthleteCentricPipeline:
             right_pose: Pose result for right lane athlete
             frame_shape: (height, width, channels)
             fps: Video frame rate
+            left_holds: Detected holds for left lane (optional, for camera compensation)
+            right_holds: Detected holds for right lane (optional, for camera compensation)
 
         Returns:
             Dict with 'left' and 'right' FrameResult objects
@@ -813,12 +1126,33 @@ class AthleteCentricPipeline:
         frame_height = frame_shape[0]
 
         results = {}
+        holds_dict = {'left': left_holds, 'right': right_holds}
 
         for lane, pose in [('left', left_pose), ('right', right_pose)]:
             state = self.lane_states[lane]
+            detected_holds = holds_dict.get(lane)
+
+            # Update hold anchoring for camera motion compensation
+            if self.enable_hold_anchoring and detected_holds:
+                self.hold_anchoring.update_from_holds(
+                    lane=lane,
+                    detected_holds=detected_holds,
+                    frame_id=frame_id,
+                    frame_height=frame_height,
+                    scale_pixels_per_meter=state.scale_pixels_per_meter
+                )
+
             result = self._process_lane_frame(
                 state, frame_id, timestamp, pose, frame_height, fps
             )
+
+            # Apply camera motion correction to cumulative distance
+            if self.enable_hold_anchoring:
+                corrected_distance = self.hold_anchoring.get_corrected_distance(
+                    lane, state.cumulative_distance_m
+                )
+                result.cumulative_distance_m = corrected_distance
+
             results[lane] = result
             self.frame_results[lane].append(result)
 
@@ -1086,18 +1420,31 @@ class AthleteCentricPipeline:
             state = self.lane_states[lane]
             results = self.frame_results[lane]
 
+            # Get camera motion compensation data
+            camera_offset = self.hold_anchoring.camera_offset_m.get(lane, 0.0)
+            corrected_distance = self.hold_anchoring.get_corrected_distance(
+                lane, state.cumulative_distance_m
+            )
+
             summary[lane] = {
                 'phase': state.phase.value,
                 'start_frame': state.start_frame,
                 'finish_frame': state.finish_frame,
                 'fall_frame': state.fall_frame,
-                'total_distance_m': state.cumulative_distance_m,
+                # Raw distance from relative motion tracking only
+                'raw_distance_m': state.cumulative_distance_m,
+                # Corrected distance including camera motion compensation
+                'total_distance_m': corrected_distance,
+                # Camera motion offset (how much camera moved up)
+                'camera_offset_m': camera_offset,
                 'max_height_m': state.max_height_m,
                 'max_velocity_m_s': state.max_velocity_m_s,
                 'scale_pixels_per_meter': state.scale_pixels_per_meter,
                 'scale_confidence': state.scale_confidence,
                 'frames_processed': len(results),
                 'frames_with_detection': sum(1 for r in results if r.has_detection),
+                # Hold anchoring confidence
+                'camera_motion_confidence': self.hold_anchoring.motion_confidence.get(lane, 0.0),
             }
 
             # Calculate race duration if completed

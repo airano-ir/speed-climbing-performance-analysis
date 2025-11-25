@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
-Test script for the new Athlete-Centric Pipeline.
+Test script for the new Athlete-Centric Pipeline with Hold-Based Camera Compensation.
 
-This script demonstrates the new approach that:
+This script demonstrates the hybrid approach that:
 1. Uses athlete pose as the primary reference (not holds)
 2. Handles dual-lane racing (left and right climbers)
 3. Detects actual race segments within video
 4. Estimates wall position relative to camera
-5. Calculates cumulative climbing distance
+5. Uses hold detection to compensate for camera tracking
+6. Calculates accurate cumulative climbing distance
 
 Usage:
     python scripts/run_athlete_centric_pipeline.py <video_path> [--output <output_dir>]
@@ -29,6 +30,8 @@ sys.path.insert(0, str(project_root))
 
 from speed_climbing.vision.pose import BlazePoseExtractor
 from speed_climbing.vision.lanes import DualLaneDetector
+from speed_climbing.vision.holds import HoldDetector
+from speed_climbing.vision.calibration import CameraCalibrator
 from speed_climbing.processing.athlete_centric import (
     AthleteCentricPipeline,
     RacePhase
@@ -152,16 +155,18 @@ def process_video(
     video_path: str,
     output_dir: str = None,
     max_frames: int = None,
-    visualize: bool = False
+    visualize: bool = False,
+    enable_hold_detection: bool = True
 ) -> dict:
     """
-    Process a race video using the athlete-centric pipeline.
+    Process a race video using the athlete-centric pipeline with hold-based camera compensation.
 
     Args:
         video_path: Path to video file
         output_dir: Optional output directory for results
         max_frames: Maximum frames to process (for testing)
         visualize: Whether to show live visualization
+        enable_hold_detection: Enable hold detection for camera motion compensation
 
     Returns:
         Dict with processing results
@@ -174,9 +179,25 @@ def process_video(
 
     # Initialize components
     route_map_path = CONFIGS_DIR / "ifsc_route_coordinates.json"
-    pipeline = AthleteCentricPipeline(str(route_map_path))
+    pipeline = AthleteCentricPipeline(str(route_map_path), enable_hold_anchoring=enable_hold_detection)
 
     lane_detector = DualLaneDetector(boundary_detection_method="fixed")
+
+    # Initialize hold detector for camera motion compensation
+    hold_detector = None
+    calibrator = None
+    if enable_hold_detection:
+        hold_detector = HoldDetector(
+            route_coordinates_path=str(route_map_path),
+            min_confidence=0.4,
+            use_star_detection=True
+        )
+        calibrator = CameraCalibrator(
+            route_coordinates_path=str(route_map_path),
+            min_holds_for_calibration=3,
+            min_holds_for_affine=2
+        )
+        logger.info("Hold detection enabled for camera motion compensation")
 
     # Open video
     cap = cv2.VideoCapture(str(video_path))
@@ -209,6 +230,11 @@ def process_video(
     # Process frames
     frame_id = 0
     processing_times = []
+    hold_detection_interval = 5  # Detect holds every N frames to reduce overhead
+
+    # Track calibration results for hold matching
+    left_calibration = None
+    right_calibration = None
 
     try:
         while frame_id < total_frames:
@@ -233,14 +259,43 @@ def process_video(
                 timestamp
             )
 
-            # Process frame with pipeline
+            # Detect holds for camera motion compensation
+            left_holds = None
+            right_holds = None
+
+            if hold_detector and frame_id % hold_detection_interval == 0:
+                # Detect holds in each lane
+                left_holds = hold_detector.detect_holds(frame, lane='left')
+                right_holds = hold_detector.detect_holds(frame, lane='right')
+
+                # Match holds to route map using calibration
+                if calibrator and left_holds:
+                    calib_result = calibrator.calibrate(frame, left_holds, lane='left')
+                    if calib_result:
+                        left_calibration = calib_result
+                        # Filter holds to only matched ones
+                        left_holds = hold_detector.filter_by_spatial_grid(
+                            left_holds, calib_result.homography_matrix, frame.shape[:2], 'left'
+                        )
+
+                if calibrator and right_holds:
+                    calib_result = calibrator.calibrate(frame, right_holds, lane='right')
+                    if calib_result:
+                        right_calibration = calib_result
+                        right_holds = hold_detector.filter_by_spatial_grid(
+                            right_holds, calib_result.homography_matrix, frame.shape[:2], 'right'
+                        )
+
+            # Process frame with pipeline (including hold data for camera compensation)
             results = pipeline.process_frame(
                 frame_id=frame_id,
                 timestamp=timestamp,
                 left_pose=left_pose_dict,
                 right_pose=right_pose_dict,
                 frame_shape=frame.shape,
-                fps=fps
+                fps=fps,
+                left_holds=left_holds,
+                right_holds=right_holds
             )
 
             # Calculate processing time
@@ -252,10 +307,13 @@ def process_video(
             if frame_id % 100 == 0:
                 left_state = pipeline.lane_states['left']
                 right_state = pipeline.lane_states['right']
+                # Get camera offsets
+                left_cam_offset = pipeline.hold_anchoring.camera_offset_m.get('left', 0)
+                right_cam_offset = pipeline.hold_anchoring.camera_offset_m.get('right', 0)
                 logger.info(
                     f"Frame {frame_id}/{total_frames} | "
-                    f"Left: {left_state.phase.value}, h={left_state.current_height_m:.2f}m | "
-                    f"Right: {right_state.phase.value}, h={right_state.current_height_m:.2f}m"
+                    f"Left: {left_state.phase.value}, raw={left_state.cumulative_distance_m:.2f}m, cam_offset={left_cam_offset:.2f}m | "
+                    f"Right: {right_state.phase.value}, raw={right_state.cumulative_distance_m:.2f}m, cam_offset={right_cam_offset:.2f}m"
                 )
 
             # Optional visualization
@@ -378,14 +436,23 @@ def visualize_frame(frame, boundary, left_pose_dict, right_pose_dict, results):
 def print_summary(summary: dict):
     """Print human-readable summary."""
     print("\n" + "=" * 60)
-    print("RACE ANALYSIS SUMMARY (Athlete-Centric Pipeline)")
+    print("RACE ANALYSIS SUMMARY (Athlete-Centric Pipeline with Camera Compensation)")
     print("=" * 60)
 
     for lane in ['left', 'right']:
         data = summary.get(lane, {})
         print(f"\n{lane.upper()} LANE:")
         print(f"  Phase: {data.get('phase', 'unknown')}")
-        print(f"  Total Distance: {data.get('total_distance_m', 0):.2f} m")
+
+        # Show both raw and corrected distances
+        raw_dist = data.get('raw_distance_m', 0)
+        total_dist = data.get('total_distance_m', 0)
+        cam_offset = data.get('camera_offset_m', 0)
+
+        print(f"  Raw Distance (relative motion): {raw_dist:.2f} m")
+        print(f"  Camera Offset (tracked via holds): {cam_offset:.2f} m")
+        print(f"  Total Distance (corrected): {total_dist:.2f} m")
+
         print(f"  Max Height: {data.get('max_height_m', 0):.2f} m")
         print(f"  Max Velocity: {data.get('max_velocity_m_s', 0):.2f} m/s")
 
@@ -393,6 +460,7 @@ def print_summary(summary: dict):
             print(f"  Race Duration: {data.get('race_duration_s'):.2f} s")
 
         print(f"  Scale Confidence: {data.get('scale_confidence', 0):.2f}")
+        print(f"  Camera Motion Confidence: {data.get('camera_motion_confidence', 0):.2f}")
         print(f"  Frames with Detection: {data.get('frames_with_detection', 0)}/{data.get('frames_processed', 0)}")
 
     print("\n" + "=" * 60)
@@ -421,12 +489,14 @@ def print_summary(summary: dict):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Run athlete-centric pipeline on a speed climbing video"
+        description="Run athlete-centric pipeline on a speed climbing video with camera compensation"
     )
     parser.add_argument("video_path", help="Path to video file")
     parser.add_argument("--output", "-o", help="Output directory for results")
     parser.add_argument("--max-frames", "-m", type=int, help="Maximum frames to process")
     parser.add_argument("--visualize", "-v", action="store_true", help="Show live visualization")
+    parser.add_argument("--no-holds", action="store_true",
+                        help="Disable hold detection (faster but no camera motion compensation)")
 
     args = parser.parse_args()
 
@@ -435,7 +505,8 @@ def main():
             video_path=args.video_path,
             output_dir=args.output,
             max_frames=args.max_frames,
-            visualize=args.visualize
+            visualize=args.visualize,
+            enable_hold_detection=not args.no_holds
         )
         return 0
     except Exception as e:
