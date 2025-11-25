@@ -1,9 +1,16 @@
 {
   "wall": {
     "height_m": 15.0,
-    "width_m": 3.0,
+    "width_m": 1.5,
     "overhang_degrees": 5.0,
-    "hold_spacing_mm": 125.0
+    "hold_spacing_mm": 125.0,
+    "panel_size_mm": 1500.0,
+    "num_panels_height": 10
+  },
+  "coordinate_system": {
+    "description": "Lane-relative coordinates. Each lane is 1.5m wide. X=0 is the inner edge (near center divider), X=1.5 is the outer edge.",
+    "origin": "bottom-center of each lane",
+    "units": "meters"
   },
   "holds": [
     {
@@ -11,434 +18,372 @@
       "panel": "DX1",
       "kind": "FOOT HOLD",
       "grid_position": "F4",
-      "grid_orientation": "G4",
       "grid_x": 5,
       "grid_y": 3,
       "panel_x_mm": 625.0,
       "panel_y_mm": 375.0,
-      "wall_x_m": 3.625,
-      "wall_y_m": 0.375,
-      "description": "Hold 1 on panel DX1 at position F4"
+      "wall_x_m": 0.625,
+      "wall_y_m": 0.375
     },
     {
       "hold_num": 2,
       "panel": "DX1",
       "kind": "FOOT HOLD",
       "grid_position": "A10",
-      "grid_orientation": "B10",
       "grid_x": 0,
       "grid_y": 9,
       "panel_x_mm": 0.0,
       "panel_y_mm": 1125.0,
-      "wall_x_m": 3.0,
-      "wall_y_m": 1.125,
-      "description": "Hold 2 on panel DX1 at position A10"
+      "wall_x_m": 0.0,
+      "wall_y_m": 1.125
     },
     {
       "hold_num": 3,
       "panel": "DX2",
       "kind": "BIG HOLD",
       "grid_position": "F1",
-      "grid_orientation": "D3",
       "grid_x": 5,
       "grid_y": 0,
       "panel_x_mm": 625.0,
       "panel_y_mm": 0.0,
-      "wall_x_m": 3.625,
-      "wall_y_m": 1.5,
-      "description": "Hold 3 on panel DX2 at position F1"
+      "wall_x_m": 0.625,
+      "wall_y_m": 1.5
     },
     {
       "hold_num": 4,
       "panel": "DX2",
       "kind": "BIG HOLD",
       "grid_position": "G3",
-      "grid_orientation": "E5",
       "grid_x": 6,
       "grid_y": 2,
       "panel_x_mm": 750.0,
       "panel_y_mm": 250.0,
-      "wall_x_m": 3.75,
-      "wall_y_m": 1.75,
-      "description": "Hold 4 on panel DX2 at position G3"
+      "wall_x_m": 0.75,
+      "wall_y_m": 1.75
     },
     {
       "hold_num": 5,
       "panel": "DX2",
       "kind": "BIG HOLD",
       "grid_position": "A9",
-      "grid_orientation": "C10",
       "grid_x": 0,
       "grid_y": 8,
       "panel_x_mm": 0.0,
       "panel_y_mm": 1000.0,
-      "wall_x_m": 3.0,
-      "wall_y_m": 2.5,
-      "description": "Hold 5 on panel DX2 at position A9"
+      "wall_x_m": 0.0,
+      "wall_y_m": 2.5
     },
     {
       "hold_num": 6,
       "panel": "SN2",
       "kind": "FOOT HOLD",
       "grid_position": "G3",
-      "grid_orientation": "H3",
       "grid_x": 6,
       "grid_y": 2,
       "panel_x_mm": 750.0,
       "panel_y_mm": 250.0,
       "wall_x_m": 0.75,
-      "wall_y_m": 1.75,
-      "description": "Hold 6 on panel SN2 at position G3"
+      "wall_y_m": 1.75
     },
     {
       "hold_num": 7,
       "panel": "DX3",
       "kind": "FOOT HOLD",
       "grid_position": "C6",
-      "grid_orientation": "C5",
       "grid_x": 2,
       "grid_y": 5,
       "panel_x_mm": 250.0,
       "panel_y_mm": 625.0,
-      "wall_x_m": 3.25,
-      "wall_y_m": 3.625,
-      "description": "Hold 7 on panel DX3 at position C6"
+      "wall_x_m": 0.25,
+      "wall_y_m": 3.625
     },
     {
       "hold_num": 8,
       "panel": "SN3",
       "kind": "BIG HOLD",
       "grid_position": "G4",
-      "grid_orientation": "G1",
       "grid_x": 6,
       "grid_y": 3,
       "panel_x_mm": 750.0,
       "panel_y_mm": 375.0,
       "wall_x_m": 0.75,
-      "wall_y_m": 3.375,
-      "description": "Hold 8 on panel SN3 at position G4"
+      "wall_y_m": 3.375
     },
     {
       "hold_num": 9,
       "panel": "SN3",
       "kind": "BIG HOLD",
       "grid_position": "M10",
-      "grid_orientation": "I 8",
       "grid_x": 12,
       "grid_y": 9,
       "panel_x_mm": 1500.0,
       "panel_y_mm": 1125.0,
       "wall_x_m": 1.5,
-      "wall_y_m": 4.125,
-      "description": "Hold 9 on panel SN3 at position M10"
+      "wall_y_m": 4.125
     },
     {
       "hold_num": 10,
       "panel": "DX4",
       "kind": "BIG HOLD",
       "grid_position": "B2",
-      "grid_orientation": "D3",
       "grid_x": 1,
       "grid_y": 1,
       "panel_x_mm": 125.0,
       "panel_y_mm": 125.0,
-      "wall_x_m": 3.125,
-      "wall_y_m": 4.625,
-      "description": "Hold 10 on panel DX4 at position B2"
+      "wall_x_m": 0.125,
+      "wall_y_m": 4.625
     },
     {
       "hold_num": 11,
       "panel": "SN4",
       "kind": "BIG HOLD",
       "grid_position": "M8",
-      "grid_orientation": "L10",
       "grid_x": 12,
       "grid_y": 7,
       "panel_x_mm": 1500.0,
       "panel_y_mm": 875.0,
       "wall_x_m": 1.5,
-      "wall_y_m": 5.375,
-      "description": "Hold 11 on panel SN4 at position M8"
+      "wall_y_m": 5.375
     },
     {
       "hold_num": 12,
       "panel": "DX5",
       "kind": "FOOT HOLD",
       "grid_position": "E1",
-      "grid_orientation": "E2",
       "grid_x": 4,
       "grid_y": 0,
       "panel_x_mm": 500.0,
       "panel_y_mm": 0.0,
-      "wall_x_m": 3.5,
-      "wall_y_m": 6.0,
-      "description": "Hold 12 on panel DX5 at position E1"
+      "wall_x_m": 0.5,
+      "wall_y_m": 6.0
     },
     {
       "hold_num": 13,
       "panel": "DX5",
       "kind": "BIG HOLD",
       "grid_position": "C3",
-      "grid_orientation": "C6",
       "grid_x": 2,
       "grid_y": 2,
       "panel_x_mm": 250.0,
       "panel_y_mm": 250.0,
-      "wall_x_m": 3.25,
-      "wall_y_m": 6.25,
-      "description": "Hold 13 on panel DX5 at position C3"
+      "wall_x_m": 0.25,
+      "wall_y_m": 6.25
     },
     {
       "hold_num": 14,
       "panel": "DX5",
       "kind": "BIG HOLD",
       "grid_position": "E9",
-      "grid_orientation": "H9",
       "grid_x": 4,
       "grid_y": 8,
       "panel_x_mm": 500.0,
       "panel_y_mm": 1000.0,
-      "wall_x_m": 3.5,
-      "wall_y_m": 7.0,
-      "description": "Hold 14 on panel DX5 at position E9"
+      "wall_x_m": 0.5,
+      "wall_y_m": 7.0
     },
     {
       "hold_num": 15,
       "panel": "SN5",
       "kind": "FOOT HOLD",
       "grid_position": "H1",
-      "grid_orientation": "H10 (sn 4 panel)",
       "grid_x": 7,
       "grid_y": 0,
       "panel_x_mm": 875.0,
       "panel_y_mm": 0.0,
       "wall_x_m": 0.875,
-      "wall_y_m": 6.0,
-      "description": "Hold 15 on panel SN5 at position H1"
+      "wall_y_m": 6.0
     },
     {
       "hold_num": 16,
       "panel": "SN5",
       "kind": "FOOT HOLD",
       "grid_position": "M6",
-      "grid_orientation": "M5",
       "grid_x": 12,
       "grid_y": 5,
       "panel_x_mm": 1500.0,
       "panel_y_mm": 625.0,
       "wall_x_m": 1.5,
-      "wall_y_m": 6.625,
-      "description": "Hold 16 on panel SN5 at position M6"
+      "wall_y_m": 6.625
     },
     {
       "hold_num": 17,
       "panel": "SN5",
       "kind": "FOOT HOLD",
       "grid_position": "E7",
-      "grid_orientation": "E6",
       "grid_x": 4,
       "grid_y": 6,
       "panel_x_mm": 500.0,
       "panel_y_mm": 750.0,
       "wall_x_m": 0.5,
-      "wall_y_m": 6.75,
-      "description": "Hold 17 on panel SN5 at position E7"
+      "wall_y_m": 6.75
     },
     {
       "hold_num": 18,
       "panel": "SN6",
       "kind": "BIG HOLD",
       "grid_position": "H2",
-      "grid_orientation": "E2",
       "grid_x": 7,
       "grid_y": 1,
       "panel_x_mm": 875.0,
       "panel_y_mm": 125.0,
       "wall_x_m": 0.875,
-      "wall_y_m": 7.625,
-      "description": "Hold 18 on panel SN6 at position H2"
+      "wall_y_m": 7.625
     },
     {
       "hold_num": 19,
       "panel": "SN6",
       "kind": "BIG HOLD",
       "grid_position": "L7",
-      "grid_orientation": "M9",
       "grid_x": 11,
       "grid_y": 6,
       "panel_x_mm": 1375.0,
       "panel_y_mm": 750.0,
       "wall_x_m": 1.375,
-      "wall_y_m": 8.25,
-      "description": "Hold 19 on panel SN6 at position L7"
+      "wall_y_m": 8.25
     },
     {
       "hold_num": 20,
       "panel": "SN6",
       "kind": "BIG HOLD",
       "grid_position": "F9",
-      "grid_orientation": "F6",
       "grid_x": 5,
       "grid_y": 8,
       "panel_x_mm": 625.0,
       "panel_y_mm": 1000.0,
       "wall_x_m": 0.625,
-      "wall_y_m": 8.5,
-      "description": "Hold 20 on panel SN6 at position F9"
+      "wall_y_m": 8.5
     },
     {
       "hold_num": 21,
       "panel": "SN7",
       "kind": "BIG HOLD",
-      "grid_position": "4M",
-      "grid_orientation": "5A (dx 7 panel)",
+      "grid_position": "M4",
       "grid_x": 12,
       "grid_y": 3,
       "panel_x_mm": 1500.0,
       "panel_y_mm": 375.0,
       "wall_x_m": 1.5,
-      "wall_y_m": 9.375,
-      "description": "Hold 21 on panel SN7 at position 4M"
+      "wall_y_m": 9.375
     },
     {
       "hold_num": 22,
       "panel": "SN7",
       "kind": "BIG HOLD",
-      "grid_position": "9G",
-      "grid_orientation": "8E",
+      "grid_position": "G9",
       "grid_x": 6,
       "grid_y": 8,
       "panel_x_mm": 750.0,
       "panel_y_mm": 1000.0,
       "wall_x_m": 0.75,
-      "wall_y_m": 10.0,
-      "description": "Hold 22 on panel SN7 at position 9G"
+      "wall_y_m": 10.0
     },
     {
       "hold_num": 23,
       "panel": "DX7",
       "kind": "FOOT HOLD",
-      "grid_position": "10B",
-      "grid_orientation": "10A",
+      "grid_position": "B10",
       "grid_x": 1,
       "grid_y": 9,
       "panel_x_mm": 125.0,
       "panel_y_mm": 1125.0,
-      "wall_x_m": 3.125,
-      "wall_y_m": 10.125,
-      "description": "Hold 23 on panel DX7 at position 10B"
+      "wall_x_m": 0.125,
+      "wall_y_m": 10.125
     },
     {
       "hold_num": 24,
       "panel": "SN8",
       "kind": "BIG HOLD",
-      "grid_position": "1L",
-      "grid_orientation": "10H (sn 7 panel)",
+      "grid_position": "L1",
       "grid_x": 11,
       "grid_y": 0,
       "panel_x_mm": 1375.0,
       "panel_y_mm": 0.0,
       "wall_x_m": 1.375,
-      "wall_y_m": 10.5,
-      "description": "Hold 24 on panel SN8 at position 1L"
+      "wall_y_m": 10.5
     },
     {
       "hold_num": 25,
       "panel": "SN8",
       "kind": "BIG HOLD",
-      "grid_position": "3 I",
-      "grid_orientation": "5 L",
+      "grid_position": "I3",
       "grid_x": 8,
       "grid_y": 2,
       "panel_x_mm": 1000.0,
       "panel_y_mm": 250.0,
       "wall_x_m": 1.0,
-      "wall_y_m": 10.75,
-      "description": "Hold 25 on panel SN8 at position 3 I"
+      "wall_y_m": 10.75
     },
     {
       "hold_num": 26,
       "panel": "DX8",
       "kind": "FOOT HOLD",
-      "grid_position": "1E",
-      "grid_orientation": "1F",
+      "grid_position": "E1",
       "grid_x": 4,
       "grid_y": 0,
       "panel_x_mm": 500.0,
       "panel_y_mm": 0.0,
-      "wall_x_m": 3.5,
-      "wall_y_m": 10.5,
-      "description": "Hold 26 on panel DX8 at position 1E"
+      "wall_x_m": 0.5,
+      "wall_y_m": 10.5
     },
     {
       "hold_num": 27,
       "panel": "DX8",
       "kind": "FOOT HOLD",
-      "grid_position": "5A",
-      "grid_orientation": "6A",
+      "grid_position": "A5",
       "grid_x": 0,
       "grid_y": 4,
       "panel_x_mm": 0.0,
       "panel_y_mm": 500.0,
-      "wall_x_m": 3.0,
-      "wall_y_m": 11.0,
-      "description": "Hold 27 on panel DX8 at position 5A"
+      "wall_x_m": 0.0,
+      "wall_y_m": 11.0
     },
     {
       "hold_num": 28,
-      "panel": "SN 8",
+      "panel": "SN8",
       "kind": "BIG HOLD",
-      "grid_position": "8C",
-      "grid_orientation": "9E",
+      "grid_position": "C8",
       "grid_x": 2,
       "grid_y": 7,
       "panel_x_mm": 250.0,
       "panel_y_mm": 875.0,
       "wall_x_m": 0.25,
-      "wall_y_m": 11.375,
-      "description": "Hold 28 on panel SN 8 at position 8C"
+      "wall_y_m": 11.375
     },
     {
       "hold_num": 29,
       "panel": "SN9",
       "kind": "BIG HOLD",
-      "grid_position": "10M",
-      "grid_orientation": "1A (dx 10 panel)",
+      "grid_position": "M10",
       "grid_x": 12,
       "grid_y": 9,
       "panel_x_mm": 1500.0,
       "panel_y_mm": 1125.0,
       "wall_x_m": 1.5,
-      "wall_y_m": 13.125,
-      "description": "Hold 29 on panel SN9 at position 10M"
+      "wall_y_m": 13.125
     },
     {
       "hold_num": 30,
       "panel": "DX9",
       "kind": "BIG HOLD",
-      "grid_position": "2A",
-      "grid_orientation": "4C",
+      "grid_position": "A2",
       "grid_x": 0,
       "grid_y": 1,
       "panel_x_mm": 0.0,
       "panel_y_mm": 125.0,
-      "wall_x_m": 3.0,
-      "wall_y_m": 12.125,
-      "description": "Hold 30 on panel DX9 at position 2A"
+      "wall_x_m": 0.0,
+      "wall_y_m": 12.125
     },
     {
       "hold_num": 31,
       "panel": "DX9",
       "kind": "BIG HOLD",
-      "grid_position": "7E",
-      "grid_orientation": "9E",
+      "grid_position": "E7",
       "grid_x": 4,
       "grid_y": 6,
       "panel_x_mm": 500.0,
       "panel_y_mm": 750.0,
-      "wall_x_m": 3.5,
-      "wall_y_m": 12.75,
-      "description": "Hold 31 on panel DX9 at position 7E"
+      "wall_x_m": 0.5,
+      "wall_y_m": 12.75
     }
   ]
 }
