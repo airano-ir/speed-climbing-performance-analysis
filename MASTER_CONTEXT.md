@@ -44,6 +44,8 @@ speed_climbing/
     │   ├── frequency.py      # FFT-based rhythm analysis
     │   ├── efficiency.py     # Path efficiency metrics
     │   ├── posture.py        # Joint angle analysis
+    │   ├── race_detector.py  # Variance-based race detection
+    │   ├── absolute.py       # Optional absolute metrics
     │   └── extractor.py      # Main FeatureExtractor class
     ├── time_series.py        # Time series builder
     └── start_finish_detector.py
@@ -80,6 +82,20 @@ speed_climbing/
 - `avg_reach_ratio`: Reach relative to body
 - `max_reach_ratio`: Maximum reach achieved
 
+### Race Segment Detection
+
+Automatically detects the racing portion of videos using **variance-based detection**:
+- Measures frame-to-frame limb movement (wrists + ankles)
+- Low variance = ready position or finished
+- High variance = active climbing
+- Self-calibrating: works regardless of camera angle or zoom
+- Sanity checks: duration should be 3-10 seconds
+
+**Confidence scoring** based on:
+- Variance contrast (racing vs non-racing activity)
+- Duration plausibility (typical race is ~6 seconds)
+- Detection method (primary vs fallback)
+
 ### Usage
 
 ```python
@@ -98,7 +114,12 @@ save_features_csv(results, 'features.csv')
 
 ## Recent Updates
 
-### 2025-11-28
+### 2025-11-28 (Latest)
+- **Race Detection**: Implemented variance-based race segment detection
+  - Replaces flawed pose-based detection (arms already up in ready position)
+  - Uses limb movement variance to identify active climbing
+  - 72-95% confidence on test videos
+  - All 6 test results used primary variance method
 - **Major Pivot**: Abandoned absolute calibration approach
 - **New Pipeline**: Created ML feature extraction system
 - **Cleanup**: Removed 40 obsolete files (8799 lines)
