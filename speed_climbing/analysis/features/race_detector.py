@@ -1,14 +1,15 @@
 """
-Simple race segment detection for feature extraction.
+Multi-criteria race segment detection for feature extraction.
 
-Detects the actual climbing portion of a video by analyzing COM movement.
+Detects the actual climbing portion of a video using multiple signals
+that work even with moving cameras.
 """
 
 import numpy as np
 from typing import Dict, Any, List, Tuple, Optional
 from dataclasses import dataclass
 
-from .base import extract_keypoint_series
+from .base import extract_keypoint_series, get_keypoint_at_frame, calculate_angle
 
 
 @dataclass
@@ -18,6 +19,7 @@ class RaceSegment:
     end_frame: int
     total_frames: int
     confidence: float
+    detection_method: str  # Which method detected this segment
 
     @property
     def duration_frames(self) -> int:
@@ -31,22 +33,28 @@ class RaceSegment:
 
 class RaceSegmentDetector:
     """
-    Detect the racing portion of a climbing video.
+    Detect the racing portion of a climbing video using multiple criteria.
 
-    Uses COM vertical movement to identify:
-    - Start: When athlete begins consistent upward movement
-    - End: When upward movement stops (finish or fall)
+    Works with moving cameras by using pose configuration, not just position.
+
+    Detection signals:
+    1. Pose Configuration: Standing (pre-race) vs Climbing (during race)
+    2. Movement Energy: Activity level based on limb movement variance
+    3. Knee Angle: Straight legs (standing) vs bent legs (climbing)
+    4. Arm Position: Arms down (standing) vs arms up (climbing)
     """
 
     def __init__(
         self,
-        movement_threshold: float = 0.005,  # Minimum Y change per frame
-        stillness_frames: int = 10,  # Frames of stillness before start
-        min_race_frames: int = 30,  # Minimum frames for valid race
+        min_race_frames: int = 30,
+        standing_knee_threshold: float = 155.0,  # Degrees - straighter = standing
+        climbing_knee_threshold: float = 145.0,  # Degrees - more bent = climbing
+        energy_window: int = 10,  # Frames for energy calculation
     ):
-        self.movement_threshold = movement_threshold
-        self.stillness_frames = stillness_frames
         self.min_race_frames = min_race_frames
+        self.standing_knee_threshold = standing_knee_threshold
+        self.climbing_knee_threshold = climbing_knee_threshold
+        self.energy_window = energy_window
 
     def detect(
         self,
@@ -54,106 +62,278 @@ class RaceSegmentDetector:
         lane: str = 'left'
     ) -> Optional[RaceSegment]:
         """
-        Detect race segment in frames.
-
-        Args:
-            frames: List of frame dictionaries
-            lane: 'left' or 'right' climber
+        Detect race segment using multiple criteria.
 
         Returns:
             RaceSegment or None if detection failed
         """
-        # Extract COM Y-coordinate
-        _, com_y, valid = extract_keypoint_series(frames, 'COM', lane)
-
-        if np.sum(valid) < self.min_race_frames:
+        n = len(frames)
+        if n < self.min_race_frames:
             return None
 
-        # Calculate frame-to-frame movement
-        movement = np.zeros(len(com_y))
-        for i in range(1, len(com_y)):
-            if valid[i] and valid[i-1]:
-                # Note: Y decreases as athlete climbs UP
-                movement[i] = com_y[i-1] - com_y[i]  # Positive = climbing
-            else:
-                movement[i] = 0
+        # Calculate multiple signals
+        knee_angles = self._extract_knee_angles(frames, lane)
+        arm_heights = self._extract_arm_heights(frames, lane)
+        movement_energy = self._calculate_movement_energy(frames, lane)
 
-        # Detect start: First sustained upward movement after stillness
-        start_frame = self._detect_start(movement, valid)
+        # Combine signals to detect racing frames
+        is_racing = self._combine_signals(knee_angles, arm_heights, movement_energy)
 
-        # Detect end: Last significant upward movement or frame with valid pose
-        end_frame = self._detect_end(movement, valid, start_frame)
+        # Find longest continuous racing segment
+        start, end = self._find_longest_segment(is_racing)
 
-        if end_frame - start_frame < self.min_race_frames:
-            # Too short, use all valid frames
-            valid_indices = np.where(valid)[0]
-            if len(valid_indices) < self.min_race_frames:
-                return None
-            start_frame = valid_indices[0]
-            end_frame = valid_indices[-1]
+        if end - start < self.min_race_frames:
+            # Fallback: use all valid frames
+            return self._fallback_detection(frames, lane)
 
-        # Calculate confidence
-        race_movement = movement[start_frame:end_frame]
-        positive_movement = np.sum(race_movement > self.movement_threshold / 2)
-        confidence = positive_movement / len(race_movement) if len(race_movement) > 0 else 0
-
-        return RaceSegment(
-            start_frame=start_frame,
-            end_frame=end_frame,
-            total_frames=len(frames),
-            confidence=confidence
+        # Calculate confidence based on signal agreement
+        confidence = self._calculate_confidence(
+            knee_angles, arm_heights, movement_energy, start, end
         )
 
-    def _detect_start(self, movement: np.ndarray, valid: np.ndarray) -> int:
-        """Find the frame where racing starts."""
-        n = len(movement)
+        return RaceSegment(
+            start_frame=start,
+            end_frame=end,
+            total_frames=n,
+            confidence=confidence,
+            detection_method="multi_criteria"
+        )
 
-        # Look for stillness followed by movement
-        for i in range(self.stillness_frames, n - self.min_race_frames):
-            # Check for stillness before
-            pre_window = movement[max(0, i-self.stillness_frames):i]
-            is_still = np.all(np.abs(pre_window) < self.movement_threshold)
+    def _extract_knee_angles(self, frames: List[Dict], lane: str) -> np.ndarray:
+        """Extract average knee angle per frame."""
+        angles = []
+        for frame in frames:
+            left_angle = self._get_knee_angle(frame, lane, 'left')
+            right_angle = self._get_knee_angle(frame, lane, 'right')
 
-            # Check for movement after
-            post_window = movement[i:min(n, i+10)]
-            has_movement = np.sum(post_window > self.movement_threshold) >= 3
+            if left_angle is not None and right_angle is not None:
+                angles.append((left_angle + right_angle) / 2)
+            elif left_angle is not None:
+                angles.append(left_angle)
+            elif right_angle is not None:
+                angles.append(right_angle)
+            else:
+                angles.append(np.nan)
 
-            if is_still and has_movement:
-                return i
+        return np.array(angles)
 
-        # Fallback: first valid frame with upward movement
+    def _get_knee_angle(self, frame: Dict, lane: str, side: str) -> Optional[float]:
+        """Calculate knee angle (hip-knee-ankle)."""
+        hip = get_keypoint_at_frame(frame, f'{side}_hip', lane, 0.5)
+        knee = get_keypoint_at_frame(frame, f'{side}_knee', lane, 0.5)
+        ankle = get_keypoint_at_frame(frame, f'{side}_ankle', lane, 0.5)
+
+        if hip is None or knee is None or ankle is None:
+            return None
+
+        return calculate_angle(hip, knee, ankle)
+
+    def _extract_arm_heights(self, frames: List[Dict], lane: str) -> np.ndarray:
+        """
+        Extract relative arm height (wrist Y relative to shoulder Y).
+
+        Returns: Negative = arms above shoulders (climbing)
+                 Positive = arms below shoulders (standing)
+        """
+        heights = []
+        for frame in frames:
+            left_rel = self._get_arm_height(frame, lane, 'left')
+            right_rel = self._get_arm_height(frame, lane, 'right')
+
+            if left_rel is not None and right_rel is not None:
+                # Use the higher arm (more negative = higher)
+                heights.append(min(left_rel, right_rel))
+            elif left_rel is not None:
+                heights.append(left_rel)
+            elif right_rel is not None:
+                heights.append(right_rel)
+            else:
+                heights.append(np.nan)
+
+        return np.array(heights)
+
+    def _get_arm_height(self, frame: Dict, lane: str, side: str) -> Optional[float]:
+        """Get wrist Y - shoulder Y (negative = wrist above shoulder)."""
+        shoulder = get_keypoint_at_frame(frame, f'{side}_shoulder', lane, 0.5)
+        wrist = get_keypoint_at_frame(frame, f'{side}_wrist', lane, 0.5)
+
+        if shoulder is None or wrist is None:
+            return None
+
+        # In normalized coords, Y increases downward
+        # So wrist.y < shoulder.y means wrist is ABOVE shoulder
+        return wrist[1] - shoulder[1]
+
+    def _calculate_movement_energy(self, frames: List[Dict], lane: str) -> np.ndarray:
+        """
+        Calculate movement energy based on limb position variance.
+
+        Higher energy = more active movement (likely climbing)
+        """
+        # Extract multiple keypoint series
+        _, lw_y, _ = extract_keypoint_series(frames, 'left_wrist', lane)
+        _, rw_y, _ = extract_keypoint_series(frames, 'right_wrist', lane)
+        _, la_y, _ = extract_keypoint_series(frames, 'left_ankle', lane)
+        _, ra_y, _ = extract_keypoint_series(frames, 'right_ankle', lane)
+
+        n = len(frames)
+        energy = np.zeros(n)
+
+        # Calculate sliding window variance
+        half_win = self.energy_window // 2
         for i in range(n):
-            if valid[i] and movement[i] > self.movement_threshold:
-                return max(0, i - 5)  # Include a few frames before
+            start = max(0, i - half_win)
+            end = min(n, i + half_win + 1)
 
-        # Last resort: first valid frame
-        valid_indices = np.where(valid)[0]
-        return valid_indices[0] if len(valid_indices) > 0 else 0
+            # Variance of each limb
+            vars = []
+            for series in [lw_y, rw_y, la_y, ra_y]:
+                window = series[start:end]
+                valid_window = window[~np.isnan(window)]
+                if len(valid_window) >= 3:
+                    vars.append(np.var(valid_window))
 
-    def _detect_end(
+            energy[i] = np.mean(vars) if vars else 0
+
+        return energy
+
+    def _combine_signals(
         self,
-        movement: np.ndarray,
-        valid: np.ndarray,
-        start_frame: int
-    ) -> int:
-        """Find the frame where racing ends."""
-        n = len(movement)
+        knee_angles: np.ndarray,
+        arm_heights: np.ndarray,
+        energy: np.ndarray
+    ) -> np.ndarray:
+        """
+        Combine signals to determine if each frame is racing.
 
-        # Find last frame with significant upward movement
-        last_movement = start_frame
-        for i in range(start_frame, n):
-            if valid[i] and movement[i] > self.movement_threshold / 2:
-                last_movement = i
+        A frame is racing if:
+        - Knees are bent (< threshold) OR
+        - Arms are raised (negative relative height) OR
+        - Movement energy is high
+        """
+        n = len(knee_angles)
+        is_racing = np.zeros(n, dtype=bool)
 
-        # Add some buffer frames after last movement
-        end_frame = min(n - 1, last_movement + 15)
+        # Normalize energy
+        energy_norm = energy / (np.nanmax(energy) + 1e-10)
+        energy_threshold = 0.2  # 20% of max energy
 
-        # But don't go past last valid frame
-        valid_indices = np.where(valid)[0]
-        if len(valid_indices) > 0:
-            end_frame = min(end_frame, valid_indices[-1])
+        for i in range(n):
+            # Skip if no data
+            if np.isnan(knee_angles[i]) and np.isnan(arm_heights[i]):
+                continue
 
-        return end_frame
+            # Check each criterion
+            knees_bent = (
+                not np.isnan(knee_angles[i]) and
+                knee_angles[i] < self.climbing_knee_threshold
+            )
+
+            arms_raised = (
+                not np.isnan(arm_heights[i]) and
+                arm_heights[i] < -0.05  # Wrist at least 5% above shoulder
+            )
+
+            high_energy = energy_norm[i] > energy_threshold
+
+            # Racing if any TWO criteria are met (more robust)
+            criteria_met = sum([knees_bent, arms_raised, high_energy])
+            is_racing[i] = criteria_met >= 1  # At least one criterion
+
+        return is_racing
+
+    def _find_longest_segment(self, is_racing: np.ndarray) -> Tuple[int, int]:
+        """Find the longest continuous segment of racing frames."""
+        n = len(is_racing)
+        best_start, best_end = 0, 0
+        best_length = 0
+
+        current_start = 0
+        in_segment = False
+
+        for i in range(n):
+            if is_racing[i]:
+                if not in_segment:
+                    current_start = i
+                    in_segment = True
+            else:
+                if in_segment:
+                    length = i - current_start
+                    if length > best_length:
+                        best_start = current_start
+                        best_end = i
+                        best_length = length
+                    in_segment = False
+
+        # Check if segment extends to end
+        if in_segment:
+            length = n - current_start
+            if length > best_length:
+                best_start = current_start
+                best_end = n
+
+        return best_start, best_end
+
+    def _calculate_confidence(
+        self,
+        knee_angles: np.ndarray,
+        arm_heights: np.ndarray,
+        energy: np.ndarray,
+        start: int,
+        end: int
+    ) -> float:
+        """Calculate confidence in the detected segment."""
+        segment_knee = knee_angles[start:end]
+        segment_arm = arm_heights[start:end]
+        segment_energy = energy[start:end]
+
+        scores = []
+
+        # Knee score: more bent = more confident
+        valid_knee = segment_knee[~np.isnan(segment_knee)]
+        if len(valid_knee) > 0:
+            avg_knee = np.mean(valid_knee)
+            # 180° = standing (score 0), 90° = very bent (score 1)
+            knee_score = 1 - (avg_knee - 90) / 90
+            scores.append(np.clip(knee_score, 0, 1))
+
+        # Arm score: more raised = more confident
+        valid_arm = segment_arm[~np.isnan(segment_arm)]
+        if len(valid_arm) > 0:
+            avg_arm = np.mean(valid_arm)
+            # 0.2 = below shoulder (score 0), -0.2 = well above (score 1)
+            arm_score = 1 - (avg_arm + 0.2) / 0.4
+            scores.append(np.clip(arm_score, 0, 1))
+
+        # Energy score
+        if len(segment_energy) > 0:
+            energy_ratio = np.mean(segment_energy) / (np.max(energy) + 1e-10)
+            scores.append(np.clip(energy_ratio, 0, 1))
+
+        return np.mean(scores) if scores else 0.5
+
+    def _fallback_detection(
+        self,
+        frames: List[Dict],
+        lane: str
+    ) -> Optional[RaceSegment]:
+        """Fallback: return all frames with valid pose data."""
+        valid_indices = []
+        for i, frame in enumerate(frames):
+            climber = frame.get(f'{lane}_climber')
+            if climber and climber.get('has_detection', False):
+                valid_indices.append(i)
+
+        if len(valid_indices) < self.min_race_frames:
+            return None
+
+        return RaceSegment(
+            start_frame=valid_indices[0],
+            end_frame=valid_indices[-1],
+            total_frames=len(frames),
+            confidence=0.5,  # Lower confidence for fallback
+            detection_method="fallback_all_valid"
+        )
 
     def filter_racing_frames(
         self,
@@ -169,7 +349,6 @@ class RaceSegmentDetector:
         segment = self.detect(frames, lane)
 
         if segment is None:
-            # Return all frames if detection failed
             return frames, None
 
         filtered = frames[segment.start_frame:segment.end_frame + 1]
