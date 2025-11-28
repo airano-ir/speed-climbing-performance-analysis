@@ -1,0 +1,436 @@
+2025-11-29 01:17:20,918 - INFO - Starting batch feature extraction...
+2025-11-29 01:17:20,918 - INFO - Project root: G:\My Drive\Projects\Speed Climbing Performance Analysis
+2025-11-29 01:17:20,929 - INFO - Found 32 pose files in chamonix_2024
+2025-11-29 01:17:20,932 - INFO - Found 32 pose files in innsbruck_2024
+2025-11-29 01:17:20,944 - INFO - Found 31 pose files in seoul_2024
+2025-11-29 01:17:20,947 - INFO - Found 24 pose files in villars_2024
+2025-11-29 01:17:20,951 - INFO - Found 69 pose files in zilina_2025
+2025-11-29 01:17:21,038 - INFO - Processing 188 pose files from 5 competitions
+2025-11-29 01:17:21,038 - INFO - 
+============================================================
+2025-11-29 01:17:21,038 - INFO - Processing chamonix_2024: 32 files
+2025-11-29 01:17:21,038 - INFO - ============================================================
+2025-11-29 01:17:21,127 - INFO -   [O] Speed_finals_Chamonix_2024_race001 (left): quality=0.91, conf=0.65, frames=143
+2025-11-29 01:17:21,127 - INFO -   [O] Speed_finals_Chamonix_2024_race001 (right): quality=0.90, conf=0.71, frames=141
+2025-11-29 01:17:21,266 - INFO -   [O] Speed_finals_Chamonix_2024_race002 (left): quality=0.94, conf=0.79, frames=157
+2025-11-29 01:17:21,266 - INFO -   [O] Speed_finals_Chamonix_2024_race002 (right): quality=0.94, conf=0.75, frames=155
+2025-11-29 01:17:21,389 - INFO -   [O] Speed_finals_Chamonix_2024_race003 (left): quality=0.94, conf=0.75, frames=148
+2025-11-29 01:17:21,390 - INFO -   [O] Speed_finals_Chamonix_2024_race003 (right): quality=0.95, conf=0.81, frames=167
+2025-11-29 01:17:21,518 - INFO -   [O] Speed_finals_Chamonix_2024_race004 (left): quality=0.89, conf=0.61, frames=114
+2025-11-29 01:17:21,518 - INFO -   [O] Speed_finals_Chamonix_2024_race004 (right): quality=0.94, conf=0.77, frames=136
+2025-11-29 01:17:21,644 - INFO -   [O] Speed_finals_Chamonix_2024_race005 (left): quality=0.94, conf=0.79, frames=151
+2025-11-29 01:17:21,644 - INFO -   [O] Speed_finals_Chamonix_2024_race005 (right): quality=0.94, conf=0.80, frames=171
+2025-11-29 01:17:21,794 - INFO -   [O] Speed_finals_Chamonix_2024_race006 (left): quality=0.93, conf=0.80, frames=150
+2025-11-29 01:17:21,794 - INFO -   [O] Speed_finals_Chamonix_2024_race006 (right): quality=0.95, conf=0.79, frames=137
+2025-11-29 01:17:21,934 - INFO -   [O] Speed_finals_Chamonix_2024_race007 (left): quality=0.93, conf=0.73, frames=216
+2025-11-29 01:17:21,934 - INFO -   [O] Speed_finals_Chamonix_2024_race007 (right): quality=0.94, conf=0.76, frames=197
+2025-11-29 01:17:22,072 - INFO -   [O] Speed_finals_Chamonix_2024_race008 (left): quality=0.95, conf=0.83, frames=166
+2025-11-29 01:17:22,072 - INFO -   [O] Speed_finals_Chamonix_2024_race008 (right): quality=0.95, conf=0.80, frames=161
+2025-11-29 01:17:22,250 - INFO -   [O] Speed_finals_Chamonix_2024_race009 (left): quality=0.91, conf=0.83, frames=166
+2025-11-29 01:17:22,250 - INFO -   [O] Speed_finals_Chamonix_2024_race009 (right): quality=0.94, conf=0.79, frames=166
+2025-11-29 01:17:22,359 - INFO -   [O] Speed_finals_Chamonix_2024_race010 (left): quality=0.95, conf=0.82, frames=155
+2025-11-29 01:17:22,359 - INFO -   [O] Speed_finals_Chamonix_2024_race010 (right): quality=0.97, conf=0.87, frames=166
+2025-11-29 01:17:22,461 - INFO -   [O] Speed_finals_Chamonix_2024_race011 (left): quality=0.96, conf=0.84, frames=166
+2025-11-29 01:17:22,461 - INFO -   [O] Speed_finals_Chamonix_2024_race011 (right): quality=0.89, conf=0.91, frames=166
+2025-11-29 01:17:22,579 - INFO -   [O] Speed_finals_Chamonix_2024_race012 (left): quality=0.91, conf=0.80, frames=136
+2025-11-29 01:17:22,579 - INFO -   [O] Speed_finals_Chamonix_2024_race012 (right): quality=0.90, conf=0.70, frames=213
+2025-11-29 01:17:22,680 - INFO -   [O] Speed_finals_Chamonix_2024_race013 (left): quality=0.93, conf=0.79, frames=166
+2025-11-29 01:17:22,680 - INFO -   [O] Speed_finals_Chamonix_2024_race013 (right): quality=0.86, conf=0.74, frames=166
+2025-11-29 01:17:22,814 - INFO -   [O] Speed_finals_Chamonix_2024_race014 (left): quality=0.95, conf=0.80, frames=161
+2025-11-29 01:17:22,814 - INFO -   [O] Speed_finals_Chamonix_2024_race014 (right): quality=0.94, conf=0.79, frames=178
+2025-11-29 01:17:22,953 - INFO -   [O] Speed_finals_Chamonix_2024_race015 (left): quality=0.97, conf=0.86, frames=166
+2025-11-29 01:17:22,954 - INFO -   [O] Speed_finals_Chamonix_2024_race015 (right): quality=0.94, conf=0.78, frames=180
+2025-11-29 01:17:23,083 - INFO -   [O] Speed_finals_Chamonix_2024_race016 (left): quality=0.95, conf=0.78, frames=215
+2025-11-29 01:17:23,083 - INFO -   [O] Speed_finals_Chamonix_2024_race016 (right): quality=0.94, conf=0.77, frames=136
+2025-11-29 01:17:23,236 - INFO -   [O] Speed_finals_Chamonix_2024_race017 (left): quality=0.95, conf=0.81, frames=159
+2025-11-29 01:17:23,236 - INFO -   [O] Speed_finals_Chamonix_2024_race017 (right): quality=0.95, conf=0.80, frames=157
+2025-11-29 01:17:23,377 - INFO -   [O] Speed_finals_Chamonix_2024_race018 (left): quality=0.95, conf=0.79, frames=144
+2025-11-29 01:17:23,377 - INFO -   [O] Speed_finals_Chamonix_2024_race018 (right): quality=0.94, conf=0.75, frames=166
+2025-11-29 01:17:23,510 - INFO -   [O] Speed_finals_Chamonix_2024_race019 (left): quality=0.90, conf=0.61, frames=97
+2025-11-29 01:17:23,510 - INFO -   [O] Speed_finals_Chamonix_2024_race019 (right): quality=0.93, conf=0.78, frames=166
+2025-11-29 01:17:23,640 - INFO -   [W] Speed_finals_Chamonix_2024_race020 (left): quality=0.88, conf=0.55, frames=42
+2025-11-29 01:17:23,640 - INFO -   [O] Speed_finals_Chamonix_2024_race020 (right): quality=0.93, conf=0.76, frames=166
+2025-11-29 01:17:23,796 - INFO -   [O] Speed_finals_Chamonix_2024_race021 (left): quality=0.87, conf=0.74, frames=166
+2025-11-29 01:17:23,796 - INFO -   [O] Speed_finals_Chamonix_2024_race021 (right): quality=0.95, conf=0.81, frames=192
+2025-11-29 01:17:23,930 - INFO -   [O] Speed_finals_Chamonix_2024_race022 (left): quality=0.93, conf=0.79, frames=166
+2025-11-29 01:17:23,930 - INFO -   [O] Speed_finals_Chamonix_2024_race022 (right): quality=0.95, conf=0.79, frames=180
+2025-11-29 01:17:24,025 - INFO -   [W] Speed_finals_Chamonix_2024_race023 (left): quality=0.66, conf=0.76, frames=181
+2025-11-29 01:17:24,025 - INFO -   [O] Speed_finals_Chamonix_2024_race023 (right): quality=0.94, conf=0.83, frames=186
+2025-11-29 01:17:24,213 - INFO -   [O] Speed_finals_Chamonix_2024_race024 (left): quality=0.96, conf=0.84, frames=166
+2025-11-29 01:17:24,213 - INFO -   [O] Speed_finals_Chamonix_2024_race024 (right): quality=0.93, conf=0.74, frames=180
+2025-11-29 01:17:24,349 - INFO -   [O] Speed_finals_Chamonix_2024_race025 (left): quality=0.93, conf=0.73, frames=166
+2025-11-29 01:17:24,349 - INFO -   [O] Speed_finals_Chamonix_2024_race025 (right): quality=0.79, conf=0.82, frames=166
+2025-11-29 01:17:24,500 - INFO -   [O] Speed_finals_Chamonix_2024_race026 (left): quality=0.94, conf=0.78, frames=166
+2025-11-29 01:17:24,500 - INFO -   [O] Speed_finals_Chamonix_2024_race026 (right): quality=0.87, conf=0.77, frames=166
+2025-11-29 01:17:24,650 - INFO -   [O] Speed_finals_Chamonix_2024_race027 (left): quality=0.94, conf=0.79, frames=151
+2025-11-29 01:17:24,650 - INFO -   [O] Speed_finals_Chamonix_2024_race027 (right): quality=0.96, conf=0.83, frames=197
+2025-11-29 01:17:24,797 - INFO -   [O] Speed_finals_Chamonix_2024_race028 (left): quality=0.95, conf=0.81, frames=177
+2025-11-29 01:17:24,797 - INFO -   [O] Speed_finals_Chamonix_2024_race028 (right): quality=0.95, conf=0.81, frames=166
+2025-11-29 01:17:24,924 - INFO -   [O] Speed_finals_Chamonix_2024_race029 (left): quality=0.93, conf=0.80, frames=213
+2025-11-29 01:17:24,924 - INFO -   [O] Speed_finals_Chamonix_2024_race029 (right): quality=0.87, conf=0.62, frames=120
+2025-11-29 01:17:25,050 - INFO -   [O] Speed_finals_Chamonix_2024_race030 (left): quality=0.93, conf=0.78, frames=166
+2025-11-29 01:17:25,050 - INFO -   [O] Speed_finals_Chamonix_2024_race030 (right): quality=0.92, conf=0.88, frames=209
+2025-11-29 01:17:25,149 - INFO -   [O] Speed_finals_Chamonix_2024_race031 (right): quality=0.94, conf=0.75, frames=211
+2025-11-29 01:17:25,255 - INFO -   [W] Speed_finals_Chamonix_2024_race032 (left): quality=0.65, conf=0.78, frames=166
+2025-11-29 01:17:25,255 - INFO -   [O] Speed_finals_Chamonix_2024_race032 (right): quality=0.94, conf=0.76, frames=148
+2025-11-29 01:17:25,255 - INFO - 
+============================================================
+2025-11-29 01:17:25,255 - INFO - Processing innsbruck_2024: 32 files
+2025-11-29 01:17:25,255 - INFO - ============================================================
+2025-11-29 01:17:25,466 - INFO -   [O] Speed_finals_Innsbruck_2024_race001 (left): quality=0.90, conf=0.74, frames=166
+2025-11-29 01:17:25,466 - INFO -   [O] Speed_finals_Innsbruck_2024_race001 (right): quality=0.87, conf=0.79, frames=166
+2025-11-29 01:17:25,643 - INFO -   [O] Speed_finals_Innsbruck_2024_race002 (left): quality=0.95, conf=0.80, frames=166
+2025-11-29 01:17:25,643 - INFO -   [O] Speed_finals_Innsbruck_2024_race002 (right): quality=0.87, conf=0.86, frames=188
+2025-11-29 01:17:25,800 - INFO -   [O] Speed_finals_Innsbruck_2024_race003 (left): quality=0.95, conf=0.81, frames=178
+2025-11-29 01:17:25,800 - INFO -   [O] Speed_finals_Innsbruck_2024_race003 (right): quality=0.96, conf=0.83, frames=164
+2025-11-29 01:17:26,092 - INFO -   [O] Speed_finals_Innsbruck_2024_race004 (left): quality=0.90, conf=0.79, frames=149
+2025-11-29 01:17:26,092 - INFO -   [W] Speed_finals_Innsbruck_2024_race004 (right): quality=0.75, conf=0.40, frames=791
+2025-11-29 01:17:26,246 - INFO -   [O] Speed_finals_Innsbruck_2024_race005 (left): quality=0.91, conf=0.90, frames=166
+2025-11-29 01:17:26,247 - INFO -   [O] Speed_finals_Innsbruck_2024_race005 (right): quality=0.89, conf=0.74, frames=193
+2025-11-29 01:17:26,421 - INFO -   [O] Speed_finals_Innsbruck_2024_race006 (left): quality=0.84, conf=0.85, frames=136
+2025-11-29 01:17:26,421 - INFO -   [O] Speed_finals_Innsbruck_2024_race006 (right): quality=0.93, conf=0.78, frames=166
+2025-11-29 01:17:26,597 - INFO -   [O] Speed_finals_Innsbruck_2024_race007 (left): quality=0.93, conf=0.79, frames=145
+2025-11-29 01:17:26,599 - INFO -   [O] Speed_finals_Innsbruck_2024_race007 (right): quality=0.93, conf=0.74, frames=220
+2025-11-29 01:17:26,764 - INFO -   [O] Speed_finals_Innsbruck_2024_race008 (left): quality=0.98, conf=0.91, frames=166
+2025-11-29 01:17:26,765 - INFO -   [O] Speed_finals_Innsbruck_2024_race008 (right): quality=0.95, conf=0.79, frames=166
+2025-11-29 01:17:26,929 - INFO -   [O] Speed_finals_Innsbruck_2024_race009 (left): quality=0.92, conf=0.73, frames=136
+2025-11-29 01:17:26,929 - INFO -   [O] Speed_finals_Innsbruck_2024_race009 (right): quality=0.94, conf=0.81, frames=144
+2025-11-29 01:17:27,217 - INFO -   [O] Speed_finals_Innsbruck_2024_race010 (left): quality=0.90, conf=0.85, frames=170
+2025-11-29 01:17:27,217 - INFO -   [O] Speed_finals_Innsbruck_2024_race010 (right): quality=0.78, conf=0.78, frames=138
+2025-11-29 01:17:27,404 - INFO -   [O] Speed_finals_Innsbruck_2024_race011 (left): quality=0.84, conf=0.83, frames=169
+2025-11-29 01:17:27,404 - INFO -   [O] Speed_finals_Innsbruck_2024_race011 (right): quality=0.83, conf=0.79, frames=170
+2025-11-29 01:17:27,606 - INFO -   [O] Speed_finals_Innsbruck_2024_race012 (left): quality=0.87, conf=0.85, frames=166
+2025-11-29 01:17:27,606 - INFO -   [O] Speed_finals_Innsbruck_2024_race012 (right): quality=0.84, conf=0.83, frames=158
+2025-11-29 01:17:27,787 - INFO -   [O] Speed_finals_Innsbruck_2024_race013 (left): quality=0.94, conf=0.78, frames=205
+2025-11-29 01:17:27,787 - INFO -   [O] Speed_finals_Innsbruck_2024_race013 (right): quality=0.96, conf=0.84, frames=166
+2025-11-29 01:17:27,936 - INFO -   [O] Speed_finals_Innsbruck_2024_race014 (left): quality=0.88, conf=0.84, frames=168
+2025-11-29 01:17:27,936 - INFO -   [O] Speed_finals_Innsbruck_2024_race014 (right): quality=0.94, conf=0.76, frames=137
+2025-11-29 01:17:28,123 - INFO -   [O] Speed_finals_Innsbruck_2024_race015 (left): quality=0.88, conf=0.70, frames=220
+2025-11-29 01:17:28,124 - INFO -   [O] Speed_finals_Innsbruck_2024_race015 (right): quality=0.85, conf=0.80, frames=166
+2025-11-29 01:17:28,317 - INFO -   [O] Speed_finals_Innsbruck_2024_race016 (left): quality=0.80, conf=0.73, frames=142
+2025-11-29 01:17:28,317 - INFO -   [O] Speed_finals_Innsbruck_2024_race016 (right): quality=0.93, conf=0.83, frames=181
+2025-11-29 01:17:28,463 - INFO -   [O] Speed_finals_Innsbruck_2024_race017 (left): quality=0.92, conf=0.89, frames=148
+2025-11-29 01:17:28,463 - INFO -   [O] Speed_finals_Innsbruck_2024_race017 (right): quality=0.77, conf=0.91, frames=166
+2025-11-29 01:17:28,646 - INFO -   [O] Speed_finals_Innsbruck_2024_race018 (left): quality=0.89, conf=0.75, frames=144
+2025-11-29 01:17:28,646 - INFO -   [O] Speed_finals_Innsbruck_2024_race018 (right): quality=0.95, conf=0.78, frames=137
+2025-11-29 01:17:28,808 - INFO -   [O] Speed_finals_Innsbruck_2024_race019 (left): quality=0.90, conf=0.90, frames=187
+2025-11-29 01:17:28,808 - INFO -   [O] Speed_finals_Innsbruck_2024_race019 (right): quality=0.94, conf=0.78, frames=174
+2025-11-29 01:17:29,008 - INFO -   [O] Speed_finals_Innsbruck_2024_race020 (left): quality=0.93, conf=0.86, frames=162
+2025-11-29 01:17:29,008 - INFO -   [O] Speed_finals_Innsbruck_2024_race020 (right): quality=0.87, conf=0.82, frames=219
+2025-11-29 01:17:29,158 - INFO -   [O] Speed_finals_Innsbruck_2024_race021 (left): quality=0.94, conf=0.78, frames=140
+2025-11-29 01:17:29,158 - INFO -   [O] Speed_finals_Innsbruck_2024_race021 (right): quality=0.88, conf=0.85, frames=174
+2025-11-29 01:17:29,354 - INFO -   [O] Speed_finals_Innsbruck_2024_race022 (left): quality=0.78, conf=0.84, frames=166
+2025-11-29 01:17:29,354 - INFO -   [O] Speed_finals_Innsbruck_2024_race022 (right): quality=0.80, conf=0.83, frames=166
+2025-11-29 01:17:29,531 - INFO -   [O] Speed_finals_Innsbruck_2024_race023 (left): quality=0.80, conf=0.86, frames=176
+2025-11-29 01:17:29,531 - INFO -   [O] Speed_finals_Innsbruck_2024_race023 (right): quality=0.93, conf=0.72, frames=209
+2025-11-29 01:17:29,672 - INFO -   [O] Speed_finals_Innsbruck_2024_race024 (left): quality=0.85, conf=0.91, frames=168
+2025-11-29 01:17:29,672 - INFO -   [O] Speed_finals_Innsbruck_2024_race024 (right): quality=0.90, conf=0.77, frames=171
+2025-11-29 01:17:29,892 - INFO -   [O] Speed_finals_Innsbruck_2024_race025 (left): quality=0.93, conf=0.71, frames=220
+2025-11-29 01:17:29,892 - INFO -   [O] Speed_finals_Innsbruck_2024_race025 (right): quality=0.95, conf=0.80, frames=173
+2025-11-29 01:17:30,021 - INFO -   [O] Speed_finals_Innsbruck_2024_race026 (left): quality=0.85, conf=0.75, frames=191
+2025-11-29 01:17:30,021 - INFO -   [O] Speed_finals_Innsbruck_2024_race026 (right): quality=0.94, conf=0.79, frames=166
+2025-11-29 01:17:30,201 - INFO -   [O] Speed_finals_Innsbruck_2024_race027 (left): quality=0.87, conf=0.86, frames=166
+2025-11-29 01:17:30,201 - INFO -   [O] Speed_finals_Innsbruck_2024_race027 (right): quality=0.91, conf=0.81, frames=166
+2025-11-29 01:17:30,362 - INFO -   [O] Speed_finals_Innsbruck_2024_race028 (left): quality=0.87, conf=0.86, frames=176
+2025-11-29 01:17:30,362 - INFO -   [O] Speed_finals_Innsbruck_2024_race028 (right): quality=0.88, conf=0.66, frames=221
+2025-11-29 01:17:30,550 - INFO -   [O] Speed_finals_Innsbruck_2024_race029 (left): quality=0.91, conf=0.76, frames=153
+2025-11-29 01:17:30,550 - INFO -   [O] Speed_finals_Innsbruck_2024_race029 (right): quality=0.90, conf=0.86, frames=166
+2025-11-29 01:17:30,915 - INFO -   [O] Speed_finals_Innsbruck_2024_race030 (left): quality=0.86, conf=0.72, frames=208
+2025-11-29 01:17:30,915 - INFO -   [O] Speed_finals_Innsbruck_2024_race030 (right): quality=0.93, conf=0.75, frames=215
+2025-11-29 01:17:31,080 - INFO -   [O] Speed_finals_Innsbruck_2024_race031 (left): quality=0.95, conf=0.80, frames=166
+2025-11-29 01:17:31,080 - INFO -   [O] Speed_finals_Innsbruck_2024_race031 (right): quality=0.96, conf=0.84, frames=167
+2025-11-29 01:17:31,209 - INFO -   [O] Speed_finals_Innsbruck_2024_race032 (left): quality=0.75, conf=0.82, frames=166
+2025-11-29 01:17:31,209 - INFO -   [O] Speed_finals_Innsbruck_2024_race032 (right): quality=0.85, conf=0.86, frames=155
+2025-11-29 01:17:31,209 - INFO - 
+============================================================
+2025-11-29 01:17:31,209 - INFO - Processing seoul_2024: 31 files
+2025-11-29 01:17:31,209 - INFO - ============================================================
+2025-11-29 01:17:31,365 - INFO -   [O] Speed_finals_Seoul_2024_race001 (left): quality=0.93, conf=0.78, frames=166
+2025-11-29 01:17:31,365 - INFO -   [O] Speed_finals_Seoul_2024_race001 (right): quality=0.95, conf=0.79, frames=154
+2025-11-29 01:17:31,528 - INFO -   [O] Speed_finals_Seoul_2024_race002 (left): quality=0.95, conf=0.80, frames=163
+2025-11-29 01:17:31,529 - INFO -   [O] Speed_finals_Seoul_2024_race002 (right): quality=0.95, conf=0.79, frames=157
+2025-11-29 01:17:31,689 - INFO -   [O] Speed_finals_Seoul_2024_race003 (left): quality=0.94, conf=0.76, frames=225
+2025-11-29 01:17:31,689 - INFO -   [O] Speed_finals_Seoul_2024_race003 (right): quality=0.94, conf=0.80, frames=154
+2025-11-29 01:17:31,820 - INFO -   [O] Speed_finals_Seoul_2024_race004 (left): quality=0.94, conf=0.81, frames=163
+2025-11-29 01:17:31,820 - INFO -   [O] Speed_finals_Seoul_2024_race004 (right): quality=0.73, conf=0.91, frames=166
+2025-11-29 01:17:31,982 - INFO -   [O] Speed_finals_Seoul_2024_race005 (left): quality=0.93, conf=0.76, frames=152
+2025-11-29 01:17:31,982 - INFO -   [O] Speed_finals_Seoul_2024_race005 (right): quality=0.94, conf=0.74, frames=218
+2025-11-29 01:17:32,154 - INFO -   [O] Speed_finals_Seoul_2024_race006 (left): quality=0.94, conf=0.78, frames=166
+2025-11-29 01:17:32,154 - INFO -   [O] Speed_finals_Seoul_2024_race006 (right): quality=0.95, conf=0.79, frames=166
+2025-11-29 01:17:32,411 - INFO -   [O] Speed_finals_Seoul_2024_race007 (left): quality=0.93, conf=0.75, frames=214
+2025-11-29 01:17:32,411 - INFO -   [O] Speed_finals_Seoul_2024_race007 (right): quality=0.95, conf=0.79, frames=171
+2025-11-29 01:17:32,616 - INFO -   [O] Speed_finals_Seoul_2024_race008 (left): quality=0.96, conf=0.83, frames=159
+2025-11-29 01:17:32,617 - INFO -   [O] Speed_finals_Seoul_2024_race008 (right): quality=0.93, conf=0.80, frames=171
+2025-11-29 01:17:32,781 - INFO -   [O] Speed_finals_Seoul_2024_race009 (left): quality=0.95, conf=0.81, frames=147
+2025-11-29 01:17:32,781 - INFO -   [O] Speed_finals_Seoul_2024_race009 (right): quality=0.96, conf=0.83, frames=174
+2025-11-29 01:17:32,992 - INFO -   [O] Speed_finals_Seoul_2024_race010 (left): quality=0.94, conf=0.76, frames=166
+2025-11-29 01:17:32,992 - INFO -   [O] Speed_finals_Seoul_2024_race010 (right): quality=0.93, conf=0.76, frames=166
+2025-11-29 01:17:33,151 - INFO -   [O] Speed_finals_Seoul_2024_race011 (left): quality=0.95, conf=0.80, frames=190
+2025-11-29 01:17:33,151 - INFO -   [O] Speed_finals_Seoul_2024_race011 (right): quality=0.82, conf=0.79, frames=166
+2025-11-29 01:17:33,311 - INFO -   [O] Speed_finals_Seoul_2024_race012 (left): quality=0.94, conf=0.77, frames=166
+2025-11-29 01:17:33,311 - INFO -   [O] Speed_finals_Seoul_2024_race012 (right): quality=0.95, conf=0.80, frames=166
+2025-11-29 01:17:33,509 - INFO -   [O] Speed_finals_Seoul_2024_race013 (left): quality=0.94, conf=0.78, frames=144
+2025-11-29 01:17:33,509 - INFO -   [O] Speed_finals_Seoul_2024_race013 (right): quality=0.95, conf=0.82, frames=166
+2025-11-29 01:17:33,684 - INFO -   [O] Speed_finals_Seoul_2024_race014 (left): quality=0.96, conf=0.86, frames=225
+2025-11-29 01:17:33,684 - INFO -   [O] Speed_finals_Seoul_2024_race014 (right): quality=0.93, conf=0.73, frames=218
+2025-11-29 01:17:33,879 - INFO -   [O] Speed_finals_Seoul_2024_race015 (left): quality=0.96, conf=0.83, frames=182
+2025-11-29 01:17:33,879 - INFO -   [O] Speed_finals_Seoul_2024_race015 (right): quality=0.85, conf=0.91, frames=166
+2025-11-29 01:17:34,037 - INFO -   [O] Speed_finals_Seoul_2024_race016 (left): quality=0.95, conf=0.86, frames=166
+2025-11-29 01:17:34,037 - INFO -   [O] Speed_finals_Seoul_2024_race016 (right): quality=0.85, conf=0.88, frames=166
+2025-11-29 01:17:34,241 - INFO -   [O] Speed_finals_Seoul_2024_race017 (left): quality=0.95, conf=0.79, frames=185
+2025-11-29 01:17:34,241 - INFO -   [O] Speed_finals_Seoul_2024_race017 (right): quality=0.95, conf=0.81, frames=153
+2025-11-29 01:17:34,420 - INFO -   [O] Speed_finals_Seoul_2024_race018 (left): quality=0.95, conf=0.80, frames=159
+2025-11-29 01:17:34,420 - INFO -   [O] Speed_finals_Seoul_2024_race018 (right): quality=0.94, conf=0.78, frames=166
+2025-11-29 01:17:34,647 - INFO -   [O] Speed_finals_Seoul_2024_race019 (left): quality=0.93, conf=0.79, frames=214
+2025-11-29 01:17:34,647 - INFO -   [O] Speed_finals_Seoul_2024_race019 (right): quality=0.95, conf=0.79, frames=222
+2025-11-29 01:17:34,810 - INFO -   [O] Speed_finals_Seoul_2024_race020 (left): quality=0.96, conf=0.85, frames=166
+2025-11-29 01:17:34,810 - INFO -   [O] Speed_finals_Seoul_2024_race020 (right): quality=0.95, conf=0.81, frames=158
+2025-11-29 01:17:34,978 - INFO -   [O] Speed_finals_Seoul_2024_race021 (left): quality=0.94, conf=0.78, frames=143
+2025-11-29 01:17:34,978 - INFO -   [O] Speed_finals_Seoul_2024_race021 (right): quality=0.95, conf=0.85, frames=154
+2025-11-29 01:17:35,122 - INFO -   [O] Speed_finals_Seoul_2024_race022 (left): quality=0.95, conf=0.82, frames=158
+2025-11-29 01:17:35,122 - INFO -   [O] Speed_finals_Seoul_2024_race022 (right): quality=0.93, conf=0.79, frames=190
+2025-11-29 01:17:35,274 - INFO -   [O] Speed_finals_Seoul_2024_race023 (left): quality=0.97, conf=0.86, frames=202
+2025-11-29 01:17:35,275 - INFO -   [O] Speed_finals_Seoul_2024_race023 (right): quality=0.95, conf=0.81, frames=165
+2025-11-29 01:17:35,489 - INFO -   [O] Speed_finals_Seoul_2024_race024 (left): quality=0.95, conf=0.82, frames=139
+2025-11-29 01:17:35,489 - INFO -   [O] Speed_finals_Seoul_2024_race024 (right): quality=0.94, conf=0.78, frames=136
+2025-11-29 01:17:35,721 - INFO -   [O] Speed_finals_Seoul_2024_race025 (left): quality=0.95, conf=0.82, frames=186
+2025-11-29 01:17:35,721 - INFO -   [O] Speed_finals_Seoul_2024_race025 (right): quality=0.92, conf=0.70, frames=224
+2025-11-29 01:17:35,927 - INFO -   [O] Speed_finals_Seoul_2024_race026 (left): quality=0.95, conf=0.80, frames=158
+2025-11-29 01:17:35,928 - INFO -   [O] Speed_finals_Seoul_2024_race026 (right): quality=0.96, conf=0.84, frames=166
+2025-11-29 01:17:36,072 - INFO -   [O] Speed_finals_Seoul_2024_race027 (left): quality=0.83, conf=0.90, frames=140
+2025-11-29 01:17:36,072 - INFO -   [O] Speed_finals_Seoul_2024_race027 (right): quality=0.96, conf=0.84, frames=170
+2025-11-29 01:17:36,295 - INFO -   [O] Speed_finals_Seoul_2024_race028 (left): quality=0.94, conf=0.77, frames=146
+2025-11-29 01:17:36,295 - INFO -   [O] Speed_finals_Seoul_2024_race028 (right): quality=0.95, conf=0.80, frames=148
+2025-11-29 01:17:36,456 - INFO -   [O] Speed_finals_Seoul_2024_race029 (left): quality=0.97, conf=0.87, frames=173
+2025-11-29 01:17:36,457 - INFO -   [O] Speed_finals_Seoul_2024_race029 (right): quality=0.85, conf=0.91, frames=166
+2025-11-29 01:17:36,628 - INFO -   [O] Speed_finals_Seoul_2024_race030 (left): quality=0.93, conf=0.78, frames=192
+2025-11-29 01:17:36,628 - INFO -   [O] Speed_finals_Seoul_2024_race030 (right): quality=0.94, conf=0.79, frames=154
+2025-11-29 01:17:36,796 - INFO -   [O] Speed_finals_Seoul_2024_race031 (left): quality=0.94, conf=0.75, frames=221
+2025-11-29 01:17:36,796 - INFO -   [O] Speed_finals_Seoul_2024_race031 (right): quality=0.96, conf=0.83, frames=166
+2025-11-29 01:17:36,796 - INFO - 
+============================================================
+2025-11-29 01:17:36,796 - INFO - Processing villars_2024: 24 files
+2025-11-29 01:17:36,796 - INFO - ============================================================
+2025-11-29 01:17:36,992 - INFO -   [O] Speed_finals_Villars_2024_race001 (left): quality=0.92, conf=0.76, frames=202
+2025-11-29 01:17:36,992 - INFO -   [O] Speed_finals_Villars_2024_race001 (right): quality=0.92, conf=0.76, frames=211
+2025-11-29 01:17:37,155 - INFO -   [O] Speed_finals_Villars_2024_race002 (left): quality=0.96, conf=0.86, frames=161
+2025-11-29 01:17:37,156 - INFO -   [O] Speed_finals_Villars_2024_race002 (right): quality=0.87, conf=0.81, frames=150
+2025-11-29 01:17:37,345 - INFO -   [O] Speed_finals_Villars_2024_race003 (left): quality=0.94, conf=0.77, frames=166
+2025-11-29 01:17:37,345 - INFO -   [O] Speed_finals_Villars_2024_race003 (right): quality=0.94, conf=0.81, frames=168
+2025-11-29 01:17:37,479 - INFO -   [O] Speed_finals_Villars_2024_race004 (left): quality=0.91, conf=0.88, frames=192
+2025-11-29 01:17:37,479 - INFO -   [O] Speed_finals_Villars_2024_race004 (right): quality=0.94, conf=0.79, frames=136
+2025-11-29 01:17:37,612 - INFO -   [O] Speed_finals_Villars_2024_race005 (left): quality=0.92, conf=0.83, frames=196
+2025-11-29 01:17:37,612 - INFO -   [O] Speed_finals_Villars_2024_race005 (right): quality=0.89, conf=0.91, frames=166
+2025-11-29 01:17:37,741 - INFO -   [O] Speed_finals_Villars_2024_race006 (left): quality=0.95, conf=0.79, frames=193
+2025-11-29 01:17:37,741 - INFO -   [O] Speed_finals_Villars_2024_race006 (right): quality=0.86, conf=0.91, frames=166
+2025-11-29 01:17:37,883 - INFO -   [O] Speed_finals_Villars_2024_race007 (left): quality=0.91, conf=0.81, frames=166
+2025-11-29 01:17:37,883 - INFO -   [O] Speed_finals_Villars_2024_race007 (right): quality=0.92, conf=0.77, frames=136
+2025-11-29 01:17:38,014 - INFO -   [O] Speed_finals_Villars_2024_race008 (left): quality=0.84, conf=0.80, frames=166
+2025-11-29 01:17:38,014 - INFO -   [O] Speed_finals_Villars_2024_race008 (right): quality=0.80, conf=0.92, frames=167
+2025-11-29 01:17:38,194 - INFO -   [O] Speed_finals_Villars_2024_race009 (left): quality=0.95, conf=0.81, frames=159
+2025-11-29 01:17:38,194 - INFO -   [O] Speed_finals_Villars_2024_race009 (right): quality=0.94, conf=0.78, frames=166
+2025-11-29 01:17:38,358 - INFO -   [O] Speed_finals_Villars_2024_race010 (left): quality=0.93, conf=0.79, frames=154
+2025-11-29 01:17:38,358 - INFO -   [O] Speed_finals_Villars_2024_race010 (right): quality=0.94, conf=0.78, frames=182
+2025-11-29 01:17:38,528 - INFO -   [O] Speed_finals_Villars_2024_race011 (left): quality=0.92, conf=0.81, frames=153
+2025-11-29 01:17:38,528 - INFO -   [O] Speed_finals_Villars_2024_race011 (right): quality=0.95, conf=0.80, frames=145
+2025-11-29 01:17:38,680 - INFO -   [O] Speed_finals_Villars_2024_race012 (left): quality=0.93, conf=0.77, frames=144
+2025-11-29 01:17:38,680 - INFO -   [O] Speed_finals_Villars_2024_race012 (right): quality=0.93, conf=0.76, frames=139
+2025-11-29 01:17:38,823 - INFO -   [O] Speed_finals_Villars_2024_race013 (left): quality=0.93, conf=0.77, frames=136
+2025-11-29 01:17:38,823 - INFO -   [O] Speed_finals_Villars_2024_race013 (right): quality=0.94, conf=0.82, frames=166
+2025-11-29 01:17:38,949 - INFO -   [O] Speed_finals_Villars_2024_race014 (left): quality=0.82, conf=0.88, frames=166
+2025-11-29 01:17:38,949 - INFO -   [O] Speed_finals_Villars_2024_race014 (right): quality=0.91, conf=0.80, frames=184
+2025-11-29 01:17:39,107 - INFO -   [O] Speed_finals_Villars_2024_race015 (left): quality=0.90, conf=0.79, frames=166
+2025-11-29 01:17:39,107 - INFO -   [O] Speed_finals_Villars_2024_race015 (right): quality=0.93, conf=0.80, frames=166
+2025-11-29 01:17:39,218 - INFO -   [W] Speed_finals_Villars_2024_race016 (left): quality=0.65, conf=0.91, frames=166
+2025-11-29 01:17:39,219 - INFO -   [O] Speed_finals_Villars_2024_race016 (right): quality=0.95, conf=0.81, frames=166
+2025-11-29 01:17:39,384 - INFO -   [O] Speed_finals_Villars_2024_race017 (left): quality=0.95, conf=0.79, frames=158
+2025-11-29 01:17:39,385 - INFO -   [O] Speed_finals_Villars_2024_race017 (right): quality=0.94, conf=0.75, frames=154
+2025-11-29 01:17:39,574 - INFO -   [O] Speed_finals_Villars_2024_race018 (left): quality=0.91, conf=0.77, frames=192
+2025-11-29 01:17:39,574 - INFO -   [O] Speed_finals_Villars_2024_race018 (right): quality=0.92, conf=0.77, frames=136
+2025-11-29 01:17:39,743 - INFO -   [O] Speed_finals_Villars_2024_race019 (left): quality=0.92, conf=0.78, frames=166
+2025-11-29 01:17:39,743 - INFO -   [O] Speed_finals_Villars_2024_race019 (right): quality=0.94, conf=0.82, frames=163
+2025-11-29 01:17:39,867 - INFO -   [O] Speed_finals_Villars_2024_race020 (left): quality=0.95, conf=0.82, frames=159
+2025-11-29 01:17:39,974 - INFO -   [O] Speed_finals_Villars_2024_race021 (left): quality=0.94, conf=0.80, frames=163
+2025-11-29 01:17:40,102 - INFO -   [W] Speed_finals_Villars_2024_race022 (left): quality=0.70, conf=0.89, frames=166
+2025-11-29 01:17:40,102 - INFO -   [O] Speed_finals_Villars_2024_race022 (right): quality=0.92, conf=0.85, frames=166
+2025-11-29 01:17:40,296 - INFO -   [O] Speed_finals_Villars_2024_race023 (left): quality=0.92, conf=0.81, frames=166
+2025-11-29 01:17:40,296 - INFO -   [O] Speed_finals_Villars_2024_race023 (right): quality=0.92, conf=0.72, frames=166
+2025-11-29 01:17:40,438 - INFO -   [O] Speed_finals_Villars_2024_race024 (left): quality=0.90, conf=0.77, frames=166
+2025-11-29 01:17:40,439 - INFO -   [O] Speed_finals_Villars_2024_race024 (right): quality=0.94, conf=0.76, frames=202
+2025-11-29 01:17:40,439 - INFO - 
+============================================================
+2025-11-29 01:17:40,439 - INFO - Processing zilina_2025: 69 files
+2025-11-29 01:17:40,439 - INFO - ============================================================
+2025-11-29 01:17:40,711 - INFO -   [O] Speed_finals_Zilina_2025_race001 (left): quality=0.84, conf=0.78, frames=209
+2025-11-29 01:17:40,711 - INFO -   [W] Speed_finals_Zilina_2025_race001 (right): quality=0.70, conf=0.77, frames=151
+2025-11-29 01:17:40,904 - INFO -   [O] Speed_finals_Zilina_2025_race002 (left): quality=0.82, conf=0.79, frames=193
+2025-11-29 01:17:40,904 - INFO -   [O] Speed_finals_Zilina_2025_race002 (right): quality=0.75, conf=0.83, frames=212
+2025-11-29 01:17:41,069 - INFO -   [O] Speed_finals_Zilina_2025_race003 (left): quality=0.73, conf=0.79, frames=150
+2025-11-29 01:17:41,070 - INFO -   [O] Speed_finals_Zilina_2025_race003 (right): quality=0.78, conf=0.80, frames=165
+2025-11-29 01:17:41,272 - INFO -   [O] Speed_finals_Zilina_2025_race004 (left): quality=0.78, conf=0.77, frames=166
+2025-11-29 01:17:41,599 - INFO -   [O] Speed_finals_Zilina_2025_race005 (left): quality=0.78, conf=0.71, frames=166
+2025-11-29 01:17:41,599 - INFO -   [O] Speed_finals_Zilina_2025_race005 (right): quality=0.72, conf=0.70, frames=223
+2025-11-29 01:17:41,928 - INFO -   [O] Speed_finals_Zilina_2025_race006 (left): quality=0.75, conf=0.74, frames=166
+2025-11-29 01:17:41,928 - INFO -   [O] Speed_finals_Zilina_2025_race006 (right): quality=0.71, conf=0.71, frames=166
+2025-11-29 01:17:42,262 - INFO -   [O] Speed_finals_Zilina_2025_race007 (left): quality=0.85, conf=0.78, frames=174
+2025-11-29 01:17:42,262 - INFO -   [W] Speed_finals_Zilina_2025_race007 (right): quality=0.65, conf=0.79, frames=166
+2025-11-29 01:17:42,583 - INFO -   [O] Speed_finals_Zilina_2025_race008 (left): quality=0.79, conf=0.78, frames=166
+2025-11-29 01:17:42,584 - INFO -   [O] Speed_finals_Zilina_2025_race008 (right): quality=0.84, conf=0.81, frames=173
+2025-11-29 01:17:42,918 - INFO -   [O] Speed_finals_Zilina_2025_race009 (left): quality=0.77, conf=0.89, frames=196
+2025-11-29 01:17:42,918 - INFO -   [O] Speed_finals_Zilina_2025_race009 (right): quality=0.73, conf=0.78, frames=166
+2025-11-29 01:17:43,222 - INFO -   [O] Speed_finals_Zilina_2025_race010 (left): quality=0.74, conf=0.80, frames=166
+2025-11-29 01:17:43,222 - INFO -   [W] Speed_finals_Zilina_2025_race010 (right): quality=0.70, conf=0.73, frames=154
+2025-11-29 01:17:43,586 - INFO -   [O] Speed_finals_Zilina_2025_race011 (left): quality=0.84, conf=0.87, frames=217
+2025-11-29 01:17:43,586 - INFO -   [O] Speed_finals_Zilina_2025_race011 (right): quality=0.75, conf=0.83, frames=166
+2025-11-29 01:17:43,850 - INFO -   [O] Speed_finals_Zilina_2025_race012 (left): quality=0.70, conf=0.79, frames=136
+2025-11-29 01:17:43,850 - INFO -   [O] Speed_finals_Zilina_2025_race012 (right): quality=0.78, conf=0.88, frames=188
+2025-11-29 01:17:44,211 - INFO -   [O] Speed_finals_Zilina_2025_race013 (left): quality=0.78, conf=0.75, frames=166
+2025-11-29 01:17:44,211 - INFO -   [O] Speed_finals_Zilina_2025_race013 (right): quality=0.77, conf=0.75, frames=166
+2025-11-29 01:17:44,730 - INFO -   [O] Speed_finals_Zilina_2025_race014 (left): quality=0.80, conf=0.76, frames=166
+2025-11-29 01:17:44,730 - INFO -   [O] Speed_finals_Zilina_2025_race014 (right): quality=0.74, conf=0.74, frames=166
+2025-11-29 01:17:45,042 - INFO -   [O] Speed_finals_Zilina_2025_race015 (left): quality=0.77, conf=0.74, frames=166
+2025-11-29 01:17:45,042 - INFO -   [W] Speed_finals_Zilina_2025_race015 (right): quality=0.63, conf=0.84, frames=166
+2025-11-29 01:17:45,328 - INFO -   [O] Speed_finals_Zilina_2025_race016 (left): quality=0.81, conf=0.83, frames=166
+2025-11-29 01:17:45,328 - INFO -   [O] Speed_finals_Zilina_2025_race016 (right): quality=0.75, conf=0.85, frames=166
+2025-11-29 01:17:45,597 - INFO -   [O] Speed_finals_Zilina_2025_race017 (left): quality=0.77, conf=0.84, frames=166
+2025-11-29 01:17:45,597 - INFO -   [O] Speed_finals_Zilina_2025_race017 (right): quality=0.75, conf=0.80, frames=159
+2025-11-29 01:17:46,017 - INFO -   [O] Speed_finals_Zilina_2025_race018 (left): quality=0.81, conf=0.72, frames=166
+2025-11-29 01:17:46,017 - INFO -   [O] Speed_finals_Zilina_2025_race018 (right): quality=0.77, conf=0.80, frames=184
+2025-11-29 01:17:46,564 - INFO -   [O] Speed_finals_Zilina_2025_race019 (left): quality=0.83, conf=0.78, frames=166
+2025-11-29 01:17:46,564 - INFO -   [O] Speed_finals_Zilina_2025_race019 (right): quality=0.75, conf=0.85, frames=145
+2025-11-29 01:17:46,809 - INFO -   [O] Speed_finals_Zilina_2025_race020 (left): quality=0.83, conf=0.91, frames=166
+2025-11-29 01:17:46,809 - INFO -   [O] Speed_finals_Zilina_2025_race020 (right): quality=0.76, conf=0.85, frames=166
+2025-11-29 01:17:47,222 - INFO -   [O] Speed_finals_Zilina_2025_race021 (left): quality=0.77, conf=0.67, frames=166
+2025-11-29 01:17:47,222 - INFO -   [W] Speed_finals_Zilina_2025_race021 (right): quality=0.62, conf=0.40, frames=810
+2025-11-29 01:17:47,652 - INFO -   [O] Speed_finals_Zilina_2025_race022 (left): quality=0.74, conf=0.76, frames=166
+2025-11-29 01:17:47,652 - INFO -   [O] Speed_finals_Zilina_2025_race022 (right): quality=0.79, conf=0.84, frames=157
+2025-11-29 01:17:47,912 - INFO -   [O] Speed_finals_Zilina_2025_race023 (left): quality=0.75, conf=0.84, frames=166
+2025-11-29 01:17:47,912 - INFO -   [O] Speed_finals_Zilina_2025_race023 (right): quality=0.72, conf=0.86, frames=205
+2025-11-29 01:17:48,138 - INFO -   [W] Speed_finals_Zilina_2025_race024 (left): quality=0.66, conf=0.71, frames=166
+2025-11-29 01:17:48,138 - INFO -   [O] Speed_finals_Zilina_2025_race024 (right): quality=0.75, conf=0.84, frames=166
+2025-11-29 01:17:48,368 - INFO -   [O] Speed_finals_Zilina_2025_race025 (left): quality=0.76, conf=0.85, frames=172
+2025-11-29 01:17:48,369 - INFO -   [O] Speed_finals_Zilina_2025_race025 (right): quality=0.75, conf=0.76, frames=166
+2025-11-29 01:17:48,616 - INFO -   [W] Speed_finals_Zilina_2025_race026 (left): quality=0.66, conf=0.89, frames=200
+2025-11-29 01:17:48,616 - INFO -   [W] Speed_finals_Zilina_2025_race026 (right): quality=0.69, conf=0.90, frames=186
+2025-11-29 01:17:48,861 - INFO -   [O] Speed_finals_Zilina_2025_race027 (left): quality=0.83, conf=0.81, frames=166
+2025-11-29 01:17:48,861 - INFO -   [O] Speed_finals_Zilina_2025_race027 (right): quality=0.76, conf=0.79, frames=166
+2025-11-29 01:17:49,079 - INFO -   [O] Speed_finals_Zilina_2025_race028 (left): quality=0.72, conf=0.86, frames=166
+2025-11-29 01:17:49,079 - INFO -   [W] Speed_finals_Zilina_2025_race028 (right): quality=0.70, conf=0.78, frames=165
+2025-11-29 01:17:49,312 - INFO -   [O] Speed_finals_Zilina_2025_race029 (left): quality=0.79, conf=0.86, frames=182
+2025-11-29 01:17:49,312 - INFO -   [W] Speed_finals_Zilina_2025_race029 (right): quality=0.66, conf=0.85, frames=148
+2025-11-29 01:17:49,584 - INFO -   [O] Speed_finals_Zilina_2025_race030 (left): quality=0.78, conf=0.80, frames=166
+2025-11-29 01:17:49,584 - INFO -   [O] Speed_finals_Zilina_2025_race030 (right): quality=0.80, conf=0.76, frames=217
+2025-11-29 01:17:49,804 - INFO -   [O] Speed_finals_Zilina_2025_race031 (left): quality=0.74, conf=0.83, frames=169
+2025-11-29 01:17:49,804 - INFO -   [O] Speed_finals_Zilina_2025_race031 (right): quality=0.81, conf=0.86, frames=177
+2025-11-29 01:17:50,133 - INFO -   [O] Speed_finals_Zilina_2025_race032 (left): quality=0.82, conf=0.68, frames=166
+2025-11-29 01:17:50,134 - INFO -   [O] Speed_finals_Zilina_2025_race032 (right): quality=0.75, conf=0.75, frames=166
+2025-11-29 01:17:50,384 - INFO -   [O] Speed_finals_Zilina_2025_race033 (left): quality=0.81, conf=0.74, frames=166
+2025-11-29 01:17:50,384 - INFO -   [O] Speed_finals_Zilina_2025_race033 (right): quality=0.71, conf=0.86, frames=182
+2025-11-29 01:17:50,611 - INFO -   [O] Speed_finals_Zilina_2025_race034 (left): quality=0.71, conf=0.77, frames=166
+2025-11-29 01:17:50,612 - INFO -   [O] Speed_finals_Zilina_2025_race034 (right): quality=0.85, conf=0.84, frames=166
+2025-11-29 01:17:50,838 - INFO -   [O] Speed_finals_Zilina_2025_race035 (left): quality=0.76, conf=0.76, frames=173
+2025-11-29 01:17:50,838 - INFO -   [O] Speed_finals_Zilina_2025_race035 (right): quality=0.73, conf=0.85, frames=185
+2025-11-29 01:17:51,048 - INFO -   [O] Speed_finals_Zilina_2025_race036 (left): quality=0.76, conf=0.73, frames=217
+2025-11-29 01:17:51,048 - INFO -   [W] Speed_finals_Zilina_2025_race036 (right): quality=0.70, conf=0.76, frames=214
+2025-11-29 01:17:51,205 - INFO -   [O] Speed_finals_Zilina_2025_race037 (left): quality=0.77, conf=0.76, frames=166
+2025-11-29 01:17:51,206 - INFO -   [W] Speed_finals_Zilina_2025_race037 (right): quality=0.55, conf=0.75, frames=166
+2025-11-29 01:17:51,433 - INFO -   [O] Speed_finals_Zilina_2025_race038 (left): quality=0.70, conf=0.68, frames=225
+2025-11-29 01:17:51,433 - INFO -   [W] Speed_finals_Zilina_2025_race038 (right): quality=0.70, conf=0.71, frames=189
+2025-11-29 01:17:51,626 - INFO -   [O] Speed_finals_Zilina_2025_race039 (left): quality=0.79, conf=0.86, frames=175
+2025-11-29 01:17:51,627 - INFO -   [O] Speed_finals_Zilina_2025_race039 (right): quality=0.78, conf=0.91, frames=184
+2025-11-29 01:17:51,804 - INFO -   [O] Speed_finals_Zilina_2025_race040 (left): quality=0.74, conf=0.81, frames=160
+2025-11-29 01:17:51,804 - INFO -   [O] Speed_finals_Zilina_2025_race040 (right): quality=0.72, conf=0.79, frames=138
+2025-11-29 01:17:52,024 - INFO -   [O] Speed_finals_Zilina_2025_race041 (left): quality=0.77, conf=0.79, frames=223
+2025-11-29 01:17:52,024 - INFO -   [W] Speed_finals_Zilina_2025_race041 (right): quality=0.49, conf=0.70, frames=166
+2025-11-29 01:17:52,306 - INFO -   [O] Speed_finals_Zilina_2025_race042 (left): quality=0.84, conf=0.74, frames=166
+2025-11-29 01:17:52,306 - INFO -   [O] Speed_finals_Zilina_2025_race042 (right): quality=0.75, conf=0.70, frames=166
+2025-11-29 01:17:52,527 - INFO -   [O] Speed_finals_Zilina_2025_race043 (left): quality=0.75, conf=0.86, frames=166
+2025-11-29 01:17:52,527 - INFO -   [O] Speed_finals_Zilina_2025_race043 (right): quality=0.73, conf=0.85, frames=189
+2025-11-29 01:17:52,783 - INFO -   [O] Speed_finals_Zilina_2025_race044 (left): quality=0.71, conf=0.82, frames=166
+2025-11-29 01:17:52,783 - INFO -   [W] Speed_finals_Zilina_2025_race044 (right): quality=0.61, conf=0.71, frames=166
+2025-11-29 01:17:53,074 - INFO -   [O] Speed_finals_Zilina_2025_race045 (left): quality=0.84, conf=0.73, frames=166
+2025-11-29 01:17:53,074 - INFO -   [O] Speed_finals_Zilina_2025_race045 (right): quality=0.71, conf=0.74, frames=166
+2025-11-29 01:17:53,303 - INFO -   [O] Speed_finals_Zilina_2025_race046 (left): quality=0.79, conf=0.80, frames=166
+2025-11-29 01:17:53,304 - INFO -   [O] Speed_finals_Zilina_2025_race046 (right): quality=0.72, conf=0.91, frames=166
+2025-11-29 01:17:53,750 - INFO -   [O] Speed_finals_Zilina_2025_race047 (left): quality=0.84, conf=0.80, frames=166
+2025-11-29 01:17:53,751 - INFO -   [O] Speed_finals_Zilina_2025_race047 (right): quality=0.83, conf=0.76, frames=167
+2025-11-29 01:17:53,996 - INFO -   [O] Speed_finals_Zilina_2025_race048 (left): quality=0.73, conf=0.73, frames=179
+2025-11-29 01:17:53,996 - INFO -   [O] Speed_finals_Zilina_2025_race048 (right): quality=0.73, conf=0.79, frames=165
+2025-11-29 01:17:54,246 - INFO -   [O] Speed_finals_Zilina_2025_race049 (left): quality=0.83, conf=0.77, frames=166
+2025-11-29 01:17:54,246 - INFO -   [O] Speed_finals_Zilina_2025_race049 (right): quality=0.76, conf=0.81, frames=201
+2025-11-29 01:17:54,501 - INFO -   [O] Speed_finals_Zilina_2025_race050 (left): quality=0.77, conf=0.72, frames=225
+2025-11-29 01:17:54,501 - INFO -   [O] Speed_finals_Zilina_2025_race050 (right): quality=0.72, conf=0.71, frames=166
+2025-11-29 01:17:54,776 - INFO -   [O] Speed_finals_Zilina_2025_race051 (left): quality=0.79, conf=0.76, frames=166
+2025-11-29 01:17:54,776 - INFO -   [O] Speed_finals_Zilina_2025_race051 (right): quality=0.75, conf=0.86, frames=166
+2025-11-29 01:17:55,007 - INFO -   [O] Speed_finals_Zilina_2025_race052 (left): quality=0.79, conf=0.81, frames=166
+2025-11-29 01:17:55,008 - INFO -   [O] Speed_finals_Zilina_2025_race052 (right): quality=0.72, conf=0.72, frames=225
+2025-11-29 01:17:55,229 - INFO -   [W] Speed_finals_Zilina_2025_race053 (left): quality=0.67, conf=0.86, frames=166
+2025-11-29 01:17:55,229 - INFO -   [O] Speed_finals_Zilina_2025_race053 (right): quality=0.70, conf=0.85, frames=186
+2025-11-29 01:17:55,365 - INFO -   [W] Speed_finals_Zilina_2025_race054 (right): quality=0.67, conf=0.84, frames=137
+2025-11-29 01:17:55,650 - INFO -   [O] Speed_finals_Zilina_2025_race055 (left): quality=0.79, conf=0.68, frames=203
+2025-11-29 01:17:55,650 - INFO -   [O] Speed_finals_Zilina_2025_race055 (right): quality=0.74, conf=0.83, frames=156
+2025-11-29 01:17:55,836 - INFO -   [O] Speed_finals_Zilina_2025_race056 (left): quality=0.73, conf=0.74, frames=166
+2025-11-29 01:17:55,836 - INFO -   [W] Speed_finals_Zilina_2025_race056 (right): quality=0.65, conf=0.81, frames=166
+2025-11-29 01:17:56,042 - INFO -   [W] Speed_finals_Zilina_2025_race057 (left): quality=0.63, conf=0.73, frames=166
+2025-11-29 01:17:56,042 - INFO -   [W] Speed_finals_Zilina_2025_race057 (right): quality=0.68, conf=0.86, frames=166
+2025-11-29 01:17:56,283 - INFO -   [O] Speed_finals_Zilina_2025_race058 (left): quality=0.82, conf=0.70, frames=178
+2025-11-29 01:17:56,283 - INFO -   [O] Speed_finals_Zilina_2025_race058 (right): quality=0.70, conf=0.75, frames=162
+2025-11-29 01:17:56,507 - INFO -   [O] Speed_finals_Zilina_2025_race059 (left): quality=0.73, conf=0.84, frames=166
+2025-11-29 01:17:56,507 - INFO -   [W] Speed_finals_Zilina_2025_race059 (right): quality=0.62, conf=0.86, frames=149
+2025-11-29 01:17:56,679 - INFO -   [O] Speed_finals_Zilina_2025_race060 (left): quality=0.80, conf=0.85, frames=168
+2025-11-29 01:17:56,679 - INFO -   [O] Speed_finals_Zilina_2025_race060 (right): quality=0.71, conf=0.91, frames=166
+2025-11-29 01:17:56,905 - INFO -   [O] Speed_finals_Zilina_2025_race061 (left): quality=0.74, conf=0.70, frames=166
+2025-11-29 01:17:56,905 - INFO -   [O] Speed_finals_Zilina_2025_race061 (right): quality=0.76, conf=0.78, frames=194
+2025-11-29 01:17:57,104 - INFO -   [W] Speed_finals_Zilina_2025_race062 (left): quality=0.64, conf=0.81, frames=166
+2025-11-29 01:17:57,104 - INFO -   [W] Speed_finals_Zilina_2025_race062 (right): quality=0.64, conf=0.70, frames=166
+2025-11-29 01:17:57,356 - INFO -   [W] Speed_finals_Zilina_2025_race063 (left): quality=0.74, conf=0.64, frames=37
+2025-11-29 01:17:57,356 - INFO -   [O] Speed_finals_Zilina_2025_race063 (right): quality=0.75, conf=0.74, frames=182
+2025-11-29 01:17:57,637 - INFO -   [O] Speed_finals_Zilina_2025_race064 (left): quality=0.83, conf=0.84, frames=166
+2025-11-29 01:17:57,638 - INFO -   [O] Speed_finals_Zilina_2025_race064 (right): quality=0.71, conf=0.86, frames=166
+2025-11-29 01:17:57,818 - INFO -   [O] Speed_finals_Zilina_2025_race065 (left): quality=0.71, conf=0.76, frames=166
+2025-11-29 01:17:57,818 - INFO -   [O] Speed_finals_Zilina_2025_race065 (right): quality=0.72, conf=0.86, frames=166
+2025-11-29 01:17:58,045 - INFO -   [W] Speed_finals_Zilina_2025_race066 (left): quality=0.67, conf=0.77, frames=166
+2025-11-29 01:17:58,045 - INFO -   [W] Speed_finals_Zilina_2025_race066 (right): quality=0.69, conf=0.85, frames=143
+2025-11-29 01:17:58,247 - INFO -   [W] Speed_finals_Zilina_2025_race067 (left): quality=0.68, conf=0.75, frames=194
+2025-11-29 01:17:58,247 - INFO -   [W] Speed_finals_Zilina_2025_race067 (right): quality=0.69, conf=0.86, frames=166
+2025-11-29 01:17:58,495 - INFO -   [O] Speed_finals_Zilina_2025_race068 (left): quality=0.86, conf=0.81, frames=159
+2025-11-29 01:17:58,495 - INFO -   [O] Speed_finals_Zilina_2025_race068 (right): quality=0.85, conf=0.85, frames=157
+2025-11-29 01:17:58,737 - INFO -   [O] Speed_finals_Zilina_2025_race069 (left): quality=0.87, conf=0.70, frames=196
+2025-11-29 01:17:58,737 - INFO -   [O] Speed_finals_Zilina_2025_race069 (right): quality=0.72, conf=0.80, frames=166
+2025-11-29 01:17:58,737 - INFO - 
+============================================================
+2025-11-29 01:17:58,737 - INFO - PROCESSING COMPLETE
+2025-11-29 01:17:58,737 - INFO - ============================================================
+2025-11-29 01:17:58,737 - INFO - Total files: 188
+2025-11-29 01:17:58,737 - INFO - Total extractions: 371
+2025-11-29 01:17:58,737 - INFO - Errors: 0
+2025-11-29 01:17:58,884 - INFO - 
+Features saved to:
+2025-11-29 01:17:58,884 - INFO -   JSON: G:\My Drive\Projects\Speed Climbing Performance Analysis\data\ml_dataset\all_features.json
+2025-11-29 01:17:58,884 - INFO -   CSV:  G:\My Drive\Projects\Speed Climbing Performance Analysis\data\ml_dataset\all_features.csv
+2025-11-29 01:17:58,935 - INFO -   Quality: G:\My Drive\Projects\Speed Climbing Performance Analysis\data\ml_dataset\quality_report.csv
+2025-11-29 01:17:59,001 - INFO -   Problems: G:\My Drive\Projects\Speed Climbing Performance Analysis\data\ml_dataset\problematic_videos.txt
+2025-11-29 01:17:59,001 - INFO - 
+Batch extraction complete!
+
+============================================================
+EXTRACTION SUMMARY
+============================================================
+
+Overall Status:
+  OK:      337 (90.8%)
+  WARNING:  34 (9.2%)
+  ERROR:     0 (0.0%)
+  TOTAL:   371
+
+By Competition:
+  chamonix_2024       : OK=60, WARN= 3, ERR= 0 (total: 63)
+  innsbruck_2024      : OK=63, WARN= 1, ERR= 0 (total: 64)
+  seoul_2024          : OK=62, WARN= 0, ERR= 0 (total: 62)
+  villars_2024        : OK=44, WARN= 2, ERR= 0 (total: 46)
+  zilina_2025         : OK=108, WARN=28, ERR= 0 (total: 136)
+
+Average Metrics (excluding errors):
+  Extraction Quality:     85.14%
+  Race Segment Confidence: 79.37%
+  Racing Frames:          172.8
