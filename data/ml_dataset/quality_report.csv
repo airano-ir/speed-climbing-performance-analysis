@@ -190,8 +190,8 @@ Speed_finals_Seoul_2024_race031_poses,left,seoul_2024,0.9368837451216503,0.74753
 Speed_finals_Seoul_2024_race031_poses,right,seoul_2024,0.9567115490229037,0.8268461960916146,264,264,166,29.97002997002997,OK,none
 Speed_finals_Villars_2024_race001_poses,left,villars_2024,0.9159263404139177,0.7621902101405196,264,251,202,30.0,OK,none
 Speed_finals_Villars_2024_race001_poses,right,villars_2024,0.9236788972429217,0.7628974071535052,264,255,211,30.0,OK,none
-Speed_finals_Villars_2024_race002_poses,left,villars_2024,0.8767053464365137,0.8240971332543605,172,157,157,30.0,OK,none
-Speed_finals_Villars_2024_race002_poses,right,villars_2024,0.8225513611559054,0.6506705609026915,172,141,84,30.0,WARNING,too_short(84 frames)
+Speed_finals_Villars_2024_race002_poses,left,villars_2024,0.964218919479107,0.8633272908196536,310,309,161,30.0,OK,none
+Speed_finals_Villars_2024_race002_poses,right,villars_2024,0.8708589320234841,0.8060163732552265,310,260,150,30.0,OK,none
 Speed_finals_Villars_2024_race003_poses,left,villars_2024,0.9423493450194294,0.7693973800777175,245,245,166,30.0,OK,none
 Speed_finals_Villars_2024_race003_poses,right,villars_2024,0.9398564732693995,0.8084054849143324,245,239,168,30.0,OK,none
 Speed_finals_Villars_2024_race004_poses,left,villars_2024,0.9131176846667626,0.8808171953599637,254,225,192,30.0,OK,none
@@ -212,26 +212,26 @@ Speed_finals_Villars_2024_race011_poses,left,villars_2024,0.9241824429331728,0.8
 Speed_finals_Villars_2024_race011_poses,right,villars_2024,0.9478944668352354,0.7973249937777228,348,347,145,30.0,OK,none
 Speed_finals_Villars_2024_race012_poses,left,villars_2024,0.9299842516972056,0.7741742949244156,295,287,144,30.0,OK,none
 Speed_finals_Villars_2024_race012_poses,right,villars_2024,0.9259207954572704,0.7647001309816237,295,286,139,30.0,OK,none
-Speed_finals_Villars_2024_race013_poses,left,villars_2024,0.9322049197157932,0.728819678863173,211,211,181,30.0,OK,none
-Speed_finals_Villars_2024_race013_poses,right,villars_2024,0.8991613027849356,0.6061238841255246,211,210,71,30.0,WARNING,too_short(71 frames)
+Speed_finals_Villars_2024_race013_poses,left,villars_2024,0.9313530775025202,0.7650948496926203,252,247,136,30.0,OK,none
+Speed_finals_Villars_2024_race013_poses,right,villars_2024,0.9388612749447984,0.818937163271257,252,244,166,30.0,OK,none
 Speed_finals_Villars_2024_race014_poses,left,villars_2024,0.8227366727631229,0.8805881253154396,251,177,166,30.0,OK,none
 Speed_finals_Villars_2024_race014_poses,right,villars_2024,0.9087249858877287,0.8022306208417511,251,230,184,30.0,OK,none
-Speed_finals_Villars_2024_race015_poses,left,villars_2024,0.8413793103448276,0.4,58,57,58,30.0,WARNING,"low_confidence(0.40), too_short(58 frames)"
-Speed_finals_Villars_2024_race015_poses,right,villars_2024,0.6385878489326765,0.4,58,39,52,30.0,WARNING,"low_extraction_quality(0.64), low_confidence(0.40), too_short(52 frames)"
+Speed_finals_Villars_2024_race015_poses,left,villars_2024,0.8974169723288736,0.7903151385064332,309,278,166,30.0,OK,none
+Speed_finals_Villars_2024_race015_poses,right,villars_2024,0.9326779215252872,0.7954366051949996,309,299,166,30.0,OK,none
 Speed_finals_Villars_2024_race016_poses,left,villars_2024,0.6450520833333333,0.9083333333333332,256,86,166,30.0,WARNING,low_extraction_quality(0.65)
 Speed_finals_Villars_2024_race016_poses,right,villars_2024,0.9489186622216109,0.8112996488864436,256,254,166,30.0,OK,none
 Speed_finals_Villars_2024_race017_poses,left,villars_2024,0.9480190803373654,0.7920763213494616,293,293,158,30.0,OK,none
 Speed_finals_Villars_2024_race017_poses,right,villars_2024,0.9354922071055523,0.748794766988762,293,292,154,30.0,OK,none
 Speed_finals_Villars_2024_race018_poses,left,villars_2024,0.9112064518378393,0.7714924740180243,300,281,192,30.0,OK,none
 Speed_finals_Villars_2024_race018_poses,right,villars_2024,0.9174843866394774,0.7699375465579097,300,285,136,30.0,OK,none
-Speed_finals_Villars_2024_race019_poses,left,villars_2024,0.7587175685900399,0.6492031362177739,202,164,74,30.0,WARNING,too_short(74 frames)
-Speed_finals_Villars_2024_race019_poses,right,villars_2024,0.8458952145214521,0.9083333333333332,202,149,166,30.0,OK,none
+Speed_finals_Villars_2024_race019_poses,left,villars_2024,0.9180053207933248,0.7848739477501018,319,301,166,30.0,OK,none
+Speed_finals_Villars_2024_race019_poses,right,villars_2024,0.9430008421972002,0.8221601086007131,319,311,163,30.0,OK,none
 Speed_finals_Villars_2024_race020_poses,left,villars_2024,0.9483385020040263,0.8186065332686301,396,391,159,30.0,OK,none
 Speed_finals_Villars_2024_race021_poses,left,villars_2024,0.9359184972582171,0.7961521231436554,343,334,163,30.0,OK,none
 Speed_finals_Villars_2024_race022_poses,left,villars_2024,0.6979901960784314,0.89,306,138,166,30.0,WARNING,low_extraction_quality(0.70)
 Speed_finals_Villars_2024_race022_poses,right,villars_2024,0.9237498524295494,0.8453262071038186,306,283,166,30.0,OK,none
-Speed_finals_Villars_2024_race023_poses,left,villars_2024,0.7993512965127778,0.5887095338771982,138,111,122,30.0,WARNING,low_confidence(0.59)
-Speed_finals_Villars_2024_race023_poses,right,villars_2024,0.7096790890269151,0.7,138,118,35,30.0,WARNING,too_short(35 frames)
+Speed_finals_Villars_2024_race023_poses,left,villars_2024,0.917012191830698,0.8102709895450143,450,418,166,30.0,OK,none
+Speed_finals_Villars_2024_race023_poses,right,villars_2024,0.9154145643595862,0.719436035216123,450,437,166,30.0,OK,none
 Speed_finals_Villars_2024_race024_poses,left,villars_2024,0.8963775995435946,0.7732655002151949,245,222,166,30.0,OK,none
 Speed_finals_Villars_2024_race024_poses,right,villars_2024,0.9395398246864879,0.7581592987459516,245,245,202,30.0,OK,none
 Speed_finals_Zilina_2025_race001_poses,left,zilina_2025,0.8411661052914604,0.7828462393476595,660,522,209,30.0,OK,none

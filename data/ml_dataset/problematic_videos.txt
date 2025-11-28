@@ -1,21 +1,14 @@
 # Problematic Videos Report
-# Generated: 20251128_230905
-# Total: 41 videos need review
+# Generated: 20251129_011758
+# Total: 34 videos need review
 
-## WARNINGS (41):
+## WARNINGS (34):
   Speed_finals_Chamonix_2024_race020_poses (left): low_confidence(0.55), too_short(42 frames)
   Speed_finals_Chamonix_2024_race023_poses (left): low_extraction_quality(0.66)
   Speed_finals_Chamonix_2024_race032_poses (left): low_extraction_quality(0.65)
   Speed_finals_Innsbruck_2024_race004_poses (right): low_confidence(0.40), too_long(791 frames)
-  Speed_finals_Villars_2024_race002_poses (right): too_short(84 frames)
-  Speed_finals_Villars_2024_race013_poses (right): too_short(71 frames)
-  Speed_finals_Villars_2024_race015_poses (left): low_confidence(0.40), too_short(58 frames)
-  Speed_finals_Villars_2024_race015_poses (right): low_extraction_quality(0.64), low_confidence(0.40), too_short(52 frames)
   Speed_finals_Villars_2024_race016_poses (left): low_extraction_quality(0.65)
-  Speed_finals_Villars_2024_race019_poses (left): too_short(74 frames)
   Speed_finals_Villars_2024_race022_poses (left): low_extraction_quality(0.70)
-  Speed_finals_Villars_2024_race023_poses (left): low_confidence(0.59)
-  Speed_finals_Villars_2024_race023_poses (right): too_short(35 frames)
   Speed_finals_Zilina_2025_race001_poses (right): low_extraction_quality(0.70)
   Speed_finals_Zilina_2025_race007_poses (right): low_extraction_quality(0.65)
   Speed_finals_Zilina_2025_race010_poses (right): low_extraction_quality(0.70)
