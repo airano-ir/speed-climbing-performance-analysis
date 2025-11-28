@@ -24,22 +24,21 @@ Pivoted from absolute wall calibration (which had ~50% success rate) to relative
 
 ## Architecture
 
-### `speed_climbing` Package
+### `speed_climbing` Package (Cleaned 2025-11-28)
 ```
 speed_climbing/
 ├── core/
 │   └── settings.py           # IFSC standards, config
 ├── vision/
-│   ├── holds.py              # HoldDetector (legacy, optional)
+│   ├── holds.py              # HoldDetector (optional, for future)
 │   ├── lanes.py              # DualLaneDetector
 │   ├── pose.py               # BlazePoseExtractor (33 keypoints + COM)
-│   └── calibration.py        # CameraCalibrator (legacy, optional)
+│   └── calibration.py        # CameraCalibrator (optional, for future)
 ├── processing/
-│   ├── athlete_centric.py    # Athlete-centric pipeline
-│   ├── tracking.py           # WorldCoordinateTracker (legacy)
-│   └── pipeline.py           # GlobalMapVideoProcessor (legacy)
+│   ├── athlete_centric.py    # Main pipeline (relative features)
+│   └── dropout.py            # Dropout handling
 └── analysis/
-    ├── features/             # NEW: ML feature extraction
+    ├── features/             # ML feature extraction
     │   ├── base.py           # Utility functions
     │   ├── frequency.py      # FFT-based rhythm analysis
     │   ├── efficiency.py     # Path efficiency metrics
@@ -50,6 +49,10 @@ speed_climbing/
     ├── time_series.py        # Time series builder
     └── start_finish_detector.py
 ```
+
+**Removed in cleanup:**
+- `processing/pipeline.py` (GlobalMapVideoProcessor - abandoned)
+- `processing/tracking.py` (WorldCoordinateTracker - abandoned)
 
 ## Feature Extraction (New Pipeline)
 
@@ -122,7 +125,11 @@ save_features_csv(results, 'features.csv')
   - All 6 test results used primary variance method
 - **Major Pivot**: Abandoned absolute calibration approach
 - **New Pipeline**: Created ML feature extraction system
-- **Cleanup**: Removed 40 obsolete files (8799 lines)
+- **Project Cleanup**:
+  - Removed 14 obsolete scripts (reliable_*, run_new_pipeline)
+  - Removed legacy processing modules (pipeline.py, tracking.py)
+  - Removed test folders and old requirements files
+  - Organized scripts into batch/utils/review_interface structure
 - **Verified**: Feature extraction working on all test videos
 
 ### Previous (2025-11-20 to 2025-11-27)
@@ -143,8 +150,16 @@ save_features_csv(results, 'features.csv')
 | Script | Purpose |
 |--------|---------|
 | `scripts/test_feature_extraction.py` | Test feature extraction |
-| `scripts/run_athlete_centric_pipeline.py` | Full pipeline (optional) |
-| `scripts/run_new_pipeline.py` | Legacy calibration pipeline |
+| `scripts/run_athlete_centric_pipeline.py` | Full pipeline |
+| `scripts/batch/batch_feature_extraction.py` | Batch extraction (NEW) |
+
+## Scripts Folder Structure
+```
+scripts/
+├── batch/                    # Batch processing
+├── utils/                    # Utility scripts
+└── review_interface/         # Manual review UI
+```
 
 ## Contact
 
