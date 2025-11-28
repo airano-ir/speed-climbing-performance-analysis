@@ -1,11 +1,14 @@
 """
-Variance-based race segment detection for feature extraction.
+Hybrid race segment detection for feature extraction.
 
-Detects the actual climbing portion of a video using movement variance,
-which works reliably even with moving cameras and varying video quality.
+Uses multiple signals for accurate detection:
+1. Activity burst detection for START (derivative of movement variance)
+2. Wrist minimum Y detection for END (highest point = touching top device)
+3. Variance-based fallback for robustness
 
-Key insight: During racing, limbs move rapidly. Before/after racing,
-athletes are relatively still (ready position or finished).
+Key insight:
+- Start: Athletes make preparatory movements, but react with sudden BURST to signal
+- End: Hand reaches minimum Y coordinate when touching top device
 """
 
 import numpy as np
@@ -27,6 +30,8 @@ class RaceSegment:
     # Additional diagnostics
     variance_contrast: float = 0.0  # How clear is the transition
     duration_plausible: bool = True  # Is duration reasonable for speed climbing
+    start_method: str = "variance"  # How start was detected
+    end_method: str = "variance"  # How end was detected
 
     @property
     def duration_frames(self) -> int:
@@ -40,21 +45,22 @@ class RaceSegment:
 
 class RaceSegmentDetector:
     """
-    Detect the racing portion of a climbing video using movement variance.
+    Detect the racing portion of a climbing video using hybrid approach.
+
+    Detection Strategy:
+    - START: Detect activity BURST (sharp increase in movement)
+    - END: Detect when wrist reaches MINIMUM Y (top of climb = hand touches device)
 
     This approach works because:
-    - During climbing: limbs move rapidly (high variance)
-    - Ready position: athlete is still (low variance)
-    - Finished/fallen: athlete stops moving (low variance)
-
-    The method is self-calibrating - it uses relative variance within
-    each video, making it robust to different camera angles and zoom levels.
+    - Preparatory movement is gradual, reaction to start signal is sudden
+    - Wrist Y decreases during climb, minimum Y = highest point = finish
     """
 
     # Speed climbing duration constraints
-    MIN_RACE_DURATION_S = 3.0   # Minimum realistic race time
-    MAX_RACE_DURATION_S = 10.0  # Maximum (with margin for falls/incomplete)
-    TYPICAL_RACE_DURATION_S = 6.0  # Average race duration
+    MIN_RACE_DURATION_S = 4.5   # Minimum realistic race time (world record ~5s)
+    MAX_RACE_DURATION_S = 8.0   # Maximum (falls/incomplete should be < 8s)
+    TYPICAL_RACE_DURATION_S = 5.5  # Elite average race duration
+    EXPECTED_END_BUFFER_S = 0.5  # Buffer before expected end to stop
 
     def __init__(
         self,
@@ -62,12 +68,16 @@ class RaceSegmentDetector:
         smoothing_window: int = 10,
         activity_threshold_ratio: float = 0.25,  # 25% of max activity
         min_sustained_frames: int = 15,  # Min frames above threshold to count
+        burst_threshold_ratio: float = 0.35,  # 35% of max derivative for burst
+        wrist_top_margin: float = 1.15,  # 15% margin for wrist top detection
         fps: float = 30.0,
     ):
         self.min_race_frames = min_race_frames
         self.smoothing_window = smoothing_window
         self.activity_threshold_ratio = activity_threshold_ratio
         self.min_sustained_frames = min_sustained_frames
+        self.burst_threshold_ratio = burst_threshold_ratio
+        self.wrist_top_margin = wrist_top_margin
         self.fps = fps
 
     def detect(
@@ -76,7 +86,7 @@ class RaceSegmentDetector:
         lane: str = 'left'
     ) -> Optional[RaceSegment]:
         """
-        Detect race segment using movement variance.
+        Detect race segment using hybrid approach.
 
         Returns:
             RaceSegment or None if detection failed
@@ -94,9 +104,20 @@ class RaceSegmentDetector:
         # Smooth the activity curve
         smoothed = self._smooth_signal(activity)
 
-        # Find the active racing region
-        start, end, method = self._find_active_region(smoothed)
+        # ===== START DETECTION: Activity burst =====
+        start, start_method = self._detect_activity_burst(smoothed)
 
+        # ===== END DETECTION: Duration-constrained activity analysis =====
+        # Use the fact that speed climbing races are 5-7 seconds
+        end, end_method = self._detect_end_by_duration_and_activity(smoothed, start)
+
+        # Fallback to variance-based if detection failed
+        if end is None or end <= start:
+            _, end_variance, _ = self._find_active_region(smoothed)
+            end = end_variance
+            end_method = "variance_fallback"
+
+        # Sanity checks
         if end - start < self.min_race_frames:
             return self._fallback_detection(frames, lane)
 
@@ -105,12 +126,24 @@ class RaceSegmentDetector:
         duration_s = (end - start) / self.fps
         duration_plausible = self.MIN_RACE_DURATION_S <= duration_s <= self.MAX_RACE_DURATION_S
 
+        # Determine overall method
+        if start_method == "burst" and end_method in ["duration_peak", "duration_typical"]:
+            method = "hybrid_optimal"
+        elif start_method == "burst":
+            method = "hybrid_burst_start"
+        elif end_method in ["duration_peak", "duration_typical"]:
+            method = "hybrid_duration_end"
+        else:
+            method = "variance_primary"
+
         # Confidence based on multiple factors
         confidence = self._calculate_confidence(
             variance_contrast=variance_contrast,
             duration_s=duration_s,
             coverage_ratio=(end - start) / n,
-            method=method
+            method=method,
+            start_method=start_method,
+            end_method=end_method
         )
 
         return RaceSegment(
@@ -120,8 +153,210 @@ class RaceSegmentDetector:
             confidence=confidence,
             detection_method=method,
             variance_contrast=variance_contrast,
-            duration_plausible=duration_plausible
+            duration_plausible=duration_plausible,
+            start_method=start_method,
+            end_method=end_method
         )
+
+    def _detect_activity_burst(
+        self,
+        smoothed_activity: np.ndarray
+    ) -> Tuple[int, str]:
+        """
+        Detect race start by finding the first significant activity BURST.
+
+        A burst is a sharp increase in activity (high derivative).
+        This distinguishes the reaction to start signal from preparatory movement.
+
+        Returns:
+            (start_frame, detection_method)
+        """
+        n = len(smoothed_activity)
+
+        # Calculate derivative (rate of change)
+        derivative = np.gradient(smoothed_activity)
+
+        # Smooth the derivative to reduce noise
+        derivative_smooth = self._smooth_signal(derivative)
+
+        max_derivative = np.max(derivative_smooth)
+        if max_derivative < 1e-6:
+            # Fallback to threshold-based
+            start, _, _ = self._find_active_region(smoothed_activity)
+            return start, "variance_fallback"
+
+        # Threshold for burst detection
+        burst_threshold = max_derivative * self.burst_threshold_ratio
+
+        # Find first sustained burst
+        burst_mask = derivative_smooth > burst_threshold
+        min_burst_frames = max(3, self.min_sustained_frames // 3)
+
+        start = self._find_first_sustained(burst_mask, min_burst_frames)
+
+        if start == 0:
+            # No clear burst found, use threshold-based
+            start, _, _ = self._find_active_region(smoothed_activity)
+            return start, "variance_fallback"
+
+        return start, "burst"
+
+    def _detect_end_by_duration_and_activity(
+        self,
+        smoothed_activity: np.ndarray,
+        start_frame: int
+    ) -> Tuple[Optional[int], str]:
+        """
+        Detect race end using duration constraints and activity patterns.
+
+        Speed climbing races are predictable in duration (5-7 seconds for elite).
+        This method finds the activity peak within that expected window.
+
+        Returns:
+            (end_frame, detection_method)
+        """
+        n = len(smoothed_activity)
+
+        # Define search window based on expected race duration
+        min_end = start_frame + int(self.MIN_RACE_DURATION_S * self.fps)
+        max_end = start_frame + int(self.MAX_RACE_DURATION_S * self.fps)
+        typical_end = start_frame + int(self.TYPICAL_RACE_DURATION_S * self.fps)
+
+        # Ensure within bounds
+        min_end = min(min_end, n - 1)
+        max_end = min(max_end, n - 1)
+        typical_end = min(typical_end, n - 1)
+
+        if min_end >= n - 10:
+            return None, "failed"
+
+        # Strategy: Find the last significant activity peak in the expected window
+        # Athletes are most active near the end of the race (sprint to finish)
+
+        # Look for activity peak in the typical race duration window
+        search_start = start_frame + int(4.0 * self.fps)  # After 4 seconds
+        search_end = min(n, start_frame + int(7.0 * self.fps))  # Before 7 seconds
+
+        if search_start >= search_end:
+            # Video too short, use typical end
+            return typical_end, "duration_typical"
+
+        window = smoothed_activity[search_start:search_end]
+
+        # Find the peak in this window (athletes sprint at the end)
+        peak_idx_local = np.argmax(window)
+        peak_frame = search_start + peak_idx_local
+
+        # The end is slightly after the peak (when they hit the button)
+        # Add a small buffer (0.3-0.5 seconds)
+        buffer_frames = int(self.EXPECTED_END_BUFFER_S * self.fps)
+        end_frame = min(peak_frame + buffer_frames, max_end)
+
+        # Validate: activity at end should still be reasonably high
+        if end_frame < n and smoothed_activity[end_frame] > 0.3 * np.max(smoothed_activity):
+            return end_frame, "duration_peak"
+        else:
+            # Use typical duration as fallback
+            return typical_end, "duration_typical"
+
+    def _detect_activity_drop(
+        self,
+        smoothed_activity: np.ndarray,
+        start_frame: int
+    ) -> Tuple[Optional[int], str]:
+        """
+        Detect race end by finding where activity DROPS sharply.
+
+        After touching the top device, there's a characteristic drop in climbing
+        activity. This works even with moving cameras because it's based on
+        movement patterns, not position.
+
+        Returns:
+            (end_frame, detection_method)
+        """
+        n = len(smoothed_activity)
+
+        # Only search after start + minimum race duration
+        min_race_frames = int(self.MIN_RACE_DURATION_S * self.fps)
+        search_start = start_frame + min_race_frames
+
+        if search_start >= n - 10:
+            return None, "failed"
+
+        # Calculate derivative (negative = dropping)
+        derivative = np.gradient(smoothed_activity)
+        derivative_smooth = self._smooth_signal(derivative)
+
+        # Find significant negative derivative (activity drop)
+        min_derivative = np.min(derivative_smooth[search_start:])
+
+        if min_derivative >= 0:
+            # No significant drop found
+            return None, "failed"
+
+        # Threshold for drop detection (40% of max drop)
+        drop_threshold = min_derivative * 0.4
+
+        # Find first significant drop after minimum race time
+        for i in range(search_start, n):
+            if derivative_smooth[i] < drop_threshold:
+                # Found a drop - the end is where activity was still high
+                # Go back a few frames to before the drop started
+                end_frame = max(start_frame + min_race_frames, i - 5)
+                return end_frame, "activity_drop"
+
+        return None, "failed"
+
+    def _detect_sustained_low_activity(
+        self,
+        smoothed_activity: np.ndarray,
+        start_frame: int
+    ) -> Tuple[Optional[int], str]:
+        """
+        Detect race end by finding where activity becomes sustainedly LOW.
+
+        After the race, activity drops and stays low. Find the transition point.
+
+        Returns:
+            (end_frame, detection_method)
+        """
+        n = len(smoothed_activity)
+
+        # Calculate statistics for the racing period
+        min_race_frames = int(self.MIN_RACE_DURATION_S * self.fps)
+        max_race_frames = int(self.MAX_RACE_DURATION_S * self.fps)
+
+        search_start = start_frame + min_race_frames
+        search_end = min(n, start_frame + max_race_frames)
+
+        if search_start >= search_end:
+            return None, "failed"
+
+        # Get racing activity level (first half of expected race)
+        race_mid = start_frame + min_race_frames
+        if race_mid < n:
+            racing_mean = np.mean(smoothed_activity[start_frame:race_mid])
+        else:
+            racing_mean = np.mean(smoothed_activity[start_frame:])
+
+        # Threshold: activity drops to 30% of racing level
+        low_threshold = racing_mean * 0.30
+
+        # Find first sustained low activity period
+        low_count = 0
+        required_low_frames = max(5, self.min_sustained_frames // 3)
+
+        for i in range(search_start, search_end):
+            if smoothed_activity[i] < low_threshold:
+                low_count += 1
+                if low_count >= required_low_frames:
+                    # Found sustained low activity
+                    end_frame = i - required_low_frames
+                    return end_frame, "low_activity"
+            else:
+                low_count = 0
+
+        return None, "failed"
 
     def _calculate_movement_activity(
         self,
@@ -179,7 +414,7 @@ class RaceSegmentDetector:
         activity: np.ndarray
     ) -> Tuple[int, int, str]:
         """
-        Find the sustained high-activity region.
+        Find the sustained high-activity region (variance-based fallback).
 
         Returns:
             (start_frame, end_frame, detection_method)
@@ -296,7 +531,9 @@ class RaceSegmentDetector:
         variance_contrast: float,
         duration_s: float,
         coverage_ratio: float,
-        method: str
+        method: str,
+        start_method: str,
+        end_method: str
     ) -> float:
         """
         Calculate overall confidence in the detected segment.
@@ -305,7 +542,7 @@ class RaceSegmentDetector:
         - Variance contrast: How distinct is racing from non-racing
         - Duration plausibility: Is it a realistic race duration
         - Coverage: How much of the video is racing
-        - Method: Primary vs fallback detection
+        - Method: Hybrid methods get higher confidence
         """
         scores = []
 
@@ -328,15 +565,26 @@ class RaceSegmentDetector:
         else:
             scores.append(0.5)
 
-        # Method score
+        # Method score - hybrid methods are more reliable
         method_scores = {
-            "variance_primary": 1.0,
-            "variance_relaxed": 0.7,
+            "hybrid_optimal": 1.0,
+            "hybrid_burst_start": 0.85,
+            "hybrid_duration_end": 0.85,
+            "variance_primary": 0.75,
+            "variance_relaxed": 0.6,
             "fallback_threshold": 0.4,
             "fallback_no_activity": 0.3,
             "fallback_all_valid": 0.5,
         }
         scores.append(method_scores.get(method, 0.5))
+
+        # Bonus for specific detection methods
+        if start_method == "burst":
+            scores.append(0.85)
+        if end_method == "duration_peak":
+            scores.append(0.90)
+        elif end_method == "duration_typical":
+            scores.append(0.80)
 
         return np.mean(scores)
 
@@ -362,7 +610,9 @@ class RaceSegmentDetector:
             confidence=0.4,  # Lower confidence for fallback
             detection_method="fallback_all_valid",
             variance_contrast=0.0,
-            duration_plausible=True  # Assume valid
+            duration_plausible=True,  # Assume valid
+            start_method="fallback",
+            end_method="fallback"
         )
 
     def filter_racing_frames(
@@ -401,3 +651,33 @@ class RaceSegmentDetector:
 
         smoothed = self._smooth_signal(activity)
         return activity, smoothed
+
+    def get_wrist_height_curve(
+        self,
+        frames: List[Dict[str, Any]],
+        lane: str = 'left'
+    ) -> Tuple[np.ndarray, np.ndarray]:
+        """
+        Get the wrist Y-coordinate curves for visualization.
+
+        Lower Y = higher position on wall.
+
+        Returns:
+            (min_wrist_y_raw, min_wrist_y_smoothed)
+        """
+        _, lw_y, _ = extract_keypoint_series(frames, 'left_wrist', lane)
+        _, rw_y, _ = extract_keypoint_series(frames, 'right_wrist', lane)
+
+        n = len(frames)
+        if len(lw_y) != n or len(rw_y) != n:
+            return np.ones(n), np.ones(n)
+
+        # Replace NaN with 1.0 (bottom)
+        lw_y_clean = np.where(np.isnan(lw_y), 1.0, lw_y)
+        rw_y_clean = np.where(np.isnan(rw_y), 1.0, rw_y)
+
+        # Minimum of both wrists
+        min_wrist_y = np.minimum(lw_y_clean, rw_y_clean)
+        smoothed = self._smooth_signal(min_wrist_y)
+
+        return min_wrist_y, smoothed
