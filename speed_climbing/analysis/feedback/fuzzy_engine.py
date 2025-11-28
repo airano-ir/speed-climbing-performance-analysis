@@ -2,6 +2,22 @@
 Fuzzy Logic Engine for Speed Climbing Performance Analysis.
 
 Uses fuzzy sets and rules to generate interpretable feedback.
+
+IMPORTANT: This version only uses features that are VALID with moving cameras.
+Features based on absolute COM position are excluded because cameras follow athletes.
+
+Valid features (relative/angular):
+- Joint angles (knee, elbow) - relative between body parts
+- Body lean - angle from vertical
+- Reach ratio - relative to body size
+- Limb sync - correlation between limbs
+- Movement amplitude - detrended, so camera motion is removed
+
+Invalid features (excluded):
+- path_straightness - COM appears stationary when camera follows
+- com_stability_index - artifact of camera following
+- vertical_progress_rate - cannot measure actual speed
+- lateral_movement_ratio - artifact of camera following
 """
 
 from typing import Dict, List, Tuple, Optional
@@ -69,61 +85,60 @@ class FuzzyFeedbackEngine:
     Fuzzy logic engine for generating performance feedback.
 
     Uses trapezoidal membership functions calibrated on professional data.
+
+    NOTE: Only uses camera-independent features (angles, ratios, sync).
     """
 
-    # Category definitions with Persian translations
+    # Category definitions - ONLY VALID FEATURES
+    # Removed: efficiency category (all features are camera artifacts)
+    # Modified: stability, rhythm to use only valid features
     CATEGORIES = {
-        'rhythm': {
-            'name': 'Rhythm & Coordination',
-            'name_fa': 'ریتم و هماهنگی',
+        'coordination': {
+            'name': 'Limb Coordination',
+            'name_fa': 'هماهنگی اندام‌ها',
             'features': [
-                'freq_hand_frequency_hz',
-                'freq_foot_frequency_hz',
-                'freq_limb_sync_ratio',
-                'freq_movement_regularity',
+                'freq_limb_sync_ratio',        # Valid: correlation between limbs
+                'freq_hand_movement_amplitude', # Valid: detrended
+                'freq_foot_movement_amplitude', # Valid: detrended
             ],
-            'weights': [0.2, 0.2, 0.35, 0.25],
+            'weights': [0.5, 0.25, 0.25],
         },
-        'efficiency': {
-            'name': 'Movement Efficiency',
-            'name_fa': 'کارایی حرکت',
+        'leg_technique': {
+            'name': 'Leg Technique',
+            'name_fa': 'تکنیک پا',
             'features': [
-                'eff_path_straightness',
-                'eff_lateral_movement_ratio',
-                'eff_com_stability_index',
-                'eff_movement_smoothness',
+                'post_avg_knee_angle',    # Valid: joint angle
+                'post_knee_angle_std',    # Valid: angle variation
             ],
-            'weights': [0.3, 0.25, 0.2, 0.25],
+            'weights': [0.6, 0.4],
         },
-        'stability': {
-            'name': 'Balance & Stability',
-            'name_fa': 'تعادل و ثبات',
+        'arm_technique': {
+            'name': 'Arm Technique',
+            'name_fa': 'تکنیک دست',
             'features': [
-                'eff_com_stability_index',
-                'post_body_lean_std',
-                'post_avg_body_lean',
+                'post_avg_elbow_angle',   # Valid: joint angle
+                'post_elbow_angle_std',   # Valid: angle variation
             ],
-            'weights': [0.4, 0.35, 0.25],
+            'weights': [0.6, 0.4],
         },
-        'posture': {
-            'name': 'Body Posture',
+        'body_position': {
+            'name': 'Body Position',
             'name_fa': 'وضعیت بدن',
             'features': [
-                'post_avg_knee_angle',
-                'post_avg_elbow_angle',
-                'post_hip_width_ratio',
+                'post_avg_body_lean',     # Valid: angle from vertical
+                'post_body_lean_std',     # Valid: stability of lean
+                'post_hip_width_ratio',   # Valid: ratio
             ],
-            'weights': [0.4, 0.35, 0.25],
+            'weights': [0.4, 0.3, 0.3],
         },
         'reach': {
             'name': 'Reach & Extension',
             'name_fa': 'دسترسی و کشش',
             'features': [
-                'post_avg_reach_ratio',
-                'post_max_reach_ratio',
-                'freq_hand_movement_amplitude',
+                'post_avg_reach_ratio',   # Valid: ratio to body
+                'post_max_reach_ratio',   # Valid: ratio to body
             ],
-            'weights': [0.4, 0.35, 0.25],
+            'weights': [0.5, 0.5],
         },
     }
 
@@ -242,7 +257,7 @@ class FuzzyFeedbackEngine:
         Evaluate a performance category using fuzzy aggregation.
 
         Args:
-            category_name: Name of category (rhythm, efficiency, etc.)
+            category_name: Name of category (coordination, leg_technique, etc.)
             features: Dict of feature_name -> value
 
         Returns:
@@ -339,10 +354,10 @@ class FuzzyFeedbackEngine:
 
         # Weighted average across categories
         weights = {
-            'rhythm': 0.25,
-            'efficiency': 0.25,
-            'stability': 0.20,
-            'posture': 0.15,
+            'coordination': 0.25,
+            'leg_technique': 0.20,
+            'arm_technique': 0.20,
+            'body_position': 0.20,
             'reach': 0.15,
         }
 

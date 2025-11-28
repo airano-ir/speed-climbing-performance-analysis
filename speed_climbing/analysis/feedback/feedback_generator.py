@@ -2,6 +2,9 @@
 Feedback Generator for Speed Climbing Analysis.
 
 Generates human-readable, personalized feedback in Persian and English.
+
+UPDATED: Only uses camera-independent features (angles, ratios, sync).
+Removed efficiency features that are artifacts of camera following athlete.
 """
 
 from typing import Dict, List, Optional, Any
@@ -42,30 +45,13 @@ class FeedbackGenerator:
     Generates personalized feedback from performance analysis.
 
     Supports bilingual output (Persian/English).
+
+    NOTE: Only uses camera-independent features.
     """
 
-    # Feature descriptions for feedback
+    # Feature descriptions for feedback - ONLY VALID FEATURES
     FEATURE_INFO = {
-        'freq_hand_frequency_hz': {
-            'name_en': 'Hand Movement Speed',
-            'name_fa': 'سرعت حرکت دست',
-            'good_en': 'Good hand movement rhythm',
-            'good_fa': 'ریتم خوب حرکت دست',
-            'bad_en': 'Hand movements could be more rhythmic',
-            'bad_fa': 'حرکات دست می‌تواند ریتمیک‌تر باشد',
-            'tip_en': 'Practice quick, consistent hand placements',
-            'tip_fa': 'تمرین قرار دادن سریع و یکنواخت دست‌ها',
-        },
-        'freq_foot_frequency_hz': {
-            'name_en': 'Foot Movement Speed',
-            'name_fa': 'سرعت حرکت پا',
-            'good_en': 'Efficient foot work',
-            'good_fa': 'کار پای کارآمد',
-            'bad_en': 'Foot movements need more speed',
-            'bad_fa': 'حرکات پا نیاز به سرعت بیشتر دارد',
-            'tip_en': 'Focus on quick foot placements without looking',
-            'tip_fa': 'تمرکز بر قرار دادن سریع پا بدون نگاه کردن',
-        },
+        # Coordination features
         'freq_limb_sync_ratio': {
             'name_en': 'Hand-Foot Coordination',
             'name_fa': 'هماهنگی دست و پا',
@@ -76,59 +62,31 @@ class FeedbackGenerator:
             'tip_en': 'Practice coordinated climbing drills',
             'tip_fa': 'تمرین تمرینات صعود هماهنگ',
         },
-        'freq_movement_regularity': {
-            'name_en': 'Movement Rhythm',
-            'name_fa': 'ریتم حرکت',
-            'good_en': 'Consistent climbing rhythm',
-            'good_fa': 'ریتم صعود یکنواخت',
-            'bad_en': 'Rhythm varies too much during climb',
-            'bad_fa': 'ریتم در طول صعود تغییرات زیادی دارد',
-            'tip_en': 'Use a metronome while training',
-            'tip_fa': 'استفاده از مترونوم در تمرین',
+        'freq_hand_movement_amplitude': {
+            'name_en': 'Hand Movement Range',
+            'name_fa': 'دامنه حرکت دست',
+            'good_en': 'Good hand movement amplitude',
+            'good_fa': 'دامنه حرکت دست مناسب',
+            'bad_en': 'Hand movements are too small or too large',
+            'bad_fa': 'حرکات دست خیلی کوچک یا خیلی بزرگ است',
+            'tip_en': 'Practice controlled reach movements',
+            'tip_fa': 'تمرین حرکات کنترل‌شده دست',
         },
-        'eff_path_straightness': {
-            'name_en': 'Path Efficiency',
-            'name_fa': 'کارایی مسیر',
-            'good_en': 'Direct, efficient climbing path',
-            'good_fa': 'مسیر صعود مستقیم و کارآمد',
-            'bad_en': 'Climbing path is not direct enough',
-            'bad_fa': 'مسیر صعود به اندازه کافی مستقیم نیست',
-            'tip_en': 'Visualize the shortest path before starting',
-            'tip_fa': 'کوتاه‌ترین مسیر را قبل از شروع تجسم کنید',
+        'freq_foot_movement_amplitude': {
+            'name_en': 'Foot Movement Range',
+            'name_fa': 'دامنه حرکت پا',
+            'good_en': 'Good foot movement amplitude',
+            'good_fa': 'دامنه حرکت پای مناسب',
+            'bad_en': 'Foot movements need adjustment',
+            'bad_fa': 'حرکات پا نیاز به تنظیم دارد',
+            'tip_en': 'Focus on precise foot placements',
+            'tip_fa': 'تمرکز بر قرار دادن دقیق پا',
         },
-        'eff_lateral_movement_ratio': {
-            'name_en': 'Lateral Movement',
-            'name_fa': 'حرکات جانبی',
-            'good_en': 'Minimal unnecessary sideways movement',
-            'good_fa': 'حداقل حرکات جانبی غیرضروری',
-            'bad_en': 'Too much sideways movement',
-            'bad_fa': 'حرکات جانبی بیش از حد',
-            'tip_en': 'Focus on vertical progression',
-            'tip_fa': 'تمرکز بر پیشرفت عمودی',
-        },
-        'eff_com_stability_index': {
-            'name_en': 'Center of Mass Stability',
-            'name_fa': 'ثبات مرکز ثقل',
-            'good_en': 'Stable center of gravity',
-            'good_fa': 'مرکز ثقل پایدار',
-            'bad_en': 'Body center moves excessively',
-            'bad_fa': 'مرکز بدن بیش از حد حرکت می‌کند',
-            'tip_en': 'Keep hips close to wall',
-            'tip_fa': 'لگن را نزدیک دیوار نگه دارید',
-        },
-        'eff_movement_smoothness': {
-            'name_en': 'Movement Smoothness',
-            'name_fa': 'روانی حرکت',
-            'good_en': 'Smooth, fluid movements',
-            'good_fa': 'حرکات روان و سیال',
-            'bad_en': 'Movements are jerky',
-            'bad_fa': 'حرکات تکان‌دهنده هستند',
-            'tip_en': 'Practice slow, controlled climbing',
-            'tip_fa': 'تمرین صعود آهسته و کنترل‌شده',
-        },
+
+        # Leg technique features
         'post_avg_knee_angle': {
-            'name_en': 'Knee Position',
-            'name_fa': 'وضعیت زانو',
+            'name_en': 'Knee Angle',
+            'name_fa': 'زاویه زانو',
             'good_en': 'Good knee bend for power',
             'good_fa': 'خم شدن مناسب زانو برای قدرت',
             'bad_en': 'Knee angle needs adjustment',
@@ -136,9 +94,21 @@ class FeedbackGenerator:
             'tip_en': 'Practice driving up with bent knees',
             'tip_fa': 'تمرین بلند شدن با زانوهای خمیده',
         },
+        'post_knee_angle_std': {
+            'name_en': 'Knee Angle Consistency',
+            'name_fa': 'یکنواختی زاویه زانو',
+            'good_en': 'Consistent knee technique',
+            'good_fa': 'تکنیک زانوی یکنواخت',
+            'bad_en': 'Knee angle varies too much',
+            'bad_fa': 'زاویه زانو تغییرات زیادی دارد',
+            'tip_en': 'Focus on consistent leg drive',
+            'tip_fa': 'تمرکز بر فشار یکنواخت پا',
+        },
+
+        # Arm technique features
         'post_avg_elbow_angle': {
-            'name_en': 'Arm Position',
-            'name_fa': 'وضعیت بازو',
+            'name_en': 'Elbow Angle',
+            'name_fa': 'زاویه آرنج',
             'good_en': 'Efficient arm extension',
             'good_fa': 'کشش کارآمد بازو',
             'bad_en': 'Arms are too bent or too straight',
@@ -146,25 +116,69 @@ class FeedbackGenerator:
             'tip_en': 'Keep arms slightly bent, use legs for power',
             'tip_fa': 'بازوها را کمی خمیده نگه دارید، از پاها برای قدرت استفاده کنید',
         },
+        'post_elbow_angle_std': {
+            'name_en': 'Arm Technique Consistency',
+            'name_fa': 'یکنواختی تکنیک دست',
+            'good_en': 'Consistent arm technique',
+            'good_fa': 'تکنیک دست یکنواخت',
+            'bad_en': 'Arm technique varies too much',
+            'bad_fa': 'تکنیک دست تغییرات زیادی دارد',
+            'tip_en': 'Practice smooth arm transitions',
+            'tip_fa': 'تمرین انتقال‌های روان دست',
+        },
+
+        # Body position features
         'post_avg_body_lean': {
             'name_en': 'Body Angle',
             'name_fa': 'زاویه بدن',
-            'good_en': 'Optimal body position',
-            'good_fa': 'وضعیت بهینه بدن',
+            'good_en': 'Optimal body position close to wall',
+            'good_fa': 'وضعیت بهینه بدن نزدیک دیوار',
             'bad_en': 'Body leans too far from wall',
             'bad_fa': 'بدن خیلی از دیوار فاصله دارد',
-            'tip_en': 'Stay close to the wall',
-            'tip_fa': 'نزدیک دیوار بمانید',
+            'tip_en': 'Stay close to the wall, hips in',
+            'tip_fa': 'نزدیک دیوار بمانید، لگن به داخل',
         },
         'post_body_lean_std': {
-            'name_en': 'Body Stability',
-            'name_fa': 'ثبات بدن',
-            'good_en': 'Consistent body position',
-            'good_fa': 'وضعیت ثابت بدن',
+            'name_en': 'Body Position Stability',
+            'name_fa': 'ثبات وضعیت بدن',
+            'good_en': 'Consistent body position throughout climb',
+            'good_fa': 'وضعیت ثابت بدن در طول صعود',
             'bad_en': 'Body position varies too much',
             'bad_fa': 'وضعیت بدن تغییرات زیادی دارد',
-            'tip_en': 'Focus on controlled movements',
-            'tip_fa': 'تمرکز بر حرکات کنترل‌شده',
+            'tip_en': 'Focus on controlled core movements',
+            'tip_fa': 'تمرکز بر حرکات کنترل‌شده مرکزی',
+        },
+        'post_hip_width_ratio': {
+            'name_en': 'Hip Position',
+            'name_fa': 'وضعیت لگن',
+            'good_en': 'Good hip positioning for balance',
+            'good_fa': 'وضعیت مناسب لگن برای تعادل',
+            'bad_en': 'Hip position needs adjustment',
+            'bad_fa': 'وضعیت لگن نیاز به تنظیم دارد',
+            'tip_en': 'Keep hips centered and close to wall',
+            'tip_fa': 'لگن را مرکز و نزدیک دیوار نگه دارید',
+        },
+
+        # Reach features
+        'post_avg_reach_ratio': {
+            'name_en': 'Average Reach',
+            'name_fa': 'دسترسی میانگین',
+            'good_en': 'Good use of reach relative to body',
+            'good_fa': 'استفاده خوب از دسترسی نسبت به بدن',
+            'bad_en': 'Reach could be more efficient',
+            'bad_fa': 'دسترسی می‌تواند کارآمدتر باشد',
+            'tip_en': 'Extend fully before moving feet',
+            'tip_fa': 'قبل از حرکت پا، کاملاً کشش دهید',
+        },
+        'post_max_reach_ratio': {
+            'name_en': 'Maximum Reach',
+            'name_fa': 'حداکثر دسترسی',
+            'good_en': 'Excellent maximum extension',
+            'good_fa': 'کشش حداکثری عالی',
+            'bad_en': 'Not using full reach potential',
+            'bad_fa': 'از پتانسیل کامل دسترسی استفاده نمی‌شود',
+            'tip_en': 'Practice dynamic reaches',
+            'tip_fa': 'تمرین دسترسی‌های پویا',
         },
     }
 
@@ -173,14 +187,14 @@ class FeedbackGenerator:
         FuzzyLevel.VERY_HIGH: {
             'en': 'Elite',
             'fa': 'نخبه',
-            'desc_en': 'Professional level performance',
-            'desc_fa': 'عملکرد سطح حرفه‌ای',
+            'desc_en': 'Professional level technique',
+            'desc_fa': 'تکنیک سطح حرفه‌ای',
         },
         FuzzyLevel.HIGH: {
             'en': 'Advanced',
             'fa': 'پیشرفته',
-            'desc_en': 'Strong performance, approaching elite',
-            'desc_fa': 'عملکرد قوی، نزدیک به سطح نخبه',
+            'desc_en': 'Strong technique, approaching elite',
+            'desc_fa': 'تکنیک قوی، نزدیک به سطح نخبه',
         },
         FuzzyLevel.MEDIUM: {
             'en': 'Intermediate',
@@ -274,13 +288,13 @@ class FeedbackGenerator:
         """Format overall performance summary."""
         if lang == 'fa':
             return (
-                f"امتیاز کلی شما: {score:.0f} از ۱۰۰\n"
+                f"امتیاز کلی تکنیک: {score:.0f} از ۱۰۰\n"
                 f"سطح: {level_info['fa']}\n"
                 f"{level_info['desc_fa']}"
             )
         else:
             return (
-                f"Overall Score: {score:.0f}/100\n"
+                f"Overall Technique Score: {score:.0f}/100\n"
                 f"Level: {level_info['en']}\n"
                 f"{level_info['desc_en']}"
             )
@@ -371,21 +385,21 @@ class FeedbackGenerator:
     def _get_category_strength_text(self, cat_name: str, lang: str) -> str:
         """Get strength text for a category."""
         texts = {
-            'rhythm': {
-                'fa': 'ریتم و هماهنگی حرکات بسیار خوب است',
-                'en': 'Excellent rhythm and coordination',
+            'coordination': {
+                'fa': 'هماهنگی اندام‌ها بسیار خوب است',
+                'en': 'Excellent limb coordination',
             },
-            'efficiency': {
-                'fa': 'کارایی حرکت در سطح بالایی است',
-                'en': 'High movement efficiency',
+            'leg_technique': {
+                'fa': 'تکنیک پا در سطح بالایی است',
+                'en': 'Strong leg technique',
             },
-            'stability': {
-                'fa': 'تعادل و ثبات عالی',
-                'en': 'Excellent balance and stability',
+            'arm_technique': {
+                'fa': 'تکنیک دست مناسب است',
+                'en': 'Good arm technique',
             },
-            'posture': {
-                'fa': 'وضعیت بدن مناسب',
-                'en': 'Good body posture',
+            'body_position': {
+                'fa': 'وضعیت بدن بهینه است',
+                'en': 'Optimal body positioning',
             },
             'reach': {
                 'fa': 'استفاده خوب از دسترسی',
@@ -421,22 +435,22 @@ class FeedbackGenerator:
 
         if lang == 'fa':
             if percentile >= 80:
-                return f"عملکرد شما در سطح {percentile:.0f}٪ ورزشکاران حرفه‌ای است. عالی!"
+                return f"تکنیک شما در سطح {percentile:.0f}٪ ورزشکاران حرفه‌ای است. عالی!"
             elif percentile >= 60:
-                return f"شما بهتر از {percentile:.0f}٪ ورزشکاران در دیتاست ما عمل کرده‌اید."
+                return f"تکنیک شما بهتر از {percentile:.0f}٪ ورزشکاران در دیتاست ما است."
             elif percentile >= 40:
-                return f"شما در محدوده متوسط قرار دارید ({percentile:.0f}٪)."
+                return f"تکنیک شما در محدوده متوسط قرار دارد ({percentile:.0f}٪)."
             else:
-                return f"فضای زیادی برای پیشرفت دارید. با تمرین منظم می‌توانید بهبود یابید."
+                return f"فضای زیادی برای بهبود تکنیک دارید. با تمرین منظم پیشرفت خواهید کرد."
         else:
             if percentile >= 80:
-                return f"Your performance is at the {percentile:.0f}th percentile of pro athletes. Excellent!"
+                return f"Your technique is at the {percentile:.0f}th percentile of pro athletes. Excellent!"
             elif percentile >= 60:
-                return f"You performed better than {percentile:.0f}% of athletes in our dataset."
+                return f"Your technique is better than {percentile:.0f}% of athletes in our dataset."
             elif percentile >= 40:
-                return f"You are in the average range ({percentile:.0f}th percentile)."
+                return f"Your technique is in the average range ({percentile:.0f}th percentile)."
             else:
-                return f"Lots of room to grow. Regular practice will help you improve."
+                return f"Lots of room to improve technique. Regular practice will help."
 
     def _generate_training_tips(
         self,
@@ -460,14 +474,14 @@ class FeedbackGenerator:
         # Add general tips if needed
         if lang == 'fa':
             general_tips = [
-                "ویدیو از صعود خود بگیرید و تحلیل کنید",
-                "روی یک جنبه در هر جلسه تمرینی تمرکز کنید",
+                "ویدیو از صعود خود بگیرید و تکنیک را تحلیل کنید",
+                "روی یک جنبه تکنیک در هر جلسه تمرینی تمرکز کنید",
                 "قبل از تمرین سرعت، تکنیک را کامل کنید",
             ]
         else:
             general_tips = [
-                "Record and analyze your climbs",
-                "Focus on one aspect per training session",
+                "Record and analyze your technique",
+                "Focus on one technique aspect per training session",
                 "Perfect technique before working on speed",
             ]
 
@@ -496,7 +510,7 @@ class FeedbackGenerator:
         """Format report in Persian."""
         lines = [
             "=" * 50,
-            "📊 گزارش تحلیل عملکرد صخره‌نوردی سرعت",
+            "📊 گزارش تحلیل تکنیک صخره‌نوردی سرعت",
             "=" * 50,
             "",
             fb.overall_summary,
@@ -507,7 +521,7 @@ class FeedbackGenerator:
 
         # Strengths
         if fb.strengths:
-            lines.append("💪 نقاط قوت:")
+            lines.append("💪 نقاط قوت تکنیک:")
             for s in fb.strengths:
                 lines.append(f"  ✓ {s['text']}")
             lines.append("")
@@ -539,6 +553,11 @@ class FeedbackGenerator:
         lines.append(f"  {fb.comparison_text}")
         lines.append("")
 
+        # Note about limitations
+        lines.append("─" * 50)
+        lines.append("📝 توجه: این تحلیل بر اساس زوایای بدن و هماهنگی است.")
+        lines.append("   سرعت واقعی صعود به دلیل حرکت دوربین قابل اندازه‌گیری نیست.")
+
         lines.append("=" * 50)
 
         return "\n".join(lines)
@@ -547,7 +566,7 @@ class FeedbackGenerator:
         """Format report in English."""
         lines = [
             "=" * 50,
-            "📊 Speed Climbing Performance Analysis Report",
+            "📊 Speed Climbing Technique Analysis Report",
             "=" * 50,
             "",
             fb.overall_summary,
@@ -558,7 +577,7 @@ class FeedbackGenerator:
 
         # Strengths
         if fb.strengths:
-            lines.append("💪 Strengths:")
+            lines.append("💪 Technique Strengths:")
             for s in fb.strengths:
                 lines.append(f"  ✓ {s['text']}")
             lines.append("")
@@ -589,6 +608,11 @@ class FeedbackGenerator:
         lines.append("📊 Comparison with Professionals:")
         lines.append(f"  {fb.comparison_text}")
         lines.append("")
+
+        # Note about limitations
+        lines.append("─" * 50)
+        lines.append("📝 Note: This analysis is based on body angles and coordination.")
+        lines.append("   Actual climbing speed cannot be measured due to camera motion.")
 
         lines.append("=" * 50)
 
