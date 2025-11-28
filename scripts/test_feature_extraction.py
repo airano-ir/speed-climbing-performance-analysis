@@ -47,8 +47,11 @@ def main():
             for result in results:
                 print(f"  Lane: {result.lane}")
                 print(f"  Extraction Quality: {result.extraction_quality:.2%}")
-                print(f"  Valid Frames: {result.valid_frames}/{result.total_frames}")
+                print(f"  Total Frames: {result.total_frames}")
+                print(f"  Valid Frames: {result.valid_frames}")
+                print(f"  Racing Frames: {result.racing_frames} (actually analyzed)")
                 print(f"  Detection Confidence: {result.detection_confidence:.2%}")
+                print(f"  Race Segment Confidence: {result.race_segment_confidence:.2%}")
 
                 print(f"\n  Frequency Features:")
                 for k, v in result.frequency_features.items():

@@ -1,0 +1,230 @@
+[
+  {
+    "video_id": "Speed_finals_Seoul_2024_race023_poses",
+    "lane": "left",
+    "extraction_quality": 0.808252427184466,
+    "frequency_features": {
+      "hand_frequency_hz": 2.2033898305084745,
+      "foot_frequency_hz": 0.5797101449275363,
+      "limb_sync_ratio": 0.7000628510397188,
+      "movement_regularity": 0.3424227925447938,
+      "hand_movement_amplitude": 0.08348006053380924,
+      "foot_movement_amplitude": 0.04697050169476652
+    },
+    "efficiency_features": {
+      "path_straightness": 0.16921933048088966,
+      "lateral_movement_ratio": 0.211135037787799,
+      "vertical_progress_rate": -0.001135304642184345,
+      "com_stability_index": 0.00021761960119187453,
+      "movement_smoothness": 0.05399847025134865,
+      "acceleration_variance": 0.039623620755945804
+    },
+    "posture_features": {
+      "avg_knee_angle": 143.3977656074884,
+      "knee_angle_std": 45.646949816541806,
+      "avg_elbow_angle": 106.03963164521176,
+      "elbow_angle_std": 58.619612149665706,
+      "hip_width_ratio": 0.5722613453364874,
+      "avg_body_lean": -1.5158470814876066,
+      "body_lean_std": 10.178795340925607,
+      "avg_reach_ratio": 0.5739887739060702,
+      "max_reach_ratio": 1.32622771638654
+    },
+    "total_frames": 219,
+    "valid_frames": 219,
+    "racing_frames": 207,
+    "fps": 29.97002997002997,
+    "detection_confidence": 1.0,
+    "race_segment_confidence": 0.23300970873786409
+  },
+  {
+    "video_id": "Speed_finals_Seoul_2024_race023_poses",
+    "lane": "right",
+    "extraction_quality": 0.8221153846153846,
+    "frequency_features": {
+      "hand_frequency_hz": 0.5172413793103449,
+      "foot_frequency_hz": 0.594059405940594,
+      "limb_sync_ratio": 0.8447831824039125,
+      "movement_regularity": 0.3729973421748266,
+      "hand_movement_amplitude": 0.12364161046334528,
+      "foot_movement_amplitude": 0.07946254296010381
+    },
+    "efficiency_features": {
+      "path_straightness": 0.151882400726202,
+      "lateral_movement_ratio": 0.20824648893394984,
+      "vertical_progress_rate": -0.0009600768249000659,
+      "com_stability_index": 0.0002824176046192731,
+      "movement_smoothness": 0.05276224087693749,
+      "acceleration_variance": 0.08140165451389537
+    },
+    "posture_features": {
+      "avg_knee_angle": 131.45575265024428,
+      "knee_angle_std": 53.04349122750144,
+      "avg_elbow_angle": 109.24226184708996,
+      "elbow_angle_std": 62.535791387429015,
+      "hip_width_ratio": 0.5897656209333562,
+      "avg_body_lean": 1.701246557466849,
+      "body_lean_std": 4.5894689543326725,
+      "avg_reach_ratio": 0.5661383569810041,
+      "max_reach_ratio": 1.3543164954770703
+    },
+    "total_frames": 219,
+    "valid_frames": 219,
+    "racing_frames": 209,
+    "fps": 29.97002997002997,
+    "detection_confidence": 1.0,
+    "race_segment_confidence": 0.28846153846153844
+  },
+  {
+    "video_id": "Speed_finals_Chamonix_2024_race024_poses",
+    "lane": "left",
+    "extraction_quality": 0.8415300546448088,
+    "frequency_features": {
+      "hand_frequency_hz": 0.5660377358490566,
+      "foot_frequency_hz": 0.6521739130434783,
+      "limb_sync_ratio": 0.4522288000316069,
+      "movement_regularity": 0.3451772757514535,
+      "hand_movement_amplitude": 0.07091480419132369,
+      "foot_movement_amplitude": 0.05929525596858755
+    },
+    "efficiency_features": {
+      "path_straightness": 0.12437341786056538,
+      "lateral_movement_ratio": 0.24789603031880722,
+      "vertical_progress_rate": 0.0007427561542262201,
+      "com_stability_index": 0.00022549406585603183,
+      "movement_smoothness": 0.05265560135765457,
+      "acceleration_variance": 0.0942976141279141
+    },
+    "posture_features": {
+      "avg_knee_angle": 143.60709938418833,
+      "knee_angle_std": 49.44364440994085,
+      "avg_elbow_angle": 104.81621955196333,
+      "elbow_angle_std": 62.138965610038674,
+      "hip_width_ratio": 0.5969746128151256,
+      "avg_body_lean": 1.0500524923892267,
+      "body_lean_std": 3.843643683589107,
+      "avg_reach_ratio": 0.5523727169446285,
+      "max_reach_ratio": 1.52882341119772
+    },
+    "total_frames": 222,
+    "valid_frames": 222,
+    "racing_frames": 184,
+    "fps": 30.0,
+    "detection_confidence": 1.0,
+    "race_segment_confidence": 0.366120218579235
+  },
+  {
+    "video_id": "Speed_finals_Chamonix_2024_race024_poses",
+    "lane": "right",
+    "extraction_quality": 0.8333333333333334,
+    "frequency_features": {
+      "hand_frequency_hz": 0.5769230769230769,
+      "foot_frequency_hz": 0.6382978723404256,
+      "limb_sync_ratio": 0.8315161851351743,
+      "movement_regularity": 0.6801186165332436,
+      "hand_movement_amplitude": 0.08495828716227186,
+      "foot_movement_amplitude": 0.04286271576430877
+    },
+    "efficiency_features": {
+      "path_straightness": 0.07986629441068577,
+      "lateral_movement_ratio": 0.38228230476388886,
+      "vertical_progress_rate": 0.0005625527589879138,
+      "com_stability_index": 0.0001765232690051008,
+      "movement_smoothness": 0.05880742114180824,
+      "acceleration_variance": 0.12905960544755615
+    },
+    "posture_features": {
+      "avg_knee_angle": 147.1202387447786,
+      "knee_angle_std": 40.738292063222424,
+      "avg_elbow_angle": 110.186912801312,
+      "elbow_angle_std": 49.86377313165218,
+      "hip_width_ratio": 0.5822915139137773,
+      "avg_body_lean": 2.4018481246374104,
+      "body_lean_std": 5.223499991991238,
+      "avg_reach_ratio": 0.4707167706836535,
+      "max_reach_ratio": 1.0828063945000097
+    },
+    "total_frames": 222,
+    "valid_frames": 222,
+    "racing_frames": 94,
+    "fps": 30.0,
+    "detection_confidence": 1.0,
+    "race_segment_confidence": 0.3333333333333333
+  },
+  {
+    "video_id": "Speed_finals_Innsbruck_2024_race003_poses",
+    "lane": "left",
+    "extraction_quality": 0.847457627118644,
+    "frequency_features": {
+      "hand_frequency_hz": 0.5084745762711864,
+      "foot_frequency_hz": 0.5063291139240507,
+      "limb_sync_ratio": 0.8893304529948233,
+      "movement_regularity": 0.43370155015199374,
+      "hand_movement_amplitude": 0.10501562817325676,
+      "foot_movement_amplitude": 0.07954205081574513
+    },
+    "efficiency_features": {
+      "path_straightness": 0.03708793143256846,
+      "lateral_movement_ratio": 0.6834900586717995,
+      "vertical_progress_rate": 0.0001733016364182098,
+      "com_stability_index": 0.00021327390498362142,
+      "movement_smoothness": 0.049073313065317606,
+      "acceleration_variance": 0.07398346623444334
+    },
+    "posture_features": {
+      "avg_knee_angle": 137.05666820266984,
+      "knee_angle_std": 48.64290232557332,
+      "avg_elbow_angle": 105.8788005750997,
+      "elbow_angle_std": 63.5018817096885,
+      "hip_width_ratio": 0.5835877206198657,
+      "avg_body_lean": 1.921713034889892,
+      "body_lean_std": 5.154105529423311,
+      "avg_reach_ratio": 0.5736611752725393,
+      "max_reach_ratio": 1.512670298210453
+    },
+    "total_frames": 257,
+    "valid_frames": 257,
+    "racing_frames": 237,
+    "fps": 30.0,
+    "detection_confidence": 1.0,
+    "race_segment_confidence": 0.3898305084745763
+  },
+  {
+    "video_id": "Speed_finals_Innsbruck_2024_race003_poses",
+    "lane": "right",
+    "extraction_quality": 0.8354430379746836,
+    "frequency_features": {
+      "hand_frequency_hz": 1.0285714285714285,
+      "foot_frequency_hz": 0.6302521008403361,
+      "limb_sync_ratio": 0.7895141525640373,
+      "movement_regularity": 0.3507184493704729,
+      "hand_movement_amplitude": 0.09212592192078262,
+      "foot_movement_amplitude": 0.068668470432904
+    },
+    "efficiency_features": {
+      "path_straightness": 0.08414592552669921,
+      "lateral_movement_ratio": 2.676231477651898,
+      "vertical_progress_rate": 4.840460645050562e-05,
+      "com_stability_index": 0.00023192441007080072,
+      "movement_smoothness": 0.04917085428846531,
+      "acceleration_variance": 0.07933637407429074
+    },
+    "posture_features": {
+      "avg_knee_angle": 147.77703963152513,
+      "knee_angle_std": 41.88769049832019,
+      "avg_elbow_angle": 119.92634994713899,
+      "elbow_angle_std": 54.47007113737364,
+      "hip_width_ratio": 0.6319298814557105,
+      "avg_body_lean": 3.948246315722581,
+      "body_lean_std": 5.312519893062309,
+      "avg_reach_ratio": 0.56537343604174,
+      "max_reach_ratio": 1.2315200057630498
+    },
+    "total_frames": 257,
+    "valid_frames": 257,
+    "racing_frames": 238,
+    "fps": 30.0,
+    "detection_confidence": 1.0,
+    "race_segment_confidence": 0.34177215189873417
+  }
+]

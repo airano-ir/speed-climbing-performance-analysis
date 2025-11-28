@@ -13,6 +13,7 @@ import numpy as np
 from .frequency import FrequencyAnalyzer
 from .efficiency import EfficiencyAnalyzer
 from .posture import PostureAnalyzer
+from .race_detector import RaceSegmentDetector, RaceSegment
 
 
 @dataclass
@@ -30,8 +31,10 @@ class FeatureResult:
     # Metadata
     total_frames: int
     valid_frames: int
+    racing_frames: int  # NEW: Frames actually used for analysis
     fps: float
     detection_confidence: float
+    race_segment_confidence: float  # NEW: Confidence in race detection
 
     def to_dict(self) -> Dict[str, Any]:
         """Convert to dictionary for JSON serialization."""
@@ -113,6 +116,7 @@ class FeatureExtractor:
         self.frequency_analyzer = FrequencyAnalyzer(fps=fps, min_frames=min_frames)
         self.efficiency_analyzer = EfficiencyAnalyzer(fps=fps, min_frames=min_frames)
         self.posture_analyzer = PostureAnalyzer(min_frames=min_frames)
+        self.race_detector = RaceSegmentDetector(min_race_frames=min_frames)
 
     def extract_from_file(self, pose_file: Union[str, Path]) -> List[FeatureResult]:
         """
@@ -198,11 +202,19 @@ class FeatureExtractor:
         if valid_frames < self.min_frames:
             return None
 
-        # Extract features
+        # Detect and filter racing segment
+        racing_frames, segment = self.race_detector.filter_racing_frames(frames, lane)
+        racing_frame_count = len(racing_frames)
+        race_confidence = segment.confidence if segment else 0.5
+
+        # Use racing frames for feature extraction (not all frames)
+        frames_to_analyze = racing_frames if racing_frame_count >= self.min_frames else frames
+
+        # Extract features from racing segment only
         try:
-            freq_features = self.frequency_analyzer.analyze(frames, lane)
-            eff_features = self.efficiency_analyzer.analyze(frames, lane)
-            post_features = self.posture_analyzer.analyze(frames, lane)
+            freq_features = self.frequency_analyzer.analyze(frames_to_analyze, lane)
+            eff_features = self.efficiency_analyzer.analyze(frames_to_analyze, lane)
+            post_features = self.posture_analyzer.analyze(frames_to_analyze, lane)
         except Exception as e:
             print(f"Warning: Feature extraction failed for {video_id}/{lane}: {e}")
             return None
@@ -219,7 +231,7 @@ class FeatureExtractor:
         feature_completeness = feature_count / total_features if total_features > 0 else 0
         valid_ratio = valid_frames / total_frames if total_frames > 0 else 0
 
-        extraction_quality = (detection_rate + valid_ratio + feature_completeness) / 3
+        extraction_quality = (detection_rate + valid_ratio + feature_completeness + race_confidence) / 4
 
         return FeatureResult(
             video_id=video_id,
@@ -230,8 +242,10 @@ class FeatureExtractor:
             posture_features=post_features,
             total_frames=total_frames,
             valid_frames=valid_frames,
+            racing_frames=racing_frame_count,
             fps=fps,
-            detection_confidence=detection_rate
+            detection_confidence=detection_rate,
+            race_segment_confidence=race_confidence
         )
 
     def extract_batch(
