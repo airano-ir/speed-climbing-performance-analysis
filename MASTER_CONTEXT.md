@@ -3,8 +3,7 @@
 ## Project Overview
 **Goal**: Build an AI-powered system that analyzes speed climbing videos and provides **personalized feedback** to athletes, coaches, and enthusiasts.
 
-**Current Status**: **Phase 4 - Fuzzy Logic Feedback System (Active)**
-Implemented a Fuzzy Logic based feedback system that generates personalized coaching insights from extracted features.
+**Current Status**: **Phase 4 - Fuzzy Logic Feedback System (Complete)**
 
 ## Project Journey
 
@@ -19,14 +18,82 @@ Implemented a Fuzzy Logic based feedback system that generates personalized coac
 - JSON storage for each video
 
 ### Phase 3: Feature Extraction ✅
-- 22 ML-ready features
+- 22 ML-ready features extracted
 - Automatic race segment detection
 - Quality reports and validation
 
-### Phase 4: Fuzzy Feedback System ✅ (NEW - 2025-11-28)
+### Phase 4: Fuzzy Feedback System ✅
 - Fuzzy Logic engine for interpretable analysis
 - Personalized feedback in Persian/English
 - Comparison with professional athletes
+- **Camera-independent features only** (angles, ratios, sync)
+
+---
+
+## 🗺️ Future Roadmap
+
+### Phase 5: Web Interface 📋 (Next)
+**Goal**: Create a web app where users can upload videos and get feedback
+
+| Task | Priority | Description |
+|------|----------|-------------|
+| Web UI | High | Simple upload page with results display |
+| Charts & Graphs | High | Visual representation of scores |
+| Video Player | Medium | Show video with analysis overlay |
+| Export Report | Medium | PDF/Image export of feedback |
+
+### Phase 6: Enhanced Visualization 📋
+**Goal**: Add visual feedback overlaid on video
+
+| Task | Priority | Description |
+|------|----------|-------------|
+| Keypoint Overlay | High | Draw skeleton on video frames |
+| Angle Indicators | Medium | Show joint angles on video |
+| Score Timeline | Medium | Graph of metrics over time |
+| Comparison View | Low | Side-by-side with reference athlete |
+
+### Phase 7: Single Athlete Detection 📋
+**Goal**: Fix detection for single-athlete videos
+
+| Task | Priority | Description |
+|------|----------|-------------|
+| Athlete Count Detection | High | Auto-detect 1 or 2 athletes |
+| Lane Selection | Medium | Let user choose which lane |
+| Better Lane Assignment | Medium | Improve left/right detection |
+
+### Phase 8: Label Collection 📋
+**Goal**: Collect labels for ML training
+
+| Task | Priority | Description |
+|------|----------|-------------|
+| Time Annotation Tool | High | Mark start/finish for actual time |
+| Skill Level Labels | Medium | Expert annotation of skill |
+| Competition Results | Medium | Import win/lose data |
+| Reference Technique | Low | Mark "good" vs "bad" examples |
+
+### Phase 9: ML Model Training 📋
+**Goal**: Train supervised ML models
+
+| Task | Priority | Description |
+|------|----------|-------------|
+| Time Prediction | High | Predict finish time from technique |
+| Skill Classification | Medium | Classify beginner/intermediate/advanced |
+| Technique Clustering | Medium | Find similar climbing styles |
+| Anomaly Detection | Low | Detect unusual movements |
+
+### Phase 10: Advanced Position Tracking 📋
+**Goal**: Solve camera-motion problem for absolute positioning
+
+| Task | Priority | Description |
+|------|----------|-------------|
+| Wall Detection | High | Detect climbing wall in frame |
+| Hold Tracking | High | Track holds despite occlusion |
+| Camera Motion Estimation | High | Estimate camera pan/tilt/zoom |
+| Absolute COM Position | Medium | Real position on wall |
+| Actual Climbing Speed | Medium | Meters per second |
+| Distance Traveled | Low | Total path length |
+
+---
 
 ## Architecture
 
@@ -36,149 +103,123 @@ speed_climbing/
 ├── core/
 │   └── settings.py           # IFSC standards, config
 ├── vision/
-│   ├── holds.py              # HoldDetector (optional)
+│   ├── holds.py              # HoldDetector
 │   ├── lanes.py              # DualLaneDetector
-│   ├── pose.py               # BlazePoseExtractor (33 keypoints + COM)
-│   └── calibration.py        # CameraCalibrator (optional)
+│   ├── pose.py               # BlazePoseExtractor
+│   └── calibration.py        # CameraCalibrator
 ├── processing/
-│   ├── athlete_centric.py    # Main pipeline (relative features)
+│   ├── athlete_centric.py    # Main pipeline
 │   └── dropout.py            # Dropout handling
 └── analysis/
-    ├── features/             # ML feature extraction
-    │   ├── base.py           # Utility functions
-    │   ├── frequency.py      # FFT-based rhythm analysis
-    │   ├── efficiency.py     # Path efficiency metrics
-    │   ├── posture.py        # Joint angle analysis
-    │   ├── race_detector.py  # Variance-based race detection
-    │   └── extractor.py      # Main FeatureExtractor class
-    ├── feedback/             # NEW: Fuzzy Logic Feedback System
-    │   ├── baseline.py       # Professional athlete statistics
-    │   ├── fuzzy_engine.py   # Fuzzy membership & evaluation
-    │   └── feedback_generator.py  # Persian/English report generation
-    ├── time_series.py
-    └── start_finish_detector.py
+    ├── features/             # Feature extraction
+    │   ├── frequency.py      # FFT-based rhythm
+    │   ├── efficiency.py     # Path efficiency (⚠️ camera-dependent)
+    │   ├── posture.py        # Joint angles
+    │   └── extractor.py      # Main extractor
+    └── feedback/             # Fuzzy feedback
+        ├── baseline.py       # Pro athlete stats
+        ├── fuzzy_engine.py   # Fuzzy logic
+        └── feedback_generator.py  # Report generation
 ```
 
-## Fuzzy Feedback System (NEW)
+---
 
-### How It Works
+## Current Feedback System
 
+### Valid Features (Camera-Independent)
 ```
-Video → Pose Extraction → Feature Extraction → Fuzzy Logic → Personalized Feedback
-                                                    ↑
-                                            Baseline from 371
-                                            professional races
+✅ Used in Fuzzy System:
+├── Joint Angles
+│   ├── post_avg_knee_angle
+│   ├── post_knee_angle_std
+│   ├── post_avg_elbow_angle
+│   └── post_elbow_angle_std
+├── Body Position
+│   ├── post_avg_body_lean
+│   ├── post_body_lean_std
+│   └── post_hip_width_ratio
+├── Reach
+│   ├── post_avg_reach_ratio
+│   └── post_max_reach_ratio
+└── Coordination
+    ├── freq_limb_sync_ratio
+    ├── freq_hand_movement_amplitude
+    └── freq_foot_movement_amplitude
+```
+
+### Invalid Features (Camera Artifacts)
+```
+❌ NOT used (camera follows athlete):
+├── eff_path_straightness
+├── eff_com_stability_index
+├── eff_lateral_movement_ratio
+├── eff_movement_smoothness
+├── eff_vertical_progress_rate
+└── eff_acceleration_variance
 ```
 
 ### Performance Categories (5)
+| Category | Persian | Features |
+|----------|---------|----------|
+| Coordination | هماهنگی اندام‌ها | limb_sync, amplitudes |
+| Leg Technique | تکنیک پا | knee angles |
+| Arm Technique | تکنیک دست | elbow angles |
+| Body Position | وضعیت بدن | body lean, hip ratio |
+| Reach | دسترسی و کشش | reach ratios |
 
-| Category | Persian | Features Used |
-|----------|---------|---------------|
-| Rhythm & Coordination | ریتم و هماهنگی | hand/foot frequency, sync ratio |
-| Movement Efficiency | کارایی حرکت | path straightness, lateral movement |
-| Balance & Stability | تعادل و ثبات | COM stability, body lean |
-| Body Posture | وضعیت بدن | knee/elbow angles, hip width |
-| Reach & Extension | دسترسی و کشش | reach ratio, amplitude |
+---
 
-### Output Format
+## Known Issues
 
-```
-==================================================
-📊 گزارش تحلیل عملکرد صخره‌نوردی سرعت
-==================================================
+### Single Athlete Videos
+- System always detects 2 lanes (left/right)
+- For single-athlete videos, one lane may have invalid data
+- **Workaround**: Use `--lane left` or `--lane right` flag
 
-امتیاز کلی شما: 65 از ۱۰۰
-سطح: متوسط
+### Camera Motion
+- Cannot measure actual climbing speed
+- Cannot measure absolute position on wall
+- **Requires**: Wall detection + camera motion compensation (Phase 10)
 
-💪 نقاط قوت:
-  ✓ وضعیت بهینه بدن
-  ✓ خم شدن مناسب زانو برای قدرت
+---
 
-⚠️ فرصت‌های بهبود:
-  🟡 مسیر صعود به اندازه کافی مستقیم نیست
+## Usage
 
-📈 امتیاز دسته‌ها:
-  ریتم و هماهنگی: ██████░░░░ 62
-  کارایی حرکت: ████░░░░░░ 44
-  ...
+```bash
+# Analyze a pose file
+python scripts/analyze_video.py pose_file.json --language fa --lane left
 
-🎯 توصیه‌های تمرینی:
-  1. کوتاه‌ترین مسیر را قبل از شروع تجسم کنید
-
-📊 مقایسه با حرفه‌ای‌ها:
-  شما بهتر از 65٪ ورزشکاران در دیتاست ما عمل کرده‌اید.
-==================================================
+# Options:
+#   --language fa|en    Output language
+#   --lane left|right   Which lane to analyze
+#   --output file.txt   Save report to file
 ```
 
-### Usage
-
-```python
-# Analyze a pose file and get feedback
-python scripts/analyze_video.py pose_file.json --language fa
-
-# Python API
-from speed_climbing.analysis.feedback import FeedbackGenerator
-from speed_climbing.analysis.feedback.feedback_generator import Language
-
-generator = FeedbackGenerator(language=Language.PERSIAN)
-feedback = generator.generate(features)
-print(generator.format_report(feedback))
-```
+---
 
 ## Data Available
 
-- **371 samples** from 5 competitions (Chamonix, Innsbruck, Seoul, Villars, Zilina)
+- **371 samples** from 5 competitions
 - **246 high-quality** samples (extraction quality >= 0.8)
 - **Pose files**: `data/processed/poses/samples/*.json`
 - **ML dataset**: `data/ml_dataset/`
 
-## Features Extracted (22 total)
-
-**Frequency Features (6):**
-- `hand_frequency_hz`, `foot_frequency_hz`
-- `limb_sync_ratio`, `movement_regularity`
-- `hand_movement_amplitude`, `foot_movement_amplitude`
-
-**Efficiency Features (6):**
-- `path_straightness`, `lateral_movement_ratio`
-- `vertical_progress_rate`, `com_stability_index`
-- `movement_smoothness`, `acceleration_variance`
-
-**Posture Features (10):**
-- `avg_knee_angle`, `knee_angle_std`
-- `avg_elbow_angle`, `elbow_angle_std`
-- `hip_width_ratio`, `avg_body_lean`, `body_lean_std`
-- `avg_reach_ratio`, `max_reach_ratio`
-
-## Key Scripts
-
-| Script | Purpose |
-|--------|---------|
-| `scripts/analyze_video.py` | **Main analysis script** - generates feedback |
-| `scripts/batch/batch_feature_extraction.py` | Batch processing |
-| `scripts/batch/generate_report.py` | Dataset reports |
-
-## Next Steps
-
-1. ~~Batch Feature Extraction~~ ✅
-2. ~~ML Dataset Preparation~~ ✅
-3. ~~Fuzzy Feedback System~~ ✅
-4. **Web Interface**: Upload video → Get feedback
-5. **Video Processing Integration**: Full pipeline from raw video
-6. **More Training Data**: Expand dataset with more competitions
+---
 
 ## Recent Updates
 
-### 2025-11-28 (Latest)
+### 2025-11-29 (Latest)
+- **Camera-Independent Features**: Removed 6 invalid efficiency features
+- **New Categories**: 5 technique-focused categories
+- **Limitation Note**: Added note about camera motion in reports
+- **Tested**: Confirmed working with Ola Miroslaw video
+
+### 2025-11-28
 - **Fuzzy Feedback System**: Complete implementation
-  - Baseline statistics from 371 professional races
-  - 5 performance categories with weighted scoring
-  - Bilingual output (Persian/English)
-  - Personalized strengths, weaknesses, and recommendations
-- **Analysis Script**: `scripts/analyze_video.py` for easy use
-- **Bug Fixes**: Removed duplicate recommendations
+- **Baseline Statistics**: From 371 professional races
+- **Bilingual Output**: Persian/English support
 
 ### Previous
 - Race segment detection (variance-based)
 - Feature extraction pipeline
-- Project cleanup and reorganization
+- Project cleanup
