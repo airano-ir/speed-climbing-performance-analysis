@@ -1,0 +1,343 @@
+video:
+  name: Speed_finals_Villars_2024
+  path: data/raw_videos/Speed_finals_Villars_2024.mp4
+  location: Villars, Switzerland
+  event_type: European Championship
+  fps: 30.0
+races:
+- race_id: 1
+  round: 1/8 final - Men (Rerun)
+  start_time: '51:10'
+  end_time: '51:19'
+  athletes:
+    left:
+      name: Matteo Zurloni
+      country: Italy
+      bib_color: blue
+    right:
+      name: Masio Ganier
+      country: France
+      bib_color: blue/white/red
+  notes: End time extended +5s (early finish)
+- race_id: 2
+  round: 1/8 final - Men (Rerun)
+  start_time: '52:55'
+  end_time: '53:04'
+  athletes:
+    left:
+      name: Kostiantyn Pavlenko
+      country: Ukraine
+      bib_color: black/blue/yellow
+    right:
+      name: Kevin Ammon
+      country: France
+      bib_color: blue/white/red
+  notes: End time extended +4s (early finish) | Late start (needs more buffer)
+  late_start: true
+- race_id: 3
+  round: 1/8 final - Men (Rerun)
+  start_time: '54:52'
+  end_time: '54:58'
+  athletes:
+    left:
+      name: Yaroslav Tkach
+      country: Ukraine
+      bib_color: black/blue/yellow
+    right:
+      name: Miguel Gomez Barios
+      country: Spain
+      bib_color: red/yellow
+- race_id: 4
+  round: 1/8 final - Men (Rerun)
+  start_time: '56:30'
+  end_time: '56:35'
+  athletes:
+    left:
+      name: Erik Noya
+      country: Spain
+      bib_color: red/yellow
+    right:
+      name: Gomo
+      country: Spain
+      bib_color: red/yellow
+- race_id: 5
+  round: 1/8 final - Men (Rerun)
+  start_time: '58:16'
+  end_time: '58:20'
+  athletes:
+    left:
+      name: Ludovico Fossali
+      country: Italy
+      bib_color: blue
+    right:
+      name: Alessandro Bulos
+      country: Italy
+      bib_color: blue
+- race_id: 6
+  round: 1/8 final - Men (Rerun)
+  start_time: '59:47'
+  end_time: '59:56'
+  athletes:
+    left:
+      name: Marcin Dzienski
+      country: Poland
+      bib_color: red/white
+    right:
+      name: Jan Luca Zoda
+      country: Italy
+      bib_color: blue
+  notes: Fall occurred
+- race_id: 7
+  round: 1/8 final - Men (Rerun)
+  start_time: 01:01:28
+  end_time: 01:01:37
+  athletes:
+    left:
+      name: Leander Carmans
+      country: Belgium
+      bib_color: black/red
+    right:
+      name: Hii Otisian
+      country: Ukraine
+      bib_color: black/blue/yellow
+  notes: Fall occurred | End time extended +5s (early finish)
+- race_id: 8
+  round: 1/8 final - Men (Rerun)
+  start_time: 01:03:17
+  end_time: 01:03:28
+  athletes:
+    left:
+      name: Sebastian Lucke
+      country: Germany
+      bib_color: black/red/yellow
+    right:
+      name: Lucas Knap
+      country: Germany
+      bib_color: black/red/yellow
+  notes: End time extended +5s (early finish)
+- race_id: 9
+  round: Quarter final - Women
+  start_time: 01:05:56
+  end_time: 01:06:05
+  athletes:
+    left:
+      name: Natalia Kalucka
+      country: Poland
+      bib_color: red/white
+    right:
+      name: Liry
+      country: Spain
+      bib_color: red/yellow
+- race_id: 10
+  round: Quarter final - Women
+  start_time: 01:07:24
+  end_time: 01:07:34
+  athletes:
+    left:
+      name: Julia Randy
+      country: Poland
+      bib_color: red/white
+    right:
+      name: Ka Videl Martinez
+      country: Spain
+      bib_color: red/yellow
+- race_id: 11
+  round: Quarter final - Women
+  start_time: 01:08:51
+  end_time: 01:09:01
+  athletes:
+    left:
+      name: Patricia Hujak
+      country: Poland
+      bib_color: red/white
+    right:
+      name: Anna Brok
+      country: Poland
+      bib_color: red/white
+- race_id: 12
+  round: Quarter final - Women
+  start_time: 01:10:38
+  end_time: 01:10:47
+  athletes:
+    left:
+      name: Beatrice Colli
+      country: Italy
+      bib_color: blue
+    right:
+      name: Julia Cotch
+      country: Poland
+      bib_color: red/white
+  notes: End time extended +5s (early finish)
+- race_id: 13
+  round: Quarter final - Men
+  start_time: 01:12:29
+  end_time: 01:12:33
+  athletes:
+    left:
+      name: Matteo Zurloni
+      country: Italy
+      bib_color: blue
+    right:
+      name: Kostiantyn Pavlenko
+      country: Ukraine
+      bib_color: black/blue/yellow
+  late_start: true
+  notes: Late start (needs more buffer)
+- race_id: 14
+  round: Quarter final - Men
+  start_time: 01:14:16
+  end_time: 01:14:21
+  athletes:
+    left:
+      name: Erik Noya
+      country: Spain
+      bib_color: red/yellow
+    right:
+      name: Yaroslav Tkach
+      country: Ukraine
+      bib_color: black/blue/yellow
+  notes: Slip occurred
+- race_id: 15
+  round: Quarter final - Men
+  start_time: 01:16:05
+  end_time: 01:16:10
+  athletes:
+    left:
+      name: Ludovico Fossali
+      country: Italy
+      bib_color: blue
+    right:
+      name: Marcin Dzienski
+      country: Poland
+      bib_color: red/white
+  notes: Slip occurred | Late start (needs more buffer)
+  late_start: true
+- race_id: 16
+  round: Quarter final - Men
+  start_time: 01:17:35
+  end_time: 01:17:42
+  athletes:
+    left:
+      name: Leander Carmans
+      country: Belgium
+      bib_color: black/red
+    right:
+      name: Sebastian Lucke
+      country: Germany
+      bib_color: black/red/yellow
+  notes: Fall occurred
+- race_id: 17
+  round: Semi final - Women
+  start_time: 01:24:54
+  end_time: 01:25:03
+  athletes:
+    left:
+      name: Natalia Kalucka
+      country: Poland
+      bib_color: red/white
+    right:
+      name: Julia Randy
+      country: Poland
+      bib_color: red/white
+  notes: Slip occurred
+- race_id: 18
+  round: Semi final - Women
+  start_time: 01:26:30
+  end_time: 01:26:43
+  athletes:
+    left:
+      name: Patricia Hujak
+      country: Poland
+      bib_color: red/white
+    right:
+      name: Beatrice Colli
+      country: Italy
+      bib_color: blue
+  notes: Fall and slip occurred
+- race_id: 19
+  round: Semi final - Men
+  start_time: 01:29:23
+  end_time: 01:29:35
+  athletes:
+    left:
+      name: Matteo Zurloni
+      country: Italy
+      bib_color: blue
+    right:
+      name: Erik Noya
+      country: Spain
+      bib_color: red/yellow
+  notes: First sub-5 second time of competition
+- race_id: 20
+  round: Semi final - Men
+  start_time: 01:31:15
+  end_time: 01:31:25
+  athletes:
+    left:
+      name: Ludovico Fossali
+      country: Italy
+      bib_color: blue
+    right:
+      name: Sebastian Lucke
+      country: Germany
+      bib_color: black/red/yellow
+  notes: Fall and slip occurred
+- race_id: 21
+  round: Small final - Women (Bronze)
+  start_time: 01:35:51
+  end_time: 01:36:03
+  athletes:
+    left:
+      name: Julia Randy
+      country: Poland
+      bib_color: red/white
+    right:
+      name: Beatrice Colli
+      country: Italy
+      bib_color: blue
+  notes: Fall and slip occurred
+- race_id: 22
+  round: Small final - Men (Bronze)
+  start_time: 01:38:01
+  end_time: 01:38:07
+  athletes:
+    left:
+      name: Erik Noya
+      country: Spain
+      bib_color: red/yellow
+    right:
+      name: Sebastian Lucke
+      country: Germany
+      bib_color: black/red/yellow
+  notes: False start
+- race_id: 23
+  round: Final - Women (Gold)
+  start_time: 01:40:04
+  end_time: 01:40:12
+  athletes:
+    left:
+      name: Natalia Kalucka
+      country: Poland
+      bib_color: red/white
+    right:
+      name: Patricia Hujak
+      country: Poland
+      bib_color: red/white
+  notes: Slip occurred | Late start (needs more buffer)
+  late_start: true
+- race_id: 24
+  round: Final - Men (Gold)
+  start_time: 01:42:10
+  end_time: 01:42:15
+  athletes:
+    left:
+      name: Matteo Zurloni
+      country: Italy
+      bib_color: blue
+    right:
+      name: Ludovico Fossali
+      country: Italy
+      bib_color: blue
+  notes: Slip occurred
+notes: Auto belay malfunction in left lane caused rerun of all 1/8 final men races.
+  Some races have late starts or early finishes.

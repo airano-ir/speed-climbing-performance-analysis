@@ -1,0 +1,467 @@
+video:
+  name: Speed_finals_Innsbruck_2024
+  path: data/raw_videos/Speed_finals_Innsbruck_2024.mp4
+  location: Innsbruck, Austria
+  event_type: European Cup
+  fps: 30.0
+races:
+- race_id: 1
+  round: 1/8 final - Men
+  start_time: '14:55'
+  end_time: '15:14'
+  athletes:
+    left:
+      name: Kevin Amon
+      country: Austria
+      bib_color: red/white
+    right:
+      name: Lorenz
+      country: Austria
+      bib_color: red/white
+- race_id: 2
+  round: 1/8 final - Men
+  start_time: '16:18'
+  end_time: '16:27'
+  athletes:
+    left:
+      name: Kostiantyn Pavlenko
+      country: Ukraine
+      bib_color: blue/yellow
+    right:
+      name: Joshua Bruyns
+      country: Germany
+      bib_color: black/red/yellow
+  notes: Start time +20s, End time +8s (timing adjustments) | Late start (needs more
+    buffer)
+  late_start: true
+- race_id: 3
+  round: 1/8 final - Men
+  start_time: '17:25'
+  end_time: '17:35'
+  athletes:
+    left:
+      name: Yaroslav Tkach
+      country: Ukraine
+      bib_color: blue/yellow
+    right:
+      name: Paco Leman
+      country: France
+      bib_color: blue/white/red
+  notes: End time extended +5s (early finish)
+- race_id: 4
+  round: 1/8 final - Men
+  start_time: '18:39'
+  end_time: '19:01'
+  athletes:
+    left:
+      name: Leander
+      country: Austria
+      bib_color: red/white
+    right:
+      name: Alejandro Rabadan
+      country: Spain
+      bib_color: red/yellow
+  late_start: true
+  notes: Late start (needs more buffer)
+- race_id: 5
+  round: 1/8 final - Men
+  start_time: '19:49'
+  end_time: '20:01'
+  athletes:
+    left:
+      name: Hryhoriy
+      country: Ukraine
+      bib_color: blue/yellow
+    right:
+      name: Marco
+      country: Italy
+      bib_color: blue/white/red
+- race_id: 6
+  round: 1/8 final - Men
+  start_time: '20:56'
+  end_time: '21:04'
+  athletes:
+    left:
+      name: Raife Hand
+      country: United Kingdom
+      bib_color: blue/white/red
+    right:
+      name: Andy Goodall
+      country: United Kingdom
+      bib_color: blue/white/red
+  late_start: true
+  notes: Late start (needs more buffer)
+- race_id: 7
+  round: 1/8 final - Men
+  start_time: '22:05'
+  end_time: '22:15'
+  athletes:
+    left:
+      name: Miguel Barrios
+      country: Spain
+      bib_color: red/yellow
+    right:
+      name: Lucas Knapp
+      country: Austria
+      bib_color: red/white
+- race_id: 8
+  round: 1/8 final - Men
+  start_time: '23:18'
+  end_time: '23:25'
+  athletes:
+    left:
+      name: Luka
+      country: Italy
+      bib_color: blue/white/red
+    right:
+      name: Maxime
+      country: France
+      bib_color: blue/white/red
+  late_start: true
+  notes: Late start (needs more buffer)
+- race_id: 9
+  round: 1/8 final - Women
+  start_time: '26:36'
+  end_time: '26:42'
+  athletes:
+    left:
+      name: Daria Tkacheva
+      country: Ukraine
+      bib_color: blue/yellow
+    right:
+      name: Emma Glode
+      country: Germany
+      bib_color: black/red/yellow
+  late_start: true
+  notes: Late start (needs more buffer)
+- race_id: 10
+  round: 1/8 final - Women
+  start_time: '27:44'
+  end_time: '27:56'
+  athletes:
+    left:
+      name: Erica
+      country: Italy
+      bib_color: blue/white/red
+    right:
+      name: Nelly
+      country: United Kingdom
+      bib_color: blue/white/red
+  notes: End time extended +5s (early finish) | Late start (needs more buffer)
+  late_start: true
+- race_id: 11
+  round: 1/8 final - Women
+  start_time: '28:49'
+  end_time: '29:05'
+  athletes:
+    left:
+      name: Maria
+      country: Poland
+      bib_color: red/white
+    right:
+      name: L...
+      country: Spain
+      bib_color: red/yellow
+  notes: End time extended +5s (early finish)
+- race_id: 12
+  round: 1/8 final - Women
+  start_time: '30:08'
+  end_time: '30:20'
+  athletes:
+    left:
+      name: Yulia
+      country: Ukraine
+      bib_color: blue/yellow
+    right:
+      name: Sofia
+      country: Germany
+      bib_color: black/red/yellow
+  late_start: true
+  notes: Late start (needs more buffer)
+- race_id: 13
+  round: 1/8 final - Women
+  start_time: '32:10'
+  end_time: '32:22'
+  athletes:
+    left:
+      name: Carla Martinez
+      country: Spain
+      bib_color: red/yellow
+    right:
+      name: Alex
+      country: Austria
+      bib_color: red/white
+  notes: After technical break
+- race_id: 14
+  round: 1/8 final - Women
+  start_time: '33:26'
+  end_time: '33:35'
+  athletes:
+    left:
+      name: Sarah
+      country: Italy
+      bib_color: blue/white/red
+    right:
+      name: Oksana
+      country: Ukraine
+      bib_color: blue/yellow
+  late_start: true
+  notes: Late start (needs more buffer)
+- race_id: 15
+  round: 1/8 final - Women
+  start_time: '34:28'
+  end_time: '34:42'
+  athletes:
+    left:
+      name: Leslie
+      country: France
+      bib_color: blue/white/red
+    right:
+      name: Manon Schmidt
+      country: Germany
+      bib_color: black/red/yellow
+  late_start: true
+  notes: Late start (needs more buffer)
+- race_id: 16
+  round: 1/8 final - Women
+  start_time: '35:37'
+  end_time: '35:50'
+  athletes:
+    left:
+      name: Tetiana
+      country: Austria
+      bib_color: red/white
+    right:
+      name: Agnes
+      country: Italy
+      bib_color: blue/white/red
+  late_start: true
+  notes: Late start (needs more buffer)
+- race_id: 17
+  round: Quarter final - Men
+  start_time: '39:04'
+  end_time: '39:14'
+  athletes:
+    left:
+      name: Lorenz
+      country: Austria
+      bib_color: red/white
+    right:
+      name: Kostiantyn Pavlenko
+      country: Ukraine
+      bib_color: blue/yellow
+  late_start: true
+  notes: Late start (needs more buffer)
+- race_id: 18
+  round: Quarter final - Men
+  start_time: '40:34'
+  end_time: '40:48'
+  athletes:
+    left:
+      name: Paco Leman
+      country: France
+      bib_color: blue/white/red
+    right:
+      name: Alejandro Rabadan
+      country: Spain
+      bib_color: red/yellow
+  notes: End time extended +5s (early finish)
+- race_id: 19
+  round: Quarter final - Men
+  start_time: '41:59'
+  end_time: '42:08'
+  athletes:
+    left:
+      name: Andy Goodall
+      country: United Kingdom
+      bib_color: blue/white/red
+    right:
+      name: Hryhoriy
+      country: Ukraine
+      bib_color: blue/yellow
+- race_id: 20
+  round: Quarter final - Men
+  start_time: '43:35'
+  end_time: '43:47'
+  athletes:
+    left:
+      name: Lucas Knapp
+      country: Austria
+      bib_color: red/white
+    right:
+      name: Maxime
+      country: France
+      bib_color: blue/white/red
+  late_start: true
+  notes: Late start (needs more buffer)
+- race_id: 21
+  round: Quarter final - Women
+  start_time: '53:28'
+  end_time: '53:35'
+  athletes:
+    left:
+      name: Daria
+      country: Ukraine
+      bib_color: blue/yellow
+    right:
+      name: Erica
+      country: Italy
+      bib_color: blue/white/red
+  notes: After long technical break | Late start (needs more buffer)
+  late_start: true
+- race_id: 22
+  round: Quarter final - Women
+  start_time: '54:48'
+  end_time: '55:01'
+  athletes:
+    left:
+      name: Maria
+      country: Poland
+      bib_color: red/white
+    right:
+      name: Yulia
+      country: Germany
+      bib_color: black/red/yellow
+- race_id: 23
+  round: Quarter final - Women
+  start_time: '56:24'
+  end_time: '56:35'
+  athletes:
+    left:
+      name: Carla
+      country: Spain
+      bib_color: red/yellow
+    right:
+      name: Sarah
+      country: Italy
+      bib_color: blue/white/red
+  notes: End time extended +5s (early finish) | Late start (needs more buffer)
+  late_start: true
+- race_id: 24
+  round: Quarter final - Women
+  start_time: '58:05'
+  end_time: '58:15'
+  athletes:
+    left:
+      name: Leslie
+      country: France
+      bib_color: blue/white/red
+    right:
+      name: Agnes
+      country: Italy
+      bib_color: blue/white/red
+  late_start: true
+  notes: Late start (needs more buffer)
+- race_id: 25
+  round: Semi final - Men
+  start_time: 01:04:57
+  end_time: 01:05:09
+  athletes:
+    left:
+      name: Kostiantyn Pavlenko
+      country: Ukraine
+      bib_color: blue/yellow
+    right:
+      name: Alejandro Rabadan
+      country: Spain
+      bib_color: red/yellow
+  late_start: true
+  notes: Late start (needs more buffer)
+- race_id: 26
+  round: Semi final - Men
+  start_time: 01:07:40
+  end_time: 01:07:49
+  athletes:
+    left:
+      name: Hryhoriy
+      country: Ukraine
+      bib_color: blue/yellow
+    right:
+      name: Lucas Knapp
+      country: Austria
+      bib_color: red/white
+- race_id: 27
+  round: Semi final - Women
+  start_time: 01:10:21
+  end_time: 01:10:29
+  athletes:
+    left:
+      name: Daria
+      country: Ukraine
+      bib_color: blue/yellow
+    right:
+      name: Maria
+      country: Poland
+      bib_color: red/white
+  late_start: true
+  notes: Late start (needs more buffer)
+- race_id: 28
+  round: Semi final - Women
+  start_time: 01:12:22
+  end_time: 01:12:34
+  athletes:
+    left:
+      name: Leslie
+      country: France
+      bib_color: blue/white/red
+    right:
+      name: Sarah
+      country: Italy
+      bib_color: blue/white/red
+- race_id: 29
+  round: Small final - Men (Bronze)
+  start_time: 01:16:20
+  end_time: 01:16:32
+  athletes:
+    left:
+      name: Alejandro Rabadan
+      country: Spain
+      bib_color: red/yellow
+    right:
+      name: Hryhoriy
+      country: Ukraine
+      bib_color: blue/yellow
+- race_id: 30
+  round: Small final - Women (Bronze)
+  start_time: 01:18:41
+  end_time: 01:18:56
+  athletes:
+    left:
+      name: Maria
+      country: Poland
+      bib_color: red/white
+    right:
+      name: Sarah
+      country: Italy
+      bib_color: blue/white/red
+  notes: End time extended +5s (early finish)
+- race_id: 31
+  round: Final - Men (Gold)
+  start_time: 01:21:55
+  end_time: 01:22:01
+  athletes:
+    left:
+      name: Kostiantyn Pavlenko
+      country: Ukraine
+      bib_color: blue/yellow
+    right:
+      name: Lucas Knapp
+      country: Austria
+      bib_color: red/white
+- race_id: 32
+  round: Final - Women (Gold)
+  start_time: 01:24:34
+  end_time: 01:24:43
+  athletes:
+    left:
+      name: Daria
+      country: Ukraine
+      bib_color: blue/yellow
+    right:
+      name: Leslie
+      country: France
+      bib_color: blue/white/red
+  late_start: true
+  notes: Late start (needs more buffer)
+notes: Many races have approximate/late start times. Some athlete names are incomplete
+  (first or last name only). Commentary by Matthew Fall (British Speed Team member).
