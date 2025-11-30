@@ -1,0 +1,150 @@
+# =============================================================================
+# Speed Climbing Performance Analysis - Git Ignore
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Development / IDE
+# -----------------------------------------------------------------------------
+/don't read
+/.claude
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# -----------------------------------------------------------------------------
+# Python
+# -----------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# -----------------------------------------------------------------------------
+# Large Data Files (Download Separately)
+# -----------------------------------------------------------------------------
+
+# All video files
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+
+# Data directories
+data/raw_videos/
+data/race_segments/
+data/processed/
+data/calibration/
+data/ml_dataset/
+
+# Model files
+*.pth
+*.pt
+*.h5
+*.pkl
+*.ckpt
+
+# -----------------------------------------------------------------------------
+# Exceptions - Keep These Files
+# -----------------------------------------------------------------------------
+
+# Keep sample data for examples
+!examples/sample_output/*.json
+!data/.gitkeep
+
+# Keep config files
+!configs/*.json
+!configs/*.yaml
+
+# -----------------------------------------------------------------------------
+# Environment & Secrets
+# -----------------------------------------------------------------------------
+.env
+.env.local
+.env.*.local
+*.env
+secrets/
+credentials/
+
+# -----------------------------------------------------------------------------
+# OS Files
+# -----------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.lnk
+
+# -----------------------------------------------------------------------------
+# Logs & Temporary
+# -----------------------------------------------------------------------------
+*.log
+logs/
+*.tmp
+*.temp
+.cache/
+tmp/
+temp/
+
+# -----------------------------------------------------------------------------
+# Documentation Builds
+# -----------------------------------------------------------------------------
+docs/_build/
+docs/.doctrees/
+site/
+
+# -----------------------------------------------------------------------------
+# Testing
+# -----------------------------------------------------------------------------
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# -----------------------------------------------------------------------------
+# Development Files (Remove from Release)
+# -----------------------------------------------------------------------------
+docs/PROMPT_*.md
+docs/PHASE_*.md
+docs/SESSION_*.md
+notebooks/
+prompt.md
+# Note: MASTER_CONTEXT.md is tracked in development branch for internal use
+
+# -----------------------------------------------------------------------------
+# Release Assets (Upload to GitHub Release Separately)
+# -----------------------------------------------------------------------------
+release_assets/

@@ -1,0 +1,461 @@
+video:
+  name: Speed_finals_Seoul_2024
+  path: data/raw_videos/Speed_finals_Seoul_2024.mp4
+  location: Seoul, South Korea
+  event_type: IFSC World Cup
+  fps: 30.0
+races:
+- race_id: 1
+  round: 1/8 final - Women
+  start_time: 06:34
+  end_time: 06:43
+  athletes:
+    left:
+      name: Raja Salilia
+      country: Indonesia
+      bib_color: red/white
+    right:
+      name: Ren Masatu
+      country: Japan
+      bib_color: red/white
+  notes: End time extended +5s (race finished early)
+  original_race_id: 1
+- race_id: 2
+  round: 1/8 final - Women
+  start_time: 08:12
+  end_time: 08:21
+  athletes:
+    left:
+      name: Alveni Kadija
+      country: Indonesia
+      bib_color: red/white
+    right:
+      name: Susan Nuri Adadya
+      country: Indonesia
+      bib_color: red/white
+  notes: End time extended +5s (race finished early)
+  original_race_id: 2
+- race_id: 3
+  round: 1/8 final - Women
+  start_time: 09:53
+  end_time: '10:04'
+  athletes:
+    left:
+      name: Lijuan Deng
+      country: China
+      bib_color: red/yellow
+    right:
+      name: Puja
+      country: Indonesia
+      bib_color: red/white
+  notes: End time extended +5s (race finished early)
+  original_race_id: 3
+- race_id: 4
+  round: 1/8 final - Women
+  start_time: '11:31'
+  end_time: '11:41'
+  athletes:
+    left:
+      name: Karen Hayeshi
+      country: Japan
+      bib_color: red/white
+    right:
+      name: Shaokwin Zang
+      country: China
+      bib_color: red/yellow
+  notes: End time extended +5s (race finished early)
+  original_race_id: 4
+- race_id: 5
+  round: 1/8 final - Women
+  start_time: '13:08'
+  end_time: '13:18'
+  athletes:
+    left:
+      name: Zho Yayo
+      country: China
+      bib_color: red/yellow
+    right:
+      name: Shim Hang
+      country: South Korea
+      bib_color: black/blue
+  notes: End time extended +5s (race finished early)
+  original_race_id: 5
+- race_id: 6
+  round: 1/8 final - Women
+  start_time: '14:36'
+  end_time: '14:45'
+  athletes:
+    left:
+      name: Tamara
+      country: Kazakhstan
+      bib_color: blue/yellow
+    right:
+      name: Nurl
+      country: Indonesia
+      bib_color: red/white
+  notes: End time extended +5s (race finished early)
+  original_race_id: 6
+- race_id: 7
+  round: 1/8 final - Women
+  start_time: '16:04'
+  end_time: '16:17'
+  athletes:
+    left:
+      name: Hanareum Song
+      country: South Korea
+      bib_color: black/blue
+    right:
+      name: Jimin Jong
+      country: South Korea
+      bib_color: black/blue
+  notes: End time extended +5s (race finished early)
+  original_race_id: 7
+- race_id: 8
+  round: 1/8 final - Women
+  start_time: '17:33'
+  end_time: '17:44'
+  athletes:
+    left:
+      name: Shenen Wang
+      country: China
+      bib_color: red/yellow
+    right:
+      name: Sophia
+      country: USA
+      bib_color: blue/red/white
+  original_race_id: 8
+- race_id: 9
+  round: 1/8 final - Men
+  start_time: '20:20'
+  end_time: '20:26'
+  athletes:
+    left:
+      name: Kiromal Katibin
+      country: Indonesia
+      bib_color: red/white
+    right:
+      name: Sebastian Lucke
+      country: Ecuador
+      bib_color: yellow/blue/red
+  original_race_id: 9
+- race_id: 10
+  round: 1/8 final - Men
+  start_time: '21:38'
+  end_time: '21:51'
+  athletes:
+    left:
+      name: Erik Noya
+      country: USA
+      bib_color: blue/red/white
+    right:
+      name: Yaroslav Tkach
+      country: Ukraine
+      bib_color: blue/yellow
+  notes: End time extended +5s (race finished early)
+  original_race_id: 10
+- race_id: 11
+  round: 1/8 final - Men
+  start_time: '23:20'
+  end_time: '23:27'
+  athletes:
+    left:
+      name: Peng Wu
+      country: China
+      bib_color: red/yellow
+    right:
+      name: Aspar Jaelolo
+      country: Indonesia
+      bib_color: red/white
+  original_race_id: 11
+- race_id: 12
+  round: 1/8 final - Men
+  start_time: '24:45'
+  end_time: '24:51'
+  athletes:
+    left:
+      name: Xinchang Wang
+      country: China
+      bib_color: red/yellow
+    right:
+      name: Zamsa
+      country: Indonesia
+      bib_color: red/white
+  original_race_id: 12
+- race_id: 13
+  round: 1/8 final - Men
+  start_time: '26:12'
+  end_time: '26:24'
+  athletes:
+    left:
+      name: Kostiantyn Pavlenko
+      country: Ukraine
+      bib_color: blue/yellow
+    right:
+      name: Veddriq Leonardo
+      country: Indonesia
+      bib_color: red/white
+  notes: End time extended +5s (race finished early)
+  original_race_id: 13
+- race_id: 14
+  round: 1/8 final - Men
+  start_time: '27:50'
+  end_time: '27:56'
+  athletes:
+    left:
+      name: Jun Yasukawa
+      country: Japan
+      bib_color: red/white
+    right:
+      name: Matteo Zurloni
+      country: Italy
+      bib_color: blue
+  original_race_id: 14
+- race_id: 15
+  round: 1/8 final - Men
+  start_time: '30:33'
+  end_time: '30:45'
+  athletes:
+    left:
+      name: Afriat
+      country: Thailand
+      bib_color: blue/red
+    right:
+      name: Amir Maimuratov
+      country: Kazakhstan
+      bib_color: blue/yellow
+  notes: Injury occurred | End time extended +5s
+  original_race_id: 16
+- race_id: 16
+  round: Quarter final - Women
+  start_time: '34:22'
+  end_time: '34:32'
+  athletes:
+    left:
+      name: Raja Salilia
+      country: Indonesia
+      bib_color: red/white
+    right:
+      name: Susan Nuri Adadya
+      country: Indonesia
+      bib_color: red/white
+  notes: End time extended +5s (race finished early)
+  original_race_id: 17
+- race_id: 17
+  round: Quarter final - Women
+  start_time: '35:57'
+  end_time: '36:08'
+  athletes:
+    left:
+      name: Lijuan Deng
+      country: China
+      bib_color: red/yellow
+    right:
+      name: Shaokwin Zang
+      country: China
+      bib_color: red/yellow
+  notes: End time extended +5s (race finished early)
+  original_race_id: 18
+- race_id: 18
+  round: Quarter final - Women
+  start_time: '37:40'
+  end_time: '37:46'
+  athletes:
+    left:
+      name: Tamara
+      country: Kazakhstan
+      bib_color: blue/yellow
+    right:
+      name: Zho Yayo
+      country: China
+      bib_color: red/yellow
+  original_race_id: 19
+- race_id: 19
+  round: Quarter final - Women
+  start_time: '39:08'
+  end_time: '39:18'
+  athletes:
+    left:
+      name: Jimin Jong
+      country: South Korea
+      bib_color: black/blue
+    right:
+      name: Shenen Wang
+      country: China
+      bib_color: red/yellow
+  notes: End time extended +5s (race finished early)
+  original_race_id: 20
+- race_id: 20
+  round: Quarter final - Men
+  start_time: '54:29'
+  end_time: '54:35'
+  athletes:
+    left:
+      name: Kiromal Katibin
+      country: Indonesia
+      bib_color: red/white
+    right:
+      name: Yaroslav Tkach
+      country: Ukraine
+      bib_color: blue/yellow
+  original_race_id: 21
+- race_id: 21
+  round: Quarter final - Men
+  start_time: '56:00'
+  end_time: '56:05'
+  athletes:
+    left:
+      name: Peng Wu
+      country: China
+      bib_color: red/yellow
+    right:
+      name: Xinchang Wang
+      country: China
+      bib_color: red/yellow
+  original_race_id: 22
+- race_id: 22
+  round: Quarter final - Men
+  start_time: '57:26'
+  end_time: '57:30'
+  athletes:
+    left:
+      name: Veddriq Leonardo
+      country: Indonesia
+      bib_color: red/white
+    right:
+      name: Matteo Zurloni
+      country: Italy
+      bib_color: blue
+  original_race_id: 23
+- race_id: 23
+  round: Quarter final - Men
+  start_time: '58:58'
+  end_time: '59:04'
+  athletes:
+    left:
+      name: Amir Maimuratov
+      country: Kazakhstan
+      bib_color: blue/yellow
+    right:
+      name: Michael Holm
+      country: USA
+      bib_color: blue/red/white
+  original_race_id: 24
+- race_id: 24
+  round: Semi final - Women
+  start_time: 01:07:08
+  end_time: 01:07:19
+  athletes:
+    left:
+      name: Raja Salilia
+      country: Indonesia
+      bib_color: red/white
+    right:
+      name: Lijuan Deng
+      country: China
+      bib_color: red/yellow
+  notes: End time extended +5s (race finished early)
+  original_race_id: 25
+- race_id: 25
+  round: Semi final - Women
+  start_time: 01:09:01
+  end_time: 01:09:14
+  athletes:
+    left:
+      name: Zho Yayo
+      country: China
+      bib_color: red/yellow
+    right:
+      name: Shenen Wang
+      country: China
+      bib_color: red/yellow
+  notes: End time extended +5s (race finished early)
+  original_race_id: 26
+- race_id: 26
+  round: Semi final - Men
+  start_time: 01:11:28
+  end_time: 01:11:35
+  athletes:
+    left:
+      name: Kiromal Katibin
+      country: Indonesia
+      bib_color: red/white
+    right:
+      name: Xinchang Wang
+      country: China
+      bib_color: red/yellow
+  original_race_id: 27
+- race_id: 27
+  round: Semi final - Men
+  start_time: 01:13:28
+  end_time: 01:13:32
+  athletes:
+    left:
+      name: Matteo Zurloni
+      country: Italy
+      bib_color: blue
+    right:
+      name: Amir Maimuratov
+      country: Kazakhstan
+      bib_color: blue/yellow
+  original_race_id: 28
+- race_id: 28
+  round: Small final - Women (Bronze)
+  start_time: 01:16:57
+  end_time: 01:17:09
+  athletes:
+    left:
+      name: Lijuan Deng
+      country: China
+      bib_color: red/yellow
+    right:
+      name: Shenen Wang
+      country: China
+      bib_color: red/yellow
+  notes: End time extended +5s (race finished early)
+  original_race_id: 29
+- race_id: 29
+  round: Small final - Men (Bronze)
+  start_time: 01:18:48
+  end_time: 01:18:59
+  athletes:
+    left:
+      name: Kiromal Katibin
+      country: Indonesia
+      bib_color: red/white
+    right:
+      name: Matteo Zurloni
+      country: Italy
+      bib_color: blue
+  notes: End time extended +5s (race finished early)
+  original_race_id: 30
+- race_id: 30
+  round: Final - Women (Gold)
+  start_time: 01:20:47
+  end_time: 01:20:58
+  athletes:
+    left:
+      name: Raja Salilia
+      country: Indonesia
+      bib_color: red/white
+    right:
+      name: Zho Yayo
+      country: China
+      bib_color: red/yellow
+  notes: End time extended +5s (race finished early)
+  original_race_id: 31
+- race_id: 31
+  round: Final - Men (Gold)
+  start_time: 01:22:51
+  end_time: 01:23:02
+  athletes:
+    left:
+      name: Xinchang Wang
+      country: China
+      bib_color: red/yellow
+    right:
+      name: Amir Maimuratov
+      country: Kazakhstan
+      bib_color: blue/yellow
+  notes: End time extended +5s (race finished early)
+  original_race_id: 32
+notes: Race 15 (false start) removed. Some end times extended +5s due to early finish.

@@ -1,0 +1,85 @@
+# =============================================================================
+# Speed Climbing Performance Analysis - Docker Compose
+# Optimized for Coolify Deployment
+# =============================================================================
+#
+# COOLIFY DEPLOYMENT NOTES:
+# - Ports: Only container port specified (no host mapping) - Coolify manages this
+# - Health checks: Configured for automatic health monitoring
+# - Volumes: Named volumes for data persistence
+# - Environment: All configurable via Coolify UI
+#
+# Local Development:
+#   docker-compose up --build
+#
+# Production (Coolify):
+#   Just push to Git repository - Coolify handles the rest
+# =============================================================================
+
+version: '3.8'
+
+services:
+  # ---------------------------------------------------------------------------
+  # Web Application - Streamlit-based UI
+  # ---------------------------------------------------------------------------
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # CRITICAL: Only container port - NO host port mapping for Coolify!
+    ports:
+      - "8501"
+
+    # Environment variables
+    environment:
+      # Streamlit configuration
+      - STREAMLIT_SERVER_PORT=8501
+      - STREAMLIT_SERVER_ADDRESS=0.0.0.0
+      - STREAMLIT_SERVER_HEADLESS=true
+      - STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+      # Application settings
+      - APP_ENV=${APP_ENV:-production}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+
+    # Persistent data storage
+    volumes:
+      - app_data:/app/data
+      - app_configs:/app/configs
+
+    # Health check for Coolify rolling updates
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:8501/_stcore/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+    # Restart policy
+    restart: unless-stopped
+
+    # Resource limits (optional - adjust based on your server)
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '2'
+    #       memory: 4G
+    #     reservations:
+    #       cpus: '0.5'
+    #       memory: 1G
+
+# -----------------------------------------------------------------------------
+# Named Volumes for Data Persistence
+# -----------------------------------------------------------------------------
+volumes:
+  app_data:
+    driver: local
+  app_configs:
+    driver: local
+
+# -----------------------------------------------------------------------------
+# Networks (optional - Coolify manages networking)
+# -----------------------------------------------------------------------------
+# networks:
+#   default:
+#     driver: bridge

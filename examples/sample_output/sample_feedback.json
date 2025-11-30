@@ -1,0 +1,70 @@
+{
+  "analysis_info": {
+    "version": "0.1.0",
+    "language": "en",
+    "lane": "left",
+    "timestamp": "2025-11-29T12:00:00Z"
+  },
+  "athlete_profile": {
+    "detected_skill_level": "intermediate",
+    "total_frames_analyzed": 450,
+    "race_duration_seconds": 7.5
+  },
+  "performance_scores": {
+    "coordination": {
+      "score": 72.5,
+      "rating": "good",
+      "feedback_en": "Good limb coordination with consistent movement patterns.",
+      "feedback_fa": "هماهنگی خوب اندام‌ها با الگوهای حرکتی ثابت."
+    },
+    "leg_technique": {
+      "score": 68.0,
+      "rating": "average",
+      "feedback_en": "Knee angles could be more consistent. Focus on maintaining 120-150 degree angles.",
+      "feedback_fa": "زوایای زانو می‌تواند ثابت‌تر باشد. روی حفظ زوایای 120-150 درجه تمرکز کنید."
+    },
+    "arm_technique": {
+      "score": 75.0,
+      "rating": "good",
+      "feedback_en": "Good elbow positioning. Minor improvements possible in reach extension.",
+      "feedback_fa": "قرارگیری خوب آرنج. بهبودهای جزئی در کشش دسترسی امکان‌پذیر است."
+    },
+    "body_position": {
+      "score": 70.0,
+      "rating": "good",
+      "feedback_en": "Body lean is within optimal range. Hip positioning is stable.",
+      "feedback_fa": "شیب بدن در محدوده بهینه است. قرارگیری لگن پایدار است."
+    },
+    "reach": {
+      "score": 65.0,
+      "rating": "average",
+      "feedback_en": "Reach ratio could be improved. Professional athletes typically show 15-20% higher reach ratios.",
+      "feedback_fa": "نسبت دسترسی می‌تواند بهبود یابد. ورزشکاران حرفه‌ای معمولاً نسبت دسترسی 15-20% بالاتری دارند."
+    }
+  },
+  "overall_score": 70.1,
+  "overall_rating": "good",
+  "comparison_to_professionals": {
+    "percentile": 45,
+    "closest_match": "Intermediate competitive level",
+    "improvement_potential": "With focused training on leg technique and reach, potential to improve by 10-15%"
+  },
+  "recommendations": [
+    {
+      "priority": "high",
+      "category": "leg_technique",
+      "recommendation_en": "Practice maintaining consistent knee angles during push-off phases",
+      "recommendation_fa": "تمرین حفظ زوایای ثابت زانو در فازهای هل دادن"
+    },
+    {
+      "priority": "medium",
+      "category": "reach",
+      "recommendation_en": "Work on extending reach during upward movements",
+      "recommendation_fa": "کار روی افزایش دسترسی در حرکات رو به بالا"
+    }
+  ],
+  "notes": {
+    "camera_limitation": "Speed and position metrics are not available due to camera motion. Analysis focuses on technique-based features only.",
+    "data_quality": "High quality pose detection (>80% confidence across analyzed frames)"
+  }
+}

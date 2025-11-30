@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "source": "sample_race_video.mp4",
+    "fps": 30.0,
+    "width": 1920,
+    "height": 1080,
+    "total_frames": 225,
+    "detection_rate_left": 0.92,
+    "detection_rate_right": 0.0,
+    "processing_date": "2025-11-30T12:00:00Z",
+    "version": "0.1.0"
+  },
+  "frames": [
+    {
+      "frame_id": 0,
+      "timestamp": 0.0,
+      "left_climber": {
+        "has_detection": true,
+        "overall_confidence": 0.95,
+        "keypoints": {
+          "nose": {"x": 0.45, "y": 0.15, "z": 0.0, "visibility": 0.98},
+          "left_shoulder": {"x": 0.42, "y": 0.22, "z": 0.0, "visibility": 0.96},
+          "right_shoulder": {"x": 0.48, "y": 0.22, "z": 0.0, "visibility": 0.95},
+          "left_elbow": {"x": 0.38, "y": 0.32, "z": 0.0, "visibility": 0.94},
+          "right_elbow": {"x": 0.52, "y": 0.30, "z": 0.0, "visibility": 0.93},
+          "left_wrist": {"x": 0.35, "y": 0.18, "z": 0.0, "visibility": 0.92},
+          "right_wrist": {"x": 0.55, "y": 0.25, "z": 0.0, "visibility": 0.91},
+          "left_hip": {"x": 0.43, "y": 0.45, "z": 0.0, "visibility": 0.97},
+          "right_hip": {"x": 0.47, "y": 0.45, "z": 0.0, "visibility": 0.96},
+          "left_knee": {"x": 0.40, "y": 0.62, "z": 0.0, "visibility": 0.95},
+          "right_knee": {"x": 0.50, "y": 0.58, "z": 0.0, "visibility": 0.94},
+          "left_ankle": {"x": 0.38, "y": 0.78, "z": 0.0, "visibility": 0.93},
+          "right_ankle": {"x": 0.52, "y": 0.72, "z": 0.0, "visibility": 0.92},
+          "left_heel": {"x": 0.37, "y": 0.80, "z": 0.0, "visibility": 0.90},
+          "right_heel": {"x": 0.53, "y": 0.74, "z": 0.0, "visibility": 0.89},
+          "left_foot_index": {"x": 0.36, "y": 0.82, "z": 0.0, "visibility": 0.88},
+          "right_foot_index": {"x": 0.54, "y": 0.76, "z": 0.0, "visibility": 0.87},
+          "left_index": {"x": 0.34, "y": 0.16, "z": 0.0, "visibility": 0.86},
+          "right_index": {"x": 0.56, "y": 0.23, "z": 0.0, "visibility": 0.85}
+        }
+      },
+      "right_climber": null
+    },
+    {
+      "frame_id": 30,
+      "timestamp": 1.0,
+      "left_climber": {
+        "has_detection": true,
+        "overall_confidence": 0.94,
+        "keypoints": {
+          "nose": {"x": 0.45, "y": 0.12, "z": 0.0, "visibility": 0.97},
+          "left_shoulder": {"x": 0.41, "y": 0.19, "z": 0.0, "visibility": 0.95},
+          "right_shoulder": {"x": 0.49, "y": 0.19, "z": 0.0, "visibility": 0.94},
+          "left_elbow": {"x": 0.36, "y": 0.28, "z": 0.0, "visibility": 0.93},
+          "right_elbow": {"x": 0.54, "y": 0.15, "z": 0.0, "visibility": 0.92},
+          "left_wrist": {"x": 0.33, "y": 0.35, "z": 0.0, "visibility": 0.91},
+          "right_wrist": {"x": 0.57, "y": 0.08, "z": 0.0, "visibility": 0.96},
+          "left_hip": {"x": 0.42, "y": 0.42, "z": 0.0, "visibility": 0.96},
+          "right_hip": {"x": 0.48, "y": 0.42, "z": 0.0, "visibility": 0.95},
+          "left_knee": {"x": 0.39, "y": 0.58, "z": 0.0, "visibility": 0.94},
+          "right_knee": {"x": 0.51, "y": 0.55, "z": 0.0, "visibility": 0.93},
+          "left_ankle": {"x": 0.37, "y": 0.74, "z": 0.0, "visibility": 0.92},
+          "right_ankle": {"x": 0.53, "y": 0.68, "z": 0.0, "visibility": 0.91},
+          "left_heel": {"x": 0.36, "y": 0.76, "z": 0.0, "visibility": 0.89},
+          "right_heel": {"x": 0.54, "y": 0.70, "z": 0.0, "visibility": 0.88},
+          "left_foot_index": {"x": 0.35, "y": 0.78, "z": 0.0, "visibility": 0.87},
+          "right_foot_index": {"x": 0.55, "y": 0.72, "z": 0.0, "visibility": 0.86},
+          "left_index": {"x": 0.32, "y": 0.37, "z": 0.0, "visibility": 0.85},
+          "right_index": {"x": 0.58, "y": 0.06, "z": 0.0, "visibility": 0.95}
+        }
+      },
+      "right_climber": null
+    },
+    {
+      "frame_id": 60,
+      "timestamp": 2.0,
+      "left_climber": {
+        "has_detection": true,
+        "overall_confidence": 0.93,
+        "keypoints": {
+          "nose": {"x": 0.44, "y": 0.09, "z": 0.0, "visibility": 0.96},
+          "left_shoulder": {"x": 0.40, "y": 0.16, "z": 0.0, "visibility": 0.94},
+          "right_shoulder": {"x": 0.48, "y": 0.16, "z": 0.0, "visibility": 0.93},
+          "left_elbow": {"x": 0.35, "y": 0.08, "z": 0.0, "visibility": 0.95},
+          "right_elbow": {"x": 0.53, "y": 0.25, "z": 0.0, "visibility": 0.91},
+          "left_wrist": {"x": 0.32, "y": 0.02, "z": 0.0, "visibility": 0.96},
+          "right_wrist": {"x": 0.56, "y": 0.32, "z": 0.0, "visibility": 0.90},
+          "left_hip": {"x": 0.41, "y": 0.38, "z": 0.0, "visibility": 0.95},
+          "right_hip": {"x": 0.47, "y": 0.38, "z": 0.0, "visibility": 0.94},
+          "left_knee": {"x": 0.38, "y": 0.54, "z": 0.0, "visibility": 0.93},
+          "right_knee": {"x": 0.50, "y": 0.50, "z": 0.0, "visibility": 0.92},
+          "left_ankle": {"x": 0.36, "y": 0.70, "z": 0.0, "visibility": 0.91},
+          "right_ankle": {"x": 0.52, "y": 0.64, "z": 0.0, "visibility": 0.90},
+          "left_heel": {"x": 0.35, "y": 0.72, "z": 0.0, "visibility": 0.88},
+          "right_heel": {"x": 0.53, "y": 0.66, "z": 0.0, "visibility": 0.87},
+          "left_foot_index": {"x": 0.34, "y": 0.74, "z": 0.0, "visibility": 0.86},
+          "right_foot_index": {"x": 0.54, "y": 0.68, "z": 0.0, "visibility": 0.85},
+          "left_index": {"x": 0.31, "y": 0.0, "z": 0.0, "visibility": 0.95},
+          "right_index": {"x": 0.57, "y": 0.34, "z": 0.0, "visibility": 0.84}
+        }
+      },
+      "right_climber": null
+    },
+    {
+      "frame_id": 90,
+      "timestamp": 3.0,
+      "left_climber": {
+        "has_detection": true,
+        "overall_confidence": 0.92,
+        "keypoints": {
+          "nose": {"x": 0.43, "y": 0.06, "z": 0.0, "visibility": 0.95},
+          "left_shoulder": {"x": 0.39, "y": 0.13, "z": 0.0, "visibility": 0.93},
+          "right_shoulder": {"x": 0.47, "y": 0.13, "z": 0.0, "visibility": 0.92},
+          "left_elbow": {"x": 0.34, "y": 0.22, "z": 0.0, "visibility": 0.90},
+          "right_elbow": {"x": 0.52, "y": 0.05, "z": 0.0, "visibility": 0.94},
+          "left_wrist": {"x": 0.31, "y": 0.30, "z": 0.0, "visibility": 0.89},
+          "right_wrist": {"x": 0.55, "y": 0.0, "z": 0.0, "visibility": 0.95},
+          "left_hip": {"x": 0.40, "y": 0.35, "z": 0.0, "visibility": 0.94},
+          "right_hip": {"x": 0.46, "y": 0.35, "z": 0.0, "visibility": 0.93},
+          "left_knee": {"x": 0.37, "y": 0.50, "z": 0.0, "visibility": 0.92},
+          "right_knee": {"x": 0.49, "y": 0.46, "z": 0.0, "visibility": 0.91},
+          "left_ankle": {"x": 0.35, "y": 0.66, "z": 0.0, "visibility": 0.90},
+          "right_ankle": {"x": 0.51, "y": 0.60, "z": 0.0, "visibility": 0.89},
+          "left_heel": {"x": 0.34, "y": 0.68, "z": 0.0, "visibility": 0.87},
+          "right_heel": {"x": 0.52, "y": 0.62, "z": 0.0, "visibility": 0.86},
+          "left_foot_index": {"x": 0.33, "y": 0.70, "z": 0.0, "visibility": 0.85},
+          "right_foot_index": {"x": 0.53, "y": 0.64, "z": 0.0, "visibility": 0.84},
+          "left_index": {"x": 0.30, "y": 0.32, "z": 0.0, "visibility": 0.83},
+          "right_index": {"x": 0.56, "y": 0.0, "z": 0.0, "visibility": 0.94}
+        }
+      },
+      "right_climber": null
+    },
+    {
+      "frame_id": 120,
+      "timestamp": 4.0,
+      "left_climber": {
+        "has_detection": true,
+        "overall_confidence": 0.91,
+        "keypoints": {
+          "nose": {"x": 0.42, "y": 0.03, "z": 0.0, "visibility": 0.94},
+          "left_shoulder": {"x": 0.38, "y": 0.10, "z": 0.0, "visibility": 0.92},
+          "right_shoulder": {"x": 0.46, "y": 0.10, "z": 0.0, "visibility": 0.91},
+          "left_elbow": {"x": 0.33, "y": 0.02, "z": 0.0, "visibility": 0.93},
+          "right_elbow": {"x": 0.51, "y": 0.18, "z": 0.0, "visibility": 0.89},
+          "left_wrist": {"x": 0.30, "y": 0.0, "z": 0.0, "visibility": 0.94},
+          "right_wrist": {"x": 0.54, "y": 0.25, "z": 0.0, "visibility": 0.88},
+          "left_hip": {"x": 0.39, "y": 0.32, "z": 0.0, "visibility": 0.93},
+          "right_hip": {"x": 0.45, "y": 0.32, "z": 0.0, "visibility": 0.92},
+          "left_knee": {"x": 0.36, "y": 0.46, "z": 0.0, "visibility": 0.91},
+          "right_knee": {"x": 0.48, "y": 0.42, "z": 0.0, "visibility": 0.90},
+          "left_ankle": {"x": 0.34, "y": 0.62, "z": 0.0, "visibility": 0.89},
+          "right_ankle": {"x": 0.50, "y": 0.56, "z": 0.0, "visibility": 0.88},
+          "left_heel": {"x": 0.33, "y": 0.64, "z": 0.0, "visibility": 0.86},
+          "right_heel": {"x": 0.51, "y": 0.58, "z": 0.0, "visibility": 0.85},
+          "left_foot_index": {"x": 0.32, "y": 0.66, "z": 0.0, "visibility": 0.84},
+          "right_foot_index": {"x": 0.52, "y": 0.60, "z": 0.0, "visibility": 0.83},
+          "left_index": {"x": 0.29, "y": 0.0, "z": 0.0, "visibility": 0.93},
+          "right_index": {"x": 0.55, "y": 0.27, "z": 0.0, "visibility": 0.82}
+        }
+      },
+      "right_climber": null
+    }
+  ],
+  "notes": {
+    "sample_data": true,
+    "description": "Sample pose data for testing the Speed Climbing Performance Analysis system",
+    "usage": "Upload this file to test the analysis without processing a video"
+  }
+}

@@ -1,0 +1,253 @@
+{
+  "mediapipe_landmarks": {
+    "description": "MediaPipe BlazePose 33 keypoint definitions",
+    "total_keypoints": 33,
+    "coordinate_system": "normalized_0_to_1",
+    "keypoints": [
+      {
+        "id": 0,
+        "name": "nose",
+        "category": "face",
+        "priority": "low"
+      },
+      {
+        "id": 1,
+        "name": "left_eye_inner",
+        "category": "face",
+        "priority": "low"
+      },
+      {
+        "id": 2,
+        "name": "left_eye",
+        "category": "face",
+        "priority": "low"
+      },
+      {
+        "id": 3,
+        "name": "left_eye_outer",
+        "category": "face",
+        "priority": "low"
+      },
+      {
+        "id": 4,
+        "name": "right_eye_inner",
+        "category": "face",
+        "priority": "low"
+      },
+      {
+        "id": 5,
+        "name": "right_eye",
+        "category": "face",
+        "priority": "low"
+      },
+      {
+        "id": 6,
+        "name": "right_eye_outer",
+        "category": "face",
+        "priority": "low"
+      },
+      {
+        "id": 7,
+        "name": "left_ear",
+        "category": "face",
+        "priority": "low"
+      },
+      {
+        "id": 8,
+        "name": "right_ear",
+        "category": "face",
+        "priority": "low"
+      },
+      {
+        "id": 9,
+        "name": "mouth_left",
+        "category": "face",
+        "priority": "low"
+      },
+      {
+        "id": 10,
+        "name": "mouth_right",
+        "category": "face",
+        "priority": "low"
+      },
+      {
+        "id": 11,
+        "name": "left_shoulder",
+        "category": "upper_body",
+        "priority": "high",
+        "usage": "posture_analysis"
+      },
+      {
+        "id": 12,
+        "name": "right_shoulder",
+        "category": "upper_body",
+        "priority": "high",
+        "usage": "posture_analysis"
+      },
+      {
+        "id": 13,
+        "name": "left_elbow",
+        "category": "upper_body",
+        "priority": "critical",
+        "usage": "hand_movement_analysis"
+      },
+      {
+        "id": 14,
+        "name": "right_elbow",
+        "category": "upper_body",
+        "priority": "critical",
+        "usage": "hand_movement_analysis"
+      },
+      {
+        "id": 15,
+        "name": "left_wrist",
+        "category": "upper_body",
+        "priority": "critical",
+        "usage": "contact_point_detection"
+      },
+      {
+        "id": 16,
+        "name": "right_wrist",
+        "category": "upper_body",
+        "priority": "critical",
+        "usage": "contact_point_detection"
+      },
+      {
+        "id": 17,
+        "name": "left_pinky",
+        "category": "hand",
+        "priority": "medium"
+      },
+      {
+        "id": 18,
+        "name": "right_pinky",
+        "category": "hand",
+        "priority": "medium"
+      },
+      {
+        "id": 19,
+        "name": "left_index",
+        "category": "hand",
+        "priority": "medium"
+      },
+      {
+        "id": 20,
+        "name": "right_index",
+        "category": "hand",
+        "priority": "medium"
+      },
+      {
+        "id": 21,
+        "name": "left_thumb",
+        "category": "hand",
+        "priority": "medium"
+      },
+      {
+        "id": 22,
+        "name": "right_thumb",
+        "category": "hand",
+        "priority": "medium"
+      },
+      {
+        "id": 23,
+        "name": "left_hip",
+        "category": "lower_body",
+        "priority": "critical",
+        "usage": "COM_calculation"
+      },
+      {
+        "id": 24,
+        "name": "right_hip",
+        "category": "lower_body",
+        "priority": "critical",
+        "usage": "COM_calculation"
+      },
+      {
+        "id": 25,
+        "name": "left_knee",
+        "category": "lower_body",
+        "priority": "critical",
+        "usage": "gait_analysis"
+      },
+      {
+        "id": 26,
+        "name": "right_knee",
+        "category": "lower_body",
+        "priority": "critical",
+        "usage": "gait_analysis"
+      },
+      {
+        "id": 27,
+        "name": "left_ankle",
+        "category": "lower_body",
+        "priority": "critical",
+        "usage": "step_length_calculation"
+      },
+      {
+        "id": 28,
+        "name": "right_ankle",
+        "category": "lower_body",
+        "priority": "critical",
+        "usage": "step_length_calculation"
+      },
+      {
+        "id": 29,
+        "name": "left_heel",
+        "category": "foot",
+        "priority": "medium"
+      },
+      {
+        "id": 30,
+        "name": "right_heel",
+        "category": "foot",
+        "priority": "medium"
+      },
+      {
+        "id": 31,
+        "name": "left_foot_index",
+        "category": "foot",
+        "priority": "medium"
+      },
+      {
+        "id": 32,
+        "name": "right_foot_index",
+        "category": "foot",
+        "priority": "medium"
+      }
+    ]
+  },
+  "custom_keypoints": {
+    "COM": {
+      "name": "Center of Mass",
+      "calculation": "average of left_hip (23) and right_hip (24)",
+      "priority": "critical",
+      "usage": "trajectory_analysis"
+    }
+  },
+  "critical_keypoints_for_speed_climbing": [
+    "COM",
+    "left_knee",
+    "right_knee",
+    "left_elbow",
+    "right_elbow",
+    "left_wrist",
+    "right_wrist",
+    "left_ankle",
+    "right_ankle",
+    "left_shoulder",
+    "right_shoulder"
+  ],
+  "confidence_thresholds": {
+    "minimum_visibility": 0.5,
+    "high_confidence": 0.8,
+    "excellent_confidence": 0.95
+  },
+  "ifsc_standards": {
+    "wall_height_meters": 15.0,
+    "wall_width_meters": 3.0,
+    "wall_overhang_degrees": 5.0,
+    "num_holds": 20,
+    "world_record_men_seconds": 5.0,
+    "world_record_women_seconds": 6.53
+  }
+}
